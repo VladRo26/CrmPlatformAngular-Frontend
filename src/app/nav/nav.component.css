@@ -1,0 +1,55 @@
+/* Dropdown container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    margin-left: 1rem; /* Adjust as needed for spacing */
+  }
+  
+  /* Dropdown toggle link */
+  .dropdown-toggle {
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+  }
+  
+  .dropdown-toggle:hover {
+    color: #17a2b8; /* Optional: change hover color */
+  }
+  
+  /* Dropdown menu styling */
+  .dropdown-menu {
+    background-color: #343a40; /* Dark background to match navbar */
+    border: none;
+    border-radius: 0.25rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    min-width: 160px; /* Adjust width as needed */
+    padding: 0;
+    margin-top: 0.5rem; /* Space between toggle and menu */
+    transition: all 0.3s ease;
+  }
+  
+  /* Dropdown items */
+  .dropdown-item {
+    color: #f8f9fa; /* Light text for dark background */
+    padding: 0.5rem 1rem;
+    display: block;
+    white-space: nowrap;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #495057; /* Darker background on hover */
+    color: #ffffff; /* Optional: Adjust text color on hover */
+  }
+  
+  /* Adjust dropdown placement on smaller screens */
+  @media (max-width: 576px) {
+    .dropdown {
+      margin-left: 0;
+    }
+  
+    .dropdown-menu {
+      min-width: 100px; /* Narrower menu for smaller screens */
+    }
+  }
+  
