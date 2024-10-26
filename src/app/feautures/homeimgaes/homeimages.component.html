@@ -1,0 +1,9 @@
+<carousel [isAnimated]="true" [showIndicators]="true">
+    <slide *ngFor="let image of images">
+      <img [src]="image.url" [alt]="image.title" style="display: block; width: 100%;">
+      <div class="carousel-caption">
+        <h5>{{ image.title }}</h5>
+      </div>
+    </slide>
+  </carousel>
+  
