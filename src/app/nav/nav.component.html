@@ -23,22 +23,16 @@
                 <a [routerLink]="['/login']" routerLinkActive="active"  class="nav-link">Login</a>
               </li>
               }
-                @if(accountService.currentUser())
-                {
-               <li class="nav-item">
-                <a class="nav-link" (click)="logout()">Logout</a>
-              </li>
-                }
             </ul>
         
 
                 @if(accountService.currentUser())
                 {
                 <div dropdown class="dropdown">
-                    <a dropdownToggle class = "dropdown-toggle text-light text-decoration-none">Welcome user</a>
+                    <a dropdownToggle class = "dropdown-toggle text-light text-decoration-none">Welcome {{accountService.currentUser()?.userName| titlecase}}</a>
                     <div *dropdownMenu class = "dropdown-menu">
                         <a class = "dropdown-item">Edit Profile</a>
-                        <a class = "dropdown-item">Logout</a>
+                        <a class = "dropdown-item" (click)="logout()" >Logout</a>
                 </div>      
             </div> 
                }        

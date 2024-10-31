@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit {
   model: any = {};
   softwareCompanies: SoftwareCompany[] = [];
   beneficiaryCompanies: BeneficiaryCompany[] = [];
-  private accountService = inject(AccountService);
+  accountService = inject(AccountService);
   softwareCompanyService = inject(SoftwarecompanyService);
   beneficiaryCompanyService = inject(BeneficiarycompanyService);
   ngxParticlesService = inject(NgParticlesService);
