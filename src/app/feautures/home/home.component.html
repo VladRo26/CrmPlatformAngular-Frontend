@@ -1,6 +1,8 @@
 <mat-grid-list cols="2" rowHeight="1:1">
     <mat-grid-tile> <app-homeimgaes></app-homeimgaes></mat-grid-tile>
-    <mat-grid-tile>2</mat-grid-tile>
+    <mat-grid-tile>
+        <button mat-raised-button color="primary" [routerLink]="['/register']">Register</button>
+    </mat-grid-tile>
     <mat-grid-tile>3</mat-grid-tile>
     <mat-grid-tile>4</mat-grid-tile>
   </mat-grid-list>

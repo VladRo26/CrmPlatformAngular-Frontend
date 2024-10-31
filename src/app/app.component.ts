@@ -32,6 +32,8 @@ export class AppComponent implements OnInit {
     this.accountService.currentUser.set(JSON.parse(user));
   }
 
+ 
+
   getBenefCompanies() {
     this.http.get('https://localhost:7057/api/BeneficiaryCompany').subscribe
     ({

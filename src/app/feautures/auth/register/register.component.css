@@ -1,0 +1,13 @@
+.rounded-card {
+    background-color: rgba(255, 255, 255, 0.85); /* White background with 70% opacity */
+    border-radius: 25px; /* Rounded corners */
+}
+
+.bg-opacity {
+    background-color: rgb(255, 255, 255); /* Adjusted for overall opacity */
+}
+
+.card-body {
+    border-radius: 25px;
+    padding: 1.5rem;
+}

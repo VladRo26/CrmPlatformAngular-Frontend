@@ -1,1 +1,26 @@
-<p>login works!</p>
+<ngx-particles [id]="id" [options]="particlesOptions" (particlesLoaded)="particlesService.particlesLoaded($event)"></ngx-particles>
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="card p-4 mt-5 shadow-sm bg-opacity rounded-card">
+          <div class="card-body rounded shadow">
+            <form #loginForm="ngForm" (ngSubmit)="login()" class="p-4">
+              <h2 class="mb-4 text-center">DevLink</h2>
+      
+              <!-- Username -->
+              <div class="form-group mb-3">
+                <input type="text" class="form-control" placeholder="Username" name="username" [(ngModel)]="model.username" required>
+              </div>
+      
+              <!-- Password -->
+              <div class="form-group mb-3">
+                <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="model.password" required minlength="4" maxlength="12">
+              </div>
+      
+              <!-- Login Button -->
+              <button class="btn btn-primary w-100 mb-2" type="submit">Login</button>
+      
+              <!-- Cancel Button -->
+              <!-- <button class="btn btn-secondary w-100" type="button" (click)="cancel()">Cancel</button> -->
+            </form>
+          </div>
+        </div>
+      </div>
