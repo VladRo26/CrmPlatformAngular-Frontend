@@ -1,0 +1,16 @@
+<div>
+    <h1>Error Testing</h1>
+    <p>Click the button below to test the error handling.</p>
+    <button class="btn btn-primary" (click)="get400Error()">400 Error</button>
+    <button class="btn btn-primary" (click)="get401Error()">401 Error</button>
+    <button class="btn btn-primary" (click)="get404Error()">404 Error</button>
+    <button class="btn btn-primary" (click)="get500Error()">500 Error</button>
+    <button class="btn btn-primary" (click)="get401ValidationError()">401 Validation Error</button>
+
+    <div *ngIf="validationErrors.length > 0" class="alert alert-danger mt-3">
+        <ul>
+            <li *ngFor="let error of validationErrors">{{ error }}</li>
+        </ul>
+    </div>
+    
+</div>

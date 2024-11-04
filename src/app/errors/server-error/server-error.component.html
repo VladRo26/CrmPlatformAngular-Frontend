@@ -1,0 +1,11 @@
+<div>
+    <h1>500 - Server Error</h1>
+    <p>Sorry, something went wrong on the server. Check the API</p>
+    <div>
+        @if(error){
+            <h5 class="text-bg-danger">Error: {{error.message}}</h5>
+        }
+        <p class="text-danger">Stack Trace: {{error.details}}</p>
+    </div>
+    <button class="btn btn-info" routerLink="/">Go Back</button>
+</div>

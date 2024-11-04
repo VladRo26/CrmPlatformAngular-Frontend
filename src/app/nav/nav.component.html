@@ -17,6 +17,9 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Dashboard</a>
               </li>
+              <li class="nav-item">
+                <a [routerLink]="['/error']" routerLinkActive="active"  class="nav-link">Errors</a>
+              </li>
               @if(!accountService.currentUser())
               {
               <li class="nav-item">
