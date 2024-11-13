@@ -1,0 +1,11 @@
+<div class="row">
+    <div class="col-6">
+        @for(userapp of usersapp; track userapp.id){
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{userapp.firstName}}</h5>
+                </div>
+            </div>
+        }
+    </div>
+</div>
