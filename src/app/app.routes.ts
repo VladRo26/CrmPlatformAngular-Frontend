@@ -8,6 +8,7 @@ import { ErrorTestingComponent } from './errors/error-testing/error-testing.comp
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { UserappListComponent } from './feautures/userapp/userapp-list/userapp-list.component';
+import { UserappDetailComponent } from './feautures/userapp/user-detail/userapp-detail/userapp-detail.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -17,7 +18,8 @@ export const routes: Routes = [
         canActivate: [authGuard],
         children: [ 
             {path: 'tickets',component: TicketsComponent,canActivate: [authGuard]},
-            {path: 'usersApp', component: UserappListComponent, canActivate: [authGuard]}
+            {path: 'usersApp', component: UserappListComponent, canActivate: [authGuard]},
+            {path: 'usersApp/:username', component: UserappDetailComponent, canActivate: [authGuard]}
         ]
     },
     {path: 'register', component: RegisterComponent},

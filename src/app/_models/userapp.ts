@@ -8,6 +8,7 @@ export interface userApp {
     companyName: string
     userType: number
     token: string
+    companyPhotoUrl: string
     photoUrl: string
   }
-  
+   

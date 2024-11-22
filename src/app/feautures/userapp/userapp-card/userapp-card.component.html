@@ -1,0 +1,26 @@
+<mat-card class="example-card" appearance="outlined">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image">
+        <img mat-card-avatar src= {{userapp().companyPhotoUrl}} alt="Photo of user">
+      </div>
+      <mat-card-title>
+        <i class="fa fa-user"></i>
+        {{userapp().userName}}
+      </mat-card-title>
+      <mat-card-subtitle>
+        <a [routerLink]="['/company', userapp().companyName]" class="company-link">  {{userapp().companyName}}</a></mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src={{userapp().photoUrl}} alt="Photo of user">
+    <mat-card-content>
+      <p>
+        {{userapp().lastName}} {{userapp().firstName}}
+      </p>
+      <p>
+        {{userapp().email}}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button routerLink="/usersApp/{{userapp().userName}}">View Profile</button>
+    </mat-card-actions>
+  </mat-card>
+

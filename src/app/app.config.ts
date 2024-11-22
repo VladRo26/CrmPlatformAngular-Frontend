@@ -7,12 +7,13 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideToastr, ToastrModule } from 'ngx-toastr';
 import { errorInterceptor } from './_interceptors/error.interceptor';
+import { tokenInterceptor } from './_interceptors/token.interceptor';
 
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
      provideRouter(routes),
-     provideHttpClient(withInterceptors([errorInterceptor])), //am adaugat serviciul de httpclient, folosind dependecyinjection
+     provideHttpClient(withInterceptors([errorInterceptor,tokenInterceptor])), //am adaugat serviciul de httpclient, folosind dependecyinjection
      provideAnimations(),
       provideAnimationsAsync(),
       provideToastr({

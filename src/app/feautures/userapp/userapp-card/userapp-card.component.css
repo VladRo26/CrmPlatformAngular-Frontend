@@ -1,0 +1,83 @@
+.example-card {
+    max-width: 300px;
+    margin: 20px auto; 
+    border: 2px solid #080808; 
+    box-shadow: 0 2px 4px rgba(87, 56, 56, 0.1); /* Adds a slight shadow */
+    border-radius: 6px; /* Rounds the corners */
+    transition: transform 0.2s, box-shadow 0.2s; /* Adds hover effect */
+  }
+  
+  .example-card:hover {
+    transform: scale(1.05); /* Grows slightly on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Increases shadow on hover */
+  }
+  
+  .example-header-image img {
+    border-radius: 60%; /* Makes avatar circular */
+    border: 2px solid #849c85; /* Green border around the avatar */
+  }
+  
+  mat-card-header {
+    background-color: #f5f5f5; /* Light background for header */
+    padding: 20px;
+    border-bottom: 1px solid #ddd; /* Subtle divider below header */
+  }
+  
+  mat-card-title {
+    font-size: 1.25rem; /* Slightly larger title */
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .company-link {
+    text-decoration: underline; /* Adds underline to the company name */
+    color: #4caf50; /* Green text for the link */
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .company-link:hover {
+    color: #388e3c; /* Darker green on hover */
+    text-decoration: none; /* Removes underline on hover for a sleek look */
+  }
+  
+  
+  mat-card-content {
+    padding: 16px;
+    font-size: 0.95rem;
+    color: #444;
+  }
+  
+  
+  mat-card-actions {
+    display: flex;
+    justify-content: flex-end; /* Aligns buttons to the right */
+    padding: 16px;
+  }
+  
+  mat-card-actions button {
+    color: #000000; /* Green button text */
+    font-weight: bold;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  
+  mat-card-actions button:hover {
+    text-decoration: underline; /* Adds underline on hover */
+  }
+  
+  mat-card-image {
+    width: 50%; /* Makes image responsive */
+    height: 70%;
+    margin: 1rem; /* Centers the image */
+    max-height: 100px;
+    object-fit: cover; 
+  }
+  
+  @media (max-width: 600px) {
+    .example-card {
+      max-width: 100%; /* Makes card full width on smaller screens */
+    }
+  }
+  
