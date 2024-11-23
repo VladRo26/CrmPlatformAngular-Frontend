@@ -1,9 +1,16 @@
 <mat-grid-list cols="2" rowHeight="1:1">
-    <mat-grid-tile> <app-homeimgaes></app-homeimgaes></mat-grid-tile>
+    <mat-grid-tile> 
+        <app-homeimgaes></app-homeimgaes>
+    </mat-grid-tile>
     <mat-grid-tile>
         <button mat-raised-button color="primary" [routerLink]="['/register']">Register</button>
     </mat-grid-tile>
-    <mat-grid-tile>3</mat-grid-tile>
+    <mat-grid-tile>
+        <div>
+        <h3 style="text-align: center; margin-bottom: 10px;">Our parteners Companies</h3>
+        <app-softwarecompanies-list></app-softwarecompanies-list>
+        </div>
+    </mat-grid-tile>
     <mat-grid-tile>4</mat-grid-tile>
   </mat-grid-list>
  

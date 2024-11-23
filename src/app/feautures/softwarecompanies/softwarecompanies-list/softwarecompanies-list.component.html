@@ -1,0 +1,24 @@
+<p-carousel
+  [value]="softwarecompanies"
+  [numVisible]="3"
+  [numScroll]="1"
+  [circular]="true" 
+  autoplayInterval="2000"
+>
+  <ng-template let-company pTemplate="item">
+    <div class="border-1 surface-border border-round m-2 p-3">
+      <div class="mb-3">
+        <div class="relative mx-auto">
+          <img
+            src="{{ company.photoUrl }}"
+            [alt]="company.name || 'No Name'"
+            class="w-25"
+          />
+        </div>
+      </div>
+      <div class="mb-3 font-medium">
+        {{ company.name || 'No Name' }}
+      </div>
+      </div>
+  </ng-template>
+</p-carousel>

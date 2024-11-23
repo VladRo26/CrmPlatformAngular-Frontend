@@ -2,11 +2,20 @@ import { Component, inject, OnInit } from '@angular/core';
 import { UserappService } from '../../../../_services/userapp.service';
 import { ActivatedRoute } from '@angular/router';
 import { userApp } from '../../../../_models/userapp';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button'; // Import the ButtonModule
+import { TabViewModule } from 'primeng/tabview';
+import { BadgeModule } from 'primeng/badge'; // Import BadgeModule
+import { AvatarModule } from 'primeng/avatar'; // Import AvatarModule
+import { ScrollPanelModule } from 'primeng/scrollpanel'; // Import ScrollPanelModule
+
+
+
 
 @Component({
   selector: 'app-userapp-detail',
   standalone: true,
-  imports: [],
+  imports: [CardModule,ButtonModule,TabViewModule,BadgeModule,AvatarModule,ScrollPanelModule],
   templateUrl: './userapp-detail.component.html',
   styleUrl: './userapp-detail.component.css'
   })
