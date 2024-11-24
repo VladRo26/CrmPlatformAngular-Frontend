@@ -6,11 +6,39 @@
         <button mat-raised-button color="primary" [routerLink]="['/register']">Register</button>
     </mat-grid-tile>
     <mat-grid-tile>
-        <div>
-        <h3 style="text-align: center; margin-bottom: 10px;">Our parteners Companies</h3>
-        <app-softwarecompanies-list></app-softwarecompanies-list>
+        <div class="carousel-container">
+            <h3>Our Partners Companies</h3>
+            <p-carousel
+              [value]="combinedCompanies"
+              [numVisible]="3"
+              [numScroll]="1"
+              [circular]="true"
+              autoplayInterval="2000"
+              class="centered-carousel"
+            >
+              <ng-template let-company pTemplate="item">
+                <div class="border-1 surface-border border-round m-2 p-3 centered-item">
+                  <div class="mb-3">
+                    <div class="relative mx-auto">
+                      <img
+                        src="{{ company.photoUrl }}"
+                        [alt]="company.name || 'No Name' || ''"
+                        class="w-25"
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-3 font-medium">
+                    {{ company.name || 'No Name' }}
+                  </div>
+                </div>
+              </ng-template>
+            </p-carousel>
+          </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <div pAnimateOnScroll enterClass="fadein" leaveClass="fadeout" class="flex box shadow-4 justify-content-center align-items-center h-10rem w-10rem sm:h-15rem sm:w-15rem border-round animation-duration-1000">
+            <span class="text-3xl font-bold">fade-in</span>
         </div>
     </mat-grid-tile>
-    <mat-grid-tile>4</mat-grid-tile>
   </mat-grid-list>
  

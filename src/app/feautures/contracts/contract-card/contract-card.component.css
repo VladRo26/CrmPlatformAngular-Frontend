@@ -1,0 +1,44 @@
+.example-card {
+    margin: 10px auto;
+  }
+  
+  .card-header {
+    display: flex;
+    flex-direction: column; /* Stack title and images vertically */
+    align-items: center; /* Center title and images horizontally */
+    gap: 20px; /* Space between title and images */
+  }
+  
+  .title-section {
+    text-align: center;
+    width: 100%; /* Ensure title spans the full card width */
+    margin-bottom: 10px; /* Space below the title */
+  }
+  
+  .mat-card-title {
+    font-size: 22px; /* Adjust title font size */
+    font-weight: bold; /* Make the title bold */
+  }
+  
+  
+  .header-images {
+    display: flex;
+    flex-direction: row; /* Images and arrow on the same row */
+    justify-content: center; /* Center images horizontally */
+    align-items: center; /* Align images and arrow vertically */
+    gap: 25px; /* Space between images and arrow */
+  }
+  
+  .company-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+  }
+  
+  .arrow-icon {
+    font-size: 30px;
+    color: #3f51b5;
+  }
+  

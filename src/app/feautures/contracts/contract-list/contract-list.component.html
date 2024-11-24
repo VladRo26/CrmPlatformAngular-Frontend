@@ -1,1 +1,5 @@
-<p>contract-list works!</p>
+<div class="row">
+    @for(contract of contracts; track contract.id){
+        <app-contract-card [contract]="contract"></app-contract-card>
+    }
+</div>
