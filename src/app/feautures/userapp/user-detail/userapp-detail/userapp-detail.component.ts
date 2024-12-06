@@ -8,14 +8,13 @@ import { TabViewModule } from 'primeng/tabview';
 import { BadgeModule } from 'primeng/badge'; // Import BadgeModule
 import { AvatarModule } from 'primeng/avatar'; // Import AvatarModule
 import { ScrollPanelModule } from 'primeng/scrollpanel'; // Import ScrollPanelModule
-
-
-
+import { RatingModule } from 'primeng/rating';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-userapp-detail',
   standalone: true,
-  imports: [CardModule,ButtonModule,TabViewModule,BadgeModule,AvatarModule,ScrollPanelModule],
+  imports: [CardModule,ButtonModule,TabViewModule,BadgeModule,AvatarModule,ScrollPanelModule,RatingModule,FormsModule],
   templateUrl: './userapp-detail.component.html',
   styleUrl: './userapp-detail.component.css'
   })
@@ -25,6 +24,8 @@ export class UserappDetailComponent implements OnInit {
   private userappService = inject(UserappService);
   private route = inject(ActivatedRoute);
   userapp?: userApp;
+
+
 
   ngOnInit(): void {
     this.loadUserapp();

@@ -21,5 +21,10 @@ export class UserappCardComponent {
 
    userapp= input.required<userApp>(); // Correctly declare `userapp` as an input property
 
+   getUserPhoto(): string {
+    return this.userapp().photoUrl || '/user.png';
+  }
+  
+
 }
 

@@ -1,66 +1,63 @@
-<mat-card class="example-card" appearance="outlined">
-    <mat-card-header>
-      <!-- Title Section -->
-      <div class="title-section">
-        <mat-card-title>
-          <i class="fa fa-briefcase"></i>
-          {{ contract().projectName }}
-        </mat-card-title>
-      </div>
+<div class="card-container">
+    <mat-card class="example-card" appearance="outlined">
+      <mat-card-header>
+        <!-- Header Section -->
+        <div class="header-section">
+          <!-- Left Side: Company Names and Logos -->
+          <div class="header-left">
+            <div class="company-section">
+              <img
+                mat-card-avatar
+                [src]="contract().softwareCompanyPhotoUrl || '/company.png'"
+                alt="Software Company Logo"
+                class="company-logo"
+              />
+              <span class="company-name">{{ contract().softwareCompanyName }}</span>
+            </div>
+            <i class="pi pi-arrow-right arrow-icon"></i>
+            <div class="company-section">
+              <img
+                mat-card-avatar
+                [src]="contract().beneficiaryCompanyPhotoUrl || '/company.png'"
+                alt="Beneficiary Company Logo"
+                class="company-logo"
+              />
+              <span class="company-name">{{ contract().beneficiaryCompanyName }}</span>
+            </div>
+          </div>
   
-      <!-- Images Section -->
-      <div class="header-images">
-        <img
-          mat-card-avatar
-          [src]="contract().softwareCompanyPhotoUrl"
-          alt="Software Company Logo"
-          class="company-logo"
-        />
-        <i class="pi pi-arrow-right arrow-icon"></i>
-        <img
-          mat-card-avatar
-          [src]="contract().beneficiaryCompanyPhotoUrl"
-          alt="Beneficiary Company Logo"
-          class="company-logo"
-        />
-      </div>
+          <!-- Right Side: Title -->
+          <div class="header-right">
+            <mat-card-title>
+              <i class="fa fa-briefcase"></i> {{ contract().projectName }}
+            </mat-card-title>
+          </div>
+        </div>
+      </mat-card-header>
   
-      <!-- Subtitle Section -->
-      <div class="card-header-content">
-        <mat-card-subtitle>
-          <a [routerLink]="['/company', contract().softwareCompanyName]" class="company-link">
-            {{ contract().softwareCompanyName }}
-          </a>
-          |
-          <a [routerLink]="['/company', contract().beneficiaryCompanyName]" class="company-link">
-            {{ contract().beneficiaryCompanyName }}
-          </a>
-        </mat-card-subtitle>
-      </div>
-    </mat-card-header>
+      <mat-card-content>
+        <p><strong>Start Date:</strong> {{ contract().startDate | date }}</p>
+        <p><strong>Estimated Finish:</strong> {{ contract().estimatedFinishDate | date }}</p>
+        <p><strong>Budget:</strong> {{ contract().budget | currency }}</p>
+        <p><strong>Offers Support:</strong> {{ contract().offersSupport ? 'Yes' : 'No' }}</p>
+        <div class="status-knob">
+          <p-knob 
+            [(ngModel)]="contract().status"
+            [valueColor]="'#4CAF50'" 
+            [rangeColor]="'#FFC107'" 
+            [showValue]="true"
+            [readonly]="true"
+            [min]="0"
+            [max]="100"
+          >
+          </p-knob>
+        </div>
+        <p><strong>Description:</strong> {{ contract().description }}</p>
+      </mat-card-content>
   
-    <mat-card-content>
-      <p><strong>Start Date:</strong> {{ contract().startDate | date }}</p>
-      <p><strong>Estimated Finish:</strong> {{ contract().estimatedFinishDate | date }}</p>
-      <p><strong>Budget:</strong> {{ contract().budget | currency }}</p>
-      <p><strong>Offers Support:</strong> {{ contract().offersSupport ? 'Yes' : 'No' }}</p>
-      <div class="status-knob">
-        <p-knob 
-          [(ngModel)]="contract().status"
-          [valueColor]="'#4CAF50'" 
-          [rangeColor]="'#FFC107'" 
-          [showValue]="true"
-          [readonly]="true"
-          [min]="0"
-          [max]="100"
-        >
-        </p-knob>
-      </div>
-      <p><strong>Description:</strong> {{ contract().description }}</p>
-    </mat-card-content>
-  
-    <mat-card-actions>
-      <button mat-button [routerLink]="['/contract', contract().projectName]">View Contract</button>
-    </mat-card-actions>
-  </mat-card>
+      <mat-card-actions>
+        <button mat-button [routerLink]="['/contract', contract().projectName]">View Contract</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
   

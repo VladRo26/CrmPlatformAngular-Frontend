@@ -11,5 +11,6 @@ export interface userApp {
     companyPhotoUrl: string
     hireDate: Date
     photoUrl: string
+    rating: number
   }
    
