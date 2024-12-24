@@ -11,17 +11,16 @@ import { UserappCardComponent } from '../userapp-card/userapp-card.component';
   styleUrl: './userapp-list.component.css'
 })
 export class UserappListComponent implements OnInit {
-  private userappService = inject(UserappService);
-  usersapp: userApp[] = [];
+  userappService = inject(UserappService);
 
   ngOnInit(): void {
-    this.loadUsersapp();
+    if(this.userappService.usersApp().length === 0)
+    {
+      this.loadUsersapp();
+    }
   }
 
   loadUsersapp() {
-    this.userappService.getUsersapp().subscribe({
-      next: usersapp => this.usersapp = usersapp
-    })
+    this.userappService.getUsersapp()
   }
-
 }

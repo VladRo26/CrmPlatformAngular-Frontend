@@ -15,6 +15,9 @@
                 <a [routerLink]="['/tickets']" routerLinkActive="active"  class="nav-link">Tickets</a>
               </li>
               <li class="nav-item">
+                <a [routerLink]="['/usersApp']" routerLinkActive="active"  class="nav-link">See Users</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="#">Dashboard</a>
               </li>
               <li class="nav-item">
@@ -34,7 +37,7 @@
                 <div dropdown class="dropdown">
                     <a dropdownToggle class = "dropdown-toggle text-light text-decoration-none">Welcome {{accountService.currentUser()?.userName| titlecase}}</a>
                     <div *dropdownMenu class = "dropdown-menu">
-                        <a class = "dropdown-item">Edit Profile</a>
+                        <a routerLink ="userApp/edit" class="dropdown-item">Edit Profile</a>
                         <a class = "dropdown-item" (click)="logout()" >Logout</a>
                 </div>      
             </div> 

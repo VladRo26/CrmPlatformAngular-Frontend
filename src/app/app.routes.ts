@@ -10,6 +10,8 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
 import { UserappListComponent } from './feautures/userapp/userapp-list/userapp-list.component';
 import { UserappDetailComponent } from './feautures/userapp/user-detail/userapp-detail/userapp-detail.component';
 import { ContractListComponent } from './feautures/contracts/contract-list/contract-list.component';
+import { UserappEditComponent } from './feautures/userapp/userapp-edit/userapp-edit.component';
+import { unsavedChangesGuard } from './_guards/guards/unsaved-changes.guard';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -18,10 +20,11 @@ export const routes: Routes = [
         runGuardsAndResolvers: 'always',
         canActivate: [authGuard],
         children: [ 
-            {path: 'tickets',component: TicketsComponent,canActivate: [authGuard]},
-            {path: 'usersApp', component: UserappListComponent, canActivate: [authGuard]},
-            {path: 'usersApp/:username', component: UserappDetailComponent, canActivate: [authGuard]},
-            {path:  'contracts', component: ContractListComponent, canActivate: [authGuard]}
+            {path: 'tickets',component: TicketsComponent},
+            {path: 'usersApp', component: UserappListComponent},
+            {path: 'userApp/edit', component: UserappEditComponent, canDeactivate: [unsavedChangesGuard]},
+            {path: 'usersApp/:username', component: UserappDetailComponent},
+            {path:  'contracts', component: ContractListComponent}
         ]
     },
     {path: 'register', component: RegisterComponent},

@@ -1,5 +1,5 @@
 <div class="row">
-    @for(userapp of usersapp; track userapp.id){
+    @for(userapp of userappService.usersApp(); track userapp.id){
         <div class="col-3">
         <app-userapp-card [userapp]="userapp"></app-userapp-card>
         </div>

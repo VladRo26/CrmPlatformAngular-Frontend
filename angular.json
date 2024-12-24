@@ -32,9 +32,10 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/font-awesome/css/font-awesome.min.css",
               "node_modules/bootswatch/dist/lux/bootstrap.min.css",
+              "node_modules/ngx-spinner/animations/pacman.css",
               "node_modules/primeng/resources/primeng.min.css",
               "primeng/resources/themes/mira/theme.css", 
-             
+              "node_modules/primeflex/primeflex.css",
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/primeicons/primeicons.css",
               "src/styles.css"
