@@ -2,7 +2,7 @@ import { HttpClient} from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { userApp } from '../_models/userapp';
-import { of, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 
 
 @Injectable({
@@ -35,4 +35,18 @@ export class UserappService {
     })
    )
   }
+
+  getPhotoUrl(): Observable<string> {
+    return this.http.get<{ url: string }>(`${this.baseUrl}User/photo-url`).pipe(
+      tap((response) => console.log('Fetched Photo URL:', response.url)),
+      catchError((error) => {
+        console.error('Error in getPhotoUrl:', error);
+        return of(''); // Return an empty string on error
+      }),
+      map((response) => typeof response === 'string' ? '' : response.url) // Extract the URL from the response
+    );
+  }
+  
+
+  
 }

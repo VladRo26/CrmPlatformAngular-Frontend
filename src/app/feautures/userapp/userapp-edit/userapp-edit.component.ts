@@ -13,16 +13,13 @@ import { ScrollPanelModule } from 'primeng/scrollpanel'; // Import ScrollPanelMo
 import { InputOtpModule } from 'primeng/inputotp';
 import { ToastrService } from 'ngx-toastr';
 import { jwtDecode } from 'jwt-decode';
-
-
-
-
+import { PhotoEditComponent } from "../photo-edit/photo-edit.component";
 
 
 @Component({
   selector: 'app-userapp-edit',
   standalone: true,
-  imports: [TabViewModule,CardModule,RatingModule,FormsModule,ButtonModule,BadgeModule,AvatarModule,ScrollPanelModule,InputOtpModule],
+  imports: [TabViewModule, CardModule, RatingModule, FormsModule, ButtonModule, BadgeModule, AvatarModule, ScrollPanelModule, InputOtpModule, PhotoEditComponent],
   templateUrl: './userapp-edit.component.html',
   styleUrl: './userapp-edit.component.css'
 })

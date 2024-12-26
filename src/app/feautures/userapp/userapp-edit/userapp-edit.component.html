@@ -78,14 +78,10 @@
                     name="email"
                     rows="3"></textarea>
                 </form>
-                </p-tabPanel>
-                <p-tabPanel>
-                  <ng-template pTemplate="header">
-                    <div class="flex align-items-center gap-2">
-                      <i class="pi pi-chart-bar" style="font-size: 2rem; color: #9c27b0;"></i>
-                      <span>Edit Photo</span>
-                    </div>
-                  </ng-template>
+                <h4>Photo</h4>
+                <div>
+                    <app-photo-edit [userApp]="userapp"></app-photo-edit>
+                </div>
                 </p-tabPanel>
               </p-tabView>
             </div>
