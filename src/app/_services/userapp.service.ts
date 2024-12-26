@@ -46,6 +46,10 @@ export class UserappService {
       map((response) => typeof response === 'string' ? '' : response.url) // Extract the URL from the response
     );
   }
+
+  deletePhoto(){
+    return this.http.delete(this.baseUrl + 'User/delete-photo');
+  }
   
 
   

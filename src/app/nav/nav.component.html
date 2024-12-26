@@ -34,13 +34,25 @@
 
                 @if(accountService.currentUser())
                 {
-                <div dropdown class="dropdown">
-                    <a dropdownToggle class = "dropdown-toggle text-light text-decoration-none">Welcome {{accountService.currentUser()?.userName| titlecase}}</a>
-                    <div *dropdownMenu class = "dropdown-menu">
-                        <a routerLink ="userApp/edit" class="dropdown-item">Edit Profile</a>
-                        <a class = "dropdown-item" (click)="logout()" >Logout</a>
-                </div>      
-            </div> 
+                  <div dropdown class="dropdown">
+                    <div dropdownToggle class="d-flex align-items-center">
+                      <img
+                        src="{{ accountService.currentUser()?.photoUrl || '/user.png' }}"
+                        class="rounded-3 me-2"
+                        width="40"
+                        height="40"
+                        alt="User Photo"
+                      />
+                      <a class="dropdown-toggle text-light text-decoration-none">
+                        Welcome {{ accountService.currentUser()?.userName | titlecase }}
+                      </a>
+                    </div>
+                    <div *dropdownMenu class="dropdown-menu">
+                      <a routerLink="userApp/edit" class="dropdown-item">Edit Profile</a>
+                      <a class="dropdown-item" (click)="logout()">Logout</a>
+                    </div>
+                  </div>
+                  
                }        
         
       </div>

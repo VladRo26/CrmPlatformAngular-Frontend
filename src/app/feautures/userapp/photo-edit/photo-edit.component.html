@@ -1,6 +1,6 @@
 <div class="user-photo-container">
     <p-image 
-        src="{{ userApp().photoUrl }}" 
+        src="{{ userApp().photoUrl || '/user.png' }}" 
         alt="User Photo" 
         width="250" 
         [preview]="true" 
@@ -9,7 +9,8 @@
         icon="pi pi-trash" 
         [rounded]="true" 
         severity="contrast" 
-        class="delete-button" />
+        class="delete-button"
+        (onClick)="deletePhoto()" />
 </div>
 <div>
     <div class="card flex justify-content-center">

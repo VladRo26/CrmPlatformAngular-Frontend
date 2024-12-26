@@ -49,8 +49,7 @@ export class PhotoEditComponent {
             if (userinfo) {
               const user = JSON.parse(userinfo);
               user.photoUrl = newPhotoUrl;
-              localStorage.setItem('userinfo', JSON.stringify(user));
-              this.accountService.currentUser.set(user);
+              this.accountService.setCurrentUser(user);
               this.userApp().photoUrl = newPhotoUrl;
               this.messageService.add({
                 severity: 'success',
@@ -70,5 +69,32 @@ export class PhotoEditComponent {
         },
       });
     }
+  }
+
+  deletePhoto() {
+    this.userAppService.deletePhoto().subscribe({
+      next: () => {
+        const userinfo = localStorage.getItem('userinfo');
+        if (userinfo) {
+          const user = JSON.parse(userinfo);
+          user.photoUrl = null;
+          this.accountService.setCurrentUser(user);
+          this.userApp().photoUrl = '';
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Photo deleted successfully!',
+          });
+        }
+      },
+      error: (err) => {
+        console.error('Failed to delete photo:', err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to delete photo.',
+        });
+      },
+    });
   }
 }
