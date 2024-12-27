@@ -3,56 +3,61 @@
 <div class="container d-flex justify-content-center align-items-center vh-100">
   <div class="card p-4 mt-5 shadow-sm bg-opacity rounded-card">
     <div class="card-body rounded shadow">
-      <form #registerForm="ngForm" (ngSubmit)="register()" class="p-4">
+      <form [formGroup]="registerForm"  (ngSubmit)="register()" class="p-4">
         <h2 class="mb-4 text-center">Register</h2>
 
         <!-- Username -->
         <div class="form-group mb-3">
-          <input type="text" class="form-control" placeholder="Username" name="username" [(ngModel)]="model.username" required>
+          <input [class.is-invalid]="registerForm.get('username')?.errors && registerForm.get('username')?.touched"
+          type="text" class="form-control" placeholder="Username" formControlName="username">
+          <div class="invalid-feedback">Username is required!</div>
+
         </div>
 
         <!-- First Name -->
         <div class="form-group mb-3">
-          <input type="text" class="form-control" placeholder="First Name" name="firstName" [(ngModel)]="model.firstName" required>
+          <input [class.is-invalid]="registerForm.get('firstName')?.errors && registerForm.get('firstName')?.touched" 
+          type="text" class="form-control" placeholder="First Name" formControlName="firstName">
+          <div class="invalid-feedback">First Name is required!</div>
         </div>
 
         <!-- Last Name -->
         <div class="form-group mb-3">
-          <input type="text" class="form-control" placeholder="Last Name" name="lastName" [(ngModel)]="model.lastName">
+          <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName">
         </div>
 
         <!-- Email -->
         <div class="form-group mb-3">
-          <input type="email" class="form-control" placeholder="Email" name="email" [(ngModel)]="model.email">
-        </div>
-
-        <!-- Address -->
-        <div class="form-group mb-3">
-          <input type="text" class="form-control" placeholder="Address" name="address" [(ngModel)]="model.address" required>
+          <input type="email" class="form-control" placeholder="Email" formControlName="email">
         </div>
 
         <!-- Phone Number -->
-        <div class="form-group mb-3">
-          <input type="text" class="form-control" placeholder="Phone Number" name="phoneNumber" [(ngModel)]="model.phoneNumber">
-        </div>
+        <form [formGroup]="registerForm">
+          <ngx-material-intl-tel-input [fieldControl]="registerForm.get('phoneNumber')" [required]="true" [autoIpLookup]="false" 
+            [preferredCountries]="['us', 'gb', 'ro']"
+            [enableSearch] = "true"
+            [numberValidation]="true"
+            autoSelectedCountry='ro'
+            ></ngx-material-intl-tel-input>
+        </form>
 
         <div class="form-group mb-3">
-          <mat-button-toggle-group name="userType" [(ngModel)]="model.userType" aria-label="Select User Type" required>
+          <mat-button-toggle-group formControlName="userType" aria-label="Select User Type">
             <mat-button-toggle [value]="0">Software Company User</mat-button-toggle>
             <mat-button-toggle [value]="1">Beneficiary Company User</mat-button-toggle>
           </mat-button-toggle-group>
         </div>
 
-        <div class="form-group mb-3" *ngIf="model.userType !== null">
+        <div class="form-group mb-3">
           <mat-form-field appearance="fill" class="w-100">
             <mat-label>Select Company</mat-label>
-            <mat-select [(ngModel)]="model.companyName" name="companyName" required>
-              <ng-container *ngIf="model.userType === 0">
+            <mat-select formControlName="Company">
+              <ng-container *ngIf="registerForm.get('userType')?.value === 0">
                 <mat-option *ngFor="let company of softwareCompanies" [value]="company.name">
                   {{ company.name }}
                 </mat-option>
               </ng-container>
-              <ng-container *ngIf="model.userType === 1">
+              <ng-container *ngIf="registerForm.get('userType')?.value === 1">
                 <mat-option *ngFor="let company of beneficiaryCompanies" [value]="company.name">
                   {{ company.name }}
                 </mat-option>
@@ -60,10 +65,28 @@
             </mat-select>
           </mat-form-field>
         </div>
+        
+     
 
         <!-- Password -->
+        <div  class="form-group mb-3">
+          <input [class.is-invalid]="registerForm.get('password')?.errors && registerForm.get('password')?.touched"
+           type="password" class="form-control" placeholder="Password" formControlName="password">
+          <div *ngIf="registerForm.get('password')?.hasError('required')"
+           class="invalid-feedback">Password is required!</div>
+           <div *ngIf="registerForm.get('password')?.hasError('minlength')"
+           class="invalid-feedback">Password must have minimum 4 characters!</div>
+           <div *ngIf="registerForm.get('password')?.hasError('maxlength')"
+           class="invalid-feedback">Password must have maximum 12 characters!</div>
+        </div>
+
         <div class="form-group mb-3">
-          <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="model.password" required minlength="4" maxlength="12">
+          <input [class.is-invalid]="registerForm.get('confirmPassword')?.errors && registerForm.get('confirmPassword')?.touched"
+           type="password" class="form-control" placeholder="Confirm Password" formControlName="confirmPassword">
+           <div *ngIf="registerForm.get('confirmPassword')?.hasError('required')"
+           class="invalid-feedback">Confrim password is required!</div>
+           <div *ngIf="registerForm.get('confirmPassword')?.hasError('isMatching')"
+           class="invalid-feedback">Confirm password should match the password!</div>
         </div>
 
         <!-- Register Button -->
@@ -71,7 +94,13 @@
 
         <!-- Cancel Button -->
         <button class="btn btn-secondary w-100" type="button" (click)="cancel()">Cancel</button>
+
+        <p>Form value: {{registerForm.value | json}}</p>
+<p>Form status: {{registerForm.status| json}}</p>
       </form>
     </div>
   </div>
 </div>
+
+
+

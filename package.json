@@ -29,6 +29,7 @@
     "http-proxy-middleware": "^3.0.2",
     "jwt-decode": "^4.0.0",
     "ngx-bootstrap": "^18.0.2",
+    "ngx-material-intl-tel-input": "^18.2.1",
     "ngx-spinner": "^17.0.0",
     "ngx-toastr": "^19.0.0",
     "primeflex": "^3.3.1",

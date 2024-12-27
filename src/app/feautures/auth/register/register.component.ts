@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -19,6 +19,9 @@ import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSl
 import { NgParticlesService } from "@tsparticles/angular";
 import { ParticlesService } from '../../../_services/particles.services';
 import { ToastrService } from 'ngx-toastr';
+import { JsonPipe } from '@angular/common';
+import { NgxMaterialIntlTelInputComponent } from 'ngx-material-intl-tel-input';
+
 
 
 
@@ -27,7 +30,7 @@ import { ToastrService } from 'ngx-toastr';
   selector: 'app-register',
   standalone: true,
   imports: [
-    FormsModule,
+    ReactiveFormsModule,
     MatButtonToggleModule,
     MatFormFieldModule,
     MatSelectModule,
@@ -35,7 +38,10 @@ import { ToastrService } from 'ngx-toastr';
     MatButtonModule, // Ensure this is imported
     CommonModule,
     NgxParticlesModule,
-  ],
+    JsonPipe,
+    NgxMaterialIntlTelInputComponent
+],
+
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
@@ -47,6 +53,7 @@ export class RegisterComponent implements OnInit {
 
 
   model: any = {};
+  registerForm: FormGroup = new FormGroup({});
   softwareCompanies: SoftwareCompany[] = [];
   beneficiaryCompanies: BeneficiaryCompany[] = [];
   accountService = inject(AccountService);
@@ -61,18 +68,44 @@ export class RegisterComponent implements OnInit {
     this.loadSoftwareCompanies();
     this.loadBeneficiaryCompanies();
     this.particlesService.initParticles();
+    this.initializeForm();
+  }
+
+  initializeForm(){
+    this.registerForm = new FormGroup({
+      username: new FormControl('',Validators.required),
+      firstName: new FormControl(),
+      lastName: new FormControl(),
+      email: new FormControl('',[Validators.required, Validators.email]),
+      phoneNumber: new FormControl('',[Validators.required]),
+      userType: new FormControl(''),
+      Company: new FormControl(''),
+      password: new FormControl('',[Validators.required, Validators.minLength(4), Validators.maxLength(12)]),
+      confirmPassword: new FormControl('',[Validators.required,this.comparePasswords('password')]),
+    });
+
+    this.registerForm.controls['password'].valueChanges.subscribe(() => {
+      this.registerForm.controls['confirmPassword'].updateValueAndValidity();
+    });
+  }
+
+  comparePasswords(matchTo: string): any {
+    return (control: AbstractControl) => {
+      return control.value == control.parent?.get(matchTo)?.value ? null : {isMatching: true};
+    }
   }
 
   register(){
-    this.accountService.register(this.model).subscribe({
-      next: response => {
-        console.log(response);
-        this.cancel();
-      },
-      error: error => {
-        this.toastr.error(error.error);
-      }
-    });
+    console.log(this.registerForm.value);
+    // this.accountService.register(this.model).subscribe({
+    //   next: response => {
+    //     console.log(response);
+    //     this.cancel();
+    //   },
+    //   error: error => {
+    //     this.toastr.error(error.error);
+    //   }
+    // });
   }
 
   loadSoftwareCompanies(): void {
