@@ -22,16 +22,18 @@ export class AccountService {
     )
   }
 
-  register(model: any) {
-    return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
+  register(formData: FormData) {
+    return this.http.post<User>(`${this.baseUrl}account/register`, formData).pipe(
       map(user => {
         if (user) {
           this.setCurrentUser(user);
         }
         return user;
       })
-    )
+    );
   }
+  
+  
 
   setCurrentUser(user: User) {
     localStorage.setItem('userinfo', JSON.stringify(user));

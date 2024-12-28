@@ -31,9 +31,26 @@
           <input type="email" class="form-control" placeholder="Email" formControlName="email">
         </div>
 
+        <div class="form-group mb-3">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Hire Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="hireDate">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <div *ngIf="registerForm.get('hireDate')?.errors && registerForm.get('hireDate')?.touched" class="invalid-feedback">
+            <div *ngIf="registerForm.get('hireDate')?.hasError('required')">Date is required!</div>
+          </div>
+        </div>
+        
+        
+
         <!-- Phone Number -->
         <form [formGroup]="registerForm">
-          <ngx-material-intl-tel-input [fieldControl]="registerForm.get('phoneNumber')" [required]="true" [autoIpLookup]="false" 
+          <ngx-material-intl-tel-input [fieldControl]="registerForm.get('phoneNumber')" [required]="true" [autoIpLookup]="true"
+            [iconMakeCall]="false"
+            [includeDialCode] = "true"
             [preferredCountries]="['us', 'gb', 'ro']"
             [enableSearch] = "true"
             [numberValidation]="true"
@@ -88,6 +105,37 @@
            <div *ngIf="registerForm.get('confirmPassword')?.hasError('isMatching')"
            class="invalid-feedback">Confirm password should match the password!</div>
         </div>
+
+            <!-- Photo Upload -->
+          <!-- File Upload -->
+          
+          <div class="form-group mb-3">
+            <input
+              type="file"
+              class="form-control"
+              (change)="onFileSelected($event)"
+              accept="image/*"
+            />
+            <!-- Display selected file with a remove button -->
+            <div *ngIf="registerForm.get('file')?.value">
+              <p class="mt-2">
+                <strong>Selected File:</strong> {{ registerForm.get('file')?.value.name }}
+                <button type="button" class="btn btn-sm btn-danger ms-2" (click)="removeFile()">Remove</button>
+              </p>
+            </div>
+          </div>
+                   
+
+            @if(validationErrors){
+              <div class="alert alert-danger">
+                <ul>
+                  @for(error of validationErrors; track $index)
+                  {
+                    <li>{{error}}</li>
+                  }
+                </ul>
+              </div>
+            }
 
         <!-- Register Button -->
         <button class="btn btn-primary w-100 mb-2" type="submit">Register</button>

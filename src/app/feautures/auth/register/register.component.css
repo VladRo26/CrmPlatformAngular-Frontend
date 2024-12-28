@@ -11,3 +11,19 @@
     border-radius: 25px;
     padding: 1.5rem;
 }
+
+.full-width {
+    width: 100%;
+  }
+  
+  .card {
+    max-width: 50%; /* Adjust this to your preferred width */
+    margin: 0 auto; /* Center the card horizontally */
+  }
+  
+  @media (max-width: 768px) {
+    .card {
+      max-width: 80%; /* Make the card adapt to smaller screens */
+    }
+  }
+  

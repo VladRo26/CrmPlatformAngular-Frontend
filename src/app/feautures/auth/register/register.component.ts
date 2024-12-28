@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -21,14 +21,21 @@ import { ParticlesService } from '../../../_services/particles.services';
 import { ToastrService } from 'ngx-toastr';
 import { JsonPipe } from '@angular/common';
 import { NgxMaterialIntlTelInputComponent } from 'ngx-material-intl-tel-input';
-
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material/input';
+import {provideNativeDateAdapter} from '@angular/material/core';
+import { FileUpload, FileUploadEvent, FileUploadModule } from 'primeng/fileupload';
+import { MessageService, PrimeNGConfig} from 'primeng/api';
+import { UserappService } from '../../../_services/userapp.service';
+import { Router } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
 
 
 
 @Component({
   selector: 'app-register',
   standalone: true,
+  providers: [provideNativeDateAdapter(),MessageService],
   imports: [
     ReactiveFormsModule,
     MatButtonToggleModule,
@@ -39,8 +46,14 @@ import { NgxMaterialIntlTelInputComponent } from 'ngx-material-intl-tel-input';
     CommonModule,
     NgxParticlesModule,
     JsonPipe,
-    NgxMaterialIntlTelInputComponent
+    NgxMaterialIntlTelInputComponent,
+    MatDatepickerModule,
+    MatInputModule,
+    FileUploadModule,
+    FormsModule
 ],
+changeDetection: ChangeDetectionStrategy.OnPush,
+
 
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
@@ -50,9 +63,12 @@ export class RegisterComponent implements OnInit {
   particlesService = inject(ParticlesService);
   particlesOptions = this.particlesService.particlesOptions;
   private toastr = inject(ToastrService);
+  private userAppService = inject(UserappService);
+  private router = inject(Router);
+  selectedFile: File | null = null;
 
 
-  model: any = {};
+
   registerForm: FormGroup = new FormGroup({});
   softwareCompanies: SoftwareCompany[] = [];
   beneficiaryCompanies: BeneficiaryCompany[] = [];
@@ -60,7 +76,10 @@ export class RegisterComponent implements OnInit {
   softwareCompanyService = inject(SoftwarecompanyService);
   beneficiaryCompanyService = inject(BeneficiarycompanyService);
   ngxParticlesService = inject(NgParticlesService);
+  uploadedFiles: any[] = [];
+  validationErrors: string[] | undefined;
 
+  constructor(private messageService: MessageService,private cdr: ChangeDetectorRef) {}
 
 
 
@@ -81,12 +100,25 @@ export class RegisterComponent implements OnInit {
       userType: new FormControl(''),
       Company: new FormControl(''),
       password: new FormControl('',[Validators.required, Validators.minLength(4), Validators.maxLength(12)]),
+      hireDate: new FormControl('',[Validators.required]),
       confirmPassword: new FormControl('',[Validators.required,this.comparePasswords('password')]),
+      file: new FormControl(null), // Add file control here
+
     });
 
     this.registerForm.controls['password'].valueChanges.subscribe(() => {
       this.registerForm.controls['confirmPassword'].updateValueAndValidity();
     });
+
+    this.registerForm.get('phoneNumber')?.valueChanges.subscribe((value) => {
+      const trimmedValue = this.trimPhoneNumber(value || '');
+      console.log('Original phoneNumber:', value, 'Trimmed:', trimmedValue); // Debugging log
+      if (value !== trimmedValue) {
+        this.registerForm.get('phoneNumber')?.setValue(trimmedValue, { emitEvent: false });
+        this.registerForm.get('phoneNumber')?.updateValueAndValidity();
+      }
+    });
+    
   }
 
   comparePasswords(matchTo: string): any {
@@ -95,18 +127,60 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  register(){
-    console.log(this.registerForm.value);
-    // this.accountService.register(this.model).subscribe({
-    //   next: response => {
-    //     console.log(response);
-    //     this.cancel();
-    //   },
-    //   error: error => {
-    //     this.toastr.error(error.error);
-    //   }
-    // });
+ 
+  register() {
+    const hireDate = this.getDateOnly(this.registerForm.get('hireDate')?.value);
+    this.registerForm.get('hireDate')?.setValue(hireDate);
+  
+    const formData = new FormData();
+  
+    // Append all form fields except `file`
+    Object.keys(this.registerForm.value).forEach((key) => {
+      if (key !== 'file') {
+        formData.append(key, this.registerForm.get(key)?.value);
+      }
+    });
+  
+    // Append the file separately
+    const file = this.registerForm.get('file')?.value;
+    if (file) {
+      formData.append('file', file);
+    }
+  
+    this.accountService.register(formData).subscribe({
+      next: () => {
+        this.router.navigateByUrl('/home');
+        this.cancel();
+      },
+      error: (error) => {
+        this.validationErrors = error;
+      },
+    });
   }
+  
+
+  
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input?.files && input.files.length > 0) {
+      const file = input.files[0]; // Get the selected file
+      this.registerForm.patchValue({ file }); // Bind the file to the form
+    }
+  }
+  removeFile(): void {
+    // Clear the file from the form
+    this.registerForm.patchValue({ file: null });
+  
+    // Optionally reset the file input field
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = ''; // Clear the value of the file input
+    }
+  }
+  
+
+
+   
 
   loadSoftwareCompanies(): void {
     this.softwareCompanyService.getSoftwareCompanies().subscribe(
@@ -130,7 +204,20 @@ export class RegisterComponent implements OnInit {
     );
   }
 
+  private getDateOnly(input: any): string {
+    const date = input instanceof Date ? input : new Date(input); // Ensure it is a Date object
+    if (isNaN(date.getTime())) {
+      throw new Error("Invalid date provided"); // Throw an error for invalid dates
+    }
+    return date.toISOString().split('T')[0]; // Return date in 'YYYY-MM-DD' format
+  }
+  
 
+  private trimPhoneNumber(phoneNumber: string): string {
+    return phoneNumber.replace(/\s+/g, ''); // Remove all spaces
+  }
+  
+  
   cancel(): void {
     console.log('Registration cancelled');
   }

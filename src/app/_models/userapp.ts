@@ -9,7 +9,7 @@ export interface userApp {
     userType: number
     token: string
     companyPhotoUrl: string
-    hireDate: Date
+    hireDate: string
     photoUrl: string
     rating: number
   }
