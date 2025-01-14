@@ -1,1 +1,12 @@
-<p>tickets-user-list works!</p>
+<div>  
+    <div *ngIf="tickets.length > 0; else noTickets">
+      @for(ticket of tickets; track ticket.id){
+        <app-tickets-card [ticket]="ticket"></app-tickets-card>
+      }
+    </div>
+  
+    <ng-template #noTickets>
+      <p>Currently, there are not assigned tickets!</p>
+    </ng-template>
+  </div>
+  

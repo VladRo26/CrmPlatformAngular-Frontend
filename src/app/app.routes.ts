@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './feautures/home/home.component';
-import { TicketsComponent } from './feautures/tickets/tickets.component';
 import { RegisterComponent } from './feautures/auth/register/register.component';
 import { LoginComponent } from './feautures/auth/login/login.component';
 import { authGuard } from './_guards/guards/auth.guard';
@@ -12,6 +11,7 @@ import { UserappDetailComponent } from './feautures/userapp/user-detail/userapp-
 import { ContractListComponent } from './feautures/contracts/contract-list/contract-list.component';
 import { UserappEditComponent } from './feautures/userapp/userapp-edit/userapp-edit.component';
 import { unsavedChangesGuard } from './_guards/guards/unsaved-changes.guard';
+import { TicketsUserListComponent } from './feautures/tickets/tickets-user-list/tickets-user-list.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -20,7 +20,7 @@ export const routes: Routes = [
         runGuardsAndResolvers: 'always',
         canActivate: [authGuard],
         children: [ 
-            {path: 'tickets',component: TicketsComponent},
+            {path: 'myTickets', component:TicketsUserListComponent},
             {path: 'usersApp', component: UserappListComponent},
             {path: 'userApp/edit', component: UserappEditComponent, canDeactivate: [unsavedChangesGuard]},
             {path: 'usersApp/:username', component: UserappDetailComponent},

@@ -15,4 +15,13 @@ export class BeneficiarycompanyService {
   getBeneficiaryCompanies(): Observable<BeneficiaryCompany[]> {
     return this.http.get<BeneficiaryCompany[]>(`${this.baseUrl}beneficiarycompany`);
   }
+
+  getBeneficiaryCompanyByUsername(username: string): Observable<BeneficiaryCompany> {
+    return this.http.get<BeneficiaryCompany>(`${this.baseUrl}beneficiarycompany/byusername/${username}`);
+  }
+
+  getBeneficiaryCompanyByUserId(userId: number): Observable<BeneficiaryCompany> {
+    return this.http.get<BeneficiaryCompany>(`${this.baseUrl}beneficiarycompany/ByUserId/${userId}`);
+  }
+  
 }

@@ -1,6 +1,7 @@
 import { TicketStatus } from "../_enum/TicketStatus";
 
 export interface Ticket {
+    id: number; // Ticket ID
     title: string | null; // Title of the ticket (optional)
     description: string | null; // Description of the ticket (optional)
     status: TicketStatus; // Enum for the ticket status
