@@ -167,6 +167,7 @@ export class RegisterComponent implements OnInit {
       this.registerForm.patchValue({ file }); // Bind the file to the form
     }
   }
+  
   removeFile(): void {
     // Clear the file from the form
     this.registerForm.patchValue({ file: null });
@@ -178,9 +179,6 @@ export class RegisterComponent implements OnInit {
     }
   }
   
-
-
-   
 
   loadSoftwareCompanies(): void {
     this.softwareCompanyService.getSoftwareCompanies().subscribe(

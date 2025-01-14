@@ -3,14 +3,14 @@ import { Ticket } from '../../../_models/ticket';
 import { BeneficiaryCompany } from '../../../_models/beneficiarycompany';
 import { OnInit } from '@angular/core';
 import { BeneficiarycompanyService } from '../../../_services/beneficiarycompanies.service';
-import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
+import {MatCardModule} from '@angular/material/card';
+
 
 
 @Component({
   selector: 'app-tickets-card',
   standalone: true,
-  imports: [CardModule, ButtonModule],
+  imports: [MatCardModule],
   templateUrl: './tickets-card.component.html',
   styleUrl: './tickets-card.component.css'
 })

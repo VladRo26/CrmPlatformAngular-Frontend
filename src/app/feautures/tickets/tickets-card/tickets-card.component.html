@@ -1,31 +1,31 @@
-<p-card
-  *ngIf="company; else noCompanyTemplate"
-  [header]="ticket().title ?? 'Ticket'")
-  subheader="{{ ticket().description || 'No Description' }}"
-  [style]="{ width: '360px' }"
->
-  <ng-template pTemplate="header">
-    <img
-      [src]="company?.photoUrl || '/company.png'"
-      alt="Company Photo"
-      style="width: 100%; height: auto; object-fit: cover; border-radius: 8px;"
-    />
-
-  </ng-template>
-  <p>
-    <strong>Company Name:</strong> {{ company?.name }} <br />
-    <strong>Priority:</strong> {{ ticket().priority }} <br />
-    <strong>Status:</strong> {{ ticket().status  }} <br />
-    <strong>Type:</strong> {{ ticket().type }} <br />
-  </p>
-  <ng-template pTemplate="footer">
-    <div class="flex gap-3 mt-1">
-      <p-button label="Details" severity="secondary" class="w-full" styleClass="w-full"></p-button>
-      <p-button label="Resolve" severity="success" class="w-full" styleClass="w-full"></p-button>
-    </div>
-  </ng-template>
-</p-card>
-
-<ng-template #noCompanyTemplate>
-  <p>No company details available for this user.</p>
-</ng-template>
+<mat-card class="example-card" appearance="outlined">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image">
+        <img
+          mat-card-avatar
+          [src]="company?.photoUrl || '/company.png'"
+          alt="Photo of company"
+        />
+      </div>
+      <mat-card-title>{{ ticket().title }}</mat-card-title>
+      <mat-card-subtitle>
+          {{ company?.name || 'No Company Assigned' }}
+      </mat-card-subtitle>
+    </mat-card-header>
+  
+    <img mat-card-image [src]="company?.photoUrl || '/company.png'" alt="Company Image" />
+  
+    <mat-card-content>
+      <p>
+        <strong>Priority:</strong> {{ ticket().priority }} <br />
+        <strong>Status:</strong> {{ ticket().status }} <br />
+        <strong>Type:</strong> {{ ticket().type }} <br />
+      </p>
+    </mat-card-content>
+  
+    <mat-card-actions>
+      <button mat-button color="primary">Details</button>
+      <button mat-button color="accent">Resolve</button>
+    </mat-card-actions>
+  </mat-card>
+  

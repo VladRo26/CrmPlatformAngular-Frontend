@@ -13,7 +13,7 @@ export class TicketService {
     baseUrl =  environment.apiUrl;
 
     getTicketsByHandlerUsername(username: string): Observable<Ticket[]> {
-      const url = `${this.baseUrl}/api/Ticket/ByHandlerUsername/${username}`;
+      const url = `${this.baseUrl}Ticket/ByHandlerUsername/${username}`;
       return this.http.get<Ticket[]>(url);
     }
 }

@@ -1,12 +1,8 @@
-<div>  
-    <div *ngIf="tickets.length > 0; else noTickets">
+<div class="row">
       @for(ticket of tickets; track ticket.id){
-        <app-tickets-card [ticket]="ticket"></app-tickets-card>
+        <div class="col-3">
+          <app-tickets-card [ticket]="ticket"></app-tickets-card>
+        </div>
       }
-    </div>
-  
-    <ng-template #noTickets>
-      <p>Currently, there are not assigned tickets!</p>
-    </ng-template>
-  </div>
+</div>
   

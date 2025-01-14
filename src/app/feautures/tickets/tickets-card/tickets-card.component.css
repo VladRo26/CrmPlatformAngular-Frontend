@@ -1,0 +1,73 @@
+.example-card {
+    max-width: 25rem; /* Approximately 400px */
+    margin: 2rem auto; /* Adjust spacing for responsiveness */
+    border: 0.125rem solid #080808; /* Approximately 2px */
+    box-shadow: 0 0.125rem 0.25rem rgba(87, 56, 56, 0.1); /* Subtle shadow */
+    border-radius: 0.5rem; /* Rounded corners */
+    transition: transform 0.2s, box-shadow 0.2s; /* Smooth hover effect */
+  }
+  
+  .example-card:hover {
+    transform: scale(1.05); /* Slight scale on hover */
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+  }
+  
+  .example-header-image img {
+    border-radius: 50%; /* Circular avatar */
+    border: 0.125rem solid #849c85; /* Approximately 2px green border */
+  }
+  
+  mat-card-header {
+    background-color: #f5f5f5; /* Light background for header */
+    padding: 1rem; /* Consistent padding */
+    border-bottom: 0.0625rem solid #ddd; /* Subtle divider */
+  }
+  
+  mat-card-title {
+    font-size: 1.5rem; /* Larger font size */
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .company-link {
+    text-decoration: underline;
+    color: #4caf50; /* Green link */
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .company-link:hover {
+    color: #388e3c; /* Darker green on hover */
+    text-decoration: none; /* Remove underline for cleaner look */
+  }
+  
+  mat-card-content {
+    padding: 1rem;
+    font-size: 1rem; /* Standard readable size */
+    color: #444;
+  }
+  
+  mat-card-actions {
+    display: flex;
+    justify-content: space-between; /* Space out buttons */
+    padding: 1rem;
+  }
+  
+  mat-card-actions button {
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem; /* Adjust padding for readability */
+  }
+  
+  mat-card-image {
+    max-height: 10rem; /* Scales with viewport */
+    object-fit: cover;
+    border-radius: 0.5rem; /* Matches card border radius */
+  }
+  
+  @media (max-width: 48rem) { /* Approximately 768px */
+    .example-card {
+      max-width: 90vw; /* Full width for smaller screens */
+    }
+  }
+  
