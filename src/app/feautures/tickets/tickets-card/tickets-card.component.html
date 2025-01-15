@@ -18,8 +18,8 @@
     <mat-card-content>
       <p>
         <strong>Priority:</strong> {{ ticket().priority }} <br />
-        <strong>Status:</strong> {{ ticket().status }} <br />
-        <strong>Type:</strong> {{ ticket().type }} <br />
+        <strong>Status:</strong> {{ ticket().status.toString() }} <br />
+        <strong>Summary:</strong> {{ summary }} <br />
       </p>
     </mat-card-content>
   

@@ -4,6 +4,7 @@ import { BeneficiaryCompany } from '../../../_models/beneficiarycompany';
 import { OnInit } from '@angular/core';
 import { BeneficiarycompanyService } from '../../../_services/beneficiarycompanies.service';
 import {MatCardModule} from '@angular/material/card';
+import { TicketService } from '../../../_services/ticket.service';
 
 
 
@@ -17,11 +18,15 @@ import {MatCardModule} from '@angular/material/card';
 export class TicketsCardComponent implements OnInit {
 
   beneficiaryCompanyService = inject(BeneficiarycompanyService);
+  ticketService = inject(TicketService);
   ticket = input.required<Ticket>();
   company?: BeneficiaryCompany;
+  summary?: string;
+
 
   ngOnInit(): void {
     this.loadCompanyByUserId();
+    this.generateSummary();
   }
 
   loadCompanyByUserId(): void {
@@ -36,6 +41,23 @@ export class TicketsCardComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching company details:', err);
+      },
+    });
+  }
+
+  generateSummary(): void {
+    if (!this.ticket().id) {
+      console.error('Ticket ID is missing.');
+      return;
+    }
+
+    this.ticketService.generateSummary(this.ticket().id).subscribe({
+      next: (response) => {
+        this.summary = response.summary;
+        console.log('Generated Summary:', this.summary);
+      },
+      error: (err) => {
+        console.error('Error generating summary:', err);
       },
     });
   }

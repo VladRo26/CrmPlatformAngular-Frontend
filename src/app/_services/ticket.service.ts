@@ -16,4 +16,13 @@ export class TicketService {
       const url = `${this.baseUrl}Ticket/ByHandlerUsername/${username}`;
       return this.http.get<Ticket[]>(url);
     }
+
+    generateSummary(ticketId: number): Observable<{ ticketId: number; summary: string }> {
+      const url = `${this.baseUrl}Ticket/GenerateSummary/${ticketId}`;
+  
+      return this.http.post<{ ticketId: number; summary: string }>(url, null);
+    }
+    
+
+
 }
