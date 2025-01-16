@@ -12,6 +12,7 @@ import { ContractListComponent } from './feautures/contracts/contract-list/contr
 import { UserappEditComponent } from './feautures/userapp/userapp-edit/userapp-edit.component';
 import { unsavedChangesGuard } from './_guards/guards/unsaved-changes.guard';
 import { TicketsUserListComponent } from './feautures/tickets/tickets-user-list/tickets-user-list.component';
+import { TicketDetailComponent } from './feautures/tickets/ticket-detail/ticket-detail.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -21,6 +22,7 @@ export const routes: Routes = [
         canActivate: [authGuard],
         children: [ 
             {path: 'myTickets', component:TicketsUserListComponent},
+            { path: 'tickets/:id', component: TicketDetailComponent },
             {path: 'usersApp', component: UserappListComponent},
             {path: 'userApp/edit', component: UserappEditComponent, canDeactivate: [unsavedChangesGuard]},
             {path: 'usersApp/:username', component: UserappDetailComponent},

@@ -5,13 +5,13 @@ import { OnInit } from '@angular/core';
 import { BeneficiarycompanyService } from '../../../_services/beneficiarycompanies.service';
 import {MatCardModule} from '@angular/material/card';
 import { TicketService } from '../../../_services/ticket.service';
-
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-tickets-card',
   standalone: true,
-  imports: [MatCardModule],
+  imports: [MatCardModule,RouterLink],
   templateUrl: './tickets-card.component.html',
   styleUrl: './tickets-card.component.css'
 })

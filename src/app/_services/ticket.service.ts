@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Ticket } from '../_models/ticket';
 import { Observable } from 'rxjs';
+import { TicketStatusHistory } from '../_models/ticketstatushistory';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,17 @@ export class TicketService {
   
       return this.http.post<{ ticketId: number; summary: string }>(url, null);
     }
+
+    getTicketHistoryById(ticketId: number): Observable<TicketStatusHistory[]> {
+      const url = `${this.baseUrl}Ticket/GetHistoryByTicketId/${ticketId}`;
+      return this.http.get<TicketStatusHistory[]>(url);
+    }
+
+    getTicketById(ticketId: number): Observable<Ticket> {
+      const url = `${this.baseUrl}Ticket/${ticketId}`;
+      return this.http.get<Ticket>(url);
+    }
+    
     
 
 
