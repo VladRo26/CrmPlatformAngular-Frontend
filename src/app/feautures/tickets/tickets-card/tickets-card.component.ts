@@ -6,12 +6,14 @@ import { BeneficiarycompanyService } from '../../../_services/beneficiarycompani
 import {MatCardModule} from '@angular/material/card';
 import { TicketService } from '../../../_services/ticket.service';
 import { RouterLink } from '@angular/router';
+import { NgIf } from '@angular/common';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 
 @Component({
   selector: 'app-tickets-card',
   standalone: true,
-  imports: [MatCardModule,RouterLink],
+  imports: [MatCardModule,RouterLink,NgIf,ProgressSpinnerModule],
   templateUrl: './tickets-card.component.html',
   styleUrl: './tickets-card.component.css'
 })
@@ -22,6 +24,7 @@ export class TicketsCardComponent implements OnInit {
   ticket = input.required<Ticket>();
   company?: BeneficiaryCompany;
   summary?: string;
+  isLoadingSummary: boolean = true; // Loading state for the summary
 
 
   ngOnInit(): void {
@@ -51,17 +54,18 @@ export class TicketsCardComponent implements OnInit {
       return;
     }
 
+    this.isLoadingSummary = true; // Set loading state to true
+
     this.ticketService.generateSummary(this.ticket().id).subscribe({
       next: (response) => {
         this.summary = response.summary;
+        this.isLoadingSummary = false; // Set loading state to false
         console.log('Generated Summary:', this.summary);
       },
       error: (err) => {
         console.error('Error generating summary:', err);
+        this.isLoadingSummary = false; // Set loading state to false even on error
       },
     });
   }
-
-
-
 }

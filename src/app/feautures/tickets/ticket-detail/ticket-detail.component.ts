@@ -6,19 +6,34 @@ import { TicketStatusHistory } from '../../../_models/ticketstatushistory';
 import {MatCardModule} from '@angular/material/card';
 import {MatTableModule} from '@angular/material/table';
 import { NgIf } from '@angular/common';
-
-
+import {NgxCountriesDropdownModule} from 'ngx-countries-dropdown';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-ticket-detail',
   standalone: true,
-  imports: [MatCardModule,MatTableModule,NgIf],
+  imports: [MatCardModule,MatTableModule,NgIf, NgxCountriesDropdownModule,MatButton],
   templateUrl: './ticket-detail.component.html',
   styleUrl: './ticket-detail.component.css'
 })
 export class TicketDetailComponent implements OnInit {
   private ticketService = inject(TicketService);
   private route = inject(ActivatedRoute);
+  selectedLanguageName: string | null = null;
+  ticketDescription: string | null = null; // Holds the displayed ticket description
+
+
+  selectedCountryConfig = {
+    displayLanguageName: true, // Show the language name of the selected country
+    hideName: true,
+    hideDialCode: true
+  };
+
+  countryListConfig = {
+    displayLanguageName: true, // Show language names in the country list
+    hideName: true,
+    hideDialCode: true
+  };
 
   ticket?: Ticket;
   ticketHistory: TicketStatusHistory[] = [];
@@ -26,8 +41,33 @@ export class TicketDetailComponent implements OnInit {
   displayedColumns: string[] = ['status', 'updatedByUserId', 'ticketUserRole', 'message'];
 
 
+  handleCountryChange(country: any) {
+    if (country?.language) {
+      this.selectedLanguageName = country.language.name;
+      // Save selected language to localStorage
+      localStorage.setItem('selectedLanguage', this.selectedLanguageName ?? 'English');
+    } else {
+      this.selectedLanguageName = null;
+      localStorage.removeItem('selectedLanguage'); // Clear language from localStorage if none is selected
+    }
+  }
+
+  loadSelectedLanguage() {
+    const savedLanguage = localStorage.getItem('selectedLanguage');
+    const savedDescription = localStorage.getItem('translatedDescription');
+
+    if (savedLanguage) {
+      this.selectedLanguageName = savedLanguage; // Restore the saved language
+    }
+    if (savedDescription) {
+      this.ticketDescription = savedDescription; // Restore the saved translated description
+    }
+  }
+
 
   ngOnInit(): void {
+    this.loadSelectedLanguage(); // Load language from localStorage on init
+
     this.loadTicketDetails();
   }
 
@@ -35,9 +75,14 @@ export class TicketDetailComponent implements OnInit {
   loadTicketDetails() {
     const ticketId = Number(this.route.snapshot.paramMap.get('id'));
     if (ticketId) {
-      // Fetch the ticket details
       this.ticketService.getTicketById(ticketId).subscribe({
-        next: (ticket) => (this.ticket = ticket),
+        next: (ticket) => {
+          this.ticket = ticket;
+          // Only set ticketDescription from the database if no translation exists in localStorage
+          if (!localStorage.getItem('translatedDescription')) {
+            this.ticketDescription = ticket.description;
+          }
+        },
         error: (err) => console.error('Failed to load ticket details', err),
       });
 
@@ -48,4 +93,24 @@ export class TicketDetailComponent implements OnInit {
       });
     }
   }
+
+  translateTicketDescription() {
+    if (!this.ticket?.id || !this.selectedLanguageName) {
+      console.error('Ticket ID or target language is missing.');
+      return;
+    }
+
+    this.ticketService
+      .translateDescription(this.ticket.id, 'English', this.selectedLanguageName)
+      .subscribe({
+        next: (response) => {
+          if (response.translation) {
+            this.ticketDescription = response.translation; // Update ticket description
+            // Save the translated description to localStorage
+            localStorage.setItem('translatedDescription', response.translation);
+          }
+        },
+        error: (err) => console.error('Failed to translate description', err),
+      });
+    }
 }

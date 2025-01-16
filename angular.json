@@ -39,6 +39,7 @@
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/primeicons/primeicons.css",
               "node_modules/quill/dist/quill.snow.css",
+              "node_modules/ngx-countries-dropdown/assets/styles.css",
               "src/styles.css"
             ],
             "scripts": []

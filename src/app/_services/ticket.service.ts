@@ -33,8 +33,23 @@ export class TicketService {
       const url = `${this.baseUrl}Ticket/${ticketId}`;
       return this.http.get<Ticket>(url);
     }
-    
-    
 
+    translateDescription(
+      ticketId: number,
+      sourceLanguage: string,
+      targetLanguage: string
+    ): Observable<{ ticketId: number; sourceLanguage: string; targetLanguage: string; translation: string }> {
+      const url = `${this.baseUrl}Ticket/TranslateDescription/${ticketId}`;
+      return this.http.post<{ ticketId: number; sourceLanguage: string; targetLanguage: string; translation: string }>(
+        url,
+        null,
+        {
+          params: {
+            sourceLanguage,
+            targetLanguage,
+          },
+        }
+      );
+    }
 
 }

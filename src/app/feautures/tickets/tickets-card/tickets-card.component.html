@@ -19,7 +19,16 @@
       <p>
         <strong>Priority:</strong> {{ ticket().priority }} <br />
         <strong>Status:</strong> {{ ticket().status.toString() }} <br />
-        <strong>Summary:</strong> {{ summary }} <br />
+        <strong>Summary:</strong>
+        <ng-container *ngIf="!isLoadingSummary; else loading">
+          {{ summary || 'No Summary Available' }}
+        </ng-container>
+        <ng-template #loading>
+          <p-progressSpinner 
+    styleClass="w-4rem h-4rem" 
+    strokeWidth="8" 
+    fill="var(--surface-ground)" />
+        </ng-template>
       </p>
     </mat-card-content>
   

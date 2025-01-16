@@ -1,48 +1,71 @@
 <mat-card *ngIf="ticket" class="ticket-detail-card">
-    <mat-card-header>
-      <mat-card-title>
-        <i class="fa fa-ticket-alt"></i> {{ ticket?.title }}
-      </mat-card-title>
-      <mat-card-subtitle>
-        Priority: {{ ticket?.priority }} | Status: {{ ticket?.status }}
-      </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <p>{{ ticket?.description }}</p>
-    </mat-card-content>
-  </mat-card>
-  
-  <div class="ticket-history" *ngIf="ticketHistory.length > 0">
-    <h3>History</h3>
-    <table mat-table [dataSource]="ticketHistory" class="mat-elevation-z8" style="width: 100%;">
-  
-      <!-- Status Column -->
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef> Status </th>
-        <td mat-cell *matCellDef="let history"> {{ history.status }} </td>
-      </ng-container>
-  
-      <!-- Updated By Column -->
-      <ng-container matColumnDef="updatedByUserId">
-        <th mat-header-cell *matHeaderCellDef> Updated By </th>
-        <td mat-cell *matCellDef="let history"> {{ history.updatedByUserId }} </td>
-      </ng-container>
-  
-      <!-- Role Column -->
-      <ng-container matColumnDef="ticketUserRole">
-        <th mat-header-cell *matHeaderCellDef> Role </th>
-        <td mat-cell *matCellDef="let history"> {{ history.ticketUserRole }} </td>
-      </ng-container>
-  
-      <!-- Message Column -->
-      <ng-container matColumnDef="message">
-        <th mat-header-cell *matHeaderCellDef> Message </th>
-        <td mat-cell *matCellDef="let history"> {{ history.message || 'No message' }} </td>
-      </ng-container>
-  
-      <!-- Header and Row Declarations -->
-      <tr mat-header-row *matHeaderRowDef="['status', 'updatedByUserId', 'ticketUserRole', 'message']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['status', 'updatedByUserId', 'ticketUserRole', 'message'];"></tr>
-  
-    </table>
-  </div>
+  <mat-card-header>
+    <mat-card-title>
+      <i class="fa fa-ticket-alt"></i> {{ ticket.title ?? '' }}
+    </mat-card-title>
+    <mat-card-subtitle>
+      Priority: {{ ticket.priority ?? '' }} | Status: {{ ticket.status }}
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <!-- Ticket Description -->
+    <p>{{ ticketDescription ?? '' }}</p> <!-- Updated binding -->
+
+
+    <!-- Translate Button -->
+    <button mat-raised-button color="primary" (click)="translateTicketDescription()">
+      Translate Description
+    </button>
+  </mat-card-content>
+</mat-card>
+
+
+<lib-country-list
+  [selectedCountryConfig]="selectedCountryConfig"
+  [countryListConfig]="countryListConfig"
+  (onCountryChange)="handleCountryChange($event)"
+></lib-country-list>
+
+
+
+
+<!-- Selected Language Information -->
+<div>
+  <p *ngIf="selectedLanguageName">
+    <strong>Selected Language:</strong> {{ selectedLanguageName }}
+  </p>
+</div>
+
+<!-- Ticket History -->
+<div class="ticket-history" *ngIf="ticketHistory.length > 0">
+  <h3>History</h3>
+  <table mat-table [dataSource]="ticketHistory" class="mat-elevation-z8" style="width: 100%;">
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let history"> {{ history.status }} </td>
+    </ng-container>
+
+    <!-- Updated By Column -->
+    <ng-container matColumnDef="updatedByUserId">
+      <th mat-header-cell *matHeaderCellDef> Updated By </th>
+      <td mat-cell *matCellDef="let history"> {{ history.updatedByUserId }} </td>
+    </ng-container>
+
+    <!-- Role Column -->
+    <ng-container matColumnDef="ticketUserRole">
+      <th mat-header-cell *matHeaderCellDef> Role </th>
+      <td mat-cell *matCellDef="let history"> {{ history.ticketUserRole }} </td>
+    </ng-container>
+
+    <!-- Message Column -->
+    <ng-container matColumnDef="message">
+      <th mat-header-cell *matHeaderCellDef> Message </th>
+      <td mat-cell *matCellDef="let history"> {{ history.message || 'No message' }} </td>
+    </ng-container>
+
+    <!-- Header and Row Declarations -->
+    <tr mat-header-row *matHeaderRowDef="['status', 'updatedByUserId', 'ticketUserRole', 'message']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['status', 'updatedByUserId', 'ticketUserRole', 'message'];"></tr>
+  </table>
+</div>
