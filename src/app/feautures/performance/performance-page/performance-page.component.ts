@@ -100,7 +100,11 @@ export class PerformancePageComponent implements OnInit {
             display: true,
             text: 'Number of Tickets'
           },
-          beginAtZero: true
+          beginAtZero: true,
+          ticks: {
+            callback: (value: number) => (Number.isInteger(value) ? value : ''), // Show only integers
+            stepSize: 1 // Ensure step size of 1 for integer values
+          }
         }
       }
     };

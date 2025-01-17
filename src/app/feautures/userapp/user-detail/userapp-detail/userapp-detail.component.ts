@@ -13,13 +13,16 @@ import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { FeedbackUserListComponent } from '../../../feedback/feedback-user-list/feedback-user-list.component';
 import { PerformancePageComponent } from '../../../performance/performance-page/performance-page.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatIconModule} from '@angular/material/icon';
+
 @Component({
   selector: 'app-userapp-detail',
   standalone: true,
   imports: [CardModule,ButtonModule,TabViewModule,
     BadgeModule,AvatarModule,ScrollPanelModule,
     RatingModule,FormsModule,NgIf,FeedbackUserListComponent,
-    PerformancePageComponent]
+    PerformancePageComponent,MatTabsModule,MatIconModule]
     ,
   templateUrl: './userapp-detail.component.html',
   styleUrl: './userapp-detail.component.css'

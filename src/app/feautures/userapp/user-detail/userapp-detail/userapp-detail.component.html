@@ -1,96 +1,105 @@
 <div class="row">
-    <div class = "col-4">
-            <p-card
-    header="{{ userapp?.userName }}"
-    subheader="{{ userapp?.companyName }}"
-    [style]="{ width: '360px' }"
-    class="p-card-custom"
+  <div class="col-4">
+    <p-card
+      header="{{ userapp?.userName }}"
+      subheader="{{ userapp?.companyName }}"
+      [style]="{ width: '360px' }"
+      class="p-card-custom"
     >
-    <!-- Display the user's photo in the header -->
-    <ng-template pTemplate="header">
+      <ng-template pTemplate="header">
         <img
-        alt="{{ userapp?.firstName }} {{ userapp?.lastName }}"
-        [src]="userapp?.photoUrl || '/user.png'"
-        class="header-image"
+          alt="{{ userapp?.firstName }} {{ userapp?.lastName }}"
+          [src]="userapp?.photoUrl || '/user.png'"
+          class="header-image"
         />
-    </ng-template>
+      </ng-template>
 
-    <!-- Display the userapp's details -->
-    <p>
+      <p>
         <strong>Name:</strong> {{ userapp?.firstName }} {{ userapp?.lastName }} <br />
         <strong>Email:</strong> {{ userapp?.email }} <br />
         <strong>Phone:</strong> {{ userapp?.phoneNumber }} <br />
-        <strong>Rating:</strong><p-rating [ngModel]="userapp?.rating" [readonly]="true" [cancel]="false"></p-rating> <br />
+        <strong>Rating:</strong>
+        <p-rating
+          [ngModel]="userapp?.rating"
+          [readonly]="true"
+          [cancel]="false"
+        ></p-rating>
+        <br />
         <strong>Company:</strong> {{ userapp?.companyName }} <br />
         <strong>Hire Date:</strong> {{ userapp?.hireDate }} <br />
         <img
-        [src]="userapp?.companyPhotoUrl || '/company.png'"
-        alt="{{ userapp?.companyName }}"
-        class="company-logo"
+          [src]="userapp?.companyPhotoUrl || '/company.png'"
+          alt="{{ userapp?.companyName }}"
+          class="company-logo"
         />
-    </p>
+      </p>
 
-    <!-- Footer actions -->
-    <ng-template pTemplate="footer">
+      <ng-template pTemplate="footer">
         <div class="flex gap-3 mt-1">
-        <p-button label="Edit" severity="primary" class="w-full" styleClass="w-full"></p-button>
-        <p-button label="Delete" severity="danger" class="w-full" styleClass="w-full"></p-button>
+          <p-button
+            label="Edit"
+            severity="primary"
+            class="w-full"
+            styleClass="w-full"
+          ></p-button>
+          <p-button
+            label="Delete"
+            severity="danger"
+            class="w-full"
+            styleClass="w-full"
+          ></p-button>
         </div>
-    </ng-template>
+      </ng-template>
     </p-card>
-    </div>
-    <div class = "col-8">
-        <p-tabView styleClass="tabview-custom">
-            <p-tabPanel>
-              <ng-template pTemplate="header">
-                <div class="flex align-items-center gap-2">
-                  <i class="pi pi-inbox" style="font-size: 2rem; color: #007bff;"></i>
-                  <span>Tickets</span>
-                </div>
-              </ng-template>
-              <p-scrollPanel [style]="{ width: '100%', height: '150px' }">
-                <p>
-                    Lorem ipsum dolor sit amet...
-                </p>
-                <p>
-                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium...
-                </p>
-                <p class="m-0">
-                    At vero eos et accusamus et iusto odio dignissimos...
-                </p>
-            </p-scrollPanel>            
-            </p-tabPanel>
-      
-            <p-tabPanel>
-              <ng-template pTemplate="header">
-                <div class="flex align-items-center gap-2">
-                  <i class="pi pi-chart-bar" style="font-size: 2rem; color: #9c27b0;"></i>
-                  <span>Performance</span>
-                </div>
-              </ng-template>
-              <p-scrollPanel [style]="{ width: '100%', height: '500px' }">
-                <app-performance-page
-                *ngIf="userapp?.userName"
-                [username]="userapp?.userName || ''"
-              ></app-performance-page>
-            </p-scrollPanel> 
-            </p-tabPanel>
-      
-            <p-tabPanel>
-              <ng-template pTemplate="header">
-                <div class="flex align-items-center gap-2">
-                  <i class="pi pi-comments" style="font-size: 2rem; color: #3f51b5;"></i>
-                  <span>Feedback</span>
-                  <p-badge value="4"></p-badge>
-                </div>
-              </ng-template>
-              <p-scrollPanel [style]="{ width: '100%', height: '450px' }">
-                <app-feedback-user-list *ngIf="userapp?.id" [userId]="userapp?.id ?? 1"></app-feedback-user-list>
-            </p-scrollPanel> 
-            </p-tabPanel>
-          </p-tabView>
-        </div>
+  </div>
+
+  <div class="col-8">
+    <mat-tab-group>
+      <!-- Tickets Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>inbox</mat-icon>
+          Tickets
+        </ng-template>
+        <p-scrollPanel [style]="{ width: '100%', height: '150px' }">
+          <p>Lorem ipsum dolor sit amet...</p>
+          <p>
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+            accusantium...
+          </p>
+          <p class="m-0">
+            At vero eos et accusamus et iusto odio dignissimos...
+          </p>
+        </p-scrollPanel>
+      </mat-tab>
+
+      <!-- Performance Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>bar_chart</mat-icon>
+          Performance
+        </ng-template>
+        <p-scrollPanel [style]="{ width: '100%', height: '500px' }">
+          <app-performance-page
+            *ngIf="userapp?.userName"
+            [username]="userapp?.userName || ''"
+          ></app-performance-page>
+        </p-scrollPanel>
+      </mat-tab>
+
+      <!-- Feedback Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>chat</mat-icon>
+          Feedback
+        </ng-template>
+        <p-scrollPanel [style]="{ width: '100%', height: '450px' }">
+          <app-feedback-user-list
+            *ngIf="userapp?.id"
+            [userId]="userapp?.id ?? 1"
+          ></app-feedback-user-list>
+        </p-scrollPanel>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
 </div>
-
-
-  

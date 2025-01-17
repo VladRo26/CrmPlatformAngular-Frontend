@@ -1,20 +1,20 @@
 /* Style for the header image */
 .header-image {
-    width: 100%; /* Reduce the width to fit nicely */
-    margin: 10px auto; /* Center the image and add a top and bottom margin */
-    display: block; /* Ensure the image is a block element */
-    border-radius: 10px; /* Add slight rounding for a polished look */
-    border: 1px solid #3c3a3a; /* Add a subtle border */
-  }
-  
-  /* Style for the company logo */
-  .company-logo {
-    width: 100px; /* Set a fixed width */
-    height: 100px; /* Set a fixed height */
-    margin: 10px 0; /* Add vertical margin */
-    object-fit: cover; /* Ensure the image covers the area proportionally */
-    border-radius: 8px; /* Slight rounding for logos */
-    border: 1px solid #ccc; /* Subtle border for differentiation */
-  }
-  
-  
+  width: 100%; /* Reduce the width to fit nicely */
+  margin: 10px auto; /* Center the image and add a top and bottom margin */
+  display: block; /* Ensure the image is a block element */
+  border-radius: 10px; /* Add slight rounding for a polished look */
+  border: 1px solid #3c3a3a; /* Add a subtle border */
+}
+
+/* Style for the company logo */
+.company-logo {
+  width: 100px; /* Set a fixed width */
+  height: 100px; /* Set a fixed height */
+  margin: 10px 0; /* Add vertical margin */
+  object-fit: cover; /* Ensure the image covers the area proportionally */
+  border-radius: 8px; /* Slight rounding for logos */
+  border: 1px solid #ccc; /* Subtle border for differentiation */
+}
+
+
