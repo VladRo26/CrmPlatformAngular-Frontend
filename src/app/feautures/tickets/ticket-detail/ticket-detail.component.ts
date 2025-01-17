@@ -8,11 +8,18 @@ import {MatTableModule} from '@angular/material/table';
 import { NgIf } from '@angular/common';
 import {NgxCountriesDropdownModule} from 'ngx-countries-dropdown';
 import { MatButton } from '@angular/material/button';
+import { Button } from 'primeng/button';
+import { DatePipe } from '@angular/common';
+import { NgFor } from '@angular/common';
+import { TimelineModule } from 'primeng/timeline';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-ticket-detail',
   standalone: true,
-  imports: [MatCardModule,MatTableModule,NgIf, NgxCountriesDropdownModule,MatButton],
+  imports: [MatCardModule,MatTableModule,NgIf,NgFor,
+     NgxCountriesDropdownModule,MatButton,TimelineModule,
+     Button,DatePipe,CardModule],
   templateUrl: './ticket-detail.component.html',
   styleUrl: './ticket-detail.component.css'
 })
@@ -21,6 +28,9 @@ export class TicketDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   selectedLanguageName: string | null = null;
   ticketDescription: string | null = null; // Holds the displayed ticket description
+  isLoadingPage: boolean = true; // Page loading state
+  showCountryList: boolean = false; // Show country list after page load
+
 
 
   selectedCountryConfig = {
@@ -34,6 +44,7 @@ export class TicketDetailComponent implements OnInit {
     hideName: true,
     hideDialCode: true
   };
+  events: any[] = []; // Timeline events array
 
   ticket?: Ticket;
   ticketHistory: TicketStatusHistory[] = [];
@@ -52,6 +63,8 @@ export class TicketDetailComponent implements OnInit {
     }
   }
 
+
+
   loadSelectedLanguage() {
     const savedLanguage = localStorage.getItem('selectedLanguage');
     const savedDescription = localStorage.getItem('translatedDescription');
@@ -67,9 +80,16 @@ export class TicketDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadSelectedLanguage(); // Load language from localStorage on init
-
+    this.loadCountryListAfterDelay();
     this.loadTicketDetails();
   }
+
+  loadCountryListAfterDelay() {
+    setTimeout(() => {
+      this.showCountryList = true; // Display the country list after the delay
+    }, 2000); // Adjust the delay as needed
+  }
+  
 
 
   loadTicketDetails() {
@@ -88,7 +108,10 @@ export class TicketDetailComponent implements OnInit {
 
       // Fetch the ticket history
       this.ticketService.getTicketHistoryById(ticketId).subscribe({
-        next: (history) => (this.ticketHistory = history),
+        next: (history) => {
+          this.ticketHistory = history;
+          this.transformHistoryToTimeline(); // Transform history into timeline events
+        },
         error: (err) => console.error('Failed to load ticket history', err),
       });
     }
@@ -113,4 +136,17 @@ export class TicketDetailComponent implements OnInit {
         error: (err) => console.error('Failed to translate description', err),
       });
     }
+
+    transformHistoryToTimeline(): void {
+      this.events = this.ticketHistory.map((history) => ({
+        status: history.status,
+        date: new Date(history.updatedAt).toLocaleString(),
+        role: history.ticketUserRole,
+        message: history.message || 'No additional details provided.',
+        icon: 'pi pi-user', // Use PrimeIcons
+        color: '#2196F3', // Use consistent color scheme
+      }));
+    }
+    
+    
 }
