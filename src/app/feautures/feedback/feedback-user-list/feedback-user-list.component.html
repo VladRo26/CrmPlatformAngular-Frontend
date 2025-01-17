@@ -1,0 +1,5 @@
+<div class="feedback-list">
+    @for(feedback of feedbacks; track feedback.id){
+        <app-feedback-card [feedback]="feedback"></app-feedback-card>
+    }
+</div>

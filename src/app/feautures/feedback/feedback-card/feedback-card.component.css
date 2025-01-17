@@ -1,0 +1,22 @@
+.feedback-card {
+    width: 100%; /* Full width of the container */
+    margin: 0 auto;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-photo {
+    width: 4rem; /* Adjust the width (relative to the root font size) */
+    height: 4rem; /* Adjust the height (relative to the root font size) */
+    border-radius: 50%; /* Make the image circular */
+    margin-right: 1rem; /* Add spacing between the photo and user details */
+  }
+  
+  .user-details {
+    display: flex;
+    flex-direction: column;
+  }
+  

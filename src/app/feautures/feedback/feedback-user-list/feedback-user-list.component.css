@@ -1,0 +1,7 @@
+.feedback-list {
+    display: flex;
+    flex-direction: column; /* Arrange items vertically */
+    gap: 16px; /* Space between cards */
+    padding: 8px; /* Optional padding for the container */
+  }
+  

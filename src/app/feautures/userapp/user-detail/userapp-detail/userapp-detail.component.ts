@@ -10,11 +10,15 @@ import { AvatarModule } from 'primeng/avatar'; // Import AvatarModule
 import { ScrollPanelModule } from 'primeng/scrollpanel'; // Import ScrollPanelModule
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
+import { NgIf } from '@angular/common';
+import { FeedbackUserListComponent } from '../../../feedback/feedback-user-list/feedback-user-list.component';
 
 @Component({
   selector: 'app-userapp-detail',
   standalone: true,
-  imports: [CardModule,ButtonModule,TabViewModule,BadgeModule,AvatarModule,ScrollPanelModule,RatingModule,FormsModule],
+  imports: [CardModule,ButtonModule,TabViewModule,
+    BadgeModule,AvatarModule,ScrollPanelModule,
+    RatingModule,FormsModule,NgIf,FeedbackUserListComponent],
   templateUrl: './userapp-detail.component.html',
   styleUrl: './userapp-detail.component.css'
   })

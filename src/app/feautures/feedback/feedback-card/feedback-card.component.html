@@ -1,0 +1,26 @@
+<mat-card class="feedback-card">
+    <mat-card-header>
+      <div class="user-info">
+        <img [src]="photoUrl" alt="User Photo" class="user-photo" />
+        <div class="user-details">
+          <mat-card-title>{{ userApp?.userName || 'Unknown User' }}</mat-card-title>
+          <mat-card-subtitle>Rating:</mat-card-subtitle>
+          <p-rating [(ngModel)]="feedback().rating" [readonly]="true" [cancel]="false"></p-rating>
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <p><strong>Ticket ID:</strong> {{ feedback().ticketId || 'N/A' }}</p>
+      <p><strong>Content:</strong> {{ feedback().content || 'No content provided' }}</p>
+      <p><strong>Created At:</strong> {{ feedback().createdAt | date }}</p>
+  
+      <!-- PrimeNG MeterGroup for Sentiment Analysis -->
+      <div *ngIf="value.length > 0">
+        <p-meterGroup [value]="value"></p-meterGroup>
+      </div>
+      <div *ngIf="value.length === 0">
+        <p><em>Loading sentiment analysis...</em></p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  
