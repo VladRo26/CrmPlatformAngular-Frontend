@@ -13,13 +13,15 @@ import { DatePipe } from '@angular/common';
 import { NgFor } from '@angular/common';
 import { TimelineModule } from 'primeng/timeline';
 import { CardModule } from 'primeng/card';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+
 
 @Component({
   selector: 'app-ticket-detail',
   standalone: true,
   imports: [MatCardModule,MatTableModule,NgIf,NgFor,
      NgxCountriesDropdownModule,MatButton,TimelineModule,
-     Button,DatePipe,CardModule],
+     Button,DatePipe,CardModule,ScrollPanelModule],
   templateUrl: './ticket-detail.component.html',
   styleUrl: './ticket-detail.component.css'
 })
@@ -138,14 +140,29 @@ export class TicketDetailComponent implements OnInit {
     }
 
     transformHistoryToTimeline(): void {
-      this.events = this.ticketHistory.map((history) => ({
-        status: history.status,
-        date: new Date(history.updatedAt).toLocaleString(),
-        role: history.ticketUserRole,
-        message: history.message || 'No additional details provided.',
-        icon: 'pi pi-user', // Use PrimeIcons
-        color: '#2196F3', // Use consistent color scheme
-      }));
+      this.events = this.ticketHistory.map((history) => {
+        // Determine icon and color based on role
+        let icon = 'pi pi-user';
+        let color = '#2196F3'; // Default color
+    
+        if (history.ticketUserRole.toLowerCase() === 'handler') {
+          icon = 'pi pi-briefcase'; // Icon for handlers
+          color = '#4CAF50'; // Green for handlers
+        } else if (history.ticketUserRole.toLowerCase() === 'creator') {
+          icon = 'pi pi-pencil'; // Icon for creators
+          color = '#FF9800'; // Orange for creators
+        }
+    
+        return {
+          status: history.status,
+          date: new Date(history.updatedAt).toLocaleString(),
+          role: history.ticketUserRole,
+          username: history.updatedByUsername, // Add username
+          message: history.message || 'No additional details provided.',
+          icon,
+          color,
+        };
+      });
     }
     
     

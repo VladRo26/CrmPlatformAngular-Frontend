@@ -28,6 +28,31 @@ export class UserappService {
     return this.http.get<userApp>(this.baseUrl + 'User/username/' + username);
   }
 
+  getUserAppDtoByUsername(username: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}User/userappdto/username/${username}`).pipe(
+      tap((response) => {
+        console.log('Raw Response:', response); // Debug raw response
+      }),
+      catchError((error) => {
+        console.error('Error in API call:', error);
+        throw error;
+      })
+    );
+  }
+  
+
+  getUserappById(id: number): Observable<userApp | null> {
+    return this.http.get<userApp>(`${this.baseUrl}User/${id}`).pipe(
+      tap((user) => console.log('Fetched User:', user)),
+      catchError((error) => {
+        console.error('Error in getUserappById:', error);
+        return of(null); // Return null on error
+      })
+    );
+  }
+  
+  
+
   updateUserapp(userapp: userApp) {
     return this.http.put(this.baseUrl + 'User', userapp).pipe(
       tap(() => {
@@ -46,6 +71,29 @@ export class UserappService {
       map((response) => typeof response === 'string' ? '' : response.url) // Extract the URL from the response
     );
   }
+
+  getPhotoUrlbyUsername(username: string): Observable<string> {
+    return this.http.get<{ url: string }>(`${this.baseUrl}User/photo-url/${username}`).pipe(
+      map((response) => {
+        // Validate and handle empty URLs
+        console.log('Backend Response:', response);
+        return response.url && response.url.trim() !== '' ? response.url : 'assets/default-user.png';
+      }),
+      catchError((error) => {
+        console.error('Error fetching photo URL:', error);
+        return of('assets/default-user.png'); // Default image on error
+      })
+    );
+  }
+  
+
+
+
+  
+  
+  
+
+  
 
   deletePhoto(){
     return this.http.delete(this.baseUrl + 'User/delete-photo');
