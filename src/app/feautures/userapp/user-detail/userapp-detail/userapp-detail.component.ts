@@ -12,13 +12,15 @@ import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { FeedbackUserListComponent } from '../../../feedback/feedback-user-list/feedback-user-list.component';
-
+import { PerformancePageComponent } from '../../../performance/performance-page/performance-page.component';
 @Component({
   selector: 'app-userapp-detail',
   standalone: true,
   imports: [CardModule,ButtonModule,TabViewModule,
     BadgeModule,AvatarModule,ScrollPanelModule,
-    RatingModule,FormsModule,NgIf,FeedbackUserListComponent],
+    RatingModule,FormsModule,NgIf,FeedbackUserListComponent,
+    PerformancePageComponent]
+    ,
   templateUrl: './userapp-detail.component.html',
   styleUrl: './userapp-detail.component.css'
   })

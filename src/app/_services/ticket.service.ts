@@ -52,4 +52,21 @@ export class TicketService {
       );
     }
 
+    getTicketPerformance(username: string): Observable<{
+      username: string;
+      totalTickets: number;
+      resolvedTickets: number;
+      unresolvedTickets: number;
+      ticketsByPriority: { [key: string]: number };
+    }> {
+      const url = `${this.baseUrl}Ticket/TicketPerformance/${username}`;
+      return this.http.get<{
+        username: string;
+        totalTickets: number;
+        resolvedTickets: number;
+        unresolvedTickets: number;
+        ticketsByPriority: { [key: string]: number };
+      }>(url);
+    }
+
 }

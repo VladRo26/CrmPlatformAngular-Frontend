@@ -1,1 +1,7 @@
-<p>performance-page works!</p>
+<div *ngIf="loading" class="loading-indicator">
+    <p>Loading performance data...</p>
+  </div>
+  <div *ngIf="!loading">
+    <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
+  </div>
+  
