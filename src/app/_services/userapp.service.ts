@@ -1,8 +1,9 @@
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpParams} from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.development';
 import { userApp } from '../_models/userapp';
 import { catchError, map, Observable, of, tap } from 'rxjs';
+import { PaginatedResult } from '../_models/pagination';
 
 
 @Injectable({
@@ -10,13 +11,24 @@ import { catchError, map, Observable, of, tap } from 'rxjs';
 })
 export class UserappService {
   private http = inject(HttpClient);
-  baseUrl = environment.apiUrl;
+  baseUrl = 'https://localhost:7057/api/';
   usersApp = signal<userApp[]>([]);
+  paginatedResult = signal<PaginatedResult<userApp[]> | null>(null);
   
-
-  getUsersapp() {
-    return this.http.get<userApp[]>(this.baseUrl + 'User').subscribe({
-      next: usersApp => this.usersApp.set(usersApp)  
+ 
+  getUsersapp(pageNumber?: number, pageSize?: number) {
+    let params = new HttpParams();
+    if (pageNumber && pageSize) {
+      params = params.append('pageNumber', pageNumber);
+      params = params.append('pageSize', pageSize);
+    }
+    return this.http.get<userApp[]>(this.baseUrl + 'User',{observe: 'response',params}).subscribe({
+      next: response => {
+      this.paginatedResult.set({
+        items: response.body as userApp[],
+        pagination: JSON.parse(response.headers.get('Pagination')!)
+      })
+    }
   })
   }
 

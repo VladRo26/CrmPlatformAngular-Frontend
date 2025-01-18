@@ -1,7 +1,24 @@
 <div class="row">
-    @for(userapp of userappService.usersApp(); track userapp.id){
+    @for(userapp of userappService.paginatedResult()?.items; track userapp.id){
         <div class="col-3">
         <app-userapp-card [userapp]="userapp"></app-userapp-card>
         </div>
     } 
 </div>
+
+@if(userappService.paginatedResult()?.pagination)
+{
+    <div class = "d-flex justify-content-center">
+        <pagination 
+        [boundaryLinks]="true" 
+        [totalItems]="userappService.paginatedResult()?.pagination!.totalItems" 
+        [itemsPerPage]="userappService.paginatedResult()?.pagination!.itemsPerPage"         
+        (pageChanged)="pageChanged($event)"
+        [maxSize]="10"
+        previousText="&lsaquo;" 
+        nextText="&rsaquo;" 
+        firstText="&laquo;" 
+        lastText="&raquo;"> 
+        </pagination>
+    </div>
+}
