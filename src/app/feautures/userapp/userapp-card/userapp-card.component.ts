@@ -7,11 +7,12 @@ import { CompanyphotoService } from '../../../_services/companyphoto.service';
 import { catchError, of } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
 import { RouterLinkActive } from '@angular/router'
+import { TimeagoModule } from 'ngx-timeago';
 
 @Component({
   selector: 'app-userapp-card',
   standalone: true,
-  imports: [MatButtonModule,MatCardModule,RouterLink,RouterLinkActive],
+  imports: [MatButtonModule,MatCardModule,RouterLink,RouterLinkActive,TimeagoModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './userapp-card.component.html',
   styleUrl: './userapp-card.component.css'

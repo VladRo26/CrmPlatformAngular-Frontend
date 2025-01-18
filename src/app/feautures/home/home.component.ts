@@ -11,14 +11,16 @@ import { BeneficiarycompanyService } from '../../_services/beneficiarycompanies.
 import { ChipModule } from 'primeng/chip';
 import { CarouselModule } from 'primeng/carousel';
 import { AnimateOnScrollModule } from 'primeng/animateonscroll';
-
+import {MatButtonModule} from '@angular/material/button';
 
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatGridListModule, HomeimgaesComponent, RegisterComponent, RouterLink, SoftwarecompaniesListComponent, BeneficiarycompanyListComponent,ChipModule,CarouselModule,AnimateOnScrollModule],
+  imports: [MatGridListModule, HomeimgaesComponent, RegisterComponent,
+     RouterLink, SoftwarecompaniesListComponent, BeneficiarycompanyListComponent,
+     ChipModule,CarouselModule,AnimateOnScrollModule,MatButtonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

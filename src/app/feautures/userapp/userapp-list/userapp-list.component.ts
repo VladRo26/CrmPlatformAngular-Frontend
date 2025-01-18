@@ -15,19 +15,20 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatRadioModule} from '@angular/material/radio';
 import { RatingModule } from 'primeng/rating';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-userapp-list',
   standalone: true,
   imports: [UserappCardComponent,PaginationModule,NgFor,
-    FormsModule,MatSelectModule,MatFormFieldModule,MatInputModule,MatRadioModule,RatingModule],
+    FormsModule,MatSelectModule,MatFormFieldModule,MatInputModule,
+    MatRadioModule,RatingModule,MatButtonToggleModule,MatButtonModule],
   templateUrl: './userapp-list.component.html',
   styleUrl: './userapp-list.component.css'
 })
 export class UserappListComponent implements OnInit {
-  private accountService = inject(AccountService);
   userappService = inject(UserappService);
-  userParams = new UserParams();
   softwareCompanies: SoftwareCompany[] = [];
   beneficiaryCompanies: BeneficiaryCompany[] = [];
   softwareCompanyService = inject(SoftwarecompanyService);
@@ -71,19 +72,22 @@ export class UserappListComponent implements OnInit {
     ];
   }
 
-
   loadUsersapp() {
-    this.userappService.getUsersapp(this.userParams);
+    this.userappService.getUsersapp();
+  }
+
+  resetFilters() {
+   this.userappService.resetUserParams();
+    this.loadUsersapp();
   }
 
   pageChanged(event: PageChangedEvent): void {
     console.log('Pagination Event:', event); // Debug the emitted event structure
     const page = typeof event === 'number' ? event : event.page; // Ensure page is a number
-    if (this.userParams.pageNumber !== page) {
-      this.userParams.pageNumber = page;
+    if (this.userappService.userParams().pageNumber !== page) {
+      this.userappService.userParams().pageNumber = page;
       this.loadUsersapp();
     }
   }
-  
-  
+
 }

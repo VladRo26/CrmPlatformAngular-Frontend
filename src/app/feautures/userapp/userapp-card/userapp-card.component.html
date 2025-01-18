@@ -18,6 +18,9 @@
       <p>
         {{userapp().email}}
       </p>
+      <p>Last seen:
+      {{userapp().lastActive | timeago}}</p>
+     
     </mat-card-content>
     <mat-card-actions>
       <button routerLink="/usersApp/{{userapp().userName}}">View Profile</button>

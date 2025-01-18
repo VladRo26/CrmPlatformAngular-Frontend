@@ -1,0 +1,57 @@
+.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 1rem;
+    max-width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .mat-radio-group{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Ensures the button spans the full row */
+    margin-top: 1rem; /* Add spacing above the button */
+
+  }
+
+  .small-height {
+    height: 5rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  .mat-form-field {
+    width: 100%;
+  }
+  
+  button {
+    align-self: flex-start;
+  }
+
+  .vertical-radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* Optional: Adds spacing between the buttons */
+  }
+  
+  .mat-radio-button {
+    margin: 0; /* Ensures consistent alignment */
+  }
+  
+  

@@ -5,11 +5,12 @@ export interface userApp {
     lastName: string
     email: string
     phoneNumber: string
-    companyName?: string
+    companyName: string
     userType: string
-    // token?: string
+    token?: string
     companyPhotoUrl?: string
-    // hireDate: string
+    hireDate: Date
+    lastActive: Date
     photoUrl?: string
     rating: number
   }

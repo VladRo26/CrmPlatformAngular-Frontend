@@ -1,45 +1,71 @@
 <div class="filter-container">
-    <mat-form-field appearance="fill">
+    <!-- Filter by Company -->
+    <mat-form-field appearance="fill" class="filter-item small-height">
       <mat-label>Filter by Company</mat-label>
-      <mat-select [(ngModel)]="userParams.companyName" (selectionChange)="loadUsersapp()">
+      <mat-select [(ngModel)]="userappService.userParams().companyName" (selectionChange)="loadUsersapp()">
         <mat-option value="">All Companies</mat-option>
         <mat-option *ngFor="let company of allCompanies" [value]="company.name">
           {{ company.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
-  </div>
+  
+    <!-- Filter by User Type -->
+    <div class="filter-item">
+      <label for="userType-filter">Filter by User Type:</label>
+      <mat-radio-group
+        id="userType-filter"
+        [(ngModel)]="userappService.userParams().userType"
+        (change)="loadUsersapp()"
+        class="vertical-radio-group"
+      >
+        <mat-radio-button value="">All Users</mat-radio-button>
+        <mat-radio-button value="SoftwareCompanyUser">Software Company User</mat-radio-button>
+        <mat-radio-button value="BeneficiaryCompanyUser">Beneficiary Company User</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  
+    <!-- Search by Name -->
+    <mat-form-field appearance="fill" class="filter-item small-height">
+      <mat-label>Search by Name</mat-label>
+      <input matInput [(ngModel)]="userappService.userParams().name" (input)="loadUsersapp()" />
+    </mat-form-field>
+  
+    <!-- Filter by Rating -->
+    <div class="filter-item">
+      <label for="rating-filter">Filter by Rating</label>
+      <p-rating
+        [(ngModel)]="userappService.userParams().rating"
+        (onRate)="loadUsersapp()"
+        [cancel]="true"
+        stars="5"
+        id="rating-filter"
+      ></p-rating>
+    </div>
+  
+    <!-- Sort By -->
+    <div class="filter-item">
+      <label for="sort-options">Sort By:</label>
+      <mat-button-toggle-group
+        id="sort-options"
+        [(ngModel)]="userappService.userParams().orderBy"
+        (change)="loadUsersapp()"
+        name="sortOptions"
+        aria-label="Sort Options"
+      >
+        <mat-button-toggle value="rating">Rating</mat-button-toggle>
+        <mat-button-toggle value="firstname">First Name</mat-button-toggle>
+        <mat-button-toggle value="hiredate">Hire Date</mat-button-toggle>
+        <mat-button-toggle value="">Last Name (Default)</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+</div>
 
-  <div>
-    <label for="userType-filter">Filter by User Type:</label>
-    <mat-radio-group
-      id="userType-filter"
-      [(ngModel)]="userParams.userType"
-      (change)="loadUsersapp()"
-    >
-      <mat-radio-button value="">All Users</mat-radio-button>
-      <mat-radio-button value="SoftwareCompanyUser">Software Company User</mat-radio-button>
-      <mat-radio-button value="BeneficiaryCompanyUser">Beneficiary Company User</mat-radio-button>
-    </mat-radio-group>
+    <!-- Reset Filters Button -->
+    <div class="button-container">
+      <button mat-raised-button color="primary" (click)="resetFilters()">Reset Filters</button>
   </div>
-
-  <div>
-    <mat-form-field appearance="fill">
-        <mat-label>Search by Name</mat-label>
-        <input matInput [(ngModel)]="userParams.name" (input)="loadUsersapp()" />
-      </mat-form-field>
-  </div>
-
-  <div>
-    <label for="rating-filter">Filter by Rating</label>
-    <p-rating
-      [(ngModel)]="userParams.rating"
-      (onRate)="loadUsersapp()"
-      [cancel]="true"
-      stars="5"
-      id="rating-filter"
-    ></p-rating>
-  </div>
+  
  
   
 <div class="row">
@@ -59,6 +85,7 @@
         [totalItems]="userappService.paginatedResult()?.pagination!.totalItems" 
         [itemsPerPage]="userappService.paginatedResult()?.pagination!.itemsPerPage"         
         (pageChanged)="pageChanged($event)"
+        [(ngModel)] = "userappService.paginatedResult()?.pagination!.currentPage"
         [maxSize]="10"
         previousText="&lsaquo;" 
         nextText="&rsaquo;" 

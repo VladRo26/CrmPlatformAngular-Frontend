@@ -33,6 +33,7 @@
     "ngx-countries-dropdown": "^2.0.0",
     "ngx-material-intl-tel-input": "^18.2.1",
     "ngx-spinner": "^17.0.0",
+    "ngx-timeago": "^3.0.0",
     "ngx-toastr": "^19.0.0",
     "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",

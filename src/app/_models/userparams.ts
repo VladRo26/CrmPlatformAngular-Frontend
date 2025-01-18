@@ -5,6 +5,7 @@ export class UserParams {
     companyName?: string;
     userType?: string; 
     rating?: number; 
-    name?: string; 
+    name?: string;
+    orderBy?: string;
   }
   

@@ -14,6 +14,7 @@ import { NgFor } from '@angular/common';
 import { TimelineModule } from 'primeng/timeline';
 import { CardModule } from 'primeng/card';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 
 @Component({
@@ -21,7 +22,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
   standalone: true,
   imports: [MatCardModule,MatTableModule,NgIf,NgFor,
      NgxCountriesDropdownModule,MatButton,TimelineModule,
-     Button,DatePipe,CardModule,ScrollPanelModule],
+     Button,DatePipe,CardModule,ScrollPanelModule,MatButtonToggleModule],
   templateUrl: './ticket-detail.component.html',
   styleUrl: './ticket-detail.component.css'
 })

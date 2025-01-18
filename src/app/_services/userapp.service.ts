@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { userApp } from '../_models/userapp';
@@ -15,36 +15,55 @@ export class UserappService {
   baseUrl = 'https://localhost:7057/api/';
   usersApp = signal<userApp[]>([]);
   paginatedResult = signal<PaginatedResult<userApp[]> | null>(null);
-  
+  userAppCache = new Map();
+  userParams = signal<UserParams>(new UserParams());
+
+  resetUserParams() {
+    this.userParams.set(new UserParams());
+  }
  
-  getUsersapp(UserParams: UserParams) {
+  getUsersapp() {
+    const response = this.userAppCache.get(Object.values(this.userParams()).join('-'));
 
-    let params = this.setPaginationHeader(UserParams.pageNumber, UserParams.pageSize);
+    if(response){
+      return this.setResponse(response);
 
-    if (UserParams.companyName) {
-      params = params.append('companyName', UserParams.companyName);
+    }
+    let params = this.setPaginationHeader(this.userParams().pageNumber, this.userParams().pageSize);
+
+    if (this.userParams().companyName) {
+      params = params.append('companyName', this.userParams().companyName ?? '');
     }
 
-    if (UserParams.name) {
-      params = params.append('name', UserParams.name);
+    if (this.userParams().name) {
+      params = params.append('name', this.userParams().name ?? '');
     }
 
-    if (UserParams.rating) {
-      params = params.append('rating', UserParams.rating);
+    if (this.userParams().rating) {
+      params = params.append('rating', this.userParams().rating ?? 2);
     }
 
-    if (UserParams.userType) {
-      params = params.append('userType', UserParams.userType);
+    if (this.userParams().userType) {
+      params = params.append('userType', this.userParams().userType ?? '');
+    }
+
+    if (this.userParams().orderBy) {
+      params = params.append('orderBy', this.userParams().orderBy ?? '');
     }
 
     return this.http.get<userApp[]>(this.baseUrl + 'User',{observe: 'response',params}).subscribe({
       next: response => {
-      this.paginatedResult.set({
-        items: response.body as userApp[],
-        pagination: JSON.parse(response.headers.get('Pagination')!)
-      })
+        this.setResponse(response);
+        this.userAppCache.set(Object.values(UserParams).join('-'), response);
     }
   })
+  }
+
+  private setResponse(response: HttpResponse<userApp[]>){
+    this.paginatedResult.set({
+      items: response.body as userApp[],
+      pagination: JSON.parse(response.headers.get('Pagination')!)
+    })
   }
 
   private setPaginationHeader(pageNumber: number, pageSize: number) {
@@ -120,19 +139,8 @@ export class UserappService {
     );
   }
   
-
-
-
-  
-  
-  
-
-  
-
   deletePhoto(){
     return this.http.delete(this.baseUrl + 'User/delete-photo');
   }
-  
-
   
 }

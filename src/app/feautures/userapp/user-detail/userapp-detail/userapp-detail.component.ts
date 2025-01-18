@@ -15,6 +15,8 @@ import { FeedbackUserListComponent } from '../../../feedback/feedback-user-list/
 import { PerformancePageComponent } from '../../../performance/performance-page/performance-page.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatIconModule} from '@angular/material/icon';
+import { TimeagoModule } from 'ngx-timeago';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-userapp-detail',
@@ -22,8 +24,7 @@ import {MatIconModule} from '@angular/material/icon';
   imports: [CardModule,ButtonModule,TabViewModule,
     BadgeModule,AvatarModule,ScrollPanelModule,
     RatingModule,FormsModule,NgIf,FeedbackUserListComponent,
-    PerformancePageComponent,MatTabsModule,MatIconModule]
-    ,
+    PerformancePageComponent,MatTabsModule,MatIconModule,TimeagoModule,DatePipe],
   templateUrl: './userapp-detail.component.html',
   styleUrl: './userapp-detail.component.css'
   })
