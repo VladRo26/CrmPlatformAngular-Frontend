@@ -1,3 +1,47 @@
+<div class="filter-container">
+    <mat-form-field appearance="fill">
+      <mat-label>Filter by Company</mat-label>
+      <mat-select [(ngModel)]="userParams.companyName" (selectionChange)="loadUsersapp()">
+        <mat-option value="">All Companies</mat-option>
+        <mat-option *ngFor="let company of allCompanies" [value]="company.name">
+          {{ company.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <label for="userType-filter">Filter by User Type:</label>
+    <mat-radio-group
+      id="userType-filter"
+      [(ngModel)]="userParams.userType"
+      (change)="loadUsersapp()"
+    >
+      <mat-radio-button value="">All Users</mat-radio-button>
+      <mat-radio-button value="SoftwareCompanyUser">Software Company User</mat-radio-button>
+      <mat-radio-button value="BeneficiaryCompanyUser">Beneficiary Company User</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div>
+    <mat-form-field appearance="fill">
+        <mat-label>Search by Name</mat-label>
+        <input matInput [(ngModel)]="userParams.name" (input)="loadUsersapp()" />
+      </mat-form-field>
+  </div>
+
+  <div>
+    <label for="rating-filter">Filter by Rating</label>
+    <p-rating
+      [(ngModel)]="userParams.rating"
+      (onRate)="loadUsersapp()"
+      [cancel]="true"
+      stars="5"
+      id="rating-filter"
+    ></p-rating>
+  </div>
+ 
+  
 <div class="row">
     @for(userapp of userappService.paginatedResult()?.items; track userapp.id){
         <div class="col-3">
@@ -5,6 +49,7 @@
         </div>
     } 
 </div>
+
 
 @if(userappService.paginatedResult()?.pagination)
 {

@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment.development';
 import { userApp } from '../_models/userapp';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { PaginatedResult } from '../_models/pagination';
+import { UserParams } from '../_models/userparams';
 
 
 @Injectable({
@@ -16,12 +17,26 @@ export class UserappService {
   paginatedResult = signal<PaginatedResult<userApp[]> | null>(null);
   
  
-  getUsersapp(pageNumber?: number, pageSize?: number) {
-    let params = new HttpParams();
-    if (pageNumber && pageSize) {
-      params = params.append('pageNumber', pageNumber);
-      params = params.append('pageSize', pageSize);
+  getUsersapp(UserParams: UserParams) {
+
+    let params = this.setPaginationHeader(UserParams.pageNumber, UserParams.pageSize);
+
+    if (UserParams.companyName) {
+      params = params.append('companyName', UserParams.companyName);
     }
+
+    if (UserParams.name) {
+      params = params.append('name', UserParams.name);
+    }
+
+    if (UserParams.rating) {
+      params = params.append('rating', UserParams.rating);
+    }
+
+    if (UserParams.userType) {
+      params = params.append('userType', UserParams.userType);
+    }
+
     return this.http.get<userApp[]>(this.baseUrl + 'User',{observe: 'response',params}).subscribe({
       next: response => {
       this.paginatedResult.set({
@@ -30,6 +45,13 @@ export class UserappService {
       })
     }
   })
+  }
+
+  private setPaginationHeader(pageNumber: number, pageSize: number) {
+    let params = new HttpParams();
+    params = params.append('pageNumber', pageNumber);
+    params = params.append('pageSize', pageSize);
+    return params;
   }
 
   getUsersapp_username(username: string) {
