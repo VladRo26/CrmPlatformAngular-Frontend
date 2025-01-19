@@ -1,0 +1,50 @@
+<div class="container mt-4">
+    <h2 class="mb-4">Create Feedback</h2>
+  
+    <!-- Feedback Form -->
+    <form [formGroup]="feedbackForm" (ngSubmit)="submitFeedback()">
+      <!-- Dropdown for Tickets -->
+      <div class="form-group mb-3">
+        <label for="ticketId" class="form-label">Select Ticket</label>
+        <select
+          id="ticketId"
+          class="form-select"
+          formControlName="ticketId"
+          required
+        >
+          <option *ngFor="let ticket of tickets" [value]="ticket.id">
+            {{ ticket.id }} - {{ ticket.title || 'No Title' }}
+          </option>
+        </select>
+      </div>
+  
+      <!-- Feedback Content -->
+      <div class="form-group mb-3">
+        <label for="content" class="form-label">Feedback Content</label>
+        <textarea
+          id="content"
+          class="form-control"
+          formControlName="content"
+          placeholder="Enter your feedback"
+          rows="4"
+          required
+        ></textarea>
+      </div>
+  
+      <!-- Rating -->
+      <div class="form-group mb-3">
+        <label for="rating" class="form-label">Rating</label>
+        <p-rating formControlName="rating" stars="5" cancel="true"></p-rating>
+      </div>
+  
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="feedbackForm.invalid"
+      >
+        Submit Feedback
+      </button>
+    </form>
+  </div>
+  

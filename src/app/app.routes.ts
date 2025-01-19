@@ -13,6 +13,9 @@ import { UserappEditComponent } from './feautures/userapp/userapp-edit/userapp-e
 import { unsavedChangesGuard } from './_guards/guards/unsaved-changes.guard';
 import { TicketsUserListComponent } from './feautures/tickets/tickets-user-list/tickets-user-list.component';
 import { TicketDetailComponent } from './feautures/tickets/ticket-detail/ticket-detail.component';
+import { CreateFeedbackComponent } from './feautures/feedback/create-feedback/create-feedback.component';
+import { benefuserGuard } from './_guards/guards/benefuser.guard';
+import { softuserGuard } from './_guards/guards/softuser.guard';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -21,12 +24,14 @@ export const routes: Routes = [
         runGuardsAndResolvers: 'always',
         canActivate: [authGuard],
         children: [ 
+            {path: 'createFeedback', component: CreateFeedbackComponent, canActivate: [benefuserGuard]}, 
             {path: 'myTickets', component:TicketsUserListComponent},
             { path: 'tickets/:id', component: TicketDetailComponent },
             {path: 'usersApp', component: UserappListComponent},
             {path: 'userApp/edit', component: UserappEditComponent, canDeactivate: [unsavedChangesGuard]},
             {path: 'usersApp/:username', component: UserappDetailComponent},
             {path:  'contracts', component: ContractListComponent}
+       
         ]
     },
     {path: 'register', component: RegisterComponent},

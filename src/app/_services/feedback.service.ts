@@ -21,4 +21,9 @@ export class FeedbackService {
       return this.http.get<FeedbackSentiment>(`${this.baseUrl}feedback/sentiment/${feedbackId}`);
     }
 
+    createFeedback(username: string, ticketId: number, content: string, rating: number): Observable<Feedback> {
+      const params = { username, ticketId: ticketId.toString(), content, rating: rating.toString() };
+      return this.http.post<Feedback>(`${this.baseUrl}feedback`, {}, { params });
+    }
+    
 }

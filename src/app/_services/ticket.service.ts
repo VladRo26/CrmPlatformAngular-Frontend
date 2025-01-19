@@ -69,4 +69,13 @@ export class TicketService {
       }>(url);
     }
 
+    getTicketsByCompany(companyName: string): Observable<Ticket[]> {
+      const url = `${this.baseUrl}Ticket/ByCompany/${companyName}`;
+      return this.http.get<Ticket[]>(url);
+    }
+
+    getTicketsByUserName(username: string): Observable<Ticket[]> {
+      const url = `${this.baseUrl}Ticket/ByUserName/${username}`;
+      return this.http.get<Ticket[]>(url);
+    }
 }
