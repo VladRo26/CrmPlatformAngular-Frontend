@@ -16,6 +16,7 @@ import { TicketDetailComponent } from './feautures/tickets/ticket-detail/ticket-
 import { CreateFeedbackComponent } from './feautures/feedback/create-feedback/create-feedback.component';
 import { benefuserGuard } from './_guards/guards/benefuser.guard';
 import { softuserGuard } from './_guards/guards/softuser.guard';
+import { CreateTicketComponent } from './feautures/tickets/create-ticket/create-ticket.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -25,6 +26,7 @@ export const routes: Routes = [
         canActivate: [authGuard],
         children: [ 
             {path: 'createFeedback', component: CreateFeedbackComponent, canActivate: [benefuserGuard]}, 
+            {path: 'createTicket', component: CreateTicketComponent, canActivate: [benefuserGuard]},
             {path: 'myTickets', component:TicketsUserListComponent},
             { path: 'tickets/:id', component: TicketDetailComponent },
             {path: 'usersApp', component: UserappListComponent},

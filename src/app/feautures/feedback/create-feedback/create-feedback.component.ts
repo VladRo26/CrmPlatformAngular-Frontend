@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { BeneficiarycompanyService } from '../../../_services/beneficiarycompanies.service';
 import { BeneficiaryCompany } from '../../../_models/beneficiarycompany';
 import { RatingModule } from 'primeng/rating';
+import { DragDropModule } from 'primeng/dragdrop';
 
 
 

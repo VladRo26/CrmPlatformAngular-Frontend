@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Ticket } from '../_models/ticket';
 import { Observable } from 'rxjs';
 import { TicketStatusHistory } from '../_models/ticketstatushistory';
+import { CreateTicket } from '../_models/createticket';
 
 @Injectable({
   providedIn: 'root'
@@ -77,5 +78,10 @@ export class TicketService {
     getTicketsByUserName(username: string): Observable<Ticket[]> {
       const url = `${this.baseUrl}Ticket/ByUserName/${username}`;
       return this.http.get<Ticket[]>(url);
+    }
+
+    createTicket(createTicketDto: CreateTicket): Observable<Ticket> {
+      const url = `${this.baseUrl}Ticket/CreateTicket`;
+      return this.http.post<Ticket>(url, createTicketDto);
     }
 }
