@@ -84,4 +84,17 @@ export class TicketService {
       const url = `${this.baseUrl}Ticket/CreateTicket`;
       return this.http.post<Ticket>(url, createTicketDto);
     }
+
+    getTicketsByContractId(contractId: number): Observable<Ticket[]> {
+      const url = `${this.baseUrl}Ticket/ByContract/${contractId}`;
+      return this.http.get<Ticket[]>(url);
+    }
+
+    takeOverTicket(ticketId: number, handlerId: number): Observable<any> {
+      const url = `${this.baseUrl}Ticket/TakeOver/${ticketId}`;
+      return this.http.put(url, null, { params: { handlerId } });
+    }
+    
+    
+
 }

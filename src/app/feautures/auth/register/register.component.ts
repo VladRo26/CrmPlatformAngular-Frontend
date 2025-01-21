@@ -98,7 +98,7 @@ export class RegisterComponent implements OnInit {
       email: new FormControl('',[Validators.required, Validators.email]),
       phoneNumber: new FormControl('',[Validators.required]),
       userType: new FormControl(''),
-      Company: new FormControl(''),
+      companyName: new FormControl(''),
       password: new FormControl('',[Validators.required, Validators.minLength(4), Validators.maxLength(12)]),
       hireDate: new FormControl('',[Validators.required]),
       confirmPassword: new FormControl('',[Validators.required,this.comparePasswords('password')]),
@@ -134,14 +134,12 @@ export class RegisterComponent implements OnInit {
   
     const formData = new FormData();
   
-    // Append all form fields except `file`
     Object.keys(this.registerForm.value).forEach((key) => {
       if (key !== 'file') {
         formData.append(key, this.registerForm.get(key)?.value);
       }
     });
   
-    // Append the file separately
     const file = this.registerForm.get('file')?.value;
     if (file) {
       formData.append('file', file);

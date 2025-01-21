@@ -7,7 +7,6 @@ import { HomeComponent } from "./feautures/home/home.component";
 import { NgxSpinnerComponent } from 'ngx-spinner';
 
 
-
 @Component({
   selector: 'app-root',
   standalone: true,

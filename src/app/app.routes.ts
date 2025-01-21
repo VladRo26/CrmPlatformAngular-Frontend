@@ -17,6 +17,8 @@ import { CreateFeedbackComponent } from './feautures/feedback/create-feedback/cr
 import { benefuserGuard } from './_guards/guards/benefuser.guard';
 import { softuserGuard } from './_guards/guards/softuser.guard';
 import { CreateTicketComponent } from './feautures/tickets/create-ticket/create-ticket.component';
+import { ContractSoftwareListComponent } from './feautures/contracts/contract-software-list/contract-software-list.component';
+import { TicketsCompanyListComponent } from './feautures/tickets/tickets-company-list/tickets-company-list.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -32,7 +34,9 @@ export const routes: Routes = [
             {path: 'usersApp', component: UserappListComponent},
             {path: 'userApp/edit', component: UserappEditComponent, canDeactivate: [unsavedChangesGuard]},
             {path: 'usersApp/:username', component: UserappDetailComponent},
-            {path:  'contracts', component: ContractListComponent}
+            {path:  'contracts', component: ContractListComponent},
+            {path:'contractssoft', component:ContractSoftwareListComponent},
+            {path: 'tickets/contract/:id',component: TicketsCompanyListComponent},
        
         ]
     },

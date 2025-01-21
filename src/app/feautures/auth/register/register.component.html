@@ -68,7 +68,7 @@
         <div class="form-group mb-3">
           <mat-form-field appearance="fill" class="w-100">
             <mat-label>Select Company</mat-label>
-            <mat-select formControlName="Company">
+            <mat-select formControlName="companyName">
               <ng-container *ngIf="registerForm.get('userType')?.value === 0">
                 <mat-option *ngFor="let company of softwareCompanies" [value]="company.name">
                   {{ company.name }}
@@ -82,6 +82,7 @@
             </mat-select>
           </mat-form-field>
         </div>
+        
         
      
 
