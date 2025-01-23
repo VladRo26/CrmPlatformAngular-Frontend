@@ -3,7 +3,9 @@
         <app-homeimgaes></app-homeimgaes>
     </mat-grid-tile>
     <mat-grid-tile>
+      <p *appHasRole="['Admin']">Admin</p>
         <button mat-raised-button color="primary" [routerLink]="['/register']">Register</button>
+        <button mat-raised-button color="primary" [routerLink]="['/login']">Login</button>
     </mat-grid-tile>
     <mat-grid-tile>
         <div class="carousel-container">

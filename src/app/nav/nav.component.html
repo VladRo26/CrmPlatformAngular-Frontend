@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+<nav *ngIf="accountService.currentUser()" class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
     <div class="container mt-3 mt-lg-0">
       <a class="navbar-brand" href="#">DevLink CRM</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,8 +23,9 @@
               <li class="nav-item">
                 <a [routerLink]="['/error']" routerLinkActive="active"  class="nav-link">Errors</a>
               </li>
-              <li *appHasRole="['Admin','Moderator']" class="nav-item">
-                <a [routerLink]="['/admin']" routerLinkActive="active"  class="nav-link">Admin</a>
+              <li *appHasRole="['Admin']"
+              class="nav-item">
+                <a [routerLink]="['/admin']" routerLinkActive="active"   class="nav-link">Admin</a>
               </li>
               @if(!accountService.currentUser())
               {

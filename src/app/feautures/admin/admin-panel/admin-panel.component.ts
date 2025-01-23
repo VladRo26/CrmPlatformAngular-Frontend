@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import {MatTabsModule} from '@angular/material/tabs';
 import { UserManagementComponent } from '../user-management/user-management.component';
 import { HasRoleDirective } from '../../../_directives/has-role.directive';
-
 @Component({
   selector: 'app-admin-panel',
   standalone: true,

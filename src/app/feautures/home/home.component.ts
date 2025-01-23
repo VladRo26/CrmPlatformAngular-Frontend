@@ -12,7 +12,7 @@ import { ChipModule } from 'primeng/chip';
 import { CarouselModule } from 'primeng/carousel';
 import { AnimateOnScrollModule } from 'primeng/animateonscroll';
 import {MatButtonModule} from '@angular/material/button';
-
+import { HasRoleDirective } from '../../_directives/has-role.directive';
 
 
 @Component({
@@ -20,7 +20,7 @@ import {MatButtonModule} from '@angular/material/button';
   standalone: true,
   imports: [MatGridListModule, HomeimgaesComponent, RegisterComponent,
      RouterLink, SoftwarecompaniesListComponent, BeneficiarycompanyListComponent,
-     ChipModule,CarouselModule,AnimateOnScrollModule,MatButtonModule],
+     ChipModule,CarouselModule,AnimateOnScrollModule,MatButtonModule,HasRoleDirective],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
