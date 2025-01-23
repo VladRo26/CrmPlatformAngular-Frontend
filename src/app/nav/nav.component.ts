@@ -5,11 +5,12 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { Router, RouterLink } from '@angular/router';
 import { RouterLinkActive } from '@angular/router';
 import { TitleCasePipe } from '@angular/common';
+import { HasRoleDirective } from '../_directives/has-role.directive';
 
 @Component({
   selector: 'app-nav',
   standalone: true,
-  imports: [BsDropdownModule,RouterLink,RouterLinkActive,TitleCasePipe],
+  imports: [BsDropdownModule,RouterLink,RouterLinkActive,TitleCasePipe,HasRoleDirective],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
 })

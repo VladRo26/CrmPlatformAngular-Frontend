@@ -23,6 +23,9 @@
               <li class="nav-item">
                 <a [routerLink]="['/error']" routerLinkActive="active"  class="nav-link">Errors</a>
               </li>
+              <li *appHasRole="['Admin','Moderator']" class="nav-item">
+                <a [routerLink]="['/admin']" routerLinkActive="active"  class="nav-link">Admin</a>
+              </li>
               @if(!accountService.currentUser())
               {
               <li class="nav-item">
@@ -30,7 +33,6 @@
               </li>
               }
             </ul>
-        
 
                 @if(accountService.currentUser())
                 {
