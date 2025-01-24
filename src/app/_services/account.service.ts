@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../_models/user';
 import { map } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { PresenceService } from './presence.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ export class AccountService {
   private http = inject(HttpClient);
   baseUrl = environment.apiUrl;
   currentUser = signal< User | null >(null);
+  presenceService = inject(PresenceService);
   
   roles() {
     const user = this.currentUser();
@@ -48,11 +50,13 @@ export class AccountService {
   setCurrentUser(user: User) {
     localStorage.setItem('userinfo', JSON.stringify(user));
     this.currentUser.set(user);
+    this.presenceService.createHubConnection(user);
   }
 
 
   logout() {
     localStorage.removeItem('userinfo');
     this.currentUser.set(null);
+    this.presenceService.stopHubConnection();
   }
 }
