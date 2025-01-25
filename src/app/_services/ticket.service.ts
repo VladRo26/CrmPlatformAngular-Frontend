@@ -95,6 +95,11 @@ export class TicketService {
       return this.http.put(url, null, { params: { handlerId } });
     }
     
+    addTicketStatusHistory(ticketId: number, statusHistory: TicketStatusHistory): Observable<{ message: string }> {
+      const url = `${this.baseUrl}Ticket/AddStatusHistory?ticketId=${ticketId}`;
+      return this.http.post<{ message: string }>(url, statusHistory);
+    }
+    
     
 
 }

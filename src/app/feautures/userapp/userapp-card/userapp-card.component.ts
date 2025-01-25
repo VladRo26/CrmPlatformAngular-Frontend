@@ -1,4 +1,4 @@
-import { Component, inject, Input, input, OnInit } from '@angular/core';
+import { Component, computed, inject, Input, input, OnInit } from '@angular/core';
 import { userApp } from '../../../_models/userapp';
 import {ChangeDetectionStrategy} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
@@ -8,6 +8,7 @@ import { catchError, of } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
 import { RouterLinkActive } from '@angular/router'
 import { TimeagoModule } from 'ngx-timeago';
+import { PresenceService } from '../../../_services/presence.service';
 
 @Component({
   selector: 'app-userapp-card',
@@ -19,8 +20,9 @@ import { TimeagoModule } from 'ngx-timeago';
 })
 export class UserappCardComponent {
   private router = inject(Router);
-
-   userapp= input.required<userApp>(); // Correctly declare `userapp` as an input property
+  private presenceService = inject(PresenceService);
+  userapp= input.required<userApp>(); // Correctly declare `userapp` as an input property
+  isOnline = computed(() => this.presenceService.onlineUsers().includes(this.userapp().userName));
 
    getUserPhoto(): string {
     return this.userapp().photoUrl || '/user.png';

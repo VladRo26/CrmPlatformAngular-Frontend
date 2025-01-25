@@ -7,11 +7,13 @@
       class="p-card-custom"
     >
       <ng-template pTemplate="header">
-        <img
-          alt="{{ userapp?.firstName }} {{ userapp?.lastName }}"
-          [src]="userapp?.photoUrl || '/user.png'"
-          class="header-image"
-        />
+          <img
+    alt="{{ userapp?.firstName }} {{ userapp?.lastName }}"
+    [src]="userapp?.photoUrl || '/user.png'"
+    class="header-image"
+    [ngClass]="{ 'online-blink': presenceService.onlineUsers().includes(userapp?.userName ?? '') }"
+  />
+
       </ng-template>
 
       <p>

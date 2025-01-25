@@ -24,14 +24,19 @@ export class TicketsUserListComponent implements OnInit {
   }
 
   loadTickets(): void {
-    this.ticketService.getTicketsByHandlerUsername(this.username ?? '').subscribe({
+    if (!this.username) {
+      console.error('Username is not available.');
+      return;
+    }
+
+    this.ticketService.getTicketsByUserName(this.username).subscribe({
       next: (data) => {
         this.tickets = data; // Assign fetched tickets to the array
         console.log('Tickets loaded:', this.tickets);
       },
       error: (err) => {
         console.error('Error loading tickets:', err);
-      }
+      },
     });
   }
 

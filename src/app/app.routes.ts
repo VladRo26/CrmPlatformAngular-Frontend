@@ -37,7 +37,7 @@ export const routes: Routes = [
             {path: 'userApp/edit', component: UserappEditComponent, canDeactivate: [unsavedChangesGuard]},
             {path: 'usersApp/:username', component: UserappDetailComponent},
             {path:  'contracts', component: ContractListComponent},
-            {path:'contractssoft', component:ContractSoftwareListComponent},
+            {path:'ticketscontracts', component:ContractSoftwareListComponent},
             {path: 'tickets/contract/:id',component: TicketsCompanyListComponent},
             {path: 'admin', component: AdminPanelComponent, canActivate: [adminGuard]}
        

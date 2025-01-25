@@ -16,6 +16,11 @@
     <button mat-raised-button color="primary" (click)="translateTicketDescription()">
       Translate Description
     </button>
+   <!-- Update Status Button -->
+    <button mat-raised-button color="primary" (click)="showDialog()" class="mt-3">
+      <i class="pi pi-pencil"></i> Update Status
+    </button>
+
   </mat-card-content>
 </mat-card>
 
@@ -68,5 +73,19 @@
 </p-scrollPanel>
 
 
-
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [style]="{ width: '30rem' }"
+  [dismissableMask]="true"
+  header="Update Ticket Status"
+>
+  <app-create-statushist
+    *ngIf="ticket"
+    [ticketId]="ticket.id"
+    [username]="accountService.currentUser()?.userName || ''" 
+    (statusUpdated)="handleStatusUpdate()"
+    (closeDialog)="handleDialogClose()"
+  ></app-create-statushist>
+</p-dialog>
 

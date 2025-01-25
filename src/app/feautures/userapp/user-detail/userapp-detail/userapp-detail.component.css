@@ -18,3 +18,19 @@
 }
 
 
+.online-blink {
+  animation: blink-border 1s infinite;
+  border-color: green;
+}
+
+@keyframes blink-border {
+  0% {
+    border-color: green;
+  }
+  50% {
+    border-color: transparent;
+  }
+  100% {
+    border-color: green;
+  }
+}

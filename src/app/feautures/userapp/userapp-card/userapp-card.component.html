@@ -4,8 +4,10 @@
         <img mat-card-avatar [src]="userapp().companyPhotoUrl || '/company.png'" alt="Photo of company">
       </div>
       <mat-card-title>
-        <i class="fa fa-user"></i>
-        {{userapp().userName}}
+        <span [class.isOnline]="isOnline()">
+          <i class="fa fa-user"></i>
+          {{userapp().userName}}
+        </span>
       </mat-card-title>
       <mat-card-subtitle>
         <a [routerLink]="['/company', userapp().companyName]" class="company-link">  {{userapp().companyName}}</a></mat-card-subtitle>

@@ -17,14 +17,15 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatIconModule} from '@angular/material/icon';
 import { TimeagoModule } from 'ngx-timeago';
 import { DatePipe } from '@angular/common';
-
+import { PresenceService } from '../../../../_services/presence.service';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-userapp-detail',
   standalone: true,
   imports: [CardModule,ButtonModule,TabViewModule,
     BadgeModule,AvatarModule,ScrollPanelModule,
     RatingModule,FormsModule,NgIf,FeedbackUserListComponent,
-    PerformancePageComponent,MatTabsModule,MatIconModule,TimeagoModule,DatePipe],
+    PerformancePageComponent,MatTabsModule,MatIconModule,TimeagoModule,DatePipe,CommonModule],
   templateUrl: './userapp-detail.component.html',
   styleUrl: './userapp-detail.component.css'
   })
@@ -33,6 +34,7 @@ import { DatePipe } from '@angular/common';
 export class UserappDetailComponent implements OnInit {
   private userappService = inject(UserappService);
   private route = inject(ActivatedRoute);
+  presenceService = inject(PresenceService);
   userapp?: userApp;
 
 

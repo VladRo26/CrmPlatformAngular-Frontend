@@ -80,4 +80,14 @@
       max-width: 100%; /* Makes card full width on smaller screens */
     }
   }
+
+@keyframes fa-blink{
+    0% { opacity: 1;}
+    100% { opacity: 0.2;}
+}
+
+.isOnline{
+    animation: fa-blink 1s infinite;
+    color: green;
+}
   

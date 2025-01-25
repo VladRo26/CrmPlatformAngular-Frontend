@@ -5,34 +5,37 @@ import { Ticket } from '../../../_models/ticket';
 import { TicketStatusHistory } from '../../../_models/ticketstatushistory';
 import {MatCardModule} from '@angular/material/card';
 import {MatTableModule} from '@angular/material/table';
-import { NgIf } from '@angular/common';
 import {NgxCountriesDropdownModule} from 'ngx-countries-dropdown';
 import { MatButton } from '@angular/material/button';
 import { Button } from 'primeng/button';
 import { DatePipe } from '@angular/common';
-import { NgFor } from '@angular/common';
+import { NgFor,NgIf } from '@angular/common';
 import { TimelineModule } from 'primeng/timeline';
 import { CardModule } from 'primeng/card';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-
+import { DialogModule } from 'primeng/dialog';
+import { CreateStatushistComponent } from '../create-statushist/create-statushist.component';
+import { AccountService } from '../../../_services/account.service';
 
 @Component({
   selector: 'app-ticket-detail',
   standalone: true,
   imports: [MatCardModule,MatTableModule,NgIf,NgFor,
      NgxCountriesDropdownModule,MatButton,TimelineModule,
-     Button,DatePipe,CardModule,ScrollPanelModule,MatButtonToggleModule],
+     Button,DatePipe,CardModule,ScrollPanelModule,MatButtonToggleModule,NgIf,DialogModule,CreateStatushistComponent],
   templateUrl: './ticket-detail.component.html',
   styleUrl: './ticket-detail.component.css'
 })
 export class TicketDetailComponent implements OnInit {
   private ticketService = inject(TicketService);
+  accountService = inject(AccountService);
   private route = inject(ActivatedRoute);
   selectedLanguageName: string | null = null;
   ticketDescription: string | null = null; // Holds the displayed ticket description
   isLoadingPage: boolean = true; // Page loading state
   showCountryList: boolean = false; // Show country list after page load
+  visible: boolean = false;
 
 
 
@@ -164,6 +167,19 @@ export class TicketDetailComponent implements OnInit {
           color,
         };
       });
+    }
+
+    showDialog(): void {
+      this.visible = true;
+    }
+
+    handleDialogClose(): void {
+      this.visible = false;
+    }
+  
+    handleStatusUpdate(): void {
+      this.visible = false;
+      this.loadTicketDetails(); // Refresh ticket details
     }
     
     
