@@ -1,0 +1,12 @@
+/* Disable interaction for the container and its children */
+.readonly-container {
+    pointer-events: none; /* Disable mouse interactions */
+    opacity: 0.7; /* Optional: dim the container to indicate it’s disabled */
+  }
+  
+  /* Optionally, style the text to make it look more like a label */
+  .readonly-container p {
+    font-style: italic;
+    color: gray;
+  }
+  

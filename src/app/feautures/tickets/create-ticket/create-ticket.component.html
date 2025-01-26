@@ -1,134 +1,115 @@
-<div class="container mt-4">
-    <h2>Create Ticket</h2>
-  
-    <form [formGroup]="createTicketForm" (ngSubmit)="submitTicket()">
-      <!-- Title Field -->
-      <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
-        <input
-          id="title"
-          type="text"
-          class="form-control"
-          formControlName="title"
-          placeholder="Enter ticket title"
-          [ngClass]="{ 'is-invalid': createTicketForm.get('title')?.invalid && createTicketForm.get('title')?.touched }"
-        />
-        <div class="invalid-feedback" *ngIf="createTicketForm.get('title')?.invalid && createTicketForm.get('title')?.touched">
-          Title is required and must be at least 5 characters long.
-        </div>
-      </div>
-  
-      <!-- Description Field -->
-      <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea
-          id="description"
-          class="form-control"
-          formControlName="description"
-          placeholder="Enter ticket description"
-          [ngClass]="{ 'is-invalid': createTicketForm.get('description')?.invalid && createTicketForm.get('description')?.touched }"
-        ></textarea>
-        <div class="invalid-feedback" *ngIf="createTicketForm.get('description')?.invalid && createTicketForm.get('description')?.touched">
-          Description is required and must be at least 10 characters long.
-        </div>
-      </div>
-  
-      <!-- Priority Field -->
-      <div class="mb-3">
-        <label for="priority" class="form-label">Priority</label>
-        <select
-          id="priority"
-          class="form-select"
-          formControlName="priority"
-          [ngClass]="{ 'is-invalid': createTicketForm.get('priority')?.invalid && createTicketForm.get('priority')?.touched }"
-        >
-          <option *ngFor="let priority of priorities" [value]="priority.value">
-            {{ priority.label }}
-          </option>
-        </select>
-        <div class="invalid-feedback" *ngIf="createTicketForm.get('priority')?.invalid && createTicketForm.get('priority')?.touched">
-          Priority is required.
-        </div>
-      </div>
-  
-      <!-- Type Field -->
-      <div class="mb-3">
-        <label for="type" class="form-label">Type</label>
-        <select
-          id="type"
-          class="form-select"
-          formControlName="type"
-          [ngClass]="{ 'is-invalid': createTicketForm.get('type')?.invalid && createTicketForm.get('type')?.touched }"
-        >
-          <option *ngFor="let type of types" [value]="type.value">
-            {{ type.label }}
-          </option>
-        </select>
-        <div class="invalid-feedback" *ngIf="createTicketForm.get('type')?.invalid && createTicketForm.get('type')?.touched">
-          Type is required.
-        </div>
-      </div>
-  
-      <div class="mb-3">
-        <label for="status" class="form-label">Status</label>
-        <select
-          id="status"
-          class="form-select"
-          formControlName="status"
-          [ngClass]="{ 'is-invalid': createTicketForm.get('status')?.invalid && createTicketForm.get('status')?.touched }"
-        >
-          <option *ngFor="let status of statuses" [value]="status.value">
-            {{ status.label }}
-          </option>
-        </select>
-        <div class="invalid-feedback" *ngIf="createTicketForm.get('status')?.invalid && createTicketForm.get('status')?.touched">
-          Status is required.
-        </div>
-      </div>
-  
-      <div class="d-flex gap-4">
-        <div class="available-contracts">
-          <h3>Available Contracts</h3>
-          <div class="p-2 border-1 surface-border border-round">
-            <ul class="list-none flex flex-column gap-2 p-0 m-0">
-              <li
-                *ngFor="let contract of contracts"
-                class="p-2 border-round shadow-1"
-                pDraggable
-                (onDragStart)="dragStart(contract)"
-                (onDragEnd)="dragEnd()"
-              >
-                {{ contract.projectName }}
-              </li>
-            </ul>
-          </div>
-        </div>
-  
-        <div class="selected-contract">
-          <h3>Selected Contract</h3>
-          <div
-            class="p-2 border-1 surface-border border-round"
-            pDroppable
-            (onDrop)="drop()"
-            [pDroppableDisabled]="!!selectedContract"
-          >
-            <p class="text-center surface-border border-bottom-1">Drop Zone</p>
-            <ul class="list-none flex flex-column gap-2 p-0 m-0" *ngIf="selectedContract">
-              <li class="p-2 border-round shadow-1">
-                Name: {{ selectedContract.projectName  }}
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-  
-      <button type="button" class="btn btn-secondary mt-3 ms-2" (click)="resetDragAndDrop()">
-        Reset Contracts
-      </button>
-  
-      <button type="submit" class="btn btn-primary mt-3" [disabled]="createTicketForm.invalid">
-        Submit Ticket
-      </button>
-    </form>
+<form [formGroup]="createTicketForm" (ngSubmit)="submitTicket()">
+  <!-- Title Field -->
+  <div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input
+      id="title"
+      type="text"
+      class="form-control"
+      formControlName="title"
+      placeholder="Enter ticket title"
+    />
   </div>
-  
+
+  <!-- Description Field -->
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea
+      id="description"
+      class="form-control"
+      formControlName="description"
+      placeholder="Enter ticket description"
+    ></textarea>
+  </div>
+
+  <!-- Priority Field -->
+  <div class="mb-3">
+    <label for="priority" class="form-label">Priority</label>
+    <select id="priority" class="form-select" formControlName="priority">
+      <option *ngFor="let priority of priorities" [value]="priority.value">
+        {{ priority.label }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Type Field -->
+  <div class="mb-3">
+    <label for="type" class="form-label">Type</label>
+    <select id="type" class="form-select" formControlName="type">
+      <option *ngFor="let type of types" [value]="type.value">
+        {{ type.label }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Language Field -->
+  <!-- Language Field -->
+  <div class="mb-3">
+    <label class="form-label">Language</label>
+    <lib-country-list
+      [selectedCountryConfig]="selectedCountryConfig"
+      [countryListConfig]="countryListConfig"
+      (onCountryChange)="handleCountryChange($event)"
+    ></lib-country-list>
+    <p *ngIf="selectedLanguageName">
+      <strong>Selected Language:</strong> {{ selectedLanguageName }}
+    </p>
+  </div>
+
+
+  <!-- Status Field (Read-only) -->
+  <div class="mb-3">
+    <label for="status" class="form-label">Status</label>
+    <input
+      id="status"
+      type="text"
+      class="form-control"
+      formControlName="status"
+      readonly
+    />
+  </div>
+
+  <div class="d-flex gap-4">
+    <div class="available-contracts">
+      <h3>Available Contracts</h3>
+      <div class="p-2 border-1 surface-border border-round">
+        <ul class="list-none flex flex-column gap-2 p-0 m-0">
+          <li
+            *ngFor="let contract of contracts"
+            class="p-2 border-round shadow-1"
+            pDraggable
+            (onDragStart)="dragStart(contract)"
+            (onDragEnd)="dragEnd()"
+          >
+            {{ contract.projectName }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="selected-contract">
+      <h3>Selected Contract</h3>
+      <div
+        class="p-2 border-1 surface-border border-round"
+        pDroppable
+        (onDrop)="drop()"
+        [pDroppableDisabled]="!!selectedContract"
+      >
+        <p class="text-center surface-border border-bottom-1">Drop Zone</p>
+        <ul class="list-none flex flex-column gap-2 p-0 m-0" *ngIf="selectedContract">
+          <li class="p-2 border-round shadow-1">
+            Name: {{ selectedContract.projectName  }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="btn btn-secondary mt-3 ms-2" (click)="resetDragAndDrop()">
+    Reset Contracts
+  </button>
+
+  <button type="submit" class="btn btn-primary mt-3" [disabled]="createTicketForm.invalid">
+    Submit Ticket
+  </button>
+</form>

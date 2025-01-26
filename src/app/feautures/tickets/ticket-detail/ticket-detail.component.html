@@ -26,9 +26,26 @@
 
 
 <ng-container *ngIf="showCountryList">
+
+  <!-- Original Language Dropdown -->
+  <div class="readonly-container">
+    <h3>Original Language</h3>
+    <lib-country-list
+      [selectedCountryConfig]="selectedCountryConfig"
+      [countryListConfig]="{
+        displayLanguageName: true,
+        hideDialCode: true,
+        hideSearch: true
+      }"
+      [selectedCountryCode]="ticket?.countryCode ?? 'EN'"
+    ></lib-country-list>
+    <p><strong>Language of the Ticket:</strong> {{ ticket?.language }}</p>
+  </div>
+  
   <lib-country-list
     [selectedCountryConfig]="selectedCountryConfig"
     [countryListConfig]="countryListConfig"
+    [selectedCountryCode]="'US'"
     (onCountryChange)="handleCountryChange($event)"
   ></lib-country-list>
   <div>
@@ -67,6 +84,16 @@
         <p>
           <strong>Details:</strong> {{ event.message }}
         </p>
+        <ng-container *ngIf="shouldShowTranslateButton(event.role)">
+          <p-button 
+            icon="pi pi-language" 
+            [rounded]="true"
+            severity="help"
+            [outlined]="true"
+            [disabled]="overlayActive" 
+            (click)="showOverlay(event.message, $event, overlay)">
+          </p-button>
+        </ng-container>
       </p-card>
     </ng-template>
   </p-timeline>
@@ -88,4 +115,15 @@
     (closeDialog)="handleDialogClose()"
   ></app-create-statushist>
 </p-dialog>
+
+<p-overlayPanel #overlay>
+  <div *ngIf="!translatedMessage">
+    <!-- Progress bar is shown while waiting for the translation -->
+    <p-progressBar mode="indeterminate" color="green" [style]="{ height: '6px', width: '10rem'}"></p-progressBar>
+  </div>
+  <div *ngIf="translatedMessage">
+    <!-- Translated text is shown once available -->
+    <p>{{ translatedMessage }}</p>
+  </div>
+</p-overlayPanel>
 

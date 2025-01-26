@@ -14,11 +14,12 @@ import { CurrencyPipe } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { DragDropModule } from 'primeng/dragdrop';
 import { CommonModule } from '@angular/common';
+import {NgxCountriesDropdownModule} from 'ngx-countries-dropdown';
 
 @Component({
   selector: 'app-create-ticket',
   standalone: true,
-  imports: [CurrencyPipe, ReactiveFormsModule, NgFor, NgIf,TableModule,DragDropModule,CommonModule],
+  imports: [CurrencyPipe, ReactiveFormsModule, NgFor, NgIf,TableModule,DragDropModule,CommonModule,NgxCountriesDropdownModule],
   templateUrl: './create-ticket.component.html',
   styles: [
     `:host ::ng-deep {
@@ -70,6 +71,25 @@ export class CreateTicketComponent implements OnInit {
     { label: 'Feature', value: 'Feature' },
   ]
 
+  selectedCountryConfig = {
+    displayLanguageName: true,
+    hideName: true,
+    hideDialCode: true,
+  };
+
+  countryListConfig = {
+    displayLanguageName: true,
+    hideName: true,
+    hideDialCode: true,
+  };
+
+
+  selectedLanguageName: string = 'English'; // Default language
+  selectedCountryCode: string = ''; // Country code to be automatically populated
+  selectedLanguageCode: string = ''; // Language code to be automatically populated
+
+  showCountryList: boolean = true; // Show the country list dropdown
+
   ngOnInit(): void {
     this.currentUserName = this.accountService.currentUser()?.userName ?? '';
     this.loadUserDetails();
@@ -88,6 +108,10 @@ console.log(this.createTicketForm.status);
       status: new FormControl('Open', Validators.required),
       contractId: new FormControl('', Validators.required),
       creatorId: new FormControl({ value: '', disabled: true }), // Disabled as it’s dynamic
+      language: new FormControl(this.selectedLanguageName, Validators.required), // Bind language
+      countryCode: new FormControl(this.selectedCountryCode, Validators.required), // Ensure it's not disabled
+      languageCode: new FormControl(this.selectedLanguageCode, Validators.required), // Ensure it's not disabled
+
     });
   }
 
@@ -129,13 +153,10 @@ console.log(this.createTicketForm.status);
     });
   }
 
-
   submitTicket(): void {
     if (this.createTicketForm.invalid || !this.selectedContract) {
       this.toastr.error('Please fill all required fields and select a contract.');
       return;
-
-      
     }
 
     if (!this.currentUser) {
@@ -153,6 +174,7 @@ console.log(this.createTicketForm.status);
       next: () => {
         this.toastr.success('Ticket created successfully!');
         this.createTicketForm.reset();
+        this.createTicketForm.patchValue({ status: 'Open', language: 'English'}); // Reset fields
         this.selectedContract = null;
       },
       error: (err) => {
@@ -161,6 +183,31 @@ console.log(this.createTicketForm.status);
       },
     });
   }
+
+ 
+
+ handleCountryChange(country: any): void {
+  if (country?.language?.code) {
+    this.selectedLanguageName = country.language.name;
+    this.selectedCountryCode = country.code; // Set the language code
+    this.selectedLanguageCode = country.language.code;
+    this.createTicketForm.patchValue({
+      language: this.selectedLanguageName,
+      countryCode: this.selectedCountryCode, // Update countryCode'
+      languageCode: this.selectedLanguageCode, // Update languageCode
+    });
+  } else {
+    this.selectedLanguageName = 'English';
+    this.selectedCountryCode = ''; // Default fallback
+    this.selectedLanguageCode = ''; // Default fallback
+    this.createTicketForm.patchValue({
+      language: this.selectedLanguageName,
+      countryCode: this.selectedCountryCode,
+    });
+  }
+}
+
+  
 
   dragStart(contract: Contract): void {
     this.draggedContract = contract;
@@ -198,8 +245,6 @@ console.log(this.createTicketForm.status);
   
     this.toastr.info('Contract selection has been reset, but other form values are preserved.');
   }
-  
-  
 
 
   findIndex(contract: Contract): number {
@@ -212,6 +257,17 @@ console.log(this.createTicketForm.status);
     }
     return index;
   }
+
+  logFormDetails(): void {
+    console.log('Form Validity:', this.createTicketForm.valid);
+    console.log('Form Errors:', this.createTicketForm.errors);
+    console.log('Form Controls:');
+    Object.keys(this.createTicketForm.controls).forEach((key) => {
+      const control = this.createTicketForm.get(key);
+      console.log(`${key} - Value:`, control?.value, 'Valid:', control?.valid, 'Errors:', control?.errors);
+    });
+  }
+  
   
 
 }

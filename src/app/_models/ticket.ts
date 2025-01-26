@@ -10,4 +10,7 @@ export interface Ticket {
     contractId: number; // Contract ID (required)
     creatorId: number; // Creator ID (required)
     handlerId?: number; // Handler ID (optional)
+    language?: string; // Language of the ticket (optional)
+    languageCode?: string; // Language code of the ticket (optional)
+    countryCode?: string; // Country code of the ticket (optional)
   }

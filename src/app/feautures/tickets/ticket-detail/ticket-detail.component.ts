@@ -17,25 +17,35 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { DialogModule } from 'primeng/dialog';
 import { CreateStatushistComponent } from '../create-statushist/create-statushist.component';
 import { AccountService } from '../../../_services/account.service';
+import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
+import { LlmService } from '../../../_services/llm.service';
+import { ButtonModule } from 'primeng/button';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-ticket-detail',
   standalone: true,
   imports: [MatCardModule,MatTableModule,NgIf,NgFor,
      NgxCountriesDropdownModule,MatButton,TimelineModule,
-     Button,DatePipe,CardModule,ScrollPanelModule,MatButtonToggleModule,NgIf,DialogModule,CreateStatushistComponent],
+     Button,DatePipe,CardModule,ScrollPanelModule
+     ,MatButtonToggleModule,OverlayPanelModule,NgIf,DialogModule,CreateStatushistComponent,ButtonModule,ProgressBarModule,ToastModule],
   templateUrl: './ticket-detail.component.html',
   styleUrl: './ticket-detail.component.css'
 })
 export class TicketDetailComponent implements OnInit {
   private ticketService = inject(TicketService);
   accountService = inject(AccountService);
+  private llmService = inject(LlmService); // Inject the LlmService
+
   private route = inject(ActivatedRoute);
   selectedLanguageName: string | null = null;
   ticketDescription: string | null = null; // Holds the displayed ticket description
   isLoadingPage: boolean = true; // Page loading state
   showCountryList: boolean = false; // Show country list after page load
   visible: boolean = false;
+  translatedMessage: string | null = null; // Holds the translated message
+
 
 
 
@@ -54,6 +64,11 @@ export class TicketDetailComponent implements OnInit {
 
   ticket?: Ticket;
   ticketHistory: TicketStatusHistory[] = [];
+  ticketOriginalLanguage: string | null = null; // Original language from the ticket
+  ticketOriginalLanguageCode: string | null = null; // Original language code from the ticket
+  translationLanguageCode: string = 'en'; // Default translation language code (English)
+  ticketCountryCode: string | null = null; // Single country code from ticket
+  overlayActive: boolean = false; // Tracks whether the overlay is active
 
   displayedColumns: string[] = ['status', 'updatedByUserId', 'ticketUserRole', 'message'];
 
@@ -83,6 +98,21 @@ export class TicketDetailComponent implements OnInit {
     }
   }
 
+  shouldShowTranslateButton(role: string): boolean {
+    const userType = this.accountService.currentUser()?.userType;
+  
+    if (userType === 'BeneficiaryCompanyUser' && role.toLowerCase() === 'handler') {
+      return true; // Show for BeneficiaryComp usertype and handler role
+    }
+    
+    if (userType === 'SoftwareCompanyUser' && role.toLowerCase() === 'creator') {
+      return true; // Show for SoftwareComp usertype and creator role
+    }
+  
+    return false; // Hide in all other cases
+  }
+  
+
 
   ngOnInit(): void {
     this.loadSelectedLanguage(); // Load language from localStorage on init
@@ -104,6 +134,8 @@ export class TicketDetailComponent implements OnInit {
       this.ticketService.getTicketById(ticketId).subscribe({
         next: (ticket) => {
           this.ticket = ticket;
+          this.ticketCountryCode = ticket.countryCode ?? ''; // Extract the country code
+          this.ticketOriginalLanguage = ticket.language ?? 'English'; // Extract the language
           // Only set ticketDescription from the database if no translation exists in localStorage
           if (!localStorage.getItem('translatedDescription')) {
             this.ticketDescription = ticket.description;
@@ -130,7 +162,7 @@ export class TicketDetailComponent implements OnInit {
     }
 
     this.ticketService
-      .translateDescription(this.ticket.id, 'English', this.selectedLanguageName)
+      .translateDescription(this.ticket.id, this.ticketOriginalLanguage ?? 'English', this.selectedLanguageName)
       .subscribe({
         next: (response) => {
           if (response.translation) {
@@ -181,6 +213,35 @@ export class TicketDetailComponent implements OnInit {
       this.visible = false;
       this.loadTicketDetails(); // Refresh ticket details
     }
+    
+    showOverlay(message: string, event: Event, overlay: OverlayPanel): void {
+      if (!this.selectedLanguageName || !this.ticketOriginalLanguage) {
+        console.error('Selected language or original language is missing.');
+        this.translatedMessage = 'Language selection is missing. Please select a language.';
+        overlay.toggle(event);
+        return;
+      }
+    
+      this.translatedMessage = null; // Clear previous translations
+      this.overlayActive = true; // Set the overlay active state
+      overlay.toggle(event); // Open the overlay
+    
+      // Call the LlmService for translation
+      this.llmService
+        .translateText(message, this.ticketOriginalLanguage, this.selectedLanguageName)
+        .subscribe({
+          next: (response) => {
+            this.translatedMessage = response.translation || 'Translation unavailable.';
+            this.overlayActive = false; // Reset the overlay active state
+          },
+          error: (err) => {
+            console.error('Translation failed:', err);
+            this.translatedMessage = 'Error translating message.';
+            this.overlayActive = false; // Reset the overlay active state
+          },
+        });
+    }
+    
     
     
 }
