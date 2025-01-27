@@ -1,50 +1,69 @@
 <div class="container mt-4">
-    <h2 class="mb-4">Create Feedback</h2>
-  
-    <!-- Feedback Form -->
-    <form [formGroup]="feedbackForm" (ngSubmit)="submitFeedback()">
-      <!-- Dropdown for Tickets -->
-      <div class="form-group mb-3">
-        <label for="ticketId" class="form-label">Select Ticket</label>
-        <select
-          id="ticketId"
-          class="form-select"
-          formControlName="ticketId"
-          required
-        >
-          <option *ngFor="let ticket of tickets" [value]="ticket.id">
-            {{ ticket.id }} - {{ ticket.title || 'No Title' }}
-          </option>
-        </select>
-      </div>
-  
-      <!-- Feedback Content -->
-      <div class="form-group mb-3">
-        <label for="content" class="form-label">Feedback Content</label>
-        <textarea
-          id="content"
-          class="form-control"
-          formControlName="content"
-          placeholder="Enter your feedback"
-          rows="4"
-          required
-        ></textarea>
-      </div>
-  
-      <!-- Rating -->
-      <div class="form-group mb-3">
-        <label for="rating" class="form-label">Rating</label>
-        <p-rating formControlName="rating" stars="5" cancel="true"></p-rating>
-      </div>
-  
-      <!-- Submit Button -->
-      <button
-        type="submit"
-        class="btn btn-primary"
-        [disabled]="feedbackForm.invalid"
+  <h2 class="mb-4">Create Feedback</h2>
+
+  <!-- Feedback Form -->
+  <form [formGroup]="feedbackForm" (ngSubmit)="submitFeedback()">
+    <!-- Dropdown for Tickets -->
+    <div class="form-group mb-3">
+      <label for="ticketId" class="form-label">Select Ticket</label>
+      <select
+        id="ticketId"
+        class="form-select"
+        formControlName="ticketId"
+        [ngClass]="{ 'disabled-dropdown': isDropdownDisabled }"
+        [attr.disabled]="isDropdownDisabled ? true : null" 
+        required
       >
-        Submit Feedback
-      </button>
-    </form>
-  </div>
-  
+        <option *ngFor="let ticket of tickets" [value]="ticket.id">
+          {{ ticket.id }} - {{ ticket.title || 'No Title' }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Handler Details -->
+    <div class="form-group mb-3" *ngIf="handlerUser">
+      <label>Handler Details:</label>
+      <div class="d-flex align-items-center">
+        <img
+          *ngIf="handlerUser.photoUrl"
+          [src]="handlerUser.photoUrl"
+          alt="Handler Photo"
+          class="rounded-circle me-3"
+          style="width: 50px; height: 50px;"
+        />
+        <div>
+          <p><strong>{{ handlerUser.userName }}</strong></p>
+          <p class="text-muted">{{ handlerUser.firstName }} {{ handlerUser.lastName }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feedback Content -->
+    <div class="form-group mb-3">
+      <label for="content" class="form-label">Feedback Content</label>
+      <textarea
+        id="content"
+        class="form-control"
+        formControlName="content"
+        placeholder="Enter your feedback"
+        rows="4"
+        required
+      ></textarea>
+    </div>
+
+    <!-- Rating -->
+    <div class="form-group mb-3">
+      <label for="rating" class="form-label">Rating</label>
+      <p-rating formControlName="rating" stars="5" cancel="true"></p-rating>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="feedbackForm.invalid || isDropdownDisabled"
+    >
+      Submit Feedback
+    </button>
+  </form>
+</div>

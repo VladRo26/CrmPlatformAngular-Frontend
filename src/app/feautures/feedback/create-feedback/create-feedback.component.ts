@@ -18,14 +18,15 @@ import { BeneficiarycompanyService } from '../../../_services/beneficiarycompani
 import { BeneficiaryCompany } from '../../../_models/beneficiarycompany';
 import { RatingModule } from 'primeng/rating';
 import { DragDropModule } from 'primeng/dragdrop';
-
-
+import { userApp } from '../../../_models/userapp';
+import { UserappService } from '../../../_services/userapp.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-create-feedback',
   standalone: true,
   imports: [NgFor, NgIf, ReactiveFormsModule,MatFormFieldModule,
-    MatInputModule,MatButtonModule,MatSelectModule,MatSliderModule,FormsModule,RatingModule],
+    MatInputModule,MatButtonModule,MatSelectModule,MatSliderModule,FormsModule,RatingModule,DragDropModule,CommonModule],
   templateUrl: './create-feedback.component.html',
   styleUrl: './create-feedback.component.css'
 })
@@ -33,6 +34,7 @@ export class CreateFeedbackComponent implements OnInit {
 
   feedbackService = inject(FeedbackService);
   ticketService = inject(TicketService);
+  userappService = inject(UserappService);
   beneficiaryCompanyService = inject(BeneficiarycompanyService);
   accountService = inject(AccountService);
   toastr = inject(ToastrService);
@@ -42,6 +44,8 @@ export class CreateFeedbackComponent implements OnInit {
   feedbackForm: FormGroup = new FormGroup({});
   currentUserName: string = '';
   companyName: string = '';
+  handlerUser?: userApp; // Store handler user details
+  isDropdownDisabled: boolean = true; // Disable dropdown initially
 
   ngOnInit(): void {
       this.currentUserName = this.accountService.currentUser()?.userName ?? '';
@@ -54,17 +58,19 @@ export class CreateFeedbackComponent implements OnInit {
       this.toastr.error('User is not logged in.');
       return;
     }
-  
+
     this.ticketService.getTicketsByUserName(this.currentUserName).subscribe({
       next: (data) => {
-        // Apply frontend filtering: handlerId is not null and status is Resolved or Closed
         this.tickets = data.filter(
           (ticket) =>
             ticket.handlerId !== null &&
             (ticket.status.toLowerCase() === 'resolved' || ticket.status.toLowerCase() === 'closed')
         );
-  
-        if (this.tickets.length === 0) {
+
+        // Disable dropdown if no valid tickets
+        this.isDropdownDisabled = this.tickets.length === 0;
+
+        if (this.isDropdownDisabled) {
           this.toastr.warning(`No valid tickets found for user: ${this.currentUserName}`);
         }
       },
@@ -74,6 +80,31 @@ export class CreateFeedbackComponent implements OnInit {
       },
     });
   }
+
+
+  fetchHandlerDetails(handlerId: number): void {
+    if (!handlerId) {
+      this.handlerUser = undefined; // Clear handler details if no handlerId
+      return;
+    }
+  
+    this.userappService.getUserappById(handlerId).subscribe({
+      next: (user: userApp | null) => {
+        if (user) {
+          this.handlerUser = user; // Store handler user details
+        } else {
+          this.toastr.warning('Handler details not found.');
+          this.handlerUser = undefined;
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching handler details:', err);
+        this.toastr.error('Failed to fetch handler details.');
+        this.handlerUser = undefined;
+      },
+    });
+  }
+  
   
 
   initForm(): void {

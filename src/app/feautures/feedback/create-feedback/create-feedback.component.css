@@ -1,0 +1,8 @@
+/* Disable dropdown styling */
+.disabled-dropdown {
+    pointer-events: none; /* Prevent interactions */
+    background-color: #e9ecef; /* Light gray background */
+    color: #6c757d; /* Gray text color */
+    opacity: 0.65; /* Reduced opacity for disabled effect */
+  }
+  
