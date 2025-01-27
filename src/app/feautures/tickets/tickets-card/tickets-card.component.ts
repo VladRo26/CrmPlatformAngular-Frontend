@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, Input, input } from '@angular/core';
 import { Ticket } from '../../../_models/ticket';
 import { BeneficiaryCompany } from '../../../_models/beneficiarycompany';
 import { OnInit } from '@angular/core';

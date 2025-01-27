@@ -99,7 +99,32 @@ export class TicketService {
       const url = `${this.baseUrl}Ticket/AddStatusHistory?ticketId=${ticketId}`;
       return this.http.post<{ message: string }>(url, statusHistory);
     }
+
+    updateTicketTranslation(
+      ticketId: number,
+      language: string,
+      languageCode: string,
+      countryCode: string
+    ): Observable<{ message: string }> {
+      const url = `${this.baseUrl}Ticket/UpdateTicketTranslation/${ticketId}`;
+      const body = {
+        language,
+        languageCode,
+        countryCode,
+      };
+      return this.http.put<{ message: string }>(url, body);
+    }  
+
+    updateTDescription(updateDto: { id: number; tDescription: string }): Observable<{ message: string }> {
+      const url = `${this.baseUrl}Ticket/UpdateTDescription`;
+      return this.http.put<{ message: string }>(url, updateDto, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
     
     
+    
+       
+  
 
 }

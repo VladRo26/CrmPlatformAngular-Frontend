@@ -13,4 +13,8 @@ export interface Ticket {
     language?: string; // Language of the ticket (optional)
     languageCode?: string; // Language code of the ticket (optional)
     countryCode?: string; // Country code of the ticket (optional)
+    tLanguage?: string; // Target language of the ticket (optional)
+    tLanguageCode?: string; // Target language code of the ticket (optional)
+    tCountryCode?: string; // Target country code of the ticket (optional)
+    tDescription?: string; // Translated description of the ticket (optional)
   }
