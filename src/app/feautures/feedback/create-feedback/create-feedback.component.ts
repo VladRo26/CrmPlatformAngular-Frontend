@@ -61,11 +61,15 @@ export class CreateFeedbackComponent implements OnInit {
 
     this.ticketService.getTicketsByUserName(this.currentUserName).subscribe({
       next: (data) => {
+        console.log("API Response Data:", data); // Log full response
+    
         this.tickets = data.filter(
           (ticket) =>
             ticket.handlerId !== null &&
-            (ticket.status.toLowerCase() === 'resolved' || ticket.status.toLowerCase() === 'closed')
+            ticket.status?.toLowerCase() === 'closed' // Ensure status is not null
         );
+    
+  
 
         // Disable dropdown if no valid tickets
         this.isDropdownDisabled = this.tickets.length === 0;
@@ -110,8 +114,8 @@ export class CreateFeedbackComponent implements OnInit {
   initForm(): void {
     this.feedbackForm = new FormGroup({
       ticketId: new FormControl('', Validators.required),
-      content: new FormControl('', [Validators.required, Validators.minLength(10)]),
-      rating: new FormControl(5, [Validators.required, Validators.min(1), Validators.max(5)]),
+      content: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.minLength(10)]), // Initially disabled
+      rating: new FormControl(0, [Validators.required, Validators.min(1), Validators.max(5)]),
     });
   }
 
@@ -134,6 +138,17 @@ export class CreateFeedbackComponent implements OnInit {
         this.toastr.error('Failed to submit feedback.');
       },
     });
+  }
+
+  enableMessageInput(): void {
+    const ratingControl = this.feedbackForm.get('rating');
+    const contentControl = this.feedbackForm.get('content');
+  
+    if (ratingControl?.value >= 1) {
+      contentControl?.enable(); // Enable textarea only when rating is 1 or more
+    } else {
+      contentControl?.disable(); // Keep disabled when rating is 0
+    }
   }
 
 }

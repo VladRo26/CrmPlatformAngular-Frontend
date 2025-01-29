@@ -38,24 +38,31 @@
       </div>
     </div>
 
-    <!-- Feedback Content -->
-    <div class="form-group mb-3">
-      <label for="content" class="form-label">Feedback Content</label>
-      <textarea
-        id="content"
-        class="form-control"
-        formControlName="content"
-        placeholder="Enter your feedback"
-        rows="4"
-        required
-      ></textarea>
-    </div>
+  <!-- Rating (Stars) ABOVE the Message -->
+<div class="form-group mb-3">
+  <label for="rating" class="form-label">Rating</label>
+  <p-rating
+    formControlName="rating"
+    stars="5"
+    cancel="false"
+    (onRate)="enableMessageInput()"
+  ></p-rating>
+</div>
 
-    <!-- Rating -->
-    <div class="form-group mb-3">
-      <label for="rating" class="form-label">Rating</label>
-      <p-rating formControlName="rating" stars="5" cancel="true"></p-rating>
-    </div>
+<!-- Feedback Content (Disabled Until Rating Selected) -->
+<div class="form-group mb-3">
+  <label for="content" class="form-label">Feedback Content</label>
+  <textarea
+    id="content"
+    class="form-control"
+    formControlName="content"
+    placeholder="Enter your feedback"
+    rows="4"
+    [disabled]="!feedbackForm.get('rating')?.value" 
+    required
+  ></textarea>
+</div>
+
 
     <!-- Submit Button -->
     <button

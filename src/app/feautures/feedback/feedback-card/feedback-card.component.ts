@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, input, NgZone, ViewChild } from '@angular/core';
 import { Feedback } from '../../../_models/feedback';
 import {MatCardModule} from '@angular/material/card';
 import { DatePipe } from '@angular/common';
@@ -12,13 +12,20 @@ import { UserappService } from '../../../_services/userapp.service';
 import { userApp } from '../../../_models/userapp';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
-
+import { ButtonModule } from 'primeng/button';
+import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
+import { NgxCountriesDropdownModule } from 'ngx-countries-dropdown';
+import { Ticket } from '../../../_models/ticket';
+import { TicketService } from '../../../_services/ticket.service';
+import { Observable } from 'rxjs';
+import { LlmService } from '../../../_services/llm.service';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 @Component({
   selector: 'app-feedback-card',
   standalone: true,
   imports: [MatCardModule,DatePipe,NgIf,PercentPipe,
-    MeterGroupModule,RatingModule,FormsModule],
+    MeterGroupModule,RatingModule,FormsModule,ButtonModule,OverlayPanelModule,NgxCountriesDropdownModule,ProgressBarModule],
   templateUrl: './feedback-card.component.html',
   styleUrl: './feedback-card.component.css'
 })
@@ -26,14 +33,45 @@ export class FeedbackCardComponent implements OnInit {
   feedback = input.required<Feedback>();
   sentiment: FeedbackSentiment | null = null;
   feedbackService = inject(FeedbackService);
+  ticketService = inject(TicketService); // Inject TicketService
+  llmService = inject(LlmService); // Inject LlmService 
   userAppService = inject(UserappService); // Inject UserappService
+  changeDetector = inject(ChangeDetectorRef); // Inject ChangeDetectorRef
+  ngZone = inject(NgZone); // Inject NgZone
+
   userApp: userApp | null = null; // User details for the feedback
   value: any[] = [];
   photoUrl: string = '/user.png'; 
 
+  @ViewChild('translationPanel') translationPanel!: OverlayPanel;
+  isTranslating: boolean = false; // Flag to control progress bar
+
+  selectedTicket!: Ticket | null;
+  translatedMessage: string | null = null;
+  originalContent: string | null = null; // Stores the original content
+  selectedSourceLanguage: string | null = null;
+  selectedSourceLanguageCode: string | null = null;
+  selectedTargetLanguage: string | null = null;
+  selectedTargetLanguageCode: string | null = null;
+  selectedCountyCode: string | null = null;
+
+  selectedCountryConfig = {
+    displayLanguageName: true,
+    hideName: true,
+    hideDialCode: true
+  };
+
+  countryListConfig = {
+    displayLanguageName: true,
+    hideName: true,
+    hideDialCode: true
+  };
+
+
   ngOnInit(): void {
     this.loadSentiment();
     this.loadUserDetails();
+    this.originalContent = this.feedback().content ?? ''; // Store original content
   }
 
   private loadSentiment(): void {
@@ -88,5 +126,70 @@ export class FeedbackCardComponent implements OnInit {
         }
       ];
     }
+  }
+
+  openTranslationPanel(event: Event, ticketId?: number): void {
+    if (!ticketId) return;
+  
+    this.getTicketById(ticketId).subscribe(ticket => {
+      console.log('Ticket Language:', ticket.language, 'Code:', ticket.languageCode);
+  
+      this.selectedTicket = ticket;
+      this.selectedSourceLanguage = ticket.language ?? 'Unknown';
+      this.selectedSourceLanguageCode = ticket.languageCode ?? 'en';
+      this.selectedCountyCode = ticket.countryCode ?? 'US';
+
+      this.translatedMessage = null;
+      this.translationPanel.toggle(event);
+    });
+  }
+  
+
+  getTicketById(ticketId: number): Observable<Ticket> {
+    return this.ticketService.getTicketById(ticketId);
+  }
+
+  handleCountryChange(country: any) {
+    if (country?.language) {
+      this.selectedTargetLanguage = country.language.name;
+      this.selectedTargetLanguageCode = country.language.code;
+    }
+  }
+
+  translateFeedback(): void {
+    console.log("📢 Sending Translation Request...");
+    console.log("🔹 Original Content:", this.feedback().content);
+    console.log("🌍 Source Language:", this.selectedSourceLanguage);
+    console.log("🌎 Target Language:", this.selectedTargetLanguage);
+  
+    if (!this.feedback().content || !this.selectedSourceLanguage || !this.selectedTargetLanguage) {
+      console.error("🚨 Missing content, source language, or target language!");
+      return;
+    }
+  
+    this.isTranslating = true; // ✅ Show progress bar when clicking translate
+    this.translatedMessage = null;
+  
+    this.llmService.translateText(
+      this.feedback().content ?? '',
+      this.selectedSourceLanguage,
+      this.selectedTargetLanguage
+    ).subscribe({
+      next: response => {
+        console.log("✅ Translation API Response:", response);
+  
+        if (response && response.translation) {
+          this.translatedMessage = response.translation.trim();
+        } else {
+          console.warn("⚠️ API response did not contain 'translation' field.");
+        }
+  
+        this.isTranslating = false; // ✅ Hide progress bar after translation
+      },
+      error: err => {
+        console.error("❌ Error calling translation API:", err);
+        this.isTranslating = false; // ✅ Hide progress bar even if error occurs
+      }
+    });
   }
 }
