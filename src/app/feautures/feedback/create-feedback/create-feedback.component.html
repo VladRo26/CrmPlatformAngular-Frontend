@@ -50,6 +50,7 @@
 </div>
 
 <!-- Feedback Content (Disabled Until Rating Selected) -->
+<!-- Feedback Content (Filled Automatically When Feedback is Generated) -->
 <div class="form-group mb-3">
   <label for="content" class="form-label">Feedback Content</label>
   <textarea
@@ -58,10 +59,11 @@
     formControlName="content"
     placeholder="Enter your feedback"
     rows="4"
-    [disabled]="!feedbackForm.get('rating')?.value" 
+    [disabled]="!feedbackForm.get('rating')?.value"
     required
   ></textarea>
 </div>
+
 
 
     <!-- Submit Button -->
@@ -72,5 +74,25 @@
     >
       Submit Feedback
     </button>
+    <button type="button" class="btn btn-secondary ms-2" (click)="openFeedbackOverlay($event)"
+    [disabled]="feedbackForm.get('rating')?.value < 1">
+      Generate Feedback
+    </button>
   </form>
 </div>
+
+<p-overlayPanel #feedbackOverlay [style]="{ width: '40rem' }">
+  <div>
+    <h3>Generate Feedback</h3>
+
+    <label>Describe your experience:</label>
+    <textarea [(ngModel)]="userExperience" class="form-control" rows="3"></textarea>
+
+    <p-button icon="pi pi-pencil" class="mt-2 me-2" [rounded]="true" severity="primary" (click)="generateFeedback()"></p-button>
+
+    <!-- Loading Indicator -->
+    <div *ngIf="isGenerating">
+      <p-progressBar mode="indeterminate" [style]="{ height: '6px', width: '100%' }"></p-progressBar>
+    </div>
+  </div>
+</p-overlayPanel>

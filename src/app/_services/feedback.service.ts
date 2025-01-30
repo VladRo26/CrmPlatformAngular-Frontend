@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Feedback } from '../_models/feedback';
@@ -25,5 +25,24 @@ export class FeedbackService {
       const params = { username, ticketId: ticketId.toString(), content, rating: rating.toString() };
       return this.http.post<Feedback>(`${this.baseUrl}feedback`, {}, { params });
     }
+    generateFeedbackForUser(username: string, ticketId: number, rating: number, userExperience: string): Observable<string> {
+      const url = `${this.baseUrl}Feedback/generate-feedback`;
+    
+      const body = {
+        username: username,
+        ticketId: ticketId,
+        rating: rating,
+        userExperience: userExperience
+      };
+    
+      return this.http.post<string>(url, body, { 
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json', // Use JSON instead of text/plain
+          'Accept': 'application/json'
+        })
+      });
+    }
+    
+    
     
 }
