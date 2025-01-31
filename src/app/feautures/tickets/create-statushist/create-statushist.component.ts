@@ -58,23 +58,22 @@ export class CreateStatushistComponent implements OnInit {
       this.toastr.error('Please select a valid status and provide a valid message.');
       return;
     }
-
+  
     const { status, message } = this.updateStatusForm.value;
-
-    const userRole = this.getUserRole(); // Get the user role dynamically
-
+    const userRole = this.getUserRole(); // Get user role dynamically
+  
     this.ticketService
       .addTicketStatusHistory(this.ticketId, {
         status: status ?? '',
         message: message ?? '',
         updatedByUsername: this.username,
         updatedAt: new Date(),
-        ticketUserRole: userRole, // Use the determined role
+        ticketUserRole: userRole,
       })
       .subscribe({
         next: () => {
           this.toastr.success('Status updated successfully!');
-          this.statusUpdated.emit(); // Notify parent
+          this.statusUpdated.emit(); // Notify `TicketDetailComponent` to refresh
           this.closeDialog.emit(); // Close the dialog
         },
         error: (err) => {
@@ -83,4 +82,6 @@ export class CreateStatushistComponent implements OnInit {
         },
       });
   }
+
+  
 }

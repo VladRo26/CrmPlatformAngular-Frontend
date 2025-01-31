@@ -4,7 +4,10 @@
       <i class="fa fa-ticket-alt"></i> {{ ticket.title ?? '' }}
     </mat-card-title>
     <mat-card-subtitle>
-      Priority: {{ ticket.priority ?? '' }} | Status: {{ ticket.status }}
+      Priority: {{ ticket.priority ?? '' }} |
+      <span [ngClass]="getStatusClass(ticket.status)">
+        Status: {{ ticket.status }}
+      </span>
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
@@ -16,6 +19,24 @@
     <button mat-raised-button color="primary" (click)="translateTicketDescription()">
       Translate Description
     </button>
+    <button 
+    mat-raised-button 
+    color="primary" 
+    (click)="showDialog()" 
+    class="mt-3"
+    [disabled]="ticket.status === 'Closed'">
+    <i class="pi pi-pencil"></i> Update Status
+  </button>
+
+  <!-- Reopen Ticket Button (Visible only when closed) -->
+  <button 
+    *ngIf="ticket.status === 'Closed'"
+    mat-raised-button 
+    color="warn" 
+    class="mt-3"
+    (click)="showReopenDialog()">
+    <i class="pi pi-refresh"></i> Reopen Ticket
+  </button>
   </mat-card-content>
 </mat-card>
 
@@ -123,4 +144,29 @@
     <p>{{ translatedMessage }}</p>
   </div>
 </p-overlayPanel>
+
+
+<p-dialog
+  [(visible)]="reopenVisible"
+  [modal]="true"
+  [style]="{ width: '30rem' }"
+  [dismissableMask]="true"
+  header="Reopen Ticket">
+  
+  <p>Provide a reason for reopening this ticket:</p>
+  <textarea 
+    [(ngModel)]="reopenMessage" 
+    class="form-control"
+    placeholder="Enter reason..."
+    rows="3">
+  </textarea>
+
+  <div class="d-flex justify-content-end gap-2 mt-3">
+    <button mat-button (click)="reopenVisible = false">Cancel</button>
+    <button mat-raised-button color="primary" (click)="reopenTicket()">
+      Confirm Reopen
+    </button>
+  </div>
+
+</p-dialog>
 

@@ -56,68 +56,64 @@ export class CreateFeedbackComponent implements OnInit {
   userExperience: string = ''; // Stores user experience input
   isGenerating = false;
   generatedFeedback: string | null = null;
+  handlerUserName: string | null = null;
 
   ngOnInit(): void {
       this.currentUserName = this.accountService.currentUser()?.userName ?? '';
-      this.fetchTicketsByUserName();
+      this.fetchFeedbackTicketsByUserName();
       this.initForm();
   }
 
-  fetchTicketsByUserName(): void {
-    if (!this.currentUserName) {
-      this.toastr.error('User is not logged in.');
-      return;
-    }
+  handlerUserNames: { [key: number]: string } = {}; // Store handler usernames dynamically
 
-    this.ticketService.getTicketsByUserName(this.currentUserName).subscribe({
-      next: (data) => {
-        console.log("API Response Data:", data); // Log full response
-    
-        this.tickets = data.filter(
-          (ticket) =>
-            ticket.handlerId !== null &&
-            ticket.status?.toLowerCase() === 'closed' // Ensure status is not null
-        );
-    
-  
-
-        // Disable dropdown if no valid tickets
-        this.isDropdownDisabled = this.tickets.length === 0;
-
-        if (this.isDropdownDisabled) {
-          this.toastr.warning(`No valid tickets found for user: ${this.currentUserName}`);
-        }
-      },
-      error: (err) => {
-        console.error('Error fetching tickets:', err);
-        this.toastr.error('Failed to fetch tickets.');
-      },
-    });
+fetchFeedbackTicketsByUserName(): void {
+  if (!this.currentUserName) {
+    this.toastr.error('User is not logged in.');
+    return;
   }
 
+  this.ticketService.getFeedbackTicketsByUserName(this.currentUserName).subscribe({
+    next: (data) => {
+      console.log("API Response Data:", data);
 
-  fetchHandlerDetails(handlerId: number): void {
-    if (!handlerId) {
-      this.handlerUser = undefined; // Clear handler details if no handlerId
-      return;
-    }
+      this.tickets = data;
+      this.isDropdownDisabled = this.tickets.length === 0;
+
+      if (this.isDropdownDisabled) {
+        this.toastr.warning(`No feedback-eligible tickets found for user: ${this.currentUserName}`);
+      } else {
+        // Fetch handler usernames dynamically
+        this.tickets.forEach(ticket => {
+          if (ticket.handlerId && !this.handlerUserNames[ticket.handlerId]) {
+            this.fetchHandlerUsername(ticket.handlerId);
+          }
+        });
+      }
+    },
+    error: (err) => {
+      console.error('Error fetching feedback-eligible tickets:', err);
+      this.toastr.error('Failed to fetch tickets.');
+    },
+  });
+}
+
   
-    this.userappService.getUserappById(handlerId).subscribe({
-      next: (user: userApp | null) => {
-        if (user) {
-          this.handlerUser = user; // Store handler user details
-        } else {
-          this.toastr.warning('Handler details not found.');
-          this.handlerUser = undefined;
-        }
-      },
-      error: (err) => {
-        console.error('Error fetching handler details:', err);
-        this.toastr.error('Failed to fetch handler details.');
-        this.handlerUser = undefined;
-      },
-    });
-  }
+  
+
+fetchHandlerUsername(handlerId: number): void {
+  if (!handlerId) return;
+
+  this.userappService.getUserappById(handlerId).subscribe({
+    next: (user: userApp | null) => {
+      this.handlerUserNames[handlerId] = user ? user.userName : 'No Handler'; // Store username dynamically
+    },
+    error: (err) => {
+      console.error(`Error fetching handler details for handlerId ${handlerId}:`, err);
+      this.handlerUserNames[handlerId] = 'No Handler';
+    },
+  });
+}
+
   
   
 
@@ -135,13 +131,18 @@ export class CreateFeedbackComponent implements OnInit {
       this.toastr.error('Please fill all required fields.');
       return;
     }
-
+  
     const { ticketId, content, rating } = this.feedbackForm.value;
-
+  
     this.feedbackService.createFeedback(this.currentUserName, ticketId, content, rating).subscribe({
       next: (feedback: Feedback) => {
         this.toastr.success('Feedback submitted successfully!');
         this.feedbackForm.reset();
+        
+        // Refresh the page after submission
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000); // Delay to let the toastr message show
       },
       error: (err) => {
         console.error('Error submitting feedback:', err);
@@ -149,6 +150,7 @@ export class CreateFeedbackComponent implements OnInit {
       },
     });
   }
+  
 
   enableMessageInput(): void {
     const ratingControl = this.feedbackForm.get('rating');

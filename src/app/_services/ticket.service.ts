@@ -80,6 +80,11 @@ export class TicketService {
       return this.http.get<Ticket[]>(url);
     }
 
+    getFeedbackTicketsByUserName(username: string): Observable<Ticket[]> {
+      const url = `${this.baseUrl}Ticket/FeedbackByUserName/${username}`;
+      return this.http.get<Ticket[]>(url);
+    }
+
     createTicket(createTicketDto: CreateTicket): Observable<Ticket> {
       const url = `${this.baseUrl}Ticket/CreateTicket`;
       return this.http.post<Ticket>(url, createTicketDto);

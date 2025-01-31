@@ -9,7 +9,7 @@ import {NgxCountriesDropdownModule} from 'ngx-countries-dropdown';
 import { MatButton } from '@angular/material/button';
 import { Button } from 'primeng/button';
 import { DatePipe } from '@angular/common';
-import { NgFor,NgIf } from '@angular/common';
+import { NgFor,NgIf,NgClass } from '@angular/common';
 import { TimelineModule } from 'primeng/timeline';
 import { CardModule } from 'primeng/card';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
@@ -22,6 +22,7 @@ import { LlmService } from '../../../_services/llm.service';
 import { ButtonModule } from 'primeng/button';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ToastrService } from 'ngx-toastr';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-ticket-detail',
@@ -29,7 +30,8 @@ import { ToastrService } from 'ngx-toastr';
   imports: [MatCardModule,MatTableModule,NgIf,NgFor,
      NgxCountriesDropdownModule,MatButton,TimelineModule,
      Button,DatePipe,CardModule,ScrollPanelModule
-     ,MatButtonToggleModule,OverlayPanelModule,NgIf,DialogModule,CreateStatushistComponent,ButtonModule,ProgressBarModule],
+     ,MatButtonToggleModule,OverlayPanelModule,NgIf,DialogModule,
+     CreateStatushistComponent,ButtonModule,ProgressBarModule,FormsModule,NgClass],
   templateUrl: './ticket-detail.component.html',
   styleUrl: './ticket-detail.component.css'
 })
@@ -69,6 +71,8 @@ export class TicketDetailComponent implements OnInit {
   translationLanguageCode: string = 'en'; // Default translation language code (English)
   ticketCountryCode: string | null = null; // Single country code from ticket
   overlayActive: boolean = false; // Tracks whether the overlay is active
+  reopenVisible: boolean = false; // Controls Reopen Dialog visibility
+  reopenMessage: string = ''; // Message for reopening
 
   displayedColumns: string[] = ['status', 'updatedByUserId', 'ticketUserRole', 'message'];
 
@@ -111,8 +115,62 @@ export class TicketDetailComponent implements OnInit {
       this.selectedLanguageName = null;
     }
   }
+
+  showReopenDialog(): void {
+    this.reopenVisible = true;
+  }
+
+  reopenTicket(): void {
+    if (!this.ticket || !this.ticket.id) {
+      this.toastr.error('Ticket ID is missing.', 'Error');
+      return;
+    }
+
+    if (!this.reopenMessage.trim()) {
+      this.toastr.error('Please provide a reason for reopening the ticket.');
+      return;
+    }
+
+    const userRole = this.accountService.currentUser()?.userType === 'SoftwareCompanyUser' ? 'Handler' : 'Creator';
+
+    // Call API to add a new history entry with "Open" status
+    this.ticketService.addTicketStatusHistory(this.ticket.id, {
+      status: 'Open',
+      message: this.reopenMessage,
+      updatedByUsername: this.accountService.currentUser()?.userName || '',
+      updatedAt: new Date(),
+      ticketUserRole: userRole, 
+    }).subscribe({
+      next: () => {
+        this.toastr.success('Ticket reopened successfully!');
+        this.reopenVisible = false; // Close Dialog
+        this.reopenMessage = ''; // Clear input
+        this.handleStatusUpdate(); // Refresh ticket details
+      },
+      error: (err) => {
+        console.error('Error reopening ticket:', err);
+        this.toastr.error('Failed to reopen the ticket.');
+      },
+    });
+  }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'Open':
+        return 'status-open';
+      case 'InProgress':
+        return 'status-in-progress';
+      case 'Resolved':
+        return 'status-resolved';
+      case 'Closed':
+        return 'status-closed';
+      default:
+        return '';
+    }
+  }
   
-  
+
+
 
 
 
@@ -277,9 +335,20 @@ export class TicketDetailComponent implements OnInit {
     }
   
     handleStatusUpdate(): void {
-      this.visible = false;
-      this.loadTicketDetails(); // Refresh ticket details
+      this.visible = false; // Close dialog
+      this.loadTicketDetails(); // Refresh ticket details including the updated status
+      this.ticketService.getTicketHistoryById(this.ticket?.id!).subscribe({
+        next: (history) => {
+          this.ticketHistory = history;
+          this.transformHistoryToTimeline();
+        },
+        error: (err) => {
+          console.error('Failed to load updated ticket history', err);
+          this.toastr.error('Failed to refresh ticket history.', 'Error');
+        },
+      });
     }
+    
     
     showOverlay(message: string, event: Event, overlay: OverlayPanel): void {
       if (!this.selectedLanguageName || !this.ticketOriginalLanguage) {

@@ -4,21 +4,27 @@
   <!-- Feedback Form -->
   <form [formGroup]="feedbackForm" (ngSubmit)="submitFeedback()">
     <!-- Dropdown for Tickets -->
-    <div class="form-group mb-3">
-      <label for="ticketId" class="form-label">Select Ticket</label>
-      <select
-        id="ticketId"
-        class="form-select"
-        formControlName="ticketId"
-        [ngClass]="{ 'disabled-dropdown': isDropdownDisabled }"
-        [attr.disabled]="isDropdownDisabled ? true : null" 
-        required
-      >
-        <option *ngFor="let ticket of tickets" [value]="ticket.id">
-          {{ ticket.id }} - {{ ticket.title || 'No Title' }}
-        </option>
-      </select>
-    </div>
+    <!-- Dropdown for Tickets -->
+<div class="form-group mb-3">
+  <label for="ticketId" class="form-label">Select Ticket</label>
+  <select
+    id="ticketId"
+    class="form-select"
+    formControlName="ticketId"
+    [ngClass]="{ 'disabled-dropdown': isDropdownDisabled }"
+    [attr.disabled]="isDropdownDisabled ? true : null" 
+    required
+  >
+    <option *ngFor="let ticket of tickets" [value]="ticket.id">
+      {{ ticket.id }} - {{ ticket.title || 'No Title' }} - Handler: 
+      <ng-container *ngIf="ticket.handlerId !== undefined && handlerUserNames[ticket.handlerId] as handlerName; else loading">
+        {{ handlerName }}
+      </ng-container>
+      <ng-template #loading>Loading...</ng-template>
+    </option>
+  </select>
+</div>
+
 
     <!-- Handler Details -->
     <div class="form-group mb-3" *ngIf="handlerUser">
