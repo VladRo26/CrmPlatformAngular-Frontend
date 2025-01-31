@@ -1,11 +1,11 @@
 .example-card {
-  max-width: 25rem; /* Approximately 400px */
+  max-width: 30rem; /* Approximately 400px */
   margin: 2rem auto; /* Adjust spacing for responsiveness */
   border: 0.125rem solid #080808; /* Approximately 2px */
   box-shadow: 0 0.125rem 0.25rem rgba(87, 56, 56, 0.1); /* Subtle shadow */
   border-radius: 0.5rem; /* Rounded corners */
   transition: transform 0.2s, box-shadow 0.2s; /* Smooth hover effect */
-  height: 50rem; /* Fixed height for the card */
+  height: 60rem; /* Fixed height for the card */
   display: flex;
   flex-direction: column;
   justify-content: space-between; /* Ensure consistent layout */

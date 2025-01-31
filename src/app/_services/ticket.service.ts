@@ -1,10 +1,12 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Ticket } from '../_models/ticket';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { TicketStatusHistory } from '../_models/ticketstatushistory';
 import { CreateTicket } from '../_models/createticket';
+import { PaginatedResult } from '../_models/pagination';
+import { TicketParams } from '../_models/ticketparams';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +15,9 @@ export class TicketService {
   
     private http = inject(HttpClient);
     baseUrl =  environment.apiUrl;
+    paginatedResult = signal<PaginatedResult<Ticket[]> | null>(null);
+    ticketParams = signal<TicketParams>(new TicketParams());
+    ticketCache = new Map();
 
     getTicketsByHandlerUsername(username: string): Observable<Ticket[]> {
       const url = `${this.baseUrl}Ticket/ByHandlerUsername/${username}`;
@@ -75,10 +80,59 @@ export class TicketService {
       return this.http.get<Ticket[]>(url);
     }
 
-    getTicketsByUserName(username: string): Observable<Ticket[]> {
-      const url = `${this.baseUrl}Ticket/ByUserName/${username}`;
-      return this.http.get<Ticket[]>(url);
-    }
+    // In ticket.service.ts
+getTicketsByUserName(): Observable<PaginatedResult<Ticket[]>> {
+  const cacheKey = Object.values(this.ticketParams()).join('-');
+  const cachedResponse = this.ticketCache.get(cacheKey);
+  if (cachedResponse) {
+    return of(cachedResponse);
+  }
+
+  let params = this.setPaginationHeader(this.ticketParams().pageNumber, this.ticketParams().pageSize);
+
+  if (this.ticketParams().username) {
+    params = params.append('username', this.ticketParams().username ?? '');
+  }
+  if (this.ticketParams().status) {
+    params = params.append('status', this.ticketParams().status ?? '');
+  }
+  if (this.ticketParams().priority) {
+    params = params.append('priority', this.ticketParams().priority ?? '');
+  }
+  if (this.ticketParams().title) {
+    params = params.append('title', this.ticketParams().title ?? '');
+  }
+  if (this.ticketParams().orderBy) {
+    params = params.append('orderBy', this.ticketParams().orderBy ?? '');
+  }
+  // NEW: Append sortDirection
+  if (this.ticketParams().sortDirection) {
+    params = params.append('sortDirection', this.ticketParams().sortDirection ?? '');
+  }
+
+  return this.http.get<Ticket[]>(`${this.baseUrl}Ticket/ByUserName`, { observe: 'response', params }).pipe(
+    map(response => {
+      const paginatedResult: PaginatedResult<Ticket[]> = {
+        items: response.body ?? [],
+        pagination: JSON.parse(response.headers.get('Pagination') ?? '{}')
+      };
+      this.ticketCache.set(cacheKey, paginatedResult);
+      return paginatedResult;
+    }),
+    catchError(error => {
+      console.error('Error fetching tickets:', error);
+      return of({ items: [], pagination: undefined });
+    })
+  );
+}
+
+  private setPaginationHeader(pageNumber: number, pageSize: number) {
+    let params = new HttpParams();
+    params = params.append('pageNumber', pageNumber);
+    params = params.append('pageSize', pageSize);
+    return params;
+  }
+    
 
     getFeedbackTicketsByUserName(username: string): Observable<Ticket[]> {
       const url = `${this.baseUrl}Ticket/FeedbackByUserName/${username}`;
@@ -126,8 +180,7 @@ export class TicketService {
         headers: { 'Content-Type': 'application/json' },
       });
     }
-    
-    
+
     
        
   

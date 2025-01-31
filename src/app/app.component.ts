@@ -12,7 +12,8 @@ import { NgxSpinnerComponent } from 'ngx-spinner';
   standalone: true,
   imports: [RouterOutlet, NavComponent, HomeComponent,NgxSpinnerComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+
 })
 export class AppComponent implements OnInit {
   http = inject(HttpClient);

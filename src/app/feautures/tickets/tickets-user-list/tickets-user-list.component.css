@@ -1,0 +1,95 @@
+/* Main container centers everything and adds spacing */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem;
+  }
+  
+  /* Filter Card Styling */
+  .filter-card {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  
+  .filter-title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Flex container for filter controls */
+  .filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .filter-item {
+    flex: 1 1 200px;
+    min-width: 200px;
+  }
+  
+  /* For the sort options, center the label and controls */
+  .sort-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .sort-label {
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Center the Reset Filters button */
+  .reset-btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Tickets Card Styling */
+  .tickets-card {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  
+  .tickets-title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Grid layout for ticket cards (two per row) */
+  .tickets-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin: 1rem auto;
+  }
+  
+  .ticket-col {
+    width: 100%;
+  }
+  
+  /* Center the pagination */
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  
+  /* Responsive: one column on smaller screens */
+  @media (max-width: 768px) {
+    .tickets-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  

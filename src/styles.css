@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+
 
 html, body {
     height: 100%;
@@ -12,3 +12,9 @@ html, body {
     padding: 1rem;
     box-sizing: border-box;
 }
+
+ngx-spinner {
+    z-index: 9999 !important;
+    position: fixed !important;
+  }
+  
