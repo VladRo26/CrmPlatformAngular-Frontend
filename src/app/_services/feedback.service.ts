@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { Feedback } from '../_models/feedback';
 import { Observable } from 'rxjs';
 import { FeedbackSentiment } from '../_models/feedbacksentiment';
+import { AverageFeedbackSentiment } from '../_models/averagefeedbacksentiment';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,11 @@ export class FeedbackService {
         })
       });
     }
+
+    getAverageSentimentByUsername(username: string): Observable<AverageFeedbackSentiment> {
+      return this.http.get<AverageFeedbackSentiment>(`${this.baseUrl}feedback/sentiment/average/${username}`);
+    }
+    
     
     
     

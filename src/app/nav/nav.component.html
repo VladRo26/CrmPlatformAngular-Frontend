@@ -18,10 +18,7 @@
                 <a [routerLink]="['/usersApp']" routerLinkActive="active"  class="nav-link">See Users</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Dashboard</a>
-              </li>
-              <li class="nav-item">
-                <a [routerLink]="['/error']" routerLinkActive="active"  class="nav-link">Errors</a>
+                <a [routerLink]="['/dashboard']" routerLinkActive="active"  class="nav-link">Dashboard</a>
               </li>
               <li *appHasRole="['Admin']"
               class="nav-item">

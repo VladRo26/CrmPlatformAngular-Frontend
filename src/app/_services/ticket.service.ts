@@ -181,8 +181,17 @@ getTicketsByUserName(): Observable<PaginatedResult<Ticket[]>> {
       });
     }
 
+
+    getTicketsGroupedBySoftwareCompany(username: string): Observable<any[]> {
+      const url = `${this.baseUrl}Ticket/GroupedTicketsBySoftwareCompany/${username}`; // ✅ Correct API Path
+      return this.http.get<any[]>(url);
+    }
+
+    getTicketsGroupedByBeneficiaryCompany(username: string): Observable<any[]> {
+      const url = `${this.baseUrl}Ticket/GroupedTicketsByBeneficiaryCompany/${username}`;
+      return this.http.get<any[]>(url);
+    }
     
-       
-  
+    
 
 }

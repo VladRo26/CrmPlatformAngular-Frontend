@@ -21,6 +21,7 @@ import { ContractSoftwareListComponent } from './feautures/contracts/contract-so
 import { TicketsCompanyListComponent } from './feautures/tickets/tickets-company-list/tickets-company-list.component';
 import { AdminPanelComponent } from './feautures/admin/admin-panel/admin-panel.component';
 import { adminGuard } from './_guards/guards/admin.guard';
+import { DasboardUserComponent } from './feautures/dashboard/dasboard-user/dasboard-user.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -39,6 +40,7 @@ export const routes: Routes = [
             {path:  'contracts', component: ContractListComponent},
             {path:'ticketscontracts', component:ContractSoftwareListComponent},
             {path: 'tickets/contract/:id',component: TicketsCompanyListComponent},
+            {path: 'dashboard',component: DasboardUserComponent},
             {path: 'admin', component: AdminPanelComponent, canActivate: [adminGuard]}
        
         ]

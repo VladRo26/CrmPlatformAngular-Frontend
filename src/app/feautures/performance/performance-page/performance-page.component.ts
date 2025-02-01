@@ -4,6 +4,8 @@ import { AccountService } from '../../../_services/account.service';
 import { TicketService } from '../../../_services/ticket.service';
 import { OnInit } from '@angular/core';
 import { NgIf } from '@angular/common';
+import { FeedbackService } from '../../../_services/feedback.service';
+import { AverageFeedbackSentiment } from '../../../_models/averagefeedbacksentiment';
 
 @Component({
   selector: 'app-performance-page',
@@ -16,15 +18,23 @@ export class PerformancePageComponent implements OnInit {
   @Input() username!: string; // Input property for username
 
   ticketService = inject(TicketService);
+  feedbackService = inject(FeedbackService);
 
   basicData: any; // Chart.js data
   basicOptions: any; // Chart.js options
+  sentimentData: any; // Pie Chart Data for Sentiment
+  sentimentOptions: any; // Pie Chart Options
+  ticketGroupChartData: any; // New Horizontal Bar Chart Data
+  ticketGroupChartOptions: any;
   loading: boolean = true; // Loading state for the chart data
 
  
   ngOnInit(): void {
     if (this.username) {
       this.loadPerformanceData();
+      this.loadSentimentData();  // Load sentiment data
+      this.loadTicketGroupingData();
+
     } else {
       console.error('Username is required for PerformancePageComponent.');
     }
@@ -45,6 +55,28 @@ export class PerformancePageComponent implements OnInit {
       error: (err) => {
         console.error('Error fetching performance data:', err);
         this.loading = false;
+      }
+    });
+  }
+
+  private loadSentimentData(): void {
+    this.feedbackService.getAverageSentimentByUsername(this.username).subscribe({
+      next: (data) => {
+        this.createSentimentChartData(data);
+      },
+      error: (err) => {
+        console.error('Error fetching sentiment data:', err);
+      }
+    });
+  }
+
+  private loadTicketGroupingData(): void {
+    this.ticketService.getTicketsGroupedByBeneficiaryCompany(this.username).subscribe({
+      next: (data) => {
+        this.createGroupedTicketChartData(data);
+      },
+      error: (err) => {
+        console.error('Error fetching grouped ticket data:', err);
       }
     });
   }
@@ -109,4 +141,71 @@ export class PerformancePageComponent implements OnInit {
       }
     };
   }
+
+  private createSentimentChartData(data: AverageFeedbackSentiment): void {
+    this.sentimentData = {
+      labels: ['Positive', 'Neutral', 'Negative'],
+      datasets: [{
+        data: [data.positive, data.neutral, data.negative],
+        backgroundColor: ['#66BB6A', '#FFA726', '#FF7043']
+      }]
+    };
+    this.sentimentOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top' },
+        tooltip: {
+          callbacks: {
+            label: (tooltipItem: any) => `${tooltipItem.label}: ${(tooltipItem.raw * 100).toFixed(2)}%`
+          }
+        }
+      }
+    };
+  }
+
+  private createGroupedTicketChartData(data: any[]): void {
+    const companyNames = data.map(item => item.beneficiaryCompanyName);
+    const ticketStatuses = [...new Set(data.flatMap(company => company.ticketsByStatus.map((status: { status: any; }) => status.status)))];
+
+    const datasets = ticketStatuses.map(status => ({
+      label: status,
+      data: data.map(company => {
+        const statusEntry = company.ticketsByStatus.find((s: { status: any; }) => s.status === status);
+        return statusEntry ? statusEntry.count : 0;
+      }),
+      backgroundColor: this.getRandomColor(),
+    }));
+
+    this.ticketGroupChartData = {
+      labels: companyNames,
+      datasets: datasets
+    };
+
+    this.ticketGroupChartOptions = {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top' },
+        tooltip: {
+          callbacks: {
+            label: (tooltipItem: any) => `${tooltipItem.dataset.label}: ${tooltipItem.raw}`
+          }
+        }
+      },
+      scales: {
+        x: { beginAtZero: true },
+        y: { ticks: { autoSkip: false } }
+      }
+    };
+  }
+
+  private getRandomColor(): string {
+    const colors = ['#42A5F5', '#66BB6A', '#FFA726', '#FF7043', '#AB47BC'];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
+
+  
 }

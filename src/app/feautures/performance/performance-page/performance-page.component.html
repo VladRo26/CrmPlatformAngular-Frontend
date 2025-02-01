@@ -1,7 +1,20 @@
 <div *ngIf="loading" class="loading-indicator">
-    <p>Loading performance data...</p>
+  <p>Loading performance data...</p>
+</div>
+
+<div *ngIf="!loading" class="chart-container">
+  <!-- ✅ Bar Chart for Ticket Statistics -->
+  <div class="chart-item">
+    <p-chart type="bar" [data]="basicData" [options]="basicOptions" class="custom-chart"></p-chart>
   </div>
-  <div *ngIf="!loading">
-    <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
+
+  <!-- ✅ Horizontal Bar Chart for Tickets Grouped by Beneficiary Company -->
+  <div class="chart-item">
+    <p-chart type="bar" [data]="ticketGroupChartData" [options]="ticketGroupChartOptions"></p-chart>
   </div>
-  
+
+  <!-- ✅ Pie Chart for Sentiment Analysis -->
+  <div class="chart-item">
+    <p-chart type="pie" [data]="sentimentData" [options]="sentimentOptions" class="custom-chart"></p-chart>
+  </div>
+</div>
