@@ -16,27 +16,40 @@
       <strong>Description:</strong>
       {{ ticketDescription }}
     </p>
-    <button mat-raised-button color="primary" (click)="translateTicketDescription()">
-      Translate Description
-    </button>
-    <button 
-    mat-raised-button 
-    color="primary" 
-    (click)="showDialog()" 
-    class="mt-3"
-    [disabled]="ticket.status === 'Closed'">
-    <i class="pi pi-pencil"></i> Update Status
-  </button>
+    <div class="button-container">
+      <button mat-raised-button color="primary" class="update-status" (click)="translateTicketDescription()">
+        <i class="pi pi-language"></i> Translate Description
+      </button>
 
-  <!-- Reopen Ticket Button (Visible only when closed) -->
-  <button 
-    *ngIf="ticket.status === 'Closed'"
-    mat-raised-button 
-    color="warn" 
-    class="mt-3"
-    (click)="showReopenDialog()">
-    <i class="pi pi-refresh"></i> Reopen Ticket
-  </button>
+      <button 
+        mat-raised-button 
+        color="primary" 
+        class="update-status" 
+        (click)="showDialog()" 
+        [disabled]="ticket.status === 'Closed'">
+        <i class="pi pi-pencil"></i> Update Status
+      </button>
+
+      <!-- ✅ "Give Feedback" button -->
+      <button 
+        *ngIf="isEligibleForFeedback && ticket.status === 'Closed' && isSoftwareCompanyUser && ticket.handlerId === currentUserId"
+        mat-raised-button 
+        color="accent" 
+        class="give-feedback"
+        (click)="showFeedbackDialog()">
+        <i class="pi pi-star"></i> Give Feedback
+      </button>
+
+      <!-- ✅ Reopen Ticket Button -->
+      <button 
+        *ngIf="ticket.status === 'Closed'"
+        mat-raised-button 
+        color="warn" 
+        class="reopen-ticket"
+        (click)="showReopenDialog()">
+        <i class="pi pi-refresh"></i> Reopen Ticket
+      </button>
+    </div>
   </mat-card-content>
 </mat-card>
 
@@ -168,5 +181,18 @@
     </button>
   </div>
 
+</p-dialog>
+
+<p-dialog [(visible)]="feedbackDialogVisible" [modal]="true" [style]="{ width: '30rem' }" header="Give Feedback">
+  <p>Rate your experience:</p>
+  <p-rating [(ngModel)]="feedbackRating" [cancel]="false"></p-rating>
+
+  <p>Provide feedback:</p>
+  <textarea [(ngModel)]="feedbackContent" class="form-control" placeholder="Enter feedback..." rows="3"></textarea>
+
+  <div class="d-flex justify-content-end gap-2 mt-3">
+    <button mat-button (click)="feedbackDialogVisible = false">Cancel</button>
+    <button mat-raised-button color="primary" (click)="submitFeedback()">Submit</button>
+  </div>
 </p-dialog>
 

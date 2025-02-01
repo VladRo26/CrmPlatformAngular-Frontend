@@ -1,26 +1,53 @@
 .chart-container {
     display: flex;
-    flex-direction: column; /* Stack items in a column */
-    align-items: center; /* Center charts */
-    gap: 2rem; /* Equal spacing between charts */
-    width: 100%;
-    padding: 2rem;
+    flex-direction: column;
+    gap: 20px; /* Add spacing between charts */
+    align-items: center;
   }
   
-  .chart-item {
-    width: 80%; /* Adjust width as needed */
-    max-width: 60rem; /* Prevent charts from being too large */
+  .chart-card {
+    width: 100%;
+    max-width: 600px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .chart-card:hover {
+    transform: scale(1.02);
+  }
+  
+  .chart-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 250px;
   }
   
   .custom-chart {
     width: 100%;
-    height: 40vh; /* Adjust height based on preference */
+    height: 300px;
   }
   
-  .loading-indicator {
+  .no-data-message {
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.1em;
+    color: #888;
     font-weight: bold;
-    color: #666;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    width: 80%;
+    margin: auto;
+  }
+  
+  .no-data-message {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff7043;
+    margin-top: 1rem;
   }
   

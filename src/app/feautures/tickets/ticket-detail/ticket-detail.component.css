@@ -30,3 +30,45 @@
   color: #D32F2F; /* Red */
   font-weight: bold;
 }
+
+.button-container {
+  display: flex;
+  justify-content: center; /* Center all buttons in a row */
+  align-items: center;
+  flex-wrap: nowrap; /* Prevent buttons from wrapping */
+  gap: 15px; /* Space between buttons */
+  margin-top: 15px;
+}
+
+/* ✅ Style for buttons */
+button {
+  min-width: 180px; /* Ensure all buttons have the same width */
+  text-align: center;
+  padding: 10px 15px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Space between icon and text */
+}
+
+/* ✅ Ensures the button icons are properly spaced */
+.update-status, .reopen-ticket, .give-feedback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Space between icon and text */
+}
+
+/* ✅ Ensure the buttons stay in one row on all screen sizes */
+@media (max-width: 768px) {
+  .button-container {
+      flex-wrap: wrap; /* Allow wrapping on very small screens if needed */
+      justify-content: center;
+  }
+
+  button {
+      flex: 1; /* Allow buttons to resize evenly */
+      max-width: 200px; /* Prevent them from stretching too much */
+  }
+}

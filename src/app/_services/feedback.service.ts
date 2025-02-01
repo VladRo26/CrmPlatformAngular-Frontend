@@ -47,8 +47,15 @@ export class FeedbackService {
     getAverageSentimentByUsername(username: string): Observable<AverageFeedbackSentiment> {
       return this.http.get<AverageFeedbackSentiment>(`${this.baseUrl}feedback/sentiment/average/${username}`);
     }
+
+    createFeedbackForBeneficiary(username: string, ticketId: number, content: string, rating: number): Observable<Feedback> {
+      const params = { username, ticketId: ticketId.toString(), content, rating: rating.toString() };
+      return this.http.post<Feedback>(`${this.baseUrl}feedback/software-to-beneficiary`, {}, { params });
+    }
     
-    
+    checkFeedbackEligibility(username: string, ticketId: number): Observable<boolean> {
+      return this.http.get<boolean>(`${this.baseUrl}feedback/check-eligibility/${username}/${ticketId}`);
+    }
     
     
 }

@@ -191,6 +191,19 @@ getTicketsByUserName(): Observable<PaginatedResult<Ticket[]>> {
       const url = `${this.baseUrl}Ticket/GroupedTicketsByBeneficiaryCompany/${username}`;
       return this.http.get<any[]>(url);
     }
+
+    getTicketsGroupedByContract(username: string): Observable<any[]> {
+      const url = `${this.baseUrl}Ticket/GroupedTicketsByContract/${username}`;
+      return this.http.get<any[]>(url);
+    }
+    
+    
+    getTicketsGroupedByUserStatus(username: string): Observable<any[]> {
+      const url = `${this.baseUrl}Ticket/GroupedTicketsByUserStatus/${username}`;
+      return this.http.get<any[]>(url);
+    }
+    
+    
     
     
 

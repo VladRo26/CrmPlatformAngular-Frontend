@@ -1,0 +1,32 @@
+<div *ngIf="loading" class="loading-indicator">
+    <p>Loading performance data...</p>
+  </div>
+  
+  <div *ngIf="!loading" class="chart-container">
+    
+    <!-- ✅ Bar Chart for Tickets per Contract -->
+    <div class="card">
+      <h3>Tickets per Contract</h3>
+      <p-chart *ngIf="contractChartData; else noContractData" type="bar" 
+               [data]="contractChartData" [options]="contractChartOptions" class="custom-chart">
+      </p-chart>
+    </div>
+    
+    <ng-template #noContractData>
+      <p class="no-data-message">You have no tickets assigned to any contract.</p>
+    </ng-template>
+  
+    <!-- ✅ Doughnut Chart for Tickets by Status -->
+    <div class="card">
+      <h3>Tickets by Status</h3>
+      <p-chart *ngIf="statusChartData; else noStatusData" type="doughnut" 
+               [data]="statusChartData" [options]="statusChartOptions" class="custom-chart">
+      </p-chart>
+    </div>
+  
+    <ng-template #noStatusData>
+      <p class="no-data-message">You have no tickets assigned by status.</p>
+    </ng-template>
+  
+  </div>
+  

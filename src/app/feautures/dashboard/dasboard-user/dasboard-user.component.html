@@ -1,15 +1,39 @@
 <div class="dashboard-container">
-
-  <!-- 📌 Buttons for Component Selection -->
-  <div class="button-group">
-    <button pButton label="Performance" icon="pi pi-chart-line" (click)="setSelectedComponent('performance')"></button>
-    <button pButton label="Assign Tickets" icon="pi pi-file" (click)="setSelectedComponent('assignTickets')"></button>
+  <div class="dashboard-header">
+    <h2>Welcome, {{ userName }}</h2>
   </div>
 
-  <!-- 📌 Scrollable & Larger Panel for Content -->
-    <p-panel header="User Dashboard" class="big-panel">
-      <app-performance-page *ngIf="selectedComponent === 'performance'" [username]="userName ?? ''"></app-performance-page>
-      <app-contract-software-list *ngIf="selectedComponent === 'assignTickets'"></app-contract-software-list>
-    </p-panel>
+  <!-- 📌 Navigation Buttons -->
+  <div class="button-group">
+    <p-button *ngIf="userType === 'SoftwareCompanyUser'" label="Performance" (click)="setSelectedComponent('performance')" severity="primary"></p-button>
+    <p-button *ngIf="userType === 'SoftwareCompanyUser'" label="Assign Tickets" (click)="setSelectedComponent('assignTickets')" severity="secondary"></p-button>
+    <p-button label="Feedback" (click)="setSelectedComponent('feedback')" severity="info"></p-button>
+    <p-button *ngIf="userType === 'BeneficiaryCompanyUser'" label="Statistics" (click)="setSelectedComponent('statistics')" severity="primary"></p-button>
+  </div>
 
+  <!-- 📌 PrimeNG Panel with Vertical Scroll -->
+  <p-panel header="Dashboard Section" class="dashboard-panel">
+    <div class="scroll-container">
+      <div class="content-container">
+        
+        <!-- ✅ Dynamic Component Display -->
+        <ng-container *ngIf="selectedComponent === 'performance' && userType === 'SoftwareCompanyUser'">
+          <app-performance-page class="dashboard-content" [username]="userName || ''"></app-performance-page>
+        </ng-container>
+
+        <ng-container *ngIf="selectedComponent === 'assignTickets' && userType === 'SoftwareCompanyUser'">
+          <app-contract-software-list class="dashboard-content"></app-contract-software-list>
+        </ng-container>
+
+        <ng-container *ngIf="selectedComponent === 'statistics' && userType === 'BeneficiaryCompanyUser'">
+          <app-performance-page-beneficiary class="dashboard-content" [username]="userName || ''"></app-performance-page-beneficiary>
+        </ng-container>
+
+        <ng-container *ngIf="selectedComponent === 'feedback' && userId">
+          <app-feedback-user-list class="dashboard-content" [userId]="userId"></app-feedback-user-list>
+        </ng-container>
+
+      </div>
+    </div>
+  </p-panel>
 </div>

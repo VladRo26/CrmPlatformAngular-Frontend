@@ -23,6 +23,9 @@ import { ButtonModule } from 'primeng/button';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
+import { UserappService } from '../../../_services/userapp.service';
+import { FeedbackService } from '../../../_services/feedback.service';
+import { RatingModule } from 'primeng/rating';
 
 @Component({
   selector: 'app-ticket-detail',
@@ -31,22 +34,26 @@ import { FormsModule } from '@angular/forms';
      NgxCountriesDropdownModule,MatButton,TimelineModule,
      Button,DatePipe,CardModule,ScrollPanelModule
      ,MatButtonToggleModule,OverlayPanelModule,NgIf,DialogModule,
-     CreateStatushistComponent,ButtonModule,ProgressBarModule,FormsModule,NgClass],
+     CreateStatushistComponent,ButtonModule,ProgressBarModule,FormsModule,NgClass,RatingModule],
   templateUrl: './ticket-detail.component.html',
   styleUrl: './ticket-detail.component.css'
 })
 export class TicketDetailComponent implements OnInit {
   private ticketService = inject(TicketService);
   accountService = inject(AccountService);
+  private userappService = inject(UserappService);
   private llmService = inject(LlmService); // Inject the LlmService
   private toastr = inject(ToastrService);
   private route = inject(ActivatedRoute);
+  feedbackService = inject(FeedbackService);
   selectedLanguageName: string | null = null;
   ticketDescription: string | null = null; // Holds the displayed ticket description
   isLoadingPage: boolean = true; // Page loading state
   showCountryList: boolean = false; // Show country list after page load
   visible: boolean = false;
   translatedMessage: string | null = null; // Holds the translated message
+
+  
 
 
 
@@ -73,6 +80,13 @@ export class TicketDetailComponent implements OnInit {
   overlayActive: boolean = false; // Tracks whether the overlay is active
   reopenVisible: boolean = false; // Controls Reopen Dialog visibility
   reopenMessage: string = ''; // Message for reopening
+  currentUserId: number = 0;
+  isSoftwareCompanyUser: boolean = false;
+  isEligibleForFeedback: boolean = false;
+
+  feedbackDialogVisible: boolean = false;
+  feedbackContent: string = '';
+  feedbackRating: number = 5; // Default rating
 
   displayedColumns: string[] = ['status', 'updatedByUserId', 'ticketUserRole', 'message'];
 
@@ -168,10 +182,6 @@ export class TicketDetailComponent implements OnInit {
         return '';
     }
   }
-  
-
-
-
 
 
   loadSelectedLanguage() {
@@ -206,13 +216,63 @@ export class TicketDetailComponent implements OnInit {
     this.loadSelectedLanguage(); // Load language from localStorage on init
     this.loadCountryListAfterDelay();
     this.loadTicketDetails();
+    this.loadUserDetails();
+
   }
 
+
+  private loadUserDetails(): void {
+    const username = this.accountService.currentUser()?.userName;
+    if (!username) {
+      this.toastr.error('User not found.', 'Error');
+      return;
+    }
+
+    // ✅ Fetch user details by username to get the ID
+    this.userappService.getUsersapp_username(username).subscribe({
+      next: (user) => {
+        this.currentUserId = user.id;
+        this.isSoftwareCompanyUser = user.userType === 'SoftwareCompanyUser';
+        this.loadTicketDetails(); // Load ticket details after getting user ID
+      },
+      error: (err) => {
+        console.error('Failed to get user details', err);
+        this.toastr.error('Failed to retrieve user details.', 'Error');
+      },
+    });
+  }
+
+  showFeedbackDialog(): void {
+    this.feedbackDialogVisible = true;
+  }
+
+  submitFeedback(): void {
+    if (!this.ticket || !this.ticket.id) {
+      this.toastr.error('Ticket ID is missing.', 'Error');
+      return;
+    }
+
+    const username = this.accountService.currentUser()?.userName || '';
+
+    this.feedbackService.createFeedbackForBeneficiary(username, this.ticket.id, this.feedbackContent, this.feedbackRating)
+      .subscribe({
+        next: () => {
+          this.toastr.success('Feedback submitted successfully.', 'Success');
+          this.feedbackDialogVisible = false;
+          this.feedbackContent = '';
+          this.feedbackRating = 5; 
+        },
+        error: () => this.toastr.error('Failed to submit feedback.', 'Error'),
+      });
+  }
+
+ 
   loadCountryListAfterDelay() {
     setTimeout(() => {
       this.showCountryList = true; // Display the country list after the delay
     }, 2000); // Adjust the delay as needed
   }
+
 
   loadTicketDetails() {
     const ticketId = Number(this.route.snapshot.paramMap.get('id'));
@@ -228,13 +288,16 @@ export class TicketDetailComponent implements OnInit {
           this.selectedLanguageName = ticket.tLanguage ?? ticket.language ?? 'English';
           this.translationLanguageCode = ticket.tLanguageCode ?? 'en';
           this.ticketCountryCode = ticket.tCountryCode ?? ticket.countryCode ?? 'US';
+
+          // ✅ Check if the user is eligible for feedback
+          this.checkFeedbackEligibility(ticketId);
         },
         error: (err) => {
           console.error('Failed to load ticket details', err);
           this.toastr.error('Failed to load ticket details.', 'Error');
         },
       });
-  
+
       this.ticketService.getTicketHistoryById(ticketId).subscribe({
         next: (history) => {
           this.ticketHistory = history;
@@ -247,6 +310,18 @@ export class TicketDetailComponent implements OnInit {
       });
     }
   }
+
+  private checkFeedbackEligibility(ticketId: number): void {
+    this.feedbackService.checkFeedbackEligibility(this.accountService.currentUser()?.userName || '', ticketId).subscribe({
+      next: (isEligible) => {
+        this.isEligibleForFeedback = isEligible;
+      },
+      error: (err) => {
+        console.error('Error checking feedback eligibility:', err);
+      }
+    });
+  }
+
   
   
 

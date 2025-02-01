@@ -19,13 +19,16 @@ import { TimeagoModule } from 'ngx-timeago';
 import { DatePipe } from '@angular/common';
 import { PresenceService } from '../../../../_services/presence.service';
 import { CommonModule } from '@angular/common';
+import { PerformancePageBeneficiaryComponent } from '../../../performance/performance-page-beneficiary/performance-page-beneficiary.component';
+
 @Component({
   selector: 'app-userapp-detail',
   standalone: true,
   imports: [CardModule,ButtonModule,TabViewModule,
     BadgeModule,AvatarModule,ScrollPanelModule,
     RatingModule,FormsModule,NgIf,FeedbackUserListComponent,
-    PerformancePageComponent,MatTabsModule,MatIconModule,TimeagoModule,DatePipe,CommonModule],
+    PerformancePageComponent,MatTabsModule,MatIconModule,
+    TimeagoModule,DatePipe,CommonModule,PerformancePageBeneficiaryComponent],
   templateUrl: './userapp-detail.component.html',
   styleUrl: './userapp-detail.component.css'
   })
@@ -38,7 +41,7 @@ export class UserappDetailComponent implements OnInit {
   userapp?: userApp;
 
 
-
+ 
   ngOnInit(): void {
     this.loadUserapp();
   }

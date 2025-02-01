@@ -1,45 +1,53 @@
+/* 📌 1. Completely Disable Scrolling on the Entire Page */
+html, body {
+  height: 100vh;  /* ✅ Force full viewport height */
+  width: 100vw;   /* ✅ Force full viewport width */
+  margin: 0;
+  padding: 0;
+  overflow: hidden !important;  /* ✅ Prevents page scrolling */
+}
+
+/* 📌 2. Main Dashboard Container (Fits Exactly in Viewport) */
 .dashboard-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 90%;
-  margin: 2rem auto;
+  width: 60vw;
+  max-width: 75rem;
+  height: 70vh;  /* ✅ Ensures it takes full viewport */
+  margin: 0 auto;
+  overflow: hidden;  /* ✅ Prevents scrolling on the container */
 }
 
-.button-group {
-  display: flex;
-  justify-content: center;
-  gap: 1rem; /* Add space between buttons */
-  margin-bottom: 1rem;
-}
-
-.button-group button {
-  font-size: 1.2rem;
-  padding: 0.8rem 1.5rem;
-  border-radius: 0.5rem;
-  transition: 0.3s ease-in-out;
-}
-
-.button-group button:hover {
-  background-color: #007ad9 !important;
-  color: white !important;
-}
-
-/* 📌 Bigger Panel with Scroll */
-.content-panel {
+/* 📌 3. PrimeNG Panel (Fixed Size, No External Scroll) */
+.dashboard-panel {
   width: 100%;
-  max-width: 900px; /* Make the panel wider */
-  height: 500px; /* Adjust height */
-  padding: 1rem;
-  overflow: auto;
-}
-
-.big-panel {
-  width: 100%;
-  min-height: 50rem; /* Ensure the panel has enough height */
-  padding: 2rem;
+  max-width: 75rem;
+  height: 65vh; /* ✅ Fixed height inside viewport */
+  padding: 1.5rem;
   border-radius: 1rem;
-  background-color: #f8f9fa; /* Light grey background */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0.4rem 1rem rgba(0, 0, 0, 0.1);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* ✅ No external scrolling */
+}
+
+/* 📌 4. Scrollable Content (Allows Full Content Visibility) */
+.scroll-container {
+  flex-grow: 1;
+  overflow-y: auto;  /* ✅ Enables vertical scrolling */
+  overflow-x: hidden;  /* ✅ Prevents horizontal scrolling */
+  height: 100%; /* ✅ Takes full space of panel */
+  max-height: 50Vh; /* ✅ More height for internal scrolling */
+  padding-right: 1rem;
+}
+
+
+/* 📌 6. Restrict Component Width */
+.dashboard-content {
+  width: 100% !important;
+  max-width: 70rem;
+  overflow-x: hidden;
 }

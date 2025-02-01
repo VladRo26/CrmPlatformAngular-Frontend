@@ -3,18 +3,40 @@
 </div>
 
 <div *ngIf="!loading" class="chart-container">
+  
   <!-- ✅ Bar Chart for Ticket Statistics -->
-  <div class="chart-item">
-    <p-chart type="bar" [data]="basicData" [options]="basicOptions" class="custom-chart"></p-chart>
-  </div>
+  <p-card class="chart-card">
+    <ng-template pTemplate="header">
+      <h2>Ticket Statistics</h2>
+    </ng-template>
+    <div class="chart-content">
+      <p-chart *ngIf="basicData?.datasets?.length > 0" type="bar" [data]="basicData" [options]="basicOptions" class="custom-chart"></p-chart>
+      <p *ngIf="!basicData?.datasets?.length" class="no-data-message">You have no tickets assigned.</p>
+    </div>
+  </p-card>
 
   <!-- ✅ Horizontal Bar Chart for Tickets Grouped by Beneficiary Company -->
-  <div class="chart-item">
-    <p-chart type="bar" [data]="ticketGroupChartData" [options]="ticketGroupChartOptions"></p-chart>
-  </div>
+  <p-card class="chart-card">
+    <ng-template pTemplate="header">
+      <h2>Tickets by Beneficiary Company</h2>
+    </ng-template>
+    <div class="chart-content">
+      <p-chart *ngIf="ticketGroupChartData?.datasets?.length > 0" type="bar" [data]="ticketGroupChartData" [options]="ticketGroupChartOptions"></p-chart>
+      <p *ngIf="!ticketGroupChartData?.datasets?.length" class="no-data-message">You have no tickets assigned to a beneficiary company.</p>
+    </div>
+  </p-card>
 
-  <!-- ✅ Pie Chart for Sentiment Analysis -->
-  <div class="chart-item">
-    <p-chart type="pie" [data]="sentimentData" [options]="sentimentOptions" class="custom-chart"></p-chart>
+  
+<p-card class="chart-card">
+  <ng-template pTemplate="header">
+    <h2>Feedback Sentiment Analysis</h2>
+  </ng-template>
+  <div class="chart-content">
+    <p *ngIf="noSentimentDataMessage" class="no-data-message">{{ noSentimentDataMessage }}</p>
+    <p-chart *ngIf="sentimentData" type="pie" [data]="sentimentData" [options]="sentimentOptions" class="custom-chart"></p-chart>
   </div>
+</p-card>
+
+  
+
 </div>
