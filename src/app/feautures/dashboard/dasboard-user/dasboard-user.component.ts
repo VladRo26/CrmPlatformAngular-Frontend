@@ -12,13 +12,13 @@ import { userApp } from '../../../_models/userapp';
 import { OnInit } from '@angular/core';
 import { FeedbackUserListComponent } from '../../feedback/feedback-user-list/feedback-user-list.component';
 import { ContractSoftwareListComponent} from '../../contracts/contract-software-list/contract-software-list.component';
-
+import { CreateTicketComponent } from '../../tickets/create-ticket/create-ticket.component';
 @Component({
   selector: 'app-dasboard-user',
   standalone: true,
   imports: [PerformancePageComponent, ContractSoftwareListComponent,
     PanelModule, NgIf, ButtonModule, ScrollPanelModule,
-     PerformancePageBeneficiaryComponent,FeedbackUserListComponent],
+     PerformancePageBeneficiaryComponent,FeedbackUserListComponent,CreateTicketComponent],
   templateUrl: './dasboard-user.component.html',
   styleUrl: './dasboard-user.component.css'
 })
@@ -33,13 +33,13 @@ export class DasboardUserComponent implements OnInit {
 
 
   userType: string | undefined;
-  selectedComponent: 'performance' | 'assignTickets' | 'statistics' | 'feedback';
+  selectedComponent: 'performance' | 'assignTickets' | 'statistics' | 'feedback' | 'createTicket';
+
 
   constructor() {
     this.userName = this.accountService.currentUser()?.userName;
     this.userType = this.accountService.currentUser()?.userType;
 
-    // ✅ Ensure correct default component based on user type
     if (this.userType === 'BeneficiaryCompanyUser') {
       this.selectedComponent = 'statistics';
     } else {
@@ -51,8 +51,8 @@ export class DasboardUserComponent implements OnInit {
     if (this.userName) {
       this.userappService.getUsersapp_username(this.userName).subscribe({
         next: (user) => {
-          this.userApp = user; // ✅ Store the full user object
-          this.userId = user.id; // ✅ Extract and store the user ID
+          this.userApp = user;
+          this.userId = user.id; 
         },
         error: (err) => {
           console.error('Failed to fetch user details:', err);
@@ -61,8 +61,8 @@ export class DasboardUserComponent implements OnInit {
     }
   }
 
-  setSelectedComponent(component: 'performance' | 'assignTickets' | 'statistics' | 'feedback') {
-    console.log("Switching component to:", component); // ✅ Debugging log
+  setSelectedComponent(component: 'performance' | 'assignTickets' | 'statistics' | 'feedback' | 'createTicket') {
+    console.log("Switching component to:", component);
     this.selectedComponent = component;
   }
   

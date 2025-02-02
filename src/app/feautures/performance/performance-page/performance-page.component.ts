@@ -22,6 +22,7 @@ export class PerformancePageComponent implements OnInit {
   feedbackService = inject(FeedbackService);
 
   noSentimentDataMessage: string = ""; // ✅ Holds the no-data message for the sentiment chart
+  noTicketGroupDataMessage: string = ""; // ✅ Holds the no-data message for the ticket grouping chart
 
   basicData: any; // Chart.js data
   basicOptions: any; // Chart.js options
@@ -86,24 +87,26 @@ export class PerformancePageComponent implements OnInit {
 
 
 
-  private loadTicketGroupingData(): void {
-    this.ticketService.getTicketsGroupedByBeneficiaryCompany(this.username).subscribe({
-      next: (response) => {
-        if (!response || !Array.isArray(response) || response.length === 0) {
-          console.warn('No grouped ticket data available:', response);
-          this.ticketGroupChartData = { datasets: [] }; // Prevent empty chart errors, trigger message
-          return;
-        }
-        this.createGroupedTicketChartData(response);
-      },
-      error: (err) => {
-        console.error('Error fetching grouped ticket data:', err);
-        this.ticketGroupChartData = { datasets: [] }; // Prevent empty chart errors, trigger message
+private loadTicketGroupingData(): void {
+  this.ticketService.getTicketsGroupedByBeneficiaryCompany(this.username).subscribe({
+    next: (response: any[]) => { // ✅ Expecting a direct array
+      if (!response || response.length === 0) {
+        console.warn('No grouped ticket data available:', response);
+        this.ticketGroupChartData = null; // ✅ Prevents rendering an empty chart
+        this.noTicketGroupDataMessage = "No tickets assigned to any beneficiary company."; // ✅ Show message
+        return;
       }
-    });
-  }
-  
-  
+      this.noTicketGroupDataMessage = ""; // ✅ Clear message if data exists
+      this.createGroupedTicketChartData(response);
+    },
+    error: (err) => {
+      console.error('Error fetching grouped ticket data:', err);
+      this.ticketGroupChartData = null; // ✅ Prevent chart errors
+      this.noTicketGroupDataMessage = "Error retrieving ticket data."; // ✅ Show error message
+    }
+  });
+}
+
 
   
 private createChartData(data: { username: string; totalTickets: number; resolvedTickets: number; unresolvedTickets: number; ticketsByPriority: { [key: string]: number }; }): void {
@@ -185,12 +188,12 @@ private createGroupedTicketChartData(data: any[]): void {
   }
 
   const companyNames = data.map(item => item.beneficiaryCompanyName);
-  const ticketStatuses = [...new Set(data.flatMap(company => company.ticketsByStatus.map((status: { status: any; }) => status.status)))];
+  const ticketStatuses = [...new Set(data.flatMap(company => company.ticketsByStatus.map((status: { status: any }) => status.status)))];
 
   const datasets = ticketStatuses.map(status => ({
     label: status,
     data: data.map(company => {
-      const statusEntry = company.ticketsByStatus.find((s: { status: any; }) => s.status === status);
+      const statusEntry = company.ticketsByStatus.find((s: { status: any }) => s.status === status);
       return statusEntry ? statusEntry.count : 0;
     }),
     backgroundColor: this.getRandomColor(),
@@ -219,6 +222,7 @@ private createGroupedTicketChartData(data: any[]): void {
     }
   };
 }
+
   private getRandomColor(): string {
     const colors = ['#42A5F5', '#66BB6A', '#FFA726', '#FF7043', '#AB47BC'];
     return colors[Math.floor(Math.random() * colors.length)];

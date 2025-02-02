@@ -61,6 +61,13 @@
             Reset Filters
           </button>
         </div>
+
+          <div *ngIf="userType === 'BeneficiaryCompanyUser'" class="give-feedback-container">
+            <button mat-raised-button color="accent" (click)="navigateToFeedback()">
+              <i class="pi pi-comment"></i> Give Feedback
+            </button>
+          </div>
+  
       </div>
     </mat-card-content>
   </mat-card>

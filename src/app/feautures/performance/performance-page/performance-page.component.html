@@ -15,16 +15,16 @@
     </div>
   </p-card>
 
-  <!-- ✅ Horizontal Bar Chart for Tickets Grouped by Beneficiary Company -->
-  <p-card class="chart-card">
-    <ng-template pTemplate="header">
-      <h2>Tickets by Beneficiary Company</h2>
-    </ng-template>
-    <div class="chart-content">
-      <p-chart *ngIf="ticketGroupChartData?.datasets?.length > 0" type="bar" [data]="ticketGroupChartData" [options]="ticketGroupChartOptions"></p-chart>
-      <p *ngIf="!ticketGroupChartData?.datasets?.length" class="no-data-message">You have no tickets assigned to a beneficiary company.</p>
-    </div>
-  </p-card>
+<p-card class="chart-card">
+  <ng-template pTemplate="header">
+    <h2>Tickets by Beneficiary Company</h2>
+  </ng-template>
+  <div class="chart-content">
+    <p *ngIf="noTicketGroupDataMessage" class="no-data-message">{{ noTicketGroupDataMessage }}</p>
+    <p-chart *ngIf="ticketGroupChartData" type="bar" [data]="ticketGroupChartData" [options]="ticketGroupChartOptions"></p-chart>
+  </div>
+</p-card>
+
 
   
 <p-card class="chart-card">

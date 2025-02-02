@@ -13,6 +13,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tickets-list',
@@ -27,7 +28,9 @@ export class TicketsUserListComponent implements OnInit {
   tickets: Ticket[] = [];
   ticketService = inject(TicketService);
   accountService = inject(AccountService);
+  router = inject(Router);
   username = this.accountService.currentUser()?.userName;
+  userType = this.accountService.currentUser()?.userType;
   ticketParams = this.ticketService.ticketParams();
   pagination: any = null;
 
@@ -64,6 +67,11 @@ export class TicketsUserListComponent implements OnInit {
       this.loadTickets();
     }
   }
+
+  navigateToFeedback(): void {
+    this.router.navigate(['/createFeedback']);
+  }
+
 
   resetFilters(): void {
     // Reset filter values to defaults.

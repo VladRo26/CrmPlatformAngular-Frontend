@@ -426,7 +426,7 @@ export class TicketDetailComponent implements OnInit {
     
     
     showOverlay(message: string, event: Event, overlay: OverlayPanel): void {
-      if (!this.selectedLanguageName || !this.ticketOriginalLanguage) {
+      if (!this.selectedLanguageName || !this.ticket?.language) {
         console.error('Selected language or original language is missing.');
         this.translatedMessage = 'Language selection is missing. Please select a language.';
         overlay.toggle(event);
@@ -439,7 +439,7 @@ export class TicketDetailComponent implements OnInit {
     
       // Call the LlmService for translation
       this.llmService
-        .translateText(message, this.ticketOriginalLanguage, this.selectedLanguageName)
+        .translateText(message, this.ticket?.language, this.selectedLanguageName)
         .subscribe({
           next: (response) => {
             this.translatedMessage = response.translation || 'Translation unavailable.';

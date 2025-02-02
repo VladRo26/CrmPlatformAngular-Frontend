@@ -3,20 +3,24 @@
     <h2>Welcome, {{ userName }}</h2>
   </div>
 
-  <!-- 📌 Navigation Buttons -->
   <div class="button-group">
-    <p-button *ngIf="userType === 'SoftwareCompanyUser'" label="Performance" (click)="setSelectedComponent('performance')" severity="primary"></p-button>
-    <p-button *ngIf="userType === 'SoftwareCompanyUser'" label="Assign Tickets" (click)="setSelectedComponent('assignTickets')" severity="secondary"></p-button>
-    <p-button label="Feedback" (click)="setSelectedComponent('feedback')" severity="info"></p-button>
-    <p-button *ngIf="userType === 'BeneficiaryCompanyUser'" label="Statistics" (click)="setSelectedComponent('statistics')" severity="primary"></p-button>
+    <p-button icon="pi pi-chart-bar" *ngIf="userType === 'SoftwareCompanyUser'" (click)="setSelectedComponent('performance')" severity="primary"/>
+
+
+    <p-button icon="pi pi-clipboard"*ngIf="userType === 'SoftwareCompanyUser'" (click)="setSelectedComponent('assignTickets')" severity="secondary"/>
+
+    <p-button icon="pi pi-comments" (click)="setSelectedComponent('feedback')" severity="info"/>
+
+
+    <p-button icon="pi pi-chart-pie" *ngIf="userType === 'BeneficiaryCompanyUser'" (click)="setSelectedComponent('statistics')" severity="primary"/>
+
+    <p-button icon="pi pi-pencil" *ngIf="userType === 'BeneficiaryCompanyUser'" (click)="setSelectedComponent('createTicket')" severity="success"/>
   </div>
 
-  <!-- 📌 PrimeNG Panel with Vertical Scroll -->
   <p-panel header="Dashboard Section" class="dashboard-panel">
     <div class="scroll-container">
       <div class="content-container">
         
-        <!-- ✅ Dynamic Component Display -->
         <ng-container *ngIf="selectedComponent === 'performance' && userType === 'SoftwareCompanyUser'">
           <app-performance-page class="dashboard-content" [username]="userName || ''"></app-performance-page>
         </ng-container>
@@ -31,6 +35,10 @@
 
         <ng-container *ngIf="selectedComponent === 'feedback' && userId">
           <app-feedback-user-list class="dashboard-content" [userId]="userId"></app-feedback-user-list>
+        </ng-container>
+
+        <ng-container *ngIf="selectedComponent === 'createTicket' && userType === 'BeneficiaryCompanyUser'">
+          <app-create-ticket class="dashboard-content"></app-create-ticket>
         </ng-container>
 
       </div>

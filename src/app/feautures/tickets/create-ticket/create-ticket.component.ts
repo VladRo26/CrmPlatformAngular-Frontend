@@ -15,11 +15,17 @@ import { TableModule } from 'primeng/table';
 import { DragDropModule } from 'primeng/dragdrop';
 import { CommonModule } from '@angular/common';
 import {NgxCountriesDropdownModule} from 'ngx-countries-dropdown';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-create-ticket',
   standalone: true,
-  imports: [CurrencyPipe, ReactiveFormsModule, NgFor, NgIf,TableModule,DragDropModule,CommonModule,NgxCountriesDropdownModule],
+  imports: [CurrencyPipe, ReactiveFormsModule, NgFor, NgIf,TableModule,
+    DragDropModule,CommonModule,NgxCountriesDropdownModule,MatFormFieldModule,
+    MatInputModule,MatButtonModule,MatSelectModule],
   templateUrl: './create-ticket.component.html',
   styles: [
     `:host ::ng-deep {
@@ -155,34 +161,42 @@ console.log(this.createTicketForm.status);
 
   submitTicket(): void {
     if (this.createTicketForm.invalid || !this.selectedContract) {
-      this.toastr.error('Please fill all required fields and select a contract.');
-      return;
+        this.toastr.error('Please fill all required fields and select a contract.');
+        return;
     }
 
     if (!this.currentUser) {
-      this.toastr.error('Current user is not available.');
-      return;
+        this.toastr.error('Current user is not available.');
+        return;
     }
 
     const ticket: CreateTicket = {
-      ...this.createTicketForm.value,
-      contractId: this.selectedContract.id,
-      creatorId: this.currentUser.id,
+        ...this.createTicketForm.value,
+        contractId: this.selectedContract.id,
+        creatorId: this.currentUser.id,
     };
 
     this.ticketService.createTicket(ticket).subscribe({
-      next: () => {
-        this.toastr.success('Ticket created successfully!');
-        this.createTicketForm.reset();
-        this.createTicketForm.patchValue({ status: 'Open', language: 'English'}); // Reset fields
-        this.selectedContract = null;
-      },
-      error: (err) => {
-        console.error('Error creating ticket:', err);
-        this.toastr.error('Failed to create ticket.');
-      },
+        next: () => {
+            this.toastr.success('Ticket created successfully!');
+
+            // ✅ Reset form fields
+            this.createTicketForm.reset();
+            this.createTicketForm.patchValue({ status: 'Open', language: 'English' });
+            this.selectedContract = null;
+
+            // ✅ Refresh the page after 1 second to show updates
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        },
+        error: (err) => {
+            console.error('Error creating ticket:', err);
+            this.toastr.error('Failed to create ticket.');
+        },
     });
-  }
+}
+
 
  
 

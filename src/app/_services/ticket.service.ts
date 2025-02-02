@@ -189,9 +189,9 @@ getTicketsByUserName(): Observable<PaginatedResult<Ticket[]>> {
 
     getTicketsGroupedByBeneficiaryCompany(username: string): Observable<any[]> {
       const url = `${this.baseUrl}Ticket/GroupedTicketsByBeneficiaryCompany/${username}`;
-      return this.http.get<any[]>(url);
-    }
-
+      return this.http.get<any[]>(url); // ✅ Now API returns a direct array
+  }
+  
     getTicketsGroupedByContract(username: string): Observable<any[]> {
       const url = `${this.baseUrl}Ticket/GroupedTicketsByContract/${username}`;
       return this.http.get<any[]>(url);

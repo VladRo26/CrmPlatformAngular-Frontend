@@ -170,36 +170,82 @@ fetchHandlerUsername(handlerId: number): void {
   }
 
   generateFeedback(): void {
-    if (!this.feedbackForm.get('rating')?.value) {
-      this.toastr.error("Please select a rating before generating feedback.");
-      return;
+    const ticketId = this.feedbackForm.get('ticketId')?.value;
+    const rating = this.feedbackForm.get('rating')?.value;
+
+    if (!ticketId || !rating) {
+        this.toastr.error("Please select a ticket and rating before generating feedback.");
+        return;
     }
-  
+
+    const selectedTicket = this.tickets.find(ticket => ticket.id === Number(ticketId));
+
+    if (!selectedTicket) {
+        this.toastr.error("Invalid ticket selected.");
+        return;
+    }
+
+    if (!selectedTicket.handlerId) {
+        this.toastr.error("No handler assigned to this ticket.");
+        return;
+    }
+
+    const handlerId = selectedTicket.handlerId;
+
+    // ✅ Check if handler username is already stored
+    if (this.handlerUserNames[handlerId]) {
+        this.processFeedbackGeneration(this.handlerUserNames[handlerId], ticketId, rating);
+    } else {
+        // ✅ Fetch handler username if not already stored
+        this.userappService.getUserappById(handlerId).subscribe({
+            next: (user: userApp | null) => {
+                if (user) {
+                    this.handlerUserNames[handlerId] = user.userName;
+                    this.processFeedbackGeneration(user.userName, ticketId, rating);
+                } else {
+                    this.toastr.error("Handler not found.");
+                }
+            },
+            error: (err) => {
+                console.error(`Error fetching handler details for handlerId ${handlerId}:`, err);
+                this.toastr.error("Error retrieving handler information.");
+            }
+        });
+    }
+}
+
+
+private processFeedbackGeneration(handlerUsername: string, ticketId: number, rating: number): void {
     this.isGenerating = true;
     this.generatedFeedback = ''; // Clear previous feedback
-  
+
     this.feedbackService.generateFeedbackForUser(
-      this.currentUserName,
-      this.feedbackForm.get('ticketId')?.value,
-      this.feedbackForm.get('rating')?.value,
-      this.userExperience
+        handlerUsername,
+        ticketId,
+        rating,
+        this.userExperience
     ).subscribe({
-      next: (feedback) => {
-        this.generatedFeedback = feedback;
-        this.toastr.success("Feedback generated successfully!");
-  
-        // Automatically fill the textarea with the generated feedback
-        this.feedbackForm.get('content')?.setValue(feedback);
-      },
-      error: (err) => {
-        console.error("Error generating feedback:", err);
-        this.toastr.error("Failed to generate feedback.");
-      },
-      complete: () => {
-        this.isGenerating = false;
-      }
+        next: (feedback) => {
+            this.generatedFeedback = feedback;
+            this.toastr.success("Feedback generated successfully!");
+
+            // Automatically fill the textarea with the generated feedback
+            this.feedbackForm.get('content')?.setValue(feedback);
+        },
+        error: (err) => {
+            console.error("Error generating feedback:", err);
+            this.toastr.error("Failed to generate feedback.");
+        },
+        complete: () => {
+            this.isGenerating = false;
+        }
     });
-  }
+}
+
+
+
+
+ 
   
 
 }
