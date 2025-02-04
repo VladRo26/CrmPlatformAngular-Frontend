@@ -6,7 +6,7 @@
   [responsiveOptions]="responsiveOptions"
   (onPage)="handlePageChange($event)">
   <ng-template let-contract pTemplate="item">
-    <div class="border-1 surface-border border-round m-2 p-3">
+    <div>
       <app-contract-card [contract]="contract"></app-contract-card>
     </div>
   </ng-template>
@@ -17,9 +17,7 @@
   <p>No contracts available for this company.</p>
 </div>
 
-<div *ngIf="loading" class="loading">
-  <p>Loading contracts...</p>
-</div>
+
 
 <div class="actions" *ngIf="contracts.length">
   <button class="btn btn-primary" (click)="navigateToTickets()">Select Contract</button>

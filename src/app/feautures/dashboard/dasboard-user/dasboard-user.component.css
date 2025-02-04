@@ -18,7 +18,7 @@ html, body {
   justify-content: center;
   width: 80vw;
   max-width: 90rem;
-  height: 70vh;  /* ✅ Ensures it takes full viewport */
+  height: 90vh;  /* ✅ Ensures it takes full viewport */
   margin: 0 auto;
   overflow: hidden;  /* ✅ Prevents scrolling on the container */
 }
@@ -26,8 +26,8 @@ html, body {
 /* 📌 3. PrimeNG Panel (Fixed Size, No External Scroll) */
 .dashboard-panel {
   width: 100%;
-  max-width: 85rem;
-  height: 85vh; /* ✅ Fixed height inside viewport */
+  max-width: 95rem;
+  height: 95vh; /* ✅ Fixed height inside viewport */
   padding: 3rem;
   border-radius: 1rem;
   box-shadow: 0px 0.4rem 1rem rgba(0, 0, 0, 0.1);

@@ -39,7 +39,7 @@ export class TicketsUserListComponent implements OnInit {
       console.error('Username is not available.');
       return;
     }
-    // Set a default filter (for example, show non-closed tickets)
+
     if (!this.ticketParams.status) {
       this.ticketParams.status = 'notClosed';
     }
@@ -47,7 +47,6 @@ export class TicketsUserListComponent implements OnInit {
   }
   
   loadTickets(): void {
-    // Always ensure the username is set.
     this.ticketParams.username = this.username;
     this.ticketService.getTicketsByUserName().subscribe({
       next: (result) => {

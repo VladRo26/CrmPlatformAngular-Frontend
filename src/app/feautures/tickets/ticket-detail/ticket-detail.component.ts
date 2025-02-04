@@ -281,15 +281,12 @@ export class TicketDetailComponent implements OnInit {
         next: (ticket) => {
           this.ticket = ticket;
   
-          // Always load tdescription if it exists, otherwise fallback to description
           this.ticketDescription = ticket.tDescription ?? ticket.description ?? null;
   
-          // Additional properties
           this.selectedLanguageName = ticket.tLanguage ?? ticket.language ?? 'English';
           this.translationLanguageCode = ticket.tLanguageCode ?? 'en';
           this.ticketCountryCode = ticket.tCountryCode ?? ticket.countryCode ?? 'US';
 
-          // ✅ Check if the user is eligible for feedback
           this.checkFeedbackEligibility(ticketId);
         },
         error: (err) => {
@@ -428,16 +425,17 @@ export class TicketDetailComponent implements OnInit {
     showOverlay(message: string, event: Event, overlay: OverlayPanel): void {
       if (!this.selectedLanguageName || !this.ticket?.language) {
         console.error('Selected language or original language is missing.');
+        console.log('Selected language:', this.selectedLanguageName);
         this.translatedMessage = 'Language selection is missing. Please select a language.';
         overlay.toggle(event);
         return;
       }
     
       this.translatedMessage = null; // Clear previous translations
+      this.selectedLanguageName = this.ticket.tLanguage ?? this.ticket.language; // Set the selected language
       this.overlayActive = true; // Set the overlay active state
       overlay.toggle(event); // Open the overlay
     
-      // Call the LlmService for translation
       this.llmService
         .translateText(message, this.ticket?.language, this.selectedLanguageName)
         .subscribe({
