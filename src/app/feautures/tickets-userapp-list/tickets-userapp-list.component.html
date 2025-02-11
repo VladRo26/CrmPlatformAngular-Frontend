@@ -1,0 +1,54 @@
+<div class="main-container">
+  <!-- Filter Card -->
+  <mat-card class="filter-card">
+    <mat-card-title>Filter Tickets</mat-card-title>
+    <mat-card-content>
+      <div class="filter-container">
+        <!-- Filter controls (status, priority, search, etc.) -->
+        <mat-form-field appearance="fill" class="filter-item">
+          <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="ticketParams.status" (selectionChange)="loadTickets()">
+            <mat-option value="notClosed">Not Closed</mat-option>
+            <mat-option value="all">All Statuses</mat-option>
+            <mat-option value="Open">Open</mat-option>
+            <mat-option value="InProgress">In Progress</mat-option>
+            <mat-option value="Resolved">Resolved</mat-option>
+            <mat-option value="Closed">Closed</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!-- More filter controls can go here -->
+        <button mat-raised-button color="primary" (click)="resetFilters()">Reset Filters</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Tickets Card -->
+  <mat-card class="tickets-card">
+    <mat-card-title>Tickets</mat-card-title>
+    <mat-card-content>
+      <div class="tickets-grid">
+        <ng-container *ngFor="let ticket of tickets; trackBy: trackTicket">
+          <div class="ticket-col">
+            <!-- Call the ticket-userapp-card component for each ticket -->
+            <app-tickets-userapp-card [ticket]="ticket"></app-tickets-userapp-card>
+          </div>
+        </ng-container>
+      </div>
+      <!-- Pagination -->
+      <div *ngIf="pagination" class="pagination-container">
+        <pagination
+          [boundaryLinks]="true"
+          [totalItems]="pagination.totalItems"
+          [itemsPerPage]="pagination.itemsPerPage"
+          (pageChanged)="pageChanged($event)"
+          [(ngModel)]="ticketParams.pageNumber"
+          [maxSize]="10"
+          previousText="&lsaquo;"
+          nextText="&rsaquo;"
+          firstText="&laquo;"
+          lastText="&raquo;">
+        </pagination>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

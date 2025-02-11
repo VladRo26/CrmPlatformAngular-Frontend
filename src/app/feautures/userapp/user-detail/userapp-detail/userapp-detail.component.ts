@@ -20,18 +20,18 @@ import { DatePipe } from '@angular/common';
 import { PresenceService } from '../../../../_services/presence.service';
 import { CommonModule } from '@angular/common';
 import { PerformancePageBeneficiaryComponent } from '../../../performance/performance-page-beneficiary/performance-page-beneficiary.component';
-
+import { TicketsUserappListComponent } from '../../../tickets-userapp-list/tickets-userapp-list.component';
 @Component({
   selector: 'app-userapp-detail',
   standalone: true,
-  imports: [CardModule,ButtonModule,TabViewModule,
-    BadgeModule,AvatarModule,ScrollPanelModule,
-    RatingModule,FormsModule,NgIf,FeedbackUserListComponent,
-    PerformancePageComponent,MatTabsModule,MatIconModule,
-    TimeagoModule,DatePipe,CommonModule,PerformancePageBeneficiaryComponent],
+  imports: [CardModule, ButtonModule, TabViewModule,
+    BadgeModule, AvatarModule, ScrollPanelModule,
+    RatingModule, FormsModule, NgIf, FeedbackUserListComponent,
+    PerformancePageComponent, MatTabsModule, MatIconModule,
+    TimeagoModule, DatePipe, CommonModule, PerformancePageBeneficiaryComponent, TicketsUserappListComponent],
   templateUrl: './userapp-detail.component.html',
   styleUrl: './userapp-detail.component.css'
-  })
+  }) 
 
 
 export class UserappDetailComponent implements OnInit {

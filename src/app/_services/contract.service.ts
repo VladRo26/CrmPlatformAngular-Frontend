@@ -25,4 +25,8 @@ export class ContractService {
     const url = `${this.baseUrl}Contract/by-software?softwareCompanyName=${encodeURIComponent(softwareCompanyName)}`;
     return this.http.get<Contract[]>(url);
   }
+
+  getContractByTicketId(ticketId: number): Observable<Contract> {
+    return this.http.get<Contract>(`${this.baseUrl}Contract/by-ticket/${ticketId}`);
+  }
 }
