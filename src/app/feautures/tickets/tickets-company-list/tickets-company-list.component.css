@@ -1,7 +1,81 @@
+/* Handler Photo Styling */
 .handler-photo {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
+  width: 2.5rem;       /* ~40px if 1rem = 16px */
+  height: 2.5rem;
+  border-radius: 50%;
+  margin-right: 0.625rem;  /* ~10px */
+}
+
+/* Main Container */
+.main-container {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Filter Card */
+.filter-card {
+  width: 90vw;
+  max-width: 60rem;      /* ~960px */
+  margin: 0 auto;
+  padding: 1rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+}
+
+/* Filter Title */
+.filter-title {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Filter Rows */
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* For the sort-by row, center content */
+.sort-by-row {
+  justify-content: center;
+  align-items: center;
+}
+
+/* Uniform styling for filter items */
+.filter-item {
+  flex: 1 1 20rem;
+  max-width: 25rem;
+}
+
+/* Reset Button Row */
+.reset-btn-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+/* Tickets Card */
+.tickets-card {
+  width: 90vw;
+  max-width: 70rem;
+  margin: 0 auto;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 40rem) {  /* ~640px */
+  .filter-row {
+    flex-direction: column;
+    align-items: stretch;
   }
-  
+  .filter-item {
+    max-width: 100%;
+  }
+  .reset-btn-row {
+    margin-top: 0.5rem;
+  }
+}

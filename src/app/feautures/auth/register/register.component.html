@@ -1,7 +1,7 @@
 <ngx-particles [id]="id" [options]="particlesOptions" (particlesLoaded)="particlesService.particlesLoaded($event)"></ngx-particles>
 
-<div class="container d-flex justify-content-center align-items-center vh-100">
-  <div class="card p-4 mt-5 shadow-sm bg-opacity rounded-card">
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="card p-4 shadow-sm bg-opacity rounded-card">
     <div class="card-body rounded shadow">
       <form [formGroup]="registerForm"  (ngSubmit)="register()" class="p-4">
         <h2 class="mb-4 text-center">Register</h2>
@@ -23,14 +23,35 @@
 
         <!-- Last Name -->
         <div class="form-group mb-3">
-          <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName">
+          <input 
+            [class.is-invalid]="registerForm.get('lastName')?.errors && registerForm.get('lastName')?.touched"
+            type="text" 
+            class="form-control" 
+            placeholder="Last Name" 
+            formControlName="lastName">
+          <div class="invalid-feedback" *ngIf="registerForm.get('lastName')?.errors && registerForm.get('lastName')?.touched">
+            Last Name is required!
+          </div>
         </div>
 
         <!-- Email -->
         <div class="form-group mb-3">
-          <input type="email" class="form-control" placeholder="Email" formControlName="email">
+          <input 
+            [class.is-invalid]="registerForm.get('email')?.errors && registerForm.get('email')?.touched"
+            type="email" 
+            class="form-control" 
+            placeholder="Email" 
+            formControlName="email">
+          <div class="invalid-feedback" *ngIf="registerForm.get('email')?.errors && registerForm.get('email')?.touched">
+            <div *ngIf="registerForm.get('email')?.hasError('required')">
+              Email is required!
+            </div>
+            <div *ngIf="registerForm.get('email')?.hasError('email')">
+              Please enter a valid email!
+            </div>
+          </div>
         </div>
-
+        
         <div class="form-group mb-3">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Hire Date</mat-label>

@@ -7,6 +7,7 @@ import { TicketStatusHistory } from '../_models/ticketstatushistory';
 import { CreateTicket } from '../_models/createticket';
 import { PaginatedResult } from '../_models/pagination';
 import { TicketParams } from '../_models/ticketparams';
+import { TicketContractsParams } from '../_models/ticketcontractsparams';
 
 @Injectable({
   providedIn: 'root'
@@ -81,7 +82,7 @@ export class TicketService {
     }
 
     // In ticket.service.ts
-getTicketsByUserName(): Observable<PaginatedResult<Ticket[]>> {
+  getTicketsByUserName(): Observable<PaginatedResult<Ticket[]>> {
   const cacheKey = Object.values(this.ticketParams()).join('-');
   const cachedResponse = this.ticketCache.get(cacheKey);
   if (cachedResponse) {
@@ -124,7 +125,7 @@ getTicketsByUserName(): Observable<PaginatedResult<Ticket[]>> {
       return of({ items: [], pagination: undefined });
     })
   );
-}
+  }
 
   private setPaginationHeader(pageNumber: number, pageSize: number) {
     let params = new HttpParams();
@@ -144,11 +145,38 @@ getTicketsByUserName(): Observable<PaginatedResult<Ticket[]>> {
       return this.http.post<Ticket>(url, createTicketDto);
     }
 
-    getTicketsByContractId(contractId: number): Observable<Ticket[]> {
+    getTicketsByContractId(contractId: number, paramsObj: TicketContractsParams): Observable<PaginatedResult<Ticket[]>> {
       const url = `${this.baseUrl}Ticket/ByContract/${contractId}`;
-      return this.http.get<Ticket[]>(url);
+      let params = new HttpParams()
+        .append('pageNumber', paramsObj.pageNumber.toString())
+        .append('pageSize', paramsObj.pageSize.toString());
+      
+      if (paramsObj.sortBy) {
+        params = params.append('sortBy', paramsObj.sortBy);
+      }
+      if (paramsObj.sortDirection) {
+        params = params.append('sortDirection', paramsObj.sortDirection);
+      }
+      if (paramsObj.handlerUsername) {
+        params = params.append('handlerUsername', paramsObj.handlerUsername);
+      }
+      
+      return this.http.get<Ticket[]>(url, { observe: 'response', params }).pipe(
+        map(response => {
+          const paginatedResult: PaginatedResult<Ticket[]> = {
+            items: response.body ?? [],
+            pagination: JSON.parse(response.headers.get('Pagination') ?? '{}')
+          };
+          return paginatedResult;
+        }),
+        catchError(error => {
+          console.error('Error fetching tickets by contract:', error);
+          return of({ items: [], pagination: undefined });
+        })
+      );
     }
-
+    
+    
     takeOverTicket(ticketId: number, handlerId: number): Observable<any> {
       const url = `${this.baseUrl}Ticket/TakeOver/${ticketId}`;
       return this.http.put(url, null, { params: { handlerId } });

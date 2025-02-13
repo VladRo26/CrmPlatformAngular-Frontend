@@ -9,12 +9,23 @@ import { NgFor } from '@angular/common';
 import { NgIf } from '@angular/common';
 import { userApp } from '../../../_models/userapp';
 import { AccountService } from '../../../_services/account.service';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatButtonModule } from '@angular/material/button';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { TicketContractsParams } from '../../../_models/ticketcontractsparams';
+import {MatCardModule} from '@angular/material/card';
+import { FormsModule } from '@angular/forms';
+import { PaginatedResult } from '../../../_models/pagination';
 
 @Component({
   selector: 'app-tickets-company-list',
   standalone: true,
-  imports: [TableModule,NgFor,NgIf],
+  imports: [TableModule,NgFor,NgIf,MatCardModule,
+    MatPaginatorModule,MatButtonModule,MatButtonToggleModule,
+    MatInputModule,MatSelectModule,MatFormFieldModule,FormsModule],
   templateUrl: './tickets-company-list.component.html',
   styleUrl: './tickets-company-list.component.css'
 })
@@ -28,27 +39,35 @@ export class TicketsCompanyListComponent implements OnInit {
   contractId: number | null = null;
   handlers: { [key: number]: userApp | null } = {}; // Store handler details by their IDs
   loading = true;
+  pagination: any;
+  ticketParams: TicketContractsParams = new TicketContractsParams();
+  userType = this.accountService.currentUser()?.userType;
+
+
+
 
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.contractId = +params['id']; // Extract contract ID from the URL
+      this.contractId = +params['id'];
       if (this.contractId) {
-        this.loadTickets(this.contractId);
+        this.loadTickets();
       }
     });
   }
 
 
-  loadTickets(contractId: number): void {
-    this.ticketService.getTicketsByContractId(contractId).subscribe({
-      next: tickets => {
-        this.tickets = tickets;
+  
+  loadTickets(): void {
+    if (!this.contractId) return;
+    this.loading = true;
+    this.ticketService.getTicketsByContractId(this.contractId, this.ticketParams).subscribe({
+      next: (paginatedResult: PaginatedResult<Ticket[]>) => {
+        this.tickets = paginatedResult.items ?? [];
+        this.pagination = paginatedResult.pagination;
         this.loading = false;
-
-        // Load handler details for tickets with a handlerId
-        this.tickets
-          .filter(ticket => ticket.handlerId)
+        // Load handler details for tickets that have a handlerId
+        this.tickets.filter(ticket => ticket.handlerId)
           .forEach(ticket => this.loadHandler(ticket.handlerId!));
       },
       error: err => {
@@ -58,23 +77,37 @@ export class TicketsCompanyListComponent implements OnInit {
     });
   }
 
+  applyFilters(): void {
+    this.ticketParams.pageNumber = 1; // Reset to the first page on filter change
+    this.loadTickets();
+  }
+
+  resetFilters(): void {
+    this.ticketParams = new TicketContractsParams();
+    this.loadTickets();
+  }
+
+  pageChanged(event: any): void {
+    this.ticketParams.pageNumber = Math.floor(event.first / event.rows) + 1;
+    this.ticketParams.pageSize = event.rows;
+    this.loadTickets();
+  }
 
 
   loadHandler(handlerId: number): void {
     if (!this.handlers[handlerId]) {
       this.userappService.getUserappById(handlerId).subscribe({
-        next: (user) => {
-          if (user) {
-            this.handlers[handlerId] = user;
-          } else {
-            console.warn(`Handler with ID ${handlerId} not found.`);
-            this.handlers[handlerId] = null; // Mark as not found
-          }
-        },
-        error: (err) => console.error(`Error fetching user with ID ${handlerId}:`, err),
+        next: (user) => { this.handlers[handlerId] = user; },
+        error: (err) => console.error(`Error fetching user with ID ${handlerId}:`, err)
       });
     }
   }
+
+  trackTicket(index: number, ticket: Ticket): number {
+    return ticket.id;
+  }
+
+ 
 
   takeOverTicket(ticketId: number): void {
     const currentUsername = this.accountService.currentUser()?.userName; // Fetch current user username
@@ -82,8 +115,7 @@ export class TicketsCompanyListComponent implements OnInit {
       console.error('Current user username not found.');
       return;
     }
-  
-    // Fetch current user's details
+
     this.userappService.getUsersapp_username(currentUsername).subscribe({
       next: (userApp) => {
         const handlerId = userApp.id;
@@ -91,7 +123,7 @@ export class TicketsCompanyListComponent implements OnInit {
           next: () => {
             console.log(`Ticket ${ticketId} successfully taken over.`);
   
-            // Update the handler details locally for instant UI updates
+      
             this.handlers[handlerId] = userApp;
   
             // Update the specific ticket's handlerId

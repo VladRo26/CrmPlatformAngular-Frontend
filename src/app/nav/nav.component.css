@@ -1,55 +1,117 @@
 /* Dropdown container */
 .dropdown {
-    position: relative;
-    display: inline-block;
-    margin-left: 1rem; /* Adjust as needed for spacing */
+  position: relative;
+  display: inline-block;
+  margin-left: 1rem; /* 1rem = base spacing */
+}
+
+/* Dropdown toggle link */
+.dropdown-toggle {
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+
+.dropdown-toggle:hover {
+  color: #17a2b8;
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+  background-color: #343a40; /* Dark background */
+  border: none;
+  border-radius: 0.25rem;
+  /* Convert 8px and 16px to rem (assuming base font-size of 16px): 8px = 0.5rem, 16px = 1rem */
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+  min-width: 10rem;  /* 160px / 16 = 10rem */
+  padding: 0;
+  margin-top: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+/* Dropdown items */
+.dropdown-item {
+  color: #f8f9fa;
+  padding: 0.5rem 1rem;
+  display: block;
+  white-space: nowrap;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.dropdown-item:hover {
+  background-color: #495057;
+  color: #ffffff;
+}
+
+/* Adjust dropdown placement on smaller screens */
+@media (max-width: 36rem) { /* 576px = 36rem */
+  .dropdown {
+    margin-left: 0;
   }
-  
-  /* Dropdown toggle link */
-  .dropdown-toggle {
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.2s ease-in-out;
-  }
-  
-  .dropdown-toggle:hover {
-    color: #17a2b8; /* Optional: change hover color */
-  }
-  
-  /* Dropdown menu styling */
   .dropdown-menu {
-    background-color: #343a40; /* Dark background to match navbar */
-    border: none;
-    border-radius: 0.25rem;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
-    min-width: 160px; /* Adjust width as needed */
-    padding: 0;
-    margin-top: 0.5rem; /* Space between toggle and menu */
-    transition: all 0.3s ease;
+    min-width: 6.25rem; /* ~100px: 100/16 = 6.25rem */
+  }
+}
+
+/* --- Navbar Modifications for a Smaller Navbar --- */
+.navbar {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  min-height: 3.125rem;  /* 50px / 16 = 3.125rem */
+}
+
+.navbar-brand {
+  font-size: 1rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.navbar-nav .nav-link {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.9rem;
+}
+
+.navbar-toggler {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* Adjust the user photo size within the navbar */
+.navbar img {
+  width: 2.2rem;  /* ~35px / 16 ≈ 2.2rem */
+  height: 2.2rem;
+}
+
+/* Optional: Adjust container padding/margins within the navbar */
+.navbar .container {
+  padding: 0 0.5rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+/* Responsive adjustments for smaller screens and phones */
+@media (max-width: 40rem) {  /* ~640px */
+  .navbar {
+    /* You might want to reduce the min-height further if needed */
+    min-height: 3rem;
   }
   
-  /* Dropdown items */
-  .dropdown-item {
-    color: #f8f9fa; /* Light text for dark background */
-    padding: 0.5rem 1rem;
-    display: block;
-    white-space: nowrap;
-    transition: background-color 0.2s ease-in-out;
+  .navbar-brand {
+    font-size: 0.9rem;
+    padding: 0.2rem 0.4rem;
   }
   
-  .dropdown-item:hover {
-    background-color: #495057; /* Darker background on hover */
-    color: #ffffff; /* Optional: Adjust text color on hover */
+  .navbar-nav .nav-link {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.4rem;
   }
   
-  /* Adjust dropdown placement on smaller screens */
-  @media (max-width: 576px) {
-    .dropdown {
-      margin-left: 0;
-    }
-  
-    .dropdown-menu {
-      min-width: 100px; /* Narrower menu for smaller screens */
-    }
+  .navbar-toggler {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.8rem;
   }
   
+  .navbar img {
+    width: 2rem;
+    height: 2rem;
+  }
+}

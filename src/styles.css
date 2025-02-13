@@ -1,17 +1,18 @@
 
-
 html, body {
     height: 100%;
     margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    padding-top: 56px; /* Add padding for the navbar */
+    /* font-family: Roboto, "Helvetica Neue", sans-serif; */
+    padding-top: 1rem; /* Add padding for the navbar */
 }
 
-.container {
+/* .container {
     margin-top: 0;
     padding: 1rem;
     box-sizing: border-box;
 }
+ */
+
 
 ngx-spinner {
     z-index: 9999 !important;

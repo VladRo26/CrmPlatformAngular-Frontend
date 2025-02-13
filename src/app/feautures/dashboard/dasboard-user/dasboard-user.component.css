@@ -1,56 +1,59 @@
-/* 📌 1. Completely Disable Scrolling on the Entire Page */
+/* 📌 1. Allow Scrolling on the Entire Page */
 html, body {
-  height: 100vh; 
-  width: 100vw;   
+  /* Instead of fixed 100vh/100vw, allow the page to grow naturally */
+  min-height: 100vh;      
+  width: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden !important;  /* ✅ Prevents page scrolling */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /* Remove overflow: hidden to allow scrolling */
+  overflow-x: hidden; /* Prevent horizontal scroll if needed */
+  overflow-y: auto;   /* Enable vertical scrolling */
+  /* Remove display:flex to let content flow naturally */
 }
 
-/* 📌 2. Main Dashboard Container (Fits Exactly in Viewport) */
+/* 📌 2. Main Dashboard Container */
 .dashboard-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* Align to top so scrolling works naturally */
   width: 80vw;
   max-width: 90rem;
-  height: 90vh;  /* ✅ Ensures it takes full viewport */
+  /* Remove fixed height so container grows as needed */
+  min-height: 90vh;
   margin: 0 auto;
-  overflow: hidden;  /* ✅ Prevents scrolling on the container */
+  /* Remove overflow hidden so it doesn’t clip content */
+  overflow: visible;
+  padding: 2rem 0; /* Optional vertical padding */
 }
 
-/* 📌 3. PrimeNG Panel (Fixed Size, No External Scroll) */
+/* 📌 3. PrimeNG Panel (Allow Internal Scrolling if Needed) */
 .dashboard-panel {
   width: 100%;
   max-width: 95rem;
-  height: 95vh; /* ✅ Fixed height inside viewport */
+  /* Instead of fixed 95vh, use min-height and let it expand */
+  min-height: 95vh;
   padding: 3rem;
   border-radius: 1rem;
-  box-shadow: 0px 0.4rem 1rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.1);
   background-color: white;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* ✅ No external scrolling */
-  margin-top: 1rem; /* ✅ Added spacing from header */
-
+  /* Remove overflow hidden to allow content expansion */
+  overflow: visible;
+  margin-top: 1rem;
 }
 
-/* 📌 4. Scrollable Content (Allows Full Content Visibility) */
+/* 📌 4. Scrollable Content (Internal Section) */
 .scroll-container {
   flex-grow: 1;
-  overflow-y: auto;  /* ✅ Enables vertical scrolling */
-  overflow-x: hidden;  /* ✅ Prevents horizontal scrolling */
-  height: 100%; /* ✅ Takes full space of panel */
-  max-height: 45Vh; /* ✅ More height for internal scrolling */
-  padding-right: 1rem;
-  padding: 2rem; /* ✅ Increased padding inside */
-  margin-top: 1rem; /* ✅ Extra spacing between panel & content */
+  overflow-y: auto;         /* Enable vertical scrolling inside if content is long */
+  overflow-x: hidden;       /* Prevent horizontal scrolling */
+  /* Remove fixed height; use min-height or let it expand as needed */
+  min-height: 45vh;
+  padding: 2rem;            /* Increased padding inside */
+  margin-top: 1rem;
 }
-
 
 /* 📌 6. Restrict Component Width */
 .dashboard-content {
@@ -75,6 +78,3 @@ html, body {
   border-radius: 0.5rem;
   transition: 0.3s ease-in-out;
 }
-
-
-

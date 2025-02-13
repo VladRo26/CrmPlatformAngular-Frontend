@@ -90,26 +90,34 @@ export class RegisterComponent implements OnInit {
     this.initializeForm();
   }
 
-  initializeForm(){
+  initializeForm() {
     this.registerForm = new FormGroup({
-      username: new FormControl('',Validators.required),
-      firstName: new FormControl(),
-      lastName: new FormControl(),
-      email: new FormControl('',[Validators.required, Validators.email]),
-      phoneNumber: new FormControl('',[Validators.required]),
-      userType: new FormControl(''),
+      username: new FormControl('', Validators.required),
+      firstName: new FormControl('', Validators.required),  // Now required
+      lastName: new FormControl('', Validators.required),   // Now required
+      email: new FormControl('', [Validators.required, Validators.email]),
+      phoneNumber: new FormControl('', [Validators.required]),
+      userType: new FormControl(''),   
       companyName: new FormControl(''),
-      password: new FormControl('',[Validators.required, Validators.minLength(4), Validators.maxLength(12)]),
-      hireDate: new FormControl('',[Validators.required]),
-      confirmPassword: new FormControl('',[Validators.required,this.comparePasswords('password')]),
-      file: new FormControl(null), // Add file control here
-
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(12)
+      ]),
+      hireDate: new FormControl('', Validators.required),
+      confirmPassword: new FormControl('', [
+        Validators.required,
+        this.comparePasswords('password')  // Ensure this custom validator is implemented correctly
+      ]),
+      file: new FormControl(null)  // File control
     });
-
+  
+    // Subscribe to changes in the password control so that the confirmPassword control is revalidated
     this.registerForm.controls['password'].valueChanges.subscribe(() => {
       this.registerForm.controls['confirmPassword'].updateValueAndValidity();
     });
-
+  
+    // Subscribe to changes in the phoneNumber control to trim any unwanted characters
     this.registerForm.get('phoneNumber')?.valueChanges.subscribe((value) => {
       const trimmedValue = this.trimPhoneNumber(value || '');
       console.log('Original phoneNumber:', value, 'Trimmed:', trimmedValue); // Debugging log
@@ -118,8 +126,8 @@ export class RegisterComponent implements OnInit {
         this.registerForm.get('phoneNumber')?.updateValueAndValidity();
       }
     });
-    
   }
+  
 
   comparePasswords(matchTo: string): any {
     return (control: AbstractControl) => {

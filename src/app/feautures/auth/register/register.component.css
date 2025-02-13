@@ -1,29 +1,65 @@
-.rounded-card {
-    background-color: rgba(255, 255, 255, 0.85); /* White background with 70% opacity */
-    border-radius: 25px; /* Rounded corners */
+/* Prevent scrolling on the whole page */
+html, body {
+  height: 100vh;           /* Full viewport height */
+  width: 100vw;            /* Full viewport width */
+  margin: 0;
+  padding: 0;
+  overflow: hidden;        /* Completely disable scrolling */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5; /* Optional: light background */
 }
 
-.bg-opacity {
-    background-color: rgb(255, 255, 255); /* Adjusted for overall opacity */
+/* Card Container - Prevent overflow */
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden; /* Disable any scrolling */
 }
 
+/* Bigger Card */
+.card {
+  max-width: 40vw;         /* Bigger width */
+  min-width: 35vw;
+  height: 75vh;            /* Bigger height */
+  overflow-y: auto;        /* Only vertical scrolling inside the card (if necessary) */
+  overflow-x: hidden;       /* No horizontal scroll */
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  border-radius: 2rem;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+/* Ensure card content is scrollable vertically only */
 .card-body {
-    border-radius: 25px;
-    padding: 1.5rem;
+  flex: 1;
+  overflow-y: auto;        /* Enable vertical scrolling inside the card if content overflows */
+  padding: 1.5rem;
 }
 
-.full-width {
-    width: 100%;
-  }
-  
+/* Make the card responsive for smaller screens */
+@media (max-width: 768px) {
   .card {
-    max-width: 50%; /* Adjust this to your preferred width */
-    margin: 0 auto; /* Center the card horizontally */
+      max-width: 90vw;     /* Expand width for mobile */
+      max-height: 85vh;    /* Adjust height */
   }
-  
-  @media (max-width: 768px) {
-    .card {
-      max-width: 80%; /* Make the card adapt to smaller screens */
-    }
-  }
-  
+}
+
+/* Ensure form elements are not oversized */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-control {
+  height: 2.5rem;
+  font-size: 1rem;
+}

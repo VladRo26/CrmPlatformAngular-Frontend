@@ -1,43 +1,85 @@
-<p-table [value]="tickets" [tableStyle]="{'min-width': '60rem'}" *ngIf="!loading">
-    <ng-template pTemplate="header">
-      <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Status</th>
-        <th>Priority</th>
-        <th>Handler</th>
-        <th>Actions</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-ticket>
-      <tr>
-        <td>{{ ticket.id }}</td>
-        <td>{{ ticket.title }}</td>
-        <td>{{ ticket.status }}</td>
-        <td>{{ ticket.priority }}</td>
-        <td>
-          <div *ngIf="ticket.handlerId">
-            <img
-            [src]="handlers[ticket.handlerId]?.photoUrl || '/user.png'"
-            alt="Handler Photo"
-            class="handler-photo"
-            />
-            <span>{{ handlers[ticket.handlerId]?.userName }}</span>
-          </div>
-          <div *ngIf="!ticket.handlerId">Unassigned</div>
-        </td>
-        <td>
-          <button
-            class="btn btn-primary"
-            [disabled]="!!ticket.handlerId"
-            (click)="takeOverTicket(ticket.id)"
-          >
-            Take Over
-          </button>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-  
-  <p *ngIf="!loading && tickets.length === 0">No tickets found.</p>
-  
+<div class="main-container">
+  <!-- Filter Card -->
+  <mat-card class="filter-card">
+    <mat-card-title class="filter-title">Filter Tickets</mat-card-title>
+    <mat-card-content>
+      <!-- First Row: Handler Username and Sort Direction -->
+      <div class="filter-row">
+        <!-- Filter by Handler Username -->
+        <mat-form-field appearance="fill" class="filter-item">
+          <mat-label>Handler Username</mat-label>
+          <input matInput [(ngModel)]="ticketParams.handlerUsername" (input)="applyFilters()"
+                 placeholder="Enter handler username" />
+        </mat-form-field>
+        <!-- Sort Direction -->
+        <mat-form-field appearance="fill" class="filter-item">
+          <mat-label>Sort Direction</mat-label>
+          <mat-select [(ngModel)]="ticketParams.sortDirection" (selectionChange)="applyFilters()">
+            <mat-option value="asc">Ascending</mat-option>
+            <mat-option value="desc">Descending</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Second Row: Sort By -->
+      <div class="filter-row sort-by-row">
+        <label class="sort-label">Sort By:</label>
+        <mat-button-toggle-group [(ngModel)]="ticketParams.sortBy" (change)="applyFilters()"
+                                  aria-label="Sort Options">
+          <mat-button-toggle value="assigned">Assigned</mat-button-toggle>
+          <mat-button-toggle value="unassigned">Unassigned</mat-button-toggle>
+          <mat-button-toggle value="priority">Priority</mat-button-toggle>
+          <mat-button-toggle value="status">Status</mat-button-toggle>
+          <mat-button-toggle value="date">Date</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+
+      <!-- Reset Filters Button Row (Bootstrap styled) -->
+      <div class="reset-btn-row">
+        <button class="btn btn-primary btn-sm" (click)="resetFilters()">Reset Filters</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Tickets Table Card -->
+  <mat-card class="tickets-card">
+    <mat-card-title class="tickets-title">Tickets</mat-card-title>
+    <mat-card-content>
+      <p-table [value]="tickets" [tableStyle]="{'min-width': '60rem'}" *ngIf="!loading"
+               [paginator]="true" [rows]="ticketParams.pageSize" [rowsPerPageOptions]="[5, 10, 20, 50]"
+               (onPage)="pageChanged($event)">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Handler</th>
+            <th>Actions</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-ticket>
+          <tr>
+            <td>{{ ticket.id }}</td>
+            <td>{{ ticket.title }}</td>
+            <td>{{ ticket.status }}</td>
+            <td>{{ ticket.priority }}</td>
+            <td>
+              <div *ngIf="ticket.handlerId">
+                <img [src]="handlers[ticket.handlerId]?.photoUrl || '/user.png'" alt="Handler Photo" class="handler-photo" />
+                <span>{{ handlers[ticket.handlerId]?.userName }}</span>
+              </div>
+              <div *ngIf="!ticket.handlerId">Unassigned</div>
+            </td>
+            <td>
+              <button class="btn btn-primary" [disabled]="!!ticket.handlerId" (click)="takeOverTicket(ticket.id)">
+                Take Over
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <p *ngIf="!loading && tickets.length === 0">No tickets found.</p>
+    </mat-card-content>
+  </mat-card>
+</div>
