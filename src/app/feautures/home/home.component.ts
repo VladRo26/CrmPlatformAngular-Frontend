@@ -105,7 +105,6 @@ combinedCompanies: any[] = [];
   }
 }
 
-
   loadCompanies() {
     this.softwarecompaniesService.getSoftwareCompanies().subscribe({
       next: (softwarecompanies) => {
