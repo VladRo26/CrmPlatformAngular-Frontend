@@ -2,6 +2,7 @@ import { Injectable ,inject} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SoftwareCompany } from '../_models/softwarecompany';
 import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,4 +15,9 @@ export class SoftwarecompanyService {
   getSoftwareCompanies() {
     return this.http.get<SoftwareCompany[]>(this.baseUrl + 'SoftwareCompany');
   }
+
+  getSoftwareCompanyByUserId(userId: number): Observable<SoftwareCompany> {
+    return this.http.get<SoftwareCompany>(`${this.baseUrl}SoftwareCompany/ByUserId/${userId}`);
+  }
+  
 }

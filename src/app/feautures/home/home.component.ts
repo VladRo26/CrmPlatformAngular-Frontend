@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { HomeimgaesComponent } from '../homeimgaes/homeimages.component';
@@ -21,6 +21,7 @@ import { ButtonModule } from 'primeng/button';
 import { NgIf } from '@angular/common';
 import { AccountService } from '../../_services/account.service';
 import { DashboardPreviewComponent } from '../dashboard-preview/dashboard-preview.component';
+import { TicketPreviewComponent } from '../tickets/ticket-preview/ticket-preview.component';
 
 @Component({
   selector: 'app-home',
@@ -28,7 +29,7 @@ import { DashboardPreviewComponent } from '../dashboard-preview/dashboard-previe
   imports: [MatGridListModule, HomeimgaesComponent, RegisterComponent, RouterLink,
     SoftwarecompaniesListComponent, BeneficiarycompanyListComponent,
     ChipModule,CarouselModule,AnimateOnScrollModule,
-    MatButtonModule,HasRoleDirective,NgxParticlesModule,ButtonModule,NgIf,DashboardPreviewComponent],
+    MatButtonModule,HasRoleDirective,NgxParticlesModule,ButtonModule,NgIf,DashboardPreviewComponent,TicketPreviewComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -49,6 +50,8 @@ private breakpointObserver = inject(BreakpointObserver);
 
 
 gridCols: number = 2;
+rowHeight: string = "0.5:1";
+gutterSize: string = "16px";
 
 responsiveOptions: CarouselResponsiveOptions[] = [
   {
@@ -73,17 +76,36 @@ combinedCompanies: any[] = [];
   constructor(private softwarecompaniesService: SoftwarecompanyService, private beneficiarycompanyService: BeneficiarycompanyService) {}
 
   ngOnInit(): void {
+    this.updateGrid(window.innerWidth);
+
     this.loadCompanies();
     this.particlesService.initParticles();
     this.loadContractsCount();
-    this.setupGridColumns();
+
   }
 
-  setupGridColumns(): void {
-    this.breakpointObserver.observe(['(max-width: 1000px)']).subscribe(result => {
-      this.gridCols = result.matches ? 1 : 2;
-    });
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.updateGrid(event.target.innerWidth);
   }
+
+ updateGrid(width: number) {
+  if (width < 600) {
+    this.gridCols = 1; // Mobile: Single column layout
+    this.rowHeight = "1:1"; // Enforce same height for all tiles
+    this.gutterSize = "10px";
+  } else if (width < 990) {
+    this.gridCols = 1; // Tablet: Two-column layout
+    this.rowHeight = "1:1"; // Same height for all tiles
+    this.gutterSize = "12px";
+  } else {
+    this.gridCols = 2; // Desktop layout
+    this.rowHeight = "1:1"; // Ensure uniform size
+    this.gutterSize = "16px";
+  }
+}
+
+
   loadCompanies() {
     this.softwarecompaniesService.getSoftwareCompanies().subscribe({
       next: (softwarecompanies) => {

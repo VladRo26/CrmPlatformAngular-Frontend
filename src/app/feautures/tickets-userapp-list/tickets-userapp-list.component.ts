@@ -41,7 +41,6 @@ export class TicketsUserappListComponent {
     pagination: any = null;
 
     ngOnInit(): void {
-      // Extract username from the URL parameter (e.g. /usersApp/teo1)
       const routeUsername = this.route.snapshot.paramMap.get('username');
       if (routeUsername) {
         this.username = routeUsername;
@@ -53,7 +52,6 @@ export class TicketsUserappListComponent {
         next: (user) => {
           this.userDetails = user;
           console.log('Fetched user details:', this.userDetails);
-          // Now load tickets using the username from the full user details.
           this.loadTickets();
         },
         error: (err) => {
@@ -64,7 +62,6 @@ export class TicketsUserappListComponent {
   
 
     loadTickets(): void {
-      // Use the fetched username (or fallback to the extracted username) to load tickets.
       this.ticketParams.username = this.userDetails?.userName || this.username;
       this.ticketService.getTicketsByUserName().subscribe({
         next: (result) => {

@@ -1,95 +1,120 @@
-/* Main container centers everything and adds spacing */
+/* Center everything */
 .main-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    padding: 1rem;
-  }
-  
-  /* Filter Card Styling */
-  .filter-card {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem;
-  }
-  
-  .filter-title {
-    text-align: center;
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-  }
-  
-  /* Flex container for filter controls */
-  .filter-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-  }
-  
-  .filter-item {
-    flex: 1 1 200px;
-    min-width: 200px;
-  }
-  
-  /* For the sort options, center the label and controls */
-  .sort-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-  }
-  
-  .sort-label {
-    margin-bottom: 0.5rem;
-  }
-  
-  /* Center the Reset Filters button */
-  .reset-btn-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  /* Tickets Card Styling */
-  .tickets-card {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem;
-  }
-  
-  .tickets-title {
-    text-align: center;
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-  }
-  
-  /* Grid layout for ticket cards (two per row) */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2vh;
+  padding: 2vh 2vw;
+  width: 100%;
+}
+
+/* Filter Card Styling */
+.filter-card {
+  width: 90vw;
+  max-width: 100%;
+  padding: 2vh;
+  border-radius: 1vw;
+  background: #ffffff;
+  box-shadow: 0 0.5vh 1vh rgba(0, 0, 0, 0.1);
+}
+
+/* Filter title styling */
+.filter-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1vh;
+  font-weight: bold;
+}
+
+/* Filter controls container */
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center; /* Align all items vertically */
+  gap: 2vw;
+  width: 100%;
+}
+
+filter-item {
+  flex: 1 1 20vw;
+  min-width: 20vw;
+}
+
+.sort-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.sort-label {
+  margin-bottom: 0.5vh;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+}
+
+.reset-btn-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+
+.tickets-card {
+  width: 90vw;
+  max-width: 100%;
+  padding: 2vh;
+  background: #ffffff;
+  box-shadow: 0 0.5vh 1vh rgba(0, 0, 0, 0.1);
+}
+
+.tickets-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2vh;
+  font-weight: bold;
+}
+
+
+.tickets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(30vw, 1fr));
+  gap: 2vh;
+  margin: 2vh auto;
+  width: 100%;
+}
+
+/* Center a single ticket */
+.tickets-grid:has(.ticket-col:nth-child(1):nth-last-child(1)) {
+  display: flex;
+  justify-content: center;
+}
+
+/* Ensure ticket is properly aligned */
+.ticket-col {
+  display: flex;
+  justify-content: center;
+}
+
+/* No Tickets Message */
+.no-data-message {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--warning-color);
+  padding: 2vh;
+  background: #f8d7da;
+  border-radius: 1vw;
+  width: 80%;
+  margin: auto;
+}
+
+/* Responsive: Make tickets one column on smaller screens */
+@media (max-width: 768px) {
   .tickets-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    margin: 1rem auto;
-  }
-  
-  .ticket-col {
-    width: 100%;
-  }
-  
-  /* Center the pagination */
-  .pagination-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
-  }
-  
-  /* Responsive: one column on smaller screens */
-  @media (max-width: 768px) {
-    .tickets-grid {
       grid-template-columns: 1fr;
-    }
   }
-  
+}

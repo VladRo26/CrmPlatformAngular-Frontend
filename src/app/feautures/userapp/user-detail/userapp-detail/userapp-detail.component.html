@@ -3,17 +3,16 @@
     <p-card
       header="{{ userapp?.userName }}"
       subheader="{{ userapp?.companyName }}"
-      [style]="{ width: '360px' }"
+      [style]="{ width: '22rem' }"
       class="p-card-custom"
     >
       <ng-template pTemplate="header">
-          <img
-    alt="{{ userapp?.firstName }} {{ userapp?.lastName }}"
-    [src]="userapp?.photoUrl || '/user.png'"
-    class="header-image"
-    [ngClass]="{ 'online-blink': presenceService.onlineUsers().includes(userapp?.userName ?? '') }"
-  />
-
+        <img
+          alt="{{ userapp?.firstName }} {{ userapp?.lastName }}"
+          [src]="userapp?.photoUrl || '/user.png'"
+          class="header-image"
+          [ngClass]="{ 'online-blink': presenceService.onlineUsers().includes(userapp?.userName ?? '') }"
+        />
       </ng-template>
 
       <p>
@@ -36,34 +35,18 @@
         />
       </p>
 
-      <ng-template pTemplate="footer">
-        <div class="flex gap-3 mt-1">
-          <p-button
-            label="Edit"
-            severity="primary"
-            class="w-full"
-            styleClass="w-full"
-          ></p-button>
-          <p-button
-            label="Delete"
-            severity="danger"
-            class="w-full"
-            styleClass="w-full"
-          ></p-button>
-        </div>
-      </ng-template>
     </p-card>
   </div>
 
   <div class="col-8">
-    <!-- ✅ Tabs for Software Company Users -->
     <mat-tab-group *ngIf="userapp?.userType === 'SoftwareCompanyUser'">
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon>inbox</mat-icon>
           Tickets
         </ng-template>
-        <p-scrollPanel [style]="{ width: '100%', height: '600px' }">
+        <!-- Changed height to 20rem (~320px) -->
+        <p-scrollPanel [style]="{ width: '100%', height: '30rem' }">
           <app-tickets-userapp-list></app-tickets-userapp-list>
         </p-scrollPanel>
       </mat-tab>
@@ -73,7 +56,7 @@
           <mat-icon>bar_chart</mat-icon>
           Performance
         </ng-template>
-        <p-scrollPanel [style]="{ width: '100%', height: '500px' }">
+        <p-scrollPanel [style]="{ width: '100%', height: '30rem' }">
           <app-performance-page *ngIf="userapp?.userName" [username]="userapp?.userName || ''"></app-performance-page>
         </p-scrollPanel>
       </mat-tab>
@@ -83,21 +66,20 @@
           <mat-icon>chat</mat-icon>
           Feedback
         </ng-template>
-        <p-scrollPanel [style]="{ width: '100%', height: '450px' }">
+        <p-scrollPanel [style]="{ width: '100%', height: '30rem' }">
           <app-feedback-user-list *ngIf="userapp?.id" [userId]="userapp?.id ?? 1"></app-feedback-user-list>
         </p-scrollPanel>
       </mat-tab>
     </mat-tab-group>
 
-    <!-- ✅ Tabs for Beneficiary Company Users -->
     <mat-tab-group *ngIf="userapp?.userType === 'BeneficiaryCompanyUser'">
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon>assignment</mat-icon>
           Tickets
         </ng-template>
-        <p-scrollPanel [style]="{ width: '100%', height: '150px' }">
-          <p>Lorem ipsum dolor sit amet...</p>
+        <p-scrollPanel [style]="{ width: '100%', height: '30rem' }">
+          <app-tickets-userapp-list></app-tickets-userapp-list>
         </p-scrollPanel>
       </mat-tab>
 
@@ -106,14 +88,10 @@
           <mat-icon>business</mat-icon>
           My Statistics
         </ng-template>
-        <p-scrollPanel [style]="{ width: '100%', height: '550px' }">
+        <p-scrollPanel [style]="{ width: '100%', height: '30rem' }">
           <app-performance-page-beneficiary *ngIf="userapp?.userName" [username]="userapp?.userName || ''"></app-performance-page-beneficiary>
         </p-scrollPanel>
       </mat-tab>
     </mat-tab-group>
   </div>
 </div>
-
-
-
-

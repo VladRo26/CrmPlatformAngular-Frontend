@@ -11,7 +11,6 @@
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <!-- Conditionally show the appropriate description -->
     <p>
       <strong>Description:</strong>
       {{ ticketDescription }}
@@ -30,7 +29,6 @@
         <i class="pi pi-pencil"></i> Update Status
       </button>
 
-      <!-- ✅ "Give Feedback" button -->
       <button 
         *ngIf="isEligibleForFeedback && ticket.status === 'Closed' && isSoftwareCompanyUser && ticket.handlerId === currentUserId"
         mat-raised-button 
@@ -40,7 +38,6 @@
         <i class="pi pi-star"></i> Give Feedback
       </button>
 
-      <!-- ✅ Reopen Ticket Button -->
       <button 
         *ngIf="ticket.status === 'Closed'"
         mat-raised-button 

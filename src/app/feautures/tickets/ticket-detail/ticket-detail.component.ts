@@ -147,7 +147,6 @@ export class TicketDetailComponent implements OnInit {
 
     const userRole = this.accountService.currentUser()?.userType === 'SoftwareCompanyUser' ? 'Handler' : 'Creator';
 
-    // Call API to add a new history entry with "Open" status
     this.ticketService.addTicketStatusHistory(this.ticket.id, {
       status: 'Open',
       message: this.reopenMessage,
@@ -228,7 +227,6 @@ export class TicketDetailComponent implements OnInit {
       return;
     }
 
-    // ✅ Fetch user details by username to get the ID
     this.userappService.getUsersapp_username(username).subscribe({
       next: (user) => {
         this.currentUserId = user.id;

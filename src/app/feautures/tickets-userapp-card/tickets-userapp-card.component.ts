@@ -29,44 +29,32 @@ export class TicketsUserappCardComponent implements OnInit {
   ticketService = inject(TicketService);
   route = inject(ActivatedRoute);
 
-  // Data to be displayed.
   contract?: Contract;
-  // Contract-based company details.
   companyName?: string;              // Beneficiary Company name
   companyPhotoUrl?: string;          // Beneficiary Company logo
   softwareCompanyName?: string;      // Software Company name
   softwareCompanyPhotoUrl?: string;  // Software Company logo
-  // User details.
   creatorUsername?: string;
   creatorPhotoUrl?: string;
   handlerUsername?: string;
   handlerPhotoUrl?: string;
 
-  // This flag is determined by the user loaded from the path.
   isBeneficiaryUser: boolean = false;
 
   ngOnInit(): void {
-    // Get the username from the URL path.
     const pathUsername = this.route.snapshot.paramMap.get('username');
     if (pathUsername) {
-      // Load the user from the path using your getUsersapp_username() method.
       this.userAppService.getUsersapp_username(pathUsername).subscribe({
         next: (user: userApp) => {
-          if (user && user.userType === 'BeneficiaryUser') {
+          if (user && user.userType === 'BeneficiaryCompanyUser') {
             this.isBeneficiaryUser = true;
           } else {
             this.isBeneficiaryUser = false;
           }
-        },
-        error: (err) => {
-          console.error('Error fetching user from path:', err);
         }
       });
-    } else {
-      console.error('No username parameter found in the URL path.');
-    }
-
-    // Load other related data.
+    } 
+    
     this.loadCreatorUser();
     this.loadHandlerUser();
     this.loadContract();

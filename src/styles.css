@@ -3,6 +3,7 @@ html, body {
     height: 100%;
     font-family: 'Roboto', sans-serif !important;
     padding-top: 0.2rem; /* Add padding for the navbar */
+    
 }
 
 /* .container {
@@ -21,6 +22,8 @@ ngx-spinner {
   :root {
     --link-color: #66b2ff;         /* Lighter blue for links */
     --link-hover-color: #3399ff;   /* Darker blue on hover */
+    --warning-color: #ff7043; /* Define CSS variable for color */
+
   }
   
   
