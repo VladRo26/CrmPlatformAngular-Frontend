@@ -1,0 +1,19 @@
+<div class="dashboard-preview-wrapper" 
+     pAnimateOnScroll 
+     enterClass="fadeinleft" 
+     leaveClass="fadeoutleft">
+  <h2 class="dashboard-greeting">Here's a quick preview of your dashboard:</h2>
+  
+  <div class="preview-panel">
+    <ng-container *ngIf="userType === 'SoftwareCompanyUser'; else beneficiaryPreview">
+      <app-performance-page class="dashboard-content" [username]="userName"></app-performance-page>
+    </ng-container>
+    <ng-template #beneficiaryPreview>
+      <app-performance-page-beneficiary class="dashboard-content" [username]="userName"></app-performance-page-beneficiary>
+    </ng-template>
+  </div>
+  
+  <p-button mat-raised-button color="primary" (click)="goToDashboard()">
+    Go to Dashboard
+  </p-button>
+</div>

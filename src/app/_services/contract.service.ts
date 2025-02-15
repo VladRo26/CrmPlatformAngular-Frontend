@@ -29,4 +29,8 @@ export class ContractService {
   getContractByTicketId(ticketId: number): Observable<Contract> {
     return this.http.get<Contract>(`${this.baseUrl}Contract/by-ticket/${ticketId}`);
   }
+
+  getContractCount(): Observable<{ count: number }> {
+    return this.http.get<{ count: number }>(`${this.baseUrl}Contract/count`);
+  }
 }

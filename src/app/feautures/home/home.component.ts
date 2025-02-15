@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { HomeimgaesComponent } from '../homeimgaes/homeimages.component';
 import { RegisterComponent } from "../auth/register/register.component";
@@ -9,32 +10,79 @@ import { BeneficiarycompanyListComponent } from '../beneficiarycompanies/benefic
 import { SoftwarecompanyService } from '../../_services/softwarecompanies.service';
 import { BeneficiarycompanyService } from '../../_services/beneficiarycompanies.service';
 import { ChipModule } from 'primeng/chip';
-import { CarouselModule } from 'primeng/carousel';
+import { CarouselModule, CarouselResponsiveOptions } from 'primeng/carousel';
 import { AnimateOnScrollModule } from 'primeng/animateonscroll';
 import {MatButtonModule} from '@angular/material/button';
 import { HasRoleDirective } from '../../_directives/has-role.directive';
-
+import { ContractService } from '../../_services/contract.service';
+import { NgParticlesService, NgxParticlesModule } from "@tsparticles/angular";
+import { ParticlesService } from '../../_services/particles.services';
+import { ButtonModule } from 'primeng/button';
+import { NgIf } from '@angular/common';
+import { AccountService } from '../../_services/account.service';
+import { DashboardPreviewComponent } from '../dashboard-preview/dashboard-preview.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatGridListModule, HomeimgaesComponent, RegisterComponent,
-     RouterLink, SoftwarecompaniesListComponent, BeneficiarycompanyListComponent,
-     ChipModule,CarouselModule,AnimateOnScrollModule,MatButtonModule,HasRoleDirective],
+  imports: [MatGridListModule, HomeimgaesComponent, RegisterComponent, RouterLink,
+    SoftwarecompaniesListComponent, BeneficiarycompanyListComponent,
+    ChipModule,CarouselModule,AnimateOnScrollModule,
+    MatButtonModule,HasRoleDirective,NgxParticlesModule,ButtonModule,NgIf,DashboardPreviewComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
+id = "tsparticles";
+particlesService = inject(ParticlesService);
+particlesOptions = this.particlesService.particlesOptions;
+accountService = inject(AccountService);
+ngxParticlesService = inject(NgParticlesService);
+contractService = inject(ContractService);
 routerLink: any;
 softwarecompanies: any[] = [];
 beneficiarycompanies: any[] = [];
+companiesCount: number = 0; 
+contractsCount: number = 0;
+private breakpointObserver = inject(BreakpointObserver);
+
+
+
+gridCols: number = 2;
+
+responsiveOptions: CarouselResponsiveOptions[] = [
+  {
+    breakpoint: '1024px',
+    numVisible: 3,
+    numScroll: 1
+  },
+  {
+    breakpoint: '768px',
+    numVisible: 1,
+    numScroll: 1
+  },
+  {
+    breakpoint: '560px',
+    numVisible: 1,
+    numScroll: 1
+  }
+];
+
 
 combinedCompanies: any[] = [];
   constructor(private softwarecompaniesService: SoftwarecompanyService, private beneficiarycompanyService: BeneficiarycompanyService) {}
 
   ngOnInit(): void {
     this.loadCompanies();
+    this.particlesService.initParticles();
+    this.loadContractsCount();
+    this.setupGridColumns();
+  }
 
+  setupGridColumns(): void {
+    this.breakpointObserver.observe(['(max-width: 1000px)']).subscribe(result => {
+      this.gridCols = result.matches ? 1 : 2;
+    });
   }
   loadCompanies() {
     this.softwarecompaniesService.getSoftwareCompanies().subscribe({
@@ -55,10 +103,17 @@ combinedCompanies: any[] = [];
   combineCompanies() {
     if (this.softwarecompanies.length && this.beneficiarycompanies.length) {
       this.combinedCompanies = [...this.softwarecompanies, ...this.beneficiarycompanies];
+      this.companiesCount = this.combinedCompanies.length;
+
     }
   }
 
-
-
-
+  loadContractsCount(): void {
+    this.contractService.getContractCount().subscribe({
+      next: (result) => {
+        this.contractsCount = result.count;
+      },
+      error: (err) => console.error('Error fetching contract count:', err)
+    });
+  }
 }

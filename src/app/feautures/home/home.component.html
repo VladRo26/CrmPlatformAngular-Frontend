@@ -1,46 +1,60 @@
-<mat-grid-list cols="2" rowHeight="1:1">
-    <mat-grid-tile> 
-        <app-homeimgaes></app-homeimgaes>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <p *appHasRole="['Admin']">Admin</p>
-        <button mat-raised-button color="primary" [routerLink]="['/register']">Register</button>
-        <button mat-raised-button color="primary" [routerLink]="['/login']">Login</button>
-    </mat-grid-tile>
-    <mat-grid-tile>
-        <div class="carousel-container">
-            <h3>Our Partners Companies</h3>
-            <p-carousel
-              [value]="combinedCompanies"
-              [numVisible]="3"
-              [numScroll]="1"
-              [circular]="true"
-              autoplayInterval="2000"
-              class="centered-carousel"
-            >
-              <ng-template let-company pTemplate="item">
-                <div class="border-1 surface-border border-round m-2 p-3 centered-item">
-                  <div class="mb-3">
-                    <div class="relative mx-auto">
-                      <img
-                        src="{{ company.photoUrl }}"
-                        [alt]="company.name || 'No Name' || ''"
-                        class="w-25"
-                      />
-                    </div>
-                  </div>
-                  <div class="mb-3 font-medium">
-                    {{ company.name || 'No Name' }}
-                  </div>
-                </div>
-              </ng-template>
-            </p-carousel>
+<ngx-particles [id]="id" [options]="particlesOptions" (particlesLoaded)="particlesService.particlesLoaded($event)"></ngx-particles>
+
+<mat-grid-list [cols]="gridCols" rowHeight="1:1">
+  <mat-grid-tile> 
+    <app-homeimgaes></app-homeimgaes>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <ng-container *ngIf="!accountService.currentUser(); else dashboardPreview">
+      <div class="login-register-container fade-in-container animation-duration-2000 animation-ease-in-out"
+           pAnimateOnScroll 
+           enterClass="fadeinleft" 
+           leaveClass="fadeoutleft">
+        <p class="login-text">Please log in to access the website.</p>
+        <p-button label="Login" icon="pi pi-sign-in" routerLink="/login" styleClass="p-button-primary p-button-sm"></p-button>
+        <p class="signup-text">
+          Don't have an account?
+          <a [routerLink]="['/register']" class="signup-link">Please sign up</a>
+        </p>
+      </div>
+    </ng-container>
+    <ng-template #dashboardPreview>
+      <!-- Wrap the dashboard preview component in a container with the same animation classes -->
+      <div class="dashboard-preview-wrapper fade-in-container animation-duration-2000 animation-ease-in-out"
+           pAnimateOnScroll 
+           enterClass="fadeinleft" 
+           leaveClass="fadeoutleft">
+        <app-dashboard-preview></app-dashboard-preview>
+      </div>
+    </ng-template>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <div class="carousel-container">
+      <h3>Our Partners Companies</h3>
+      <p-carousel [value]="combinedCompanies" [numVisible]="3" [numScroll]="1" [circular]="true"
+                  autoplayInterval="2000" [responsiveOptions]="responsiveOptions" class="centered-carousel">
+        <ng-template let-company pTemplate="item">
+          <div class="m-2 p-3 centered-item">
+            <div class="mb-3">
+              <div class="relative mx-auto">
+                <img [src]="company.photoUrl || '/company.png'" alt="Company Photo" class="w-25">
+              </div>
+            </div>
+            <div class="mb-3 font-medium">{{ company.name || 'No Name' }}</div>
           </div>
-    </mat-grid-tile>
-    <mat-grid-tile>
-        <div pAnimateOnScroll enterClass="fadein" leaveClass="fadeout" class="flex box shadow-4 justify-content-center align-items-center h-10rem w-10rem sm:h-15rem sm:w-15rem border-round animation-duration-1000">
-            <span class="text-3xl font-bold">fade-in</span>
-        </div>
-    </mat-grid-tile>
-  </mat-grid-list>
- 
+        </ng-template>
+      </p-carousel>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <div pAnimateOnScroll enterClass="fadeinleft" leaveClass="fadeoutleft"
+         class="fade-in-container animation-duration-2000 animation-ease-in-out">
+      <span class="fade-in-text">
+        Discover our track record: over 
+        <a [routerLink]="['/contracts']" class="contract-link">
+          {{ contractsCount }} projects
+        </a> and more than {{ companiesCount }} companies trust us to manage their interactions and implementations.
+      </span>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>

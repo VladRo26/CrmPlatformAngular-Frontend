@@ -1,24 +1,29 @@
-// Import Angular Material
 @use '@angular/material' as mat;
 
-// Include core Material styles (only include once!)
+// Include Angular Material core styles (only include once!)
 @include mat.core();
 
-// ✅ Define black, white, and grey color palettes
-$primary: mat.m2-define-palette(mat.$m2-grey-palette, 900);   // Dark Grey (Almost Black)
-$accent: mat.m2-define-palette(mat.$m2-grey-palette, 600);    // Medium Grey
-$warn: mat.m2-define-palette(mat.$m2-red-palette);            // Red for warnings
+// Define your color palettes as before
+$primary: mat.m2-define-palette(mat.$m2-grey-palette, 900);
+$accent: mat.m2-define-palette(mat.$m2-grey-palette, 600);
+$warn: mat.m2-define-palette(mat.$m2-red-palette);
 
-// ✅ Define the theme (Colors only)
-$client-theme: mat.m2-define-light-theme(( 
+// Instead of using define-typography-config, you can override global typography in :root.
+:root {
+  font-family: 'Roboto, sans-serif';
+  font-weight: bold; // All text will use a bold font weight by default
+
+  // You can add additional typography customizations here if needed.
+}
+
+// Define the theme (Colors only)
+$client-theme: mat.m2-define-light-theme((
   color: (
     primary: $primary,
     accent: $accent,
     warn: $warn,
-  ),
+  )
 ));
 
-// ✅ Apply theme to all Material components globally
-:root {
-  @include mat.all-component-themes($client-theme);
-}
+// Apply theme to all Material components globally
+@include mat.all-component-themes($client-theme);

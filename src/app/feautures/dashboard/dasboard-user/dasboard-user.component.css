@@ -5,13 +5,10 @@ html, body {
   width: 100%;
   margin: 0;
   padding: 0;
-  /* Remove overflow: hidden to allow scrolling */
   overflow-x: hidden; /* Prevent horizontal scroll if needed */
   overflow-y: auto;   /* Enable vertical scrolling */
-  /* Remove display:flex to let content flow naturally */
 }
 
-/* 📌 2. Main Dashboard Container */
 .dashboard-container {
   display: flex;
   flex-direction: column;
@@ -19,19 +16,15 @@ html, body {
   justify-content: flex-start; /* Align to top so scrolling works naturally */
   width: 80vw;
   max-width: 90rem;
-  /* Remove fixed height so container grows as needed */
   min-height: 90vh;
   margin: 0 auto;
-  /* Remove overflow hidden so it doesn’t clip content */
   overflow: visible;
   padding: 2rem 0; /* Optional vertical padding */
 }
 
-/* 📌 3. PrimeNG Panel (Allow Internal Scrolling if Needed) */
 .dashboard-panel {
   width: 100%;
   max-width: 95rem;
-  /* Instead of fixed 95vh, use min-height and let it expand */
   min-height: 95vh;
   padding: 3rem;
   border-radius: 1rem;
@@ -44,7 +37,6 @@ html, body {
   margin-top: 1rem;
 }
 
-/* 📌 4. Scrollable Content (Internal Section) */
 .scroll-container {
   flex-grow: 1;
   overflow-y: auto;         /* Enable vertical scrolling inside if content is long */
@@ -55,7 +47,6 @@ html, body {
   margin-top: 1rem;
 }
 
-/* 📌 6. Restrict Component Width */
 .dashboard-content {
   width: 100% !important;
   max-width: 100rem;

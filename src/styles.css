@@ -1,9 +1,8 @@
 
 html, body {
     height: 100%;
-    margin: 0;
-    /* font-family: Roboto, "Helvetica Neue", sans-serif; */
-    padding-top: 1rem; /* Add padding for the navbar */
+    font-family: 'Roboto', sans-serif !important;
+    padding-top: 0.2rem; /* Add padding for the navbar */
 }
 
 /* .container {
@@ -18,4 +17,10 @@ ngx-spinner {
     z-index: 9999 !important;
     position: fixed !important;
   }
+
+  :root {
+    --link-color: #66b2ff;         /* Lighter blue for links */
+    --link-hover-color: #3399ff;   /* Darker blue on hover */
+  }
+  
   

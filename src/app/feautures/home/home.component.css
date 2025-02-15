@@ -1,12 +1,113 @@
-mat-grid-tile {
-    background: lightblue;
-  }
 
-  .carousel-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%; /* Ensure it takes the full height of the tile */
-    text-align: center;
+.mat-grid-list {
+  background-color: rgba(248, 249, 250, 0.8) !important;
+}
+
+
+
+.carousel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}
+
+/* Login/Register Container */
+.login-register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: transparent;
+}
+
+/* Login Text */
+.login-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Signup Text */
+.signup-text {
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.signup-link,
+.contract-link {
+  color: var(--link-color);
+  text-decoration: underline;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.signup-link:hover,
+.contract-link:hover {
+  color: var(--link-hover-color);
+}
+
+
+/* Fade-in Container for Discover Text */
+.fade-in-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Fade-in Text Styling */
+.fade-in-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 1rem;
+  text-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.1);
+}
+
+.contract-link {
+  color: var(--link-color);
+  text-decoration: underline;
+  font-weight: bold;
+  position: relative; /* Needed for the tooltip positioning */
+}
+
+.contract-link:hover {
+  color: var(--link-hover-color);
+}
+
+/* Tooltip on hover */
+.contract-link:hover::after {
+  content: "Click to see contracts";
+  position: absolute;
+  bottom: -1.5rem; /* Adjust vertical position as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+
+@media (max-width: 50rem) {  /* ~640px */
+  .fade-in-text, .login-text {
+    font-size: 1.2rem;
+    padding: 0.5rem;
   }
+  .signup-text {
+    font-size: 0.9rem;
+    margin-top: 0.75rem;
+  }
+}
