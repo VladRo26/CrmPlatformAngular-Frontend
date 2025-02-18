@@ -24,6 +24,7 @@
     "@tsparticles/angular": "^3.0.0",
     "@tsparticles/engine": "^3.5.0",
     "@tsparticles/slim": "^3.5.0",
+    "animejs": "^3.2.2",
     "bootstrap": "^5.3.3",
     "bootswatch": "^5.3.3",
     "chart.js": "^4.4.7",

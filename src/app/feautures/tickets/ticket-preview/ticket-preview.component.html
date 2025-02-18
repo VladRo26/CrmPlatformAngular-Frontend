@@ -17,7 +17,12 @@
           </mat-form-field>
           
           <div class="filter-button-wrapper">
-            <button class="btn btn-primary" (click)="resetFilters()">Reset Filters</button>
+            <p-button 
+              label="Reset Filters" 
+              icon="pi pi-refresh" 
+              styleClass="p-button-primary" 
+              (onClick)="resetFilters()">
+            </p-button>
           </div>
         </div>
       </mat-card-content>

@@ -1,73 +1,99 @@
-/* Disable interaction for the container and its children */
-.readonly-container {
-    pointer-events: none; /* Disable mouse interactions */
-    opacity: 0.7; /* Optional: dim the container to indicate it’s disabled */
-  }
-  
-  .readonly-container p {
-    font-style: italic;
-    color: gray;
-  }
-  
-  /* Status Color Styles */
-.status-open {
-  color: #2196F3; /* Blue */
+@keyframes fa-blink {
+  0% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+
+.isOnline {
+  animation: fa-blink 1s infinite;
+  color: var(--status-resolved); /* ✅ Using CSS variable */
+}
+
+/* ✅ Responsive card */
+.example-card {
+  max-width: 90vw; /* Card takes max 90% of viewport width */
+  width: 100%;
+  margin: 2vh auto; /* Center with viewport height spacing */
+  box-shadow: 0 0.5vh 1vh rgba(0, 0, 0, 0.1); /* ✅ Responsive shadow */
+  border-radius: 0.5rem; /* ✅ Small rounded corners */
+  transition: transform 0.2s, box-shadow 0.2s; /* Adds hover effect */
+}
+
+.example-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 1vh 2vh rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ Circular avatar with border */
+.example-header-image img {
+  border-radius: 50%; 
+  border: 0.3rem solid var(--role-handler); /* ✅ Using role color */
+}
+
+/* ✅ Card header */
+mat-card-header {
+  background-color: var(--status-open); /* ✅ Dynamic status color */
+  padding: 2vh;
+  border-bottom: 0.2vh solid var(--default-color);
+}
+
+/* ✅ Title */
+mat-card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--default-color);
+}
+
+/* ✅ Company link */
+.company-link {
+  text-decoration: underline;
+  color: var(--role-handler);
+  cursor: pointer;
   font-weight: bold;
 }
 
-.status-in-progress {
-  color: #FF9800; /* Orange */
-  font-weight: bold;
+.company-link:hover {
+  color: var(--role-creator);
+  text-decoration: none;
 }
 
-.status-resolved {
-  color: #4CAF50; /* Green */
-  font-weight: bold;
+/* ✅ Card content */
+mat-card-content {
+  padding: 2vh;
+  font-size: 1.2rem;
+  color: var(--default-color);
 }
 
-.status-closed {
-  color: #D32F2F; /* Red */
-  font-weight: bold;
-}
-
-.button-container {
+/* ✅ Card actions */
+mat-card-actions {
   display: flex;
-  justify-content: center; /* Center all buttons in a row */
-  align-items: center;
-  flex-wrap: nowrap; /* Prevent buttons from wrapping */
-  gap: 15px; /* Space between buttons */
-  margin-top: 15px;
+  justify-content: flex-end;
+  padding: 2vh;
 }
 
-/* ✅ Style for buttons */
-button {
-  min-width: 180px; /* Ensure all buttons have the same width */
-  text-align: center;
-  padding: 10px 15px;
+mat-card-actions button {
+  color: var(--link-color);
   font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px; /* Space between icon and text */
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 
-/* ✅ Ensures the button icons are properly spaced */
-.update-status, .reopen-ticket, .give-feedback {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px; /* Space between icon and text */
+mat-card-actions button:hover {
+  text-decoration: underline;
 }
 
-/* ✅ Ensure the buttons stay in one row on all screen sizes */
-@media (max-width: 768px) {
-  .button-container {
-      flex-wrap: wrap; /* Allow wrapping on very small screens if needed */
-      justify-content: center;
-  }
+/* ✅ Responsive Image */
+mat-card-image {
+  width: 50%;
+  height: auto;
+  margin: 2vh;
+  max-height: 15vh;
+  object-fit: cover;
+}
 
-  button {
-      flex: 1; /* Allow buttons to resize evenly */
-      max-width: 200px; /* Prevent them from stretching too much */
+/* ✅ Mobile-friendly adjustments */
+@media (max-width: 600px) {
+  .example-card {
+      max-width: 100%;
   }
 }

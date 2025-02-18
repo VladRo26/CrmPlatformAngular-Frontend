@@ -24,6 +24,20 @@ ngx-spinner {
     --link-hover-color: #3399ff;   /* Darker blue on hover */
     --warning-color: #ff7043; /* Define CSS variable for color */
 
+    --status-open: #84c0f1;       /* Soft blue */
+    --status-inprogress: #ffca28; /* Warm yellow */
+    --status-resolved: #66bb6a;   /* Pastel green */
+    --status-closed: #e57373;     /* Soft red */
+
+    /* Priority Colors (Cold Pastel Tones) */
+    --priority-low: #90caf9;      /* Light blue */
+    --priority-medium: #81c784;   /* Soft green */
+    --priority-high: #f48fb1;     /* Pastel pink */
+
+      --role-handler: #81c784;       /* Green for handlers */
+    --role-creator: #ffca28;       /* Orange for creators */
+    --default-color: #2196F3;      /* Default fallback */
+
   }
   
   

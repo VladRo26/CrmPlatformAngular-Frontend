@@ -38,6 +38,14 @@ mat-select, mat-form-field {
 
 }
 
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  
 .filter-item {
     flex: 1 1 15rem; /* Make the fields smaller */
     padding: 0.3rem;

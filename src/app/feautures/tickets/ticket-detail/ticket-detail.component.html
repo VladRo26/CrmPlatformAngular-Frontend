@@ -4,8 +4,11 @@
       <i class="fa fa-ticket-alt"></i> {{ ticket.title ?? '' }}
     </mat-card-title>
     <mat-card-subtitle>
-      Priority: {{ ticket.priority ?? '' }} |
-      <span [ngClass]="getStatusClass(ticket.status)">
+      Priority: 
+      <span [ngStyle]="{'color': getPriorityColor(ticket.priority ?? '')}">
+        {{ ticket.priority ?? '' }}
+      </span> |
+      <span [ngClass]="getStatusClass(ticket.status)" [ngStyle]="{'color': getStatusColor(ticket.status)}">
         Status: {{ ticket.status }}
       </span>
     </mat-card-subtitle>
@@ -15,37 +18,46 @@
       <strong>Description:</strong>
       {{ ticketDescription }}
     </p>
+
+    <p *ngIf="isBeneficiaryUser">
+      <strong>Handler:</strong> 
+      <span *ngIf="handlerUsername; else notAssigned">
+        {{ handlerUsername }}
+      </span>
+      <ng-template #notAssigned>Not assigned yet</ng-template>
+    </p>
+
+    <p *ngIf="isSoftwareCompanyUser">
+      <strong>Created By:</strong> {{ creatorUsername }}
+    </p>
+
     <div class="button-container">
-      <button mat-raised-button color="primary" class="update-status" (click)="translateTicketDescription()">
-        <i class="pi pi-language"></i> Translate Description
+      <!-- Translate Description -->
+      <button class="btn btn-secondary d-flex align-items-center" (click)="translateTicketDescription()">
+        <i class="pi pi-language me-2"></i> Translate Description
       </button>
 
-      <button 
-        mat-raised-button 
-        color="primary" 
-        class="update-status" 
-        (click)="showDialog()" 
-        [disabled]="ticket.status === 'Closed'">
-        <i class="pi pi-pencil"></i> Update Status
-      </button>
 
       <button 
-        *ngIf="isEligibleForFeedback && ticket.status === 'Closed' && isSoftwareCompanyUser && ticket.handlerId === currentUserId"
-        mat-raised-button 
-        color="accent" 
-        class="give-feedback"
-        (click)="showFeedbackDialog()">
-        <i class="pi pi-star"></i> Give Feedback
-      </button>
+      class="btn btn-secondary d-flex align-items-center" 
+      (click)="showDialog()" 
+      [disabled]="ticket.status === 'Closed'">
+      <i class="pi pi-pencil me-2"></i> Update Status
+    </button>
 
-      <button 
-        *ngIf="ticket.status === 'Closed'"
-        mat-raised-button 
-        color="warn" 
-        class="reopen-ticket"
-        (click)="showReopenDialog()">
-        <i class="pi pi-refresh"></i> Reopen Ticket
-      </button>
+    <button 
+    *ngIf="isEligibleForFeedback && ticket.status === 'Closed' && isSoftwareCompanyUser && ticket.handlerId === currentUserId"
+    class="btn btn-primary d-flex align-items-center"
+    (click)="showFeedbackDialog()">
+    <i class="pi pi-star me-2"></i> Give Feedback
+  </button>
+
+  <button 
+  *ngIf="ticket.status === 'Closed'"
+  class="btn btn-danger d-flex align-items-center"
+  (click)="showReopenDialog()">
+  <i class="pi pi-refresh me-2"></i> Reopen Ticket
+</button>
     </div>
   </mat-card-content>
 </mat-card>
@@ -83,7 +95,7 @@
   </div>
 </ng-container>
 
-<!-- Selected Language Information -->
+
 
 
 <!-- Ticket History -->

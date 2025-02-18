@@ -5,6 +5,7 @@ import { NavComponent } from "./nav/nav.component";
 import { AccountService } from './_services/account.service';
 import { HomeComponent } from "./feautures/home/home.component";
 import { NgxSpinnerComponent } from 'ngx-spinner';
+import { PresenceService } from './_services/presence.service';
 
 
 @Component({
@@ -18,6 +19,7 @@ import { NgxSpinnerComponent } from 'ngx-spinner';
 export class AppComponent implements OnInit {
   http = inject(HttpClient);
   private accountService = inject(AccountService);
+  private presenceService = inject(PresenceService);
   title = 'client';
   benefcompanies: any;
 
@@ -28,10 +30,13 @@ export class AppComponent implements OnInit {
 
   setUser(){
     const user = localStorage.getItem('userinfo');
-    if(!user){
-      return;
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      // Set the current user in the account service
+      this.accountService.currentUser.set(parsedUser);
+      // Re-establish the SignalR connection
+      this.presenceService.createHubConnection(parsedUser);
     }
-    this.accountService.currentUser.set(JSON.parse(user));
   }
 
  

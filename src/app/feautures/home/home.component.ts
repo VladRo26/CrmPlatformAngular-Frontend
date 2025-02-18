@@ -22,6 +22,8 @@ import { NgIf } from '@angular/common';
 import { AccountService } from '../../_services/account.service';
 import { DashboardPreviewComponent } from '../dashboard-preview/dashboard-preview.component';
 import { TicketPreviewComponent } from '../tickets/ticket-preview/ticket-preview.component';
+import { AnimatedTextComponent } from '../animated-component/animated-component.component';
+
 
 @Component({
   selector: 'app-home',
@@ -29,7 +31,8 @@ import { TicketPreviewComponent } from '../tickets/ticket-preview/ticket-preview
   imports: [MatGridListModule, HomeimgaesComponent, RegisterComponent, RouterLink,
     SoftwarecompaniesListComponent, BeneficiarycompanyListComponent,
     ChipModule,CarouselModule,AnimateOnScrollModule,
-    MatButtonModule,HasRoleDirective,NgxParticlesModule,ButtonModule,NgIf,DashboardPreviewComponent,TicketPreviewComponent],
+    MatButtonModule,HasRoleDirective,NgxParticlesModule,
+    ButtonModule,NgIf,DashboardPreviewComponent,TicketPreviewComponent,AnimatedTextComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

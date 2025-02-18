@@ -26,6 +26,7 @@ import { FormsModule } from '@angular/forms';
 import { UserappService } from '../../../_services/userapp.service';
 import { FeedbackService } from '../../../_services/feedback.service';
 import { RatingModule } from 'primeng/rating';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-ticket-detail',
@@ -34,7 +35,7 @@ import { RatingModule } from 'primeng/rating';
      NgxCountriesDropdownModule,MatButton,TimelineModule,
      Button,DatePipe,CardModule,ScrollPanelModule
      ,MatButtonToggleModule,OverlayPanelModule,NgIf,DialogModule,
-     CreateStatushistComponent,ButtonModule,ProgressBarModule,FormsModule,NgClass,RatingModule],
+     CreateStatushistComponent,ButtonModule,ProgressBarModule,FormsModule,NgClass,RatingModule,CommonModule],
   templateUrl: './ticket-detail.component.html',
   styleUrl: './ticket-detail.component.css'
 })
@@ -49,6 +50,7 @@ export class TicketDetailComponent implements OnInit {
   selectedLanguageName: string | null = null;
   ticketDescription: string | null = null; // Holds the displayed ticket description
   isLoadingPage: boolean = true; // Page loading state
+  isBeneficiaryUser: boolean = false;
   showCountryList: boolean = false; // Show country list after page load
   visible: boolean = false;
   translatedMessage: string | null = null; // Holds the translated message
@@ -89,6 +91,16 @@ export class TicketDetailComponent implements OnInit {
   feedbackRating: number = 5; // Default rating
 
   displayedColumns: string[] = ['status', 'updatedByUserId', 'ticketUserRole', 'message'];
+
+  handlerUsername: string | null = null;
+  creatorUsername: string | null = null;
+
+
+  private setUserRole(): void {
+    const userType = this.accountService.currentUser()?.userType;
+    this.isBeneficiaryUser = userType === 'BeneficiaryCompanyUser';
+    this.isSoftwareCompanyUser = userType === 'SoftwareCompanyUser';
+  }
 
 
 
@@ -215,6 +227,7 @@ export class TicketDetailComponent implements OnInit {
     this.loadSelectedLanguage(); // Load language from localStorage on init
     this.loadCountryListAfterDelay();
     this.loadTicketDetails();
+    this.setUserRole();
     this.loadUserDetails();
 
   }
@@ -231,7 +244,7 @@ export class TicketDetailComponent implements OnInit {
       next: (user) => {
         this.currentUserId = user.id;
         this.isSoftwareCompanyUser = user.userType === 'SoftwareCompanyUser';
-        this.loadTicketDetails(); // Load ticket details after getting user ID
+        this.loadTicketDetails();
       },
       error: (err) => {
         console.error('Failed to get user details', err);
@@ -272,38 +285,62 @@ export class TicketDetailComponent implements OnInit {
   }
 
 
-  loadTicketDetails() {
+  private loadTicketDetails(): void {
     const ticketId = Number(this.route.snapshot.paramMap.get('id'));
-    if (ticketId) {
-      this.ticketService.getTicketById(ticketId).subscribe({
-        next: (ticket) => {
-          this.ticket = ticket;
-  
-          this.ticketDescription = ticket.tDescription ?? ticket.description ?? null;
-  
-          this.selectedLanguageName = ticket.tLanguage ?? ticket.language ?? 'English';
-          this.translationLanguageCode = ticket.tLanguageCode ?? 'en';
-          this.ticketCountryCode = ticket.tCountryCode ?? ticket.countryCode ?? 'US';
+    if (!ticketId) return;
 
-          this.checkFeedbackEligibility(ticketId);
-        },
-        error: (err) => {
-          console.error('Failed to load ticket details', err);
-          this.toastr.error('Failed to load ticket details.', 'Error');
-        },
-      });
+    this.ticketService.getTicketById(ticketId).subscribe({
+      next: (ticket) => {
+        this.ticket = ticket;
+        this.ticketDescription = ticket.tDescription ?? ticket.description ?? null;
 
-      this.ticketService.getTicketHistoryById(ticketId).subscribe({
-        next: (history) => {
-          this.ticketHistory = history;
-          this.transformHistoryToTimeline();
-        },
-        error: (err) => {
-          console.error('Failed to load ticket history', err);
-          this.toastr.error('Failed to load ticket history.', 'Error');
-        },
-      });
-    }
+        if (this.isBeneficiaryUser) {
+          if (ticket.handlerId) {
+            this.getUserById(ticket.handlerId, 'handler');
+          } else {
+            this.handlerUsername = 'Not assigned yet';
+          }
+        }
+
+        if (this.isSoftwareCompanyUser) {
+          this.getUserById(ticket.creatorId, 'creator');
+        }
+
+        this.checkFeedbackEligibility(ticketId);
+      },
+      error: (err) => {
+        console.error('Failed to load ticket details', err);
+        this.toastr.error('Failed to load ticket details.', 'Error');
+      },
+    });
+
+    this.ticketService.getTicketHistoryById(ticketId).subscribe({
+      next: (history) => {
+        this.ticketHistory = history;
+        this.transformHistoryToTimeline();
+      },
+      error: (err) => {
+        console.error('Failed to load ticket history', err);
+        this.toastr.error('Failed to load ticket history.', 'Error');
+      },
+    });
+  }
+
+  private getUserById(userId: number, role: 'handler' | 'creator'): void {
+    this.userappService.getUserappById(userId).subscribe({
+      next: (user) => {
+        if (user) {
+          if (role === 'handler') {
+            this.handlerUsername = user.userName;
+          } else {
+            this.creatorUsername = user.userName;
+          }
+        }
+      },
+      error: (err) => {
+        console.error(`Failed to fetch ${role} username:`, err);
+      },
+    });
   }
 
   private checkFeedbackEligibility(ticketId: number): void {
@@ -374,14 +411,14 @@ export class TicketDetailComponent implements OnInit {
     this.events = this.ticketHistory.map((history) => {
       // Determine icon and color based on role
       let icon = 'pi pi-user';
-      let color = '#2196F3'; // Default color
+      let color = 'var(--default-color)'; // Use a fallback variable
   
       if (history.ticketUserRole.toLowerCase() === 'handler') {
         icon = 'pi pi-briefcase'; // Icon for handlers
-        color = '#4CAF50'; // Green for handlers
+        color = 'var(--role-handler)'; // Green for handlers
       } else if (history.ticketUserRole.toLowerCase() === 'creator') {
         icon = 'pi pi-pencil'; // Icon for creators
-        color = '#FF9800'; // Orange for creators
+        color = 'var(--role-creator)'; // Orange for creators
       }
   
       return {
@@ -395,6 +432,7 @@ export class TicketDetailComponent implements OnInit {
       };
     });
   }
+  
 
     showDialog(): void {
       this.visible = true;
@@ -448,5 +486,27 @@ export class TicketDetailComponent implements OnInit {
           },
         });
     }
+
+    getStatusColor(status: string): string {
+      const rootStyles = getComputedStyle(document.documentElement);
+      switch (status.toLowerCase()) {
+        case 'open': return rootStyles.getPropertyValue('--status-open');
+        case 'inprogress': return rootStyles.getPropertyValue('--status-inprogress');
+        case 'resolved': return rootStyles.getPropertyValue('--status-resolved');
+        case 'closed': return rootStyles.getPropertyValue('--status-closed');
+        default: return '#000000'; 
+      }
+    }
+    
+    getPriorityColor(priority: string): string {
+      const rootStyles = getComputedStyle(document.documentElement);
+      switch (priority.toLowerCase()) {
+        case 'low': return rootStyles.getPropertyValue('--priority-low');
+        case 'medium': return rootStyles.getPropertyValue('--priority-medium');
+        case 'high': return rootStyles.getPropertyValue('--priority-high');
+        default: return '#000000'; 
+      }
+    }
+    
     
 }

@@ -1,12 +1,14 @@
 <ngx-particles [id]="id" [options]="particlesOptions" (particlesLoaded)="particlesService.particlesLoaded($event)"></ngx-particles>
 <mat-grid-list [cols]="gridCols" [rowHeight]="rowHeight" [gutterSize]="gutterSize">
-  <mat-grid-tile colspan="1" rowspan="1">
+  <mat-grid-tile colspan="1" rowspan="1" class="home-images-tile">
     <app-homeimgaes></app-homeimgaes>
   </mat-grid-tile>
+  
+  
 
   <mat-grid-tile colspan="1" rowspan="1">
     <ng-container *ngIf="!accountService.currentUser(); else dashboardPreview">
-      <div class="login-register-container fade-in-container">
+      <div pAnimateOnScroll enterClass="fadeinleft" leaveClass="fadeoutleft" class="login-register-container fade-in-container animation-duration-3000 animation-ease-in-out">
         <p class="login-text">Please log in to access the website.</p>
         <p-button label="Login" icon="pi pi-sign-in" routerLink="/login" styleClass="p-button-primary p-button-sm"></p-button>
         <p class="signup-text">
@@ -16,7 +18,7 @@
       </div>
     </ng-container>
     <ng-template #dashboardPreview>
-      <div class="dashboard-preview-wrapper fade-in-container">
+      <div pAnimateOnScroll enterClass="fadeinleft" leaveClass="fadeoutleft" class="dashboard-preview-wrapper fade-in-container animation-duration-3000 animation-ease-in-out">
         <app-dashboard-preview></app-dashboard-preview>
       </div>
     </ng-template>
@@ -31,7 +33,7 @@
           <div class="m-2 p-3 centered-item">
             <div class="mb-3">
               <div class="relative mx-auto">
-                <img [src]="company.photoUrl || '/company.png'" alt="Company Photo" class="w-25">
+                <img [src]="company.photoUrl || '/company.png'" alt="Company Photo" class="carousel-image">
               </div>
             </div>
             <div class="mb-3 font-medium">{{ company.name || 'No Name' }}</div>
@@ -40,22 +42,35 @@
       </p-carousel>
     </div>
   </mat-grid-tile>
+  
 
   <mat-grid-tile colspan="1" rowspan="1">
     <ng-container *ngIf="!accountService.currentUser(); else ticketPreview">
-      <div class="fade-in-container">
-        <span class="fade-in-text">
-          Discover our track record: over 
-          <a [routerLink]="['/contracts']" class="contract-link">
-            {{ contractsCount }} projects
-          </a> and more than {{ companiesCount }} companies trust us to manage their interactions and implementations.
-        </span>
+      <div pAnimateOnScroll enterClass="fadeinright" leaveClass="fadeoutleft" class="fade-in-container animation-duration-3000 animation-ease-in-out">
+        
+        <div class="animated-text-wrapper">
+          <app-animated-text></app-animated-text>
+        </div>
+        
+        <div class="discover-text-wrapper">
+          <span class="fade-in-text">
+            Discover our track record: over 
+            <a [routerLink]="['/contracts']" class="contract-link">
+              {{ contractsCount }} projects
+            </a> and more than {{ companiesCount }} companies trust us to manage their interactions and implementations.
+          </span>
+        </div>
+        
       </div>
     </ng-container>
     <ng-template #ticketPreview>
-      <div class="ticket-preview-wrapper fade-in-container">
+      <div class="ticket-preview-wrapper fade-in-container animation-duration-3000 animation-ease-in-out">
         <app-ticket-preview></app-ticket-preview>
       </div>
     </ng-template>
   </mat-grid-tile>
-</mat-grid-list>
+  
+  
+  
+
+  

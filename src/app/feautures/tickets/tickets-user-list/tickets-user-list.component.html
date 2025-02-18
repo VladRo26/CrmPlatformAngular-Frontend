@@ -61,11 +61,12 @@
         
 
 
-          <div *ngIf="userType === 'BeneficiaryCompanyUser'" class="give-feedback-container">
-            <button mat-raised-button color="accent" (click)="navigateToFeedback()">
-              <i class="pi pi-comment"></i> Give Feedback
-            </button>
-          </div>
+        <div *ngIf="userType === 'BeneficiaryCompanyUser'" class="give-feedback-container">
+          <button class="btn btn-secondary d-flex align-items-center" (click)="navigateToFeedback()">
+            <i class="pi pi-comment me-2"></i> Give Feedback
+          </button>
+        </div>
+        
   
       </div>
     </mat-card-content>

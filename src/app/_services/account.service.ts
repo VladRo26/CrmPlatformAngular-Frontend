@@ -39,6 +39,7 @@ export class AccountService {
       map(user => {
         if (user) {
           this.setCurrentUser(user);
+          this.presenceService.createHubConnection(user);
         }
         return user;
       })

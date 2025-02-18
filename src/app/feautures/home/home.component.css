@@ -1,21 +1,22 @@
 
 html, body {
-    min-height: 150vh !important; /* Increase min height */
-    height: auto !important; /* Allow growth */
-    overflow-y: auto !important; /* Ensure scrolling */
+    min-height: 150vh !important; 
+    height: auto !important; 
+    overflow-y: auto !important; 
     margin: 0;
     padding: 0;
 }
 
-/* Allow grid list to expand */
 .mat-grid-list {
-    background-color: rgba(248, 249, 250, 0.85) !important;
-    display: block !important;
-    min-height: auto !important;
-    height: auto !important;
+  background-color: rgba(248, 249, 250, 0.85) !important;
+  display: block !important;
+  min-height: auto !important;
+  height: auto !important;
+  border-radius: 1rem !important; 
+  overflow: hidden !important;    
 }
 
-/* Allow grid tiles to expand dynamically */
+
 .mat-grid-tile {
     height: auto !important;
     min-height: auto;
@@ -32,7 +33,6 @@ html, body {
 
 }
 
-/* Login/Register Container */
 .login-register-container {
   display: flex;
   flex-direction: column;
@@ -43,7 +43,6 @@ html, body {
   border-radius: 1vw;
 }
 
-/* Login Text */
 .login-text {
   font-size: 1.5rem;
   font-weight: bold;
@@ -51,7 +50,6 @@ html, body {
   margin-bottom: 1rem;
 }
 
-/* Signup Text */
 .signup-text {
   font-size: 1rem;
   text-align: center;
@@ -72,18 +70,16 @@ html, body {
 }
 
 
-/* Fade-in Container for Discover Text */
 .fade-in-container {
-  display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   background: transparent;
   padding: 2vh 2vw;
   box-shadow: none;
-}
+} 
 
-/* Fade-in Text Styling */
+
 .fade-in-text {
   font-size: 1.5rem;
   font-weight: bold;
@@ -96,18 +92,36 @@ html, body {
   color: var(--link-color);
   text-decoration: underline;
   font-weight: bold;
-  position: relative; /* Needed for the tooltip positioning */
+  position: relative; 
 }
+
+.home-images-tile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.carousel-image {
+  width: 70%;             
+  max-width: 150px;        
+  height: auto;            
+  object-fit: cover;       
+  transition: max-width 0.3s ease;
+  border-radius: 1rem;     /* Add a 1rem rounded border */
+}
+
 
 .contract-link:hover {
   color: var(--link-hover-color);
 }
 
-/* Tooltip on hover */
 .contract-link:hover::after {
   content: "Click to see contracts";
   position: absolute;
-  bottom: -1.5rem; /* Adjust vertical position as needed */
+  bottom: -1.5rem;
   left: 50%;
   transform: translateX(-50%);
   background-color: rgba(0, 0, 0, 0.7);
@@ -130,3 +144,48 @@ html, body {
     margin-top: 0.75rem;
   }
 }
+
+.carousel-image {
+  width: 70%;             
+  max-width: 150px;       
+  height: auto;           
+  object-fit: cover;      
+  transition: max-width 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .carousel-image {
+    max-width: 250px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .carousel-image {
+    max-width: 350px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .carousel-image {
+    max-width: 450px;
+  }
+}
+
+
+
+
+
+
+
+.animated-text-wrapper {
+  text-align: center;
+  margin-bottom: 1rem; 
+}
+
+.discover-text-wrapper {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+

@@ -112,6 +112,14 @@ filter-item {
   margin: auto;
 }
 
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 2vh;
+}
+
+
 /* Responsive: Make tickets one column on smaller screens */
 @media (max-width: 768px) {
   .tickets-grid {
