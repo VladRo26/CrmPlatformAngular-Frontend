@@ -22,5 +22,10 @@ export class AdminService {
       { params: { roles: rolesString } } // Pass roles as query params
     );
   }
+
+  deleteUser(username: string) {
+    return this.http.delete(`${this.baseUrl}User/username/${username}`);
+  }
+  
   
 }

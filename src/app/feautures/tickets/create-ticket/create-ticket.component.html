@@ -2,7 +2,7 @@
   <div class="form-container">
     <!-- Title Field -->
     <div class="form-field">
-      <mat-form-field appearance="outline" style="width:60vw">
+      <mat-form-field appearance="outline" class="w-100 custom-field">
         <mat-label>Title</mat-label>
         <input matInput formControlName="title" placeholder="Enter ticket title">
       </mat-form-field>
@@ -10,7 +10,7 @@
 
     <!-- Description Field -->
     <div class="form-field">
-      <mat-form-field appearance="outline" style="width:60vw">
+      <mat-form-field appearance="outline" class="w-100 custom-field">
         <mat-label>Description</mat-label>
         <textarea matInput formControlName="description" placeholder="Enter ticket description"></textarea>
       </mat-form-field>
@@ -18,8 +18,8 @@
 
     <!-- Priority & Type Fields (Side by Side) -->
     <div class="row">
-      <div class="form-field">
-        <mat-form-field appearance="outline" style="width:60vw">
+      <div class="form-field col-sm-6">
+        <mat-form-field appearance="outline" class="w-100 custom-field">
           <mat-label>Priority</mat-label>
           <mat-select formControlName="priority">
             <mat-option *ngFor="let priority of priorities" [value]="priority.value">
@@ -29,8 +29,8 @@
         </mat-form-field>
       </div>
 
-      <div class="form-field">
-        <mat-form-field appearance="outline" style="width:60vw">
+      <div class="form-field col-sm-6">
+        <mat-form-field appearance="outline" class="w-100 custom-field">
           <mat-label>Type</mat-label>
           <mat-select formControlName="type">
             <mat-option *ngFor="let type of types" [value]="type.value">
@@ -43,7 +43,7 @@
 
     <!-- Language Field -->
     <div class="form-field">
-      <label>Language</label>
+      <label class="mb-1 d-block">Language</label>
       <lib-country-list
         [selectedCountryConfig]="selectedCountryConfig"
         [countryListConfig]="countryListConfig"
@@ -57,7 +57,7 @@
 
     <!-- Status Field (Read-only) -->
     <div class="form-field">
-      <mat-form-field appearance="outline" style="width:60vw">
+      <mat-form-field appearance="outline" class="w-100 custom-field">
         <mat-label>Status</mat-label>
         <input matInput formControlName="status" readonly>
       </mat-form-field>
@@ -65,13 +65,13 @@
   </div>
 
   <!-- Contracts Section -->
-  <div class="contracts-container">
-    <div class="available-contracts">
+  <div class="contracts-container my-3">
+    <div class="available-contracts mb-3">
       <h3>Available Contracts</h3>
-      <div class="p-2 border-1 surface-border border-round">
-        <ul class="list-none flex flex-column gap-2 p-0 m-0">
+      <div class="p-2 border border-secondary rounded">
+        <ul class="list-unstyled d-flex flex-column gap-2 p-0 m-0">
           <li *ngFor="let contract of contracts"
-              class="p-2 border-round shadow-1"
+              class="p-2 border rounded shadow-sm"
               pDraggable
               (onDragStart)="dragStart(contract)"
               (onDragEnd)="dragEnd()">
@@ -83,13 +83,10 @@
 
     <div class="selected-contract">
       <h3>Selected Contract</h3>
-      <div class="p-2 border-1 surface-border border-round"
-           pDroppable
-           (onDrop)="drop()"
-           [pDroppableDisabled]="!!selectedContract">
-        <p class="text-center surface-border border-bottom-1">Drop Zone</p>
-        <ul class="list-none flex flex-column gap-2 p-0 m-0" *ngIf="selectedContract">
-          <li class="p-2 border-round shadow-1">
+      <div class="p-2 border border-secondary rounded" pDroppable (onDrop)="drop()" [pDroppableDisabled]="!!selectedContract">
+        <p class="text-center border-bottom pb-1">Drop Zone</p>
+        <ul class="list-unstyled d-flex flex-column gap-2 p-0 m-0" *ngIf="selectedContract">
+          <li class="p-2 border rounded shadow-sm">
             Name: {{ selectedContract.projectName }}
           </li>
         </ul>
@@ -97,9 +94,10 @@
     </div>
   </div>
 
-  <div class="button-container">
-    <button mat-raised-button color="warn" (click)="resetDragAndDrop()">Reset Contracts</button>
-    <button mat-raised-button color="primary" type="submit" [disabled]="createTicketForm.invalid">
+  <!-- Actions -->
+  <div class="button-container text-center mt-3">
+    <button type="button" class="btn btn-info me-2" (click)="resetDragAndDrop()">Reset Contracts</button>
+    <button type="submit" class="btn btn-primary" [disabled]="createTicketForm.invalid">
       Submit Ticket
     </button>
   </div>

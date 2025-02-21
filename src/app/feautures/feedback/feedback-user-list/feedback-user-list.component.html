@@ -1,5 +1,11 @@
-<div class="feedback-list">
-    @for(feedback of feedbacks; track feedback.id){
-        <app-feedback-card [feedback]="feedback"></app-feedback-card>
-    }
-</div>
+<div *ngIf="feedbacks && feedbacks.length > 0; else noFeedback">
+    <div *ngFor="let feedback of feedbacks; trackBy: trackFeedback">
+      <app-feedback-card [feedback]="feedback"></app-feedback-card>
+    </div>
+  </div>
+  <ng-template #noFeedback>
+    <div class="no-data-message">
+      <p>No feedback available for this user.</p>
+    </div>
+  </ng-template>
+  

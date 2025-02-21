@@ -4,18 +4,40 @@
   </div>
 
   <div class="button-group">
-    <p-button icon="pi pi-chart-bar" *ngIf="userType === 'SoftwareCompanyUser'" (click)="setSelectedComponent('performance')" severity="primary"/>
-
-
-    <p-button icon="pi pi-clipboard"*ngIf="userType === 'SoftwareCompanyUser'" (click)="setSelectedComponent('assignTickets')" severity="secondary"/>
-
-    <p-button icon="pi pi-comments" (click)="setSelectedComponent('feedback')" severity="info"/>
-
-
-    <p-button icon="pi pi-chart-pie" *ngIf="userType === 'BeneficiaryCompanyUser'" (click)="setSelectedComponent('statistics')" severity="primary"/>
-
-    <p-button icon="pi pi-pencil" *ngIf="userType === 'BeneficiaryCompanyUser'" (click)="setSelectedComponent('createTicket')" severity="success"/>
+    <div class="icon-only-wrapper" data-tooltip="Performance Dashboard" *ngIf="userType === 'SoftwareCompanyUser'">
+      <button type="button" class="btn btn-primary btn-sm" (click)="setSelectedComponent('performance')">
+        <i class="pi pi-chart-bar"></i>
+      </button>
+    </div>
+    
+    <div class="icon-only-wrapper" data-tooltip="Assign Tickets" *ngIf="userType === 'SoftwareCompanyUser'">
+      <button type="button" class="btn btn-secondary btn-sm" (click)="setSelectedComponent('assignTickets')">
+        <i class="pi pi-clipboard"></i>
+      </button>
+    </div>
+    
+    <!-- Feedback Button (available for all users) -->
+    <div class="icon-only-wrapper" data-tooltip="Feedback">
+      <button type="button" class="btn btn-info btn-sm" (click)="setSelectedComponent('feedback')">
+        <i class="pi pi-comments"></i>
+      </button>
+    </div>
+    
+    <!-- Statistics Button -->
+    <div class="icon-only-wrapper" data-tooltip="Statistics" *ngIf="userType === 'BeneficiaryCompanyUser'">
+      <button type="button" class="btn btn-primary btn-sm" (click)="setSelectedComponent('statistics')">
+        <i class="pi pi-chart-pie"></i>
+      </button>
+    </div>
+    
+    <!-- Create Ticket Button -->
+    <div class="icon-only-wrapper" data-tooltip="Create Ticket" *ngIf="userType === 'BeneficiaryCompanyUser'">
+      <button type="button" class="btn btn-success btn-sm" (click)="setSelectedComponent('createTicket')">
+        <i class="pi pi-pencil"></i>
+      </button>
+    </div>
   </div>
+  
 
   <p-panel header="Dashboard Section" class="dashboard-panel">
     <div class="scroll-container">

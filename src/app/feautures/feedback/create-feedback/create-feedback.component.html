@@ -72,32 +72,36 @@
 
 
 
-    <!-- Submit Button -->
-    <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="feedbackForm.invalid || isDropdownDisabled"
-    >
-      Submit Feedback
-    </button>
-    <button type="button" class="btn btn-secondary ms-2" (click)="openFeedbackOverlay($event)"
-    [disabled]="feedbackForm.get('rating')?.value < 1">
-      Generate Feedback
-    </button>
+<div class="button-container">
+  <button
+    type="submit"
+    class="btn btn-primary btn-no-radius"
+    [disabled]="feedbackForm.invalid || isDropdownDisabled"
+  >
+    Submit Feedback
+  </button>
+  <button
+    type="button"
+    class="btn btn-secondary btn-no-radius ms-2"
+    (click)="openFeedbackOverlay($event)"
+    [disabled]="feedbackForm.get('rating')?.value < 1"
+  >
+    Generate Feedback
+  </button>
+</div>
   </form>
 </div>
 
 <p-overlayPanel #feedbackOverlay [style]="{ width: '40rem' }">
-  <div>
+  <div class="overlay-content">
     <h3>Generate Feedback</h3>
-
     <label>Describe your experience:</label>
     <textarea [(ngModel)]="userExperience" class="form-control" rows="3"></textarea>
-
-    <p-button icon="pi pi-pencil" class="mt-2 me-2" [rounded]="true" severity="primary" (click)="generateFeedback()"></p-button>
-
+    <button type="button" class="btn btn-light btn-no-radius mt-2" (click)="generateFeedback()">
+      <i class="pi pi-pencil me-2"></i> Generate
+    </button>
     <!-- Loading Indicator -->
-    <div *ngIf="isGenerating">
+    <div *ngIf="isGenerating" class="mt-2">
       <p-progressBar mode="indeterminate" [style]="{ height: '6px', width: '100%' }"></p-progressBar>
     </div>
   </div>

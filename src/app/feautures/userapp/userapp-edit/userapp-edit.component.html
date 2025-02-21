@@ -1,93 +1,101 @@
 @if(userapp){
-    <div class = "col-6">
-        @if(editForm.dirty){
-            <div class="alert alert-info">
-                <p><strong>Important:</strong>
-                    Any unsaved changes will be lost. Please make sure to save your changes before leaving this page.
-                </p>
-            </div> 
-        }  
-    </div>
-    <div class="row">
-        
-        <div class = "col-4">
-            <div class = "col-4">
-                <h1>User Detail</h1>
-            </div>
-                <p-card
-        header="{{ userapp.userName }}"
-        subheader="{{ userapp.companyName }}"
-        [style]="{ width: '360px' }"
-        class="p-card-custom"
-        >
-        <!-- Display the user's photo in the header -->
-        <ng-template pTemplate="header">
-            <img
-            alt="{{ userapp.firstName }} {{ userapp.lastName }}"
-            [src]="userapp.photoUrl || '/user.png'"
-            class="header-image"
-            />
-        </ng-template>
-    
-        <!-- Display the userapp's details -->
-        <p>
-            <strong>Name:</strong> {{ userapp.firstName }} {{ userapp.lastName }} <br />
-            <strong>Email:</strong> {{ userapp.email }} <br />
-            <strong>Phone:</strong> {{ userapp.phoneNumber }} <br />
-            <strong>Rating:</strong><p-rating [ngModel]="userapp.rating" [readonly]="true" [cancel]="false"></p-rating> <br />
-            <strong>Company:</strong> {{ userapp.companyName }} <br />
-            <!-- <strong>Hire Date:</strong> {{ userapp.hireDate }} <br /> -->
-            <img
-            [src]="userapp.companyPhotoUrl || '/company.png'"
-            alt="{{ userapp.companyName }}"
-            class="company-logo"
-            />
-        </p>
-    
-        <!-- Footer actions -->
-        <ng-template pTemplate="footer">
-            <div class="flex gap-3 mt-1">
-            <button [disabled]="!editForm.dirty"
-             form="editForm" type="submit" 
-            class="btn btn-primary w-full">Save</button>
-            </div>
-        </ng-template>
-        </p-card>
-        </div>
-        <div class = "col-8">
-            <p-tabView styleClass="tabview-custom">
-                <p-tabPanel>
-                  <ng-template pTemplate="header">
-                    <div class="flex align-items-center gap-2">
-                      <i class="pi pi-inbox" style="font-size: 2rem; color: #007bff;"></i>
-                      <span>About {{ userapp.userName }}</span>
-                    </div>
-                  </ng-template>
-                  <form id="editForm" #editForm="ngForm" (ngSubmit)="updateUserApp()">
-                    <h4>Phone Number</h4>
-                        <p-inputOtp
-                        [(ngModel)]="userapp.phoneNumber"
-                        name="phoneNumber"
-                        [length]="10"
-                        [integerOnly]="true"
-                      ></p-inputOtp>
-                  <h4>Email</h4>
-                    <textarea
-                    [(ngModel)]="userapp.email"
-                    class="form-control"
-                    name="email"
-                    rows="3"></textarea>
-                </form>
-                <h4>Photo</h4>
-                <div>
-                    <app-photo-edit [userApp]="userapp"></app-photo-edit>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-12">
+                <div class="alert alert-info" *ngIf="isFormDirty()">
+                    <p><strong>Important:</strong>
+                        Any unsaved changes will be lost. Please make sure to save your changes before leaving this page.
+                    </p>
                 </div>
-                </p-tabPanel>
-              </p-tabView>
             </div>
+        </div>
+    
+        <div class="row">
+            <!-- Left Panel (User Details) -->
+            <div class="col-lg-4 col-md-5 col-sm-12">
+                <h1>User Detail</h1>
+                <p-card
+                    header="{{ userapp.userName }}"
+                    subheader="{{ userapp.companyName }}"
+                    class="p-card-custom w-100"
+                >
+                    <ng-template pTemplate="header">
+                        <img alt="{{ userapp.firstName }} {{ userapp.lastName }}" 
+                             [src]="userapp.photoUrl || '/user.png'" 
+                             class="img-fluid rounded shadow user-photo" />
+                    </ng-template>
+    
+                    <p>
+                        <strong>Name:</strong> {{ userapp.firstName }} {{ userapp.lastName }} <br />
+                        <strong>Email:</strong> {{ userapp.email }} <br />
+                        <strong>Phone:</strong> {{ userapp.phoneNumber }} <br />
+                        <strong>Rating:</strong>
+                        <p-rating [ngModel]="userapp.rating" [readonly]="true" [cancel]="false"></p-rating> <br />
+                        <strong>Company:</strong> {{ userapp.companyName }} <br />
+                        <img [src]="userapp.companyPhotoUrl || '/company.png'" 
+                             alt="{{ userapp.companyName }}" 
+                             class="company-logo img-fluid" />
+                    </p>
+    
+                    <ng-template pTemplate="footer">
+                        <div class="d-grid">
+                            <button [disabled]="!isFormDirty()" type="submit" form="editForm" 
+                                    class="btn btn-primary w-100">
+                                Save
+                            </button>
+                        </div>
+                    </ng-template>
+                </p-card>
+            </div>
+    
+            <!-- Right Panel (Form) -->
+            <div class="col-lg-8 col-md-7 col-sm-12">
+                <mat-tab-group>
+                    <mat-tab label="About">
+                        <form [formGroup]="userForm" (ngSubmit)="updateUserApp()" id="editForm" class="p-3 shadow rounded bg-white">
+                            <!-- Phone Number Card -->
+                            <div class="card shadow-sm p-3 mb-3">
+                                <h5 class="card-title">Phone Number</h5>
+                                <ngx-material-intl-tel-input
+                                    [fieldControl]="userForm.get('phoneNumber')"  
+                                    [required]="true"
+                                    [autoIpLookup]="true"
+                                    [iconMakeCall]="false"
+                                    [includeDialCode]="true"
+                                    [preferredCountries]="['us', 'gb', 'ro']"
+                                    [enableSearch]="true"
+                                    [numberValidation]="true"
+                                    autoSelectedCountry="ro"
+                                    outputNumberFormat="E164"  
+                                >
+                                </ngx-material-intl-tel-input>
+                                <div *ngIf="userForm.get('phoneNumber')?.invalid && userForm.get('phoneNumber')?.touched" class="text-danger">
+                                    Please enter a valid phone number.
+                                </div>
+                            </div>
+
+                            <!-- Email Card -->
+                            <div class="card shadow-sm p-3 mb-3">
+                                <h5 class="card-title">Email</h5>
+                                <input type="email" 
+                                       id="email"
+                                       formControlName="email" 
+                                       class="form-control" 
+                                       placeholder="Enter email">
+                                <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="text-danger">
+                                    Please enter a valid email.
+                                </div>
+                            </div>
+
+                            <!-- Photo Upload Card -->
+                            <div class="card shadow-sm p-3 mb-3">
+                                <h5 class="card-title">Profile Photo</h5>
+                                <app-photo-edit [userApp]="userapp"></app-photo-edit>
+                            </div>
+                        </form>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
     </div>
 }
-
-
-
-  

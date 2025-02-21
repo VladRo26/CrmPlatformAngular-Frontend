@@ -1,20 +1,134 @@
-/* Style for the header image */
+/* Style for the header image (user photo) */
 .header-image {
-    width: 100%; /* Reduce the width to fit nicely */
-    margin: 10px auto; /* Center the image and add a top and bottom margin */
-    display: block; /* Ensure the image is a block element */
-    border-radius: 10px; /* Add slight rounding for a polished look */
-    border: 1px solid #3c3a3a; /* Add a subtle border */
+  width: 100%;
+  max-width: 250px; /* Limit max size for large screens */
+  height: auto;
+  margin: 10px auto; /* Centering */
+  display: block;
+  border-radius: 10px;
+  border: 1px solid #3c3a3a;
+  object-fit: cover; /* Ensure the image fills the area */
+  transition: all 0.3s ease-in-out; /* Smooth effect */
+}
+
+/* Style for the company logo */
+.company-logo {
+  width: 100px;
+  height: 100px;
+  margin: 10px auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Ensure card and form layouts are responsive */
+.p-card-custom {
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+}
+
+/* Form and card shadow for better visibility */
+form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for cards */
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Make columns stack on smaller screens */
+@media (max-width: 1200px) {
+  .col-lg-4, .col-lg-8 {
+      flex: 0 0 100%;
+      max-width: 100%;
   }
-  
-  /* Style for the company logo */
+
+  /* Reduce image sizes for smaller screens */
+  .header-image {
+      max-width: 200px;
+  }
+
   .company-logo {
-    width: 100px; /* Set a fixed width */
-    height: 100px; /* Set a fixed height */
-    margin: 10px 0; /* Add vertical margin */
-    object-fit: cover; /* Ensure the image covers the area proportionally */
-    border-radius: 8px; /* Slight rounding for logos */
-    border: 1px solid #ccc; /* Subtle border for differentiation */
+      width: 80px;
+      height: 80px;
   }
-  
-  
+}
+
+/* Adjust layout for tablets */
+@media (max-width: 992px) {
+  .container-fluid {
+      padding: 15px;
+  }
+
+  .header-image {
+      max-width: 180px;
+  }
+
+  .company-logo {
+      width: 70px;
+      height: 70px;
+  }
+
+  .card {
+      padding: 15px;
+  }
+}
+
+/* Adjust layout for mobile screens */
+@media (max-width: 768px) {
+  .header-image {
+      max-width: 150px;
+  }
+
+  .company-logo {
+      width: 60px;
+      height: 60px;
+  }
+
+  /* Reduce padding and margins for better spacing */
+  .container-fluid {
+      padding: 10px;
+  }
+
+  .p-card-custom {
+      max-width: 100%;
+  }
+
+  form {
+      padding: 15px;
+  }
+
+  .card {
+      padding: 10px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 576px) {
+  .header-image {
+      max-width: 120px;
+  }
+
+  .company-logo {
+      width: 50px;
+      height: 50px;
+  }
+
+  .p-card-custom {
+      padding: 10px;
+  }
+
+  .card {
+      padding: 8px;
+  }
+}

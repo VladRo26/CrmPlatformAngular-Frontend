@@ -36,7 +36,17 @@ ngx-spinner {
 
       --role-handler: #81c784;       /* Green for handlers */
     --role-creator: #ffca28;       /* Orange for creators */
-    --default-color: #2196F3;      /* Default fallback */
+    --default-color: #9ccc65;      /* Pastel lime green */
+    --outline-color: #052b4242;
+
+    --disabled-dropdown-bg: #e9ecef;
+    --disabled-dropdown-text: #6c757d;
+    --disabled-dropdown-opacity: 0.65;
+  
+    /* Other Global Variables (if needed) */
+    --spacing-small: 0.5rem;
+    --spacing-medium: 1rem;
+    --spacing-large: 1.5rem;
 
   }
   

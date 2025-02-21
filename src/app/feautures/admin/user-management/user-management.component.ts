@@ -8,15 +8,20 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
 import {NgFor, NgIf} from '@angular/common';
 import { User2 } from '../../../_models/user2';
+import { ToastrService } from 'ngx-toastr';
+import {MatIconModule} from '@angular/material/icon';
+
 @Component({
   selector: 'app-user-management',
   standalone: true,
-  imports: [MatTableModule,MatButtonModule,DialogModule,CheckboxModule,FormsModule,NgFor,NgIf],
+  imports: [MatTableModule,MatButtonModule,DialogModule,CheckboxModule,FormsModule,NgFor,NgIf,MatIconModule],
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.css'
 })
 export class UserManagementComponent implements OnInit {
   private adminService = inject(AdminService);
+  private toastr = inject(ToastrService); // ✅ Inject ToastrService
+
   displayedColumns: string[] = ['username', 'roles', 'actions']; // Define table columns
   dataSource: MatTableDataSource<User> = new MatTableDataSource<User>();
   roles: string[] = []; // Store available roles
@@ -68,5 +73,23 @@ export class UserManagementComponent implements OnInit {
     }
     console.log('Updated selected roles:', this.selectedRoles); // Debug: Confirm role toggling
   }
+
+  deleteUser(username: string): void {
+    if (confirm(`Are you sure you want to delete ${username}?`)) {
+      this.adminService.deleteUser(username).subscribe({
+        next: () => {
+          this.toastr.success(`User ${username} deleted successfully`);
+          // Re-fetch the updated user list instead of reloading the page
+          this.getUserWithRoles();
+        },
+        error: (err) => {
+          console.error('Failed to delete user:', err);
+          this.toastr.error(`Failed to delete ${username}`);
+        },
+      });
+    }
+  }
+  
+  
 
 }

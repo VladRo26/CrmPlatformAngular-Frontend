@@ -1,0 +1,35 @@
+/* Ensure full responsiveness */
+:host {
+    display: block;
+    width: 100%;
+  }
+  
+  /* Custom form fields (optional override) */
+  .custom-field {
+    width: 60vw; /* 60% of viewport width; adjust as needed */
+    max-width: 40rem; /* Max width to limit field size on large screens */
+    margin: 0 auto;
+  }
+  
+  /* Contracts Container */
+  .contracts-container {
+    width: 100%;
+    max-width: 90rem;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  
+  /* Button container (centered) */
+  .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  /* Responsive adjustments for smaller screens */
+  @media (max-width: 40rem) {
+    .custom-field {
+      width: 90%;
+    }
+  }
+  

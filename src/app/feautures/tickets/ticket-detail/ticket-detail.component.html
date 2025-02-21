@@ -13,11 +13,14 @@
       </span>
     </mat-card-subtitle>
   </mat-card-header>
+
   <mat-card-content>
-    <p>
-      <strong>Description:</strong>
-      {{ ticketDescription }}
-    </p>
+    <!-- Description in a scroll panel -->
+    <div class="description-container">
+      <p-scrollPanel [style]="{ width: '100%', height: '5rem' }">
+        <p><strong>Description:</strong> {{ ticketDescription }}</p>
+      </p-scrollPanel>
+    </div>
 
     <p *ngIf="isBeneficiaryUser">
       <strong>Handler:</strong> 
@@ -32,36 +35,32 @@
     </p>
 
     <div class="button-container">
-      <!-- Translate Description -->
-      <button class="btn btn-secondary d-flex align-items-center" (click)="translateTicketDescription()">
+      <!-- Translate Description Button -->
+      <button type="button" class="btn btn-secondary d-flex align-items-center" (click)="translateTicketDescription()">
         <i class="pi pi-language me-2"></i> Translate Description
       </button>
 
+      <!-- Update Status Button -->
+      <button type="button" class="btn btn-secondary d-flex align-items-center" 
+              (click)="showDialog()" 
+              [disabled]="ticket.status === 'Closed'">
+        <i class="pi pi-pencil me-2"></i> Update Status
+      </button>
 
-      <button 
-      class="btn btn-secondary d-flex align-items-center" 
-      (click)="showDialog()" 
-      [disabled]="ticket.status === 'Closed'">
-      <i class="pi pi-pencil me-2"></i> Update Status
-    </button>
+      <!-- Give Feedback Button -->
+      <button *ngIf="isEligibleForFeedback && ticket.status === 'Closed' && isSoftwareCompanyUser && ticket.handlerId === currentUserId"
+              type="button" class="btn btn-secondary d-flex align-items-center" (click)="showFeedbackDialog()">
+        <i class="pi pi-star me-2"></i> Give Feedback
+      </button>
 
-    <button 
-    *ngIf="isEligibleForFeedback && ticket.status === 'Closed' && isSoftwareCompanyUser && ticket.handlerId === currentUserId"
-    class="btn btn-primary d-flex align-items-center"
-    (click)="showFeedbackDialog()">
-    <i class="pi pi-star me-2"></i> Give Feedback
-  </button>
-
-  <button 
-  *ngIf="ticket.status === 'Closed'"
-  class="btn btn-danger d-flex align-items-center"
-  (click)="showReopenDialog()">
-  <i class="pi pi-refresh me-2"></i> Reopen Ticket
-</button>
+      <!-- Reopen Ticket Button -->
+      <button *ngIf="ticket.status === 'Closed'"
+              type="button" class="btn btn-danger d-flex align-items-center" (click)="showReopenDialog()">
+        <i class="pi pi-refresh me-2"></i> Reopen Ticket
+      </button>
     </div>
   </mat-card-content>
 </mat-card>
-
 
 
 
@@ -99,7 +98,7 @@
 
 
 <!-- Ticket History -->
-<p-scrollPanel [style]="{ width: '100%', height: '300px' }">
+<p-scrollPanel [style]="{ width: '100%', height: '25rem' }">
   <p-timeline [value]="events" align="alternate" styleClass="customized-timeline">
     <!-- Marker Template -->
     <ng-template pTemplate="marker" let-event>
@@ -128,7 +127,7 @@
           <p-button 
             icon="pi pi-language" 
             [rounded]="true"
-            severity="help"
+            severity="secondary"
             [outlined]="true"
             [disabled]="overlayActive" 
             (click)="showOverlay(event.message, $event, overlay)">

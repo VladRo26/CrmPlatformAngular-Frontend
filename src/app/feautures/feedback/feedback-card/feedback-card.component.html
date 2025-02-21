@@ -1,79 +1,83 @@
 <mat-card class="feedback-card">
-    <mat-card-header>
-      <div class="user-info">
-        <img [src]="photoUrl" alt="User Photo" class="user-photo" />
-        <div class="user-details">
-          <mat-card-title>{{ userApp?.userName || 'Unknown User' }}</mat-card-title>
-          <mat-card-subtitle>Rating:</mat-card-subtitle>
-          <p-rating [(ngModel)]="feedback().rating" [readonly]="true" [cancel]="false"></p-rating>
-        </div>
+  <mat-card-header>
+    <div class="user-info">
+      <img [src]="photoUrl" alt="User Photo" class="user-photo" />
+      <div class="user-details">
+        <mat-card-title>{{ userApp?.userName || 'Unknown User' }}</mat-card-title>
+        <mat-card-subtitle>Rating:</mat-card-subtitle>
+        <p-rating [(ngModel)]="feedback().rating" [readonly]="true" [cancel]="false"></p-rating>
       </div>
-    </mat-card-header>
-    <mat-card-content>
-      <p><strong>Ticket ID:</strong> {{ feedback().ticketId || 'N/A' }}</p>
-      <p><strong>Content:</strong> {{ feedback().content || 'No content provided' }}</p>
-      <p><strong>Created At:</strong> {{ feedback().createdAt | date }}</p>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <p><strong>Ticket ID:</strong> {{ feedback().ticketId || 'N/A' }}</p>
+    <p><strong>Content:</strong> {{ feedback().content || 'No content provided' }}</p>
+    <p><strong>Created At:</strong> {{ feedback().createdAt | date }}</p>
   
-      <!-- PrimeNG MeterGroup for Sentiment Analysis -->
-      <div *ngIf="value.length > 0">
-        <p-meterGroup [value]="value"></p-meterGroup>
-      </div>
-      <div *ngIf="value.length === 0">
-        <p><em>Loading sentiment analysis...</em></p>
-      </div>
-
-      <p-button
-      icon="pi pi-language" 
-      label="Translate"
-      class="translate-button"
-      (click)="openTranslationPanel($event, feedback().ticketId)">
-      </p-button>
-
-    </mat-card-content>
-  </mat-card>
-
-  <p-overlayPanel #translationPanel [style]="{ width: '50rem' }">
-    <div *ngIf="selectedTicket">
-      <h3>Translate Feedback</h3>
+    <!-- Sentiment Analysis -->
+    <div *ngIf="value.length > 0">
+      <p-meterGroup [value]="value"></p-meterGroup>
+    </div>
+    <div *ngIf="value.length === 0">
+      <p><em>Loading sentiment analysis...</em></p>
+    </div>
   
-      <!-- Original Language (Read-Only) -->
-      <div class="readonly-container">
-        <h4>Original Language</h4>
-        <lib-country-list
-          [selectedCountryConfig]="selectedCountryConfig"
-          [countryListConfig]="{
-            displayLanguageName: true,
-            hideDialCode: true,
-            hideSearch: true
-          }"
-          [selectedCountryCode]="selectedCountyCode ?? 'GD'">
-        </lib-country-list>
-        <p><strong>Language of the Ticket:</strong> {{ selectedSourceLanguage }}</p>
-      </div>
+    <!-- Translate Button as Bootstrap Button -->
+    <div class="action-button">
+      <button type="button" class="btn btn-secondary btn-no-radius" (click)="openTranslationPanel($event, feedback().ticketId)">
+        <i class="pi pi-language me-2"></i> Translate
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<p-overlayPanel #translationPanel [appendTo]="'body'" [style]="{ width: '100%', maxWidth: '50rem' }">
+  <div class="overlay-content">
+    <h3>Translate Feedback</h3>
   
-      <h4>Select Target Language</h4>
+    <!-- Original Language (Read-Only) -->
+    <div class="readonly-container">
+      <h4>Original Language</h4>
+      <lib-country-list
+        [selectedCountryConfig]="selectedCountryConfig"
+        [countryListConfig]="{
+          displayLanguageName: true,
+          hideDialCode: true,
+          hideSearch: true
+        }"
+        [selectedCountryCode]="selectedCountyCode ?? 'GD'">
+      </lib-country-list>
+      <p><strong>Language of the Ticket:</strong> {{ selectedSourceLanguage }}</p>
+    </div>
+  
+    <h4>Select Target Language</h4>
     <lib-country-list
       [selectedCountryConfig]="selectedCountryConfig"
       [countryListConfig]="countryListConfig"
       (onCountryChange)="handleCountryChange($event)">
     </lib-country-list>
-
     
     <div *ngIf="selectedTargetLanguage">
       <p><strong>Selected Language:</strong> {{ selectedTargetLanguage }}</p>
     </div>
-
-    <button pButton label="Translate Feedback" (click)="translateFeedback()"></button>
-
-    <!-- ✅ Show Progress Bar ONLY When Translating -->
-    <div *ngIf="isTranslating" [style]="{ marginTop: '1rem' }">
-      <p-progressBar mode="indeterminate" [style]="{ height: '6px', width: '50rem'}"></p-progressBar>
+    
+    <!-- Translate Feedback Button as Bootstrap Button -->
+    <div class="mt-2">
+      <button type="button" class="btn btn-primary btn-no-radius" (click)="translateFeedback()">
+        Translate Feedback
+      </button>
     </div>
-
-    <!-- Show Translated Content -->
-    <div *ngIf="translatedMessage" [style]="{ marginTop: '1rem' }">
+    
+    <!-- Progress Bar (contained within overlay) -->
+    <div *ngIf="isTranslating" class="mt-2 progress-container">
+      <p-progressBar mode="indeterminate" [style]="{ height: '6px', width: '100%' }"></p-progressBar>
+    </div>
+    
+    <!-- Translated Content -->
+    <div *ngIf="translatedMessage" class="mt-2">
       <h4>Translated Content</h4>
       <p>{{ translatedMessage }}</p>
     </div>
   </div>
 </p-overlayPanel>
+

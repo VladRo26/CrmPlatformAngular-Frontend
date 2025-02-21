@@ -1,35 +1,69 @@
+/* Feedback Card: full width, responsive, square borders */
 .feedback-card {
-    width: 100%; /* Full width of the container */
-    margin: 0 auto;
-  }
-  
-  .user-info {
-    display: flex;
-    align-items: center;
-  }
-  
-  .user-photo {
-    width: 4rem; /* Adjust the width (relative to the root font size) */
-    height: 4rem; /* Adjust the height (relative to the root font size) */
-    border-radius: 50%; /* Make the image circular */
-    margin-right: 1rem; /* Add spacing between the photo and user details */
-  }
-  
-  .user-details {
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Disable interaction for the container and its children */
-.readonly-container {
-  pointer-events: none; /* Disable mouse interactions */
-  opacity: 0.7; /* Optional: dim the container to indicate it’s disabled */
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+  border-radius: 0;  /* Square borders */
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
 }
 
-/* Optionally, style the text to make it look more like a label */
-.readonly-container p {
-  font-style: italic;
-  color: gray;
+/* User info styling */
+.user-info {
+  display: flex;
+  align-items: center;
+}
+.user-photo {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+.user-details {
+  display: flex;
+  flex-direction: column;
 }
 
-  
+/* Disabled Dropdown styling using global CSS variables (defined in your global CSS) */
+.disabled-dropdown {
+  pointer-events: none;
+  background-color: var(--disabled-dropdown-bg);
+  color: var(--disabled-dropdown-text);
+  opacity: var(--disabled-dropdown-opacity);
+}
+
+/* Action button styling */
+.action-button {
+  margin-top: 1rem;
+  text-align: left;
+}
+
+/* Remove Bootstrap button rounding */
+.btn-no-radius {
+  border-radius: 0 !important;
+}
+
+/* Overlay content container with spacing */
+.overlay-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.progress-container {
+  width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 40rem) {
+  .feedback-card {
+    width: 95%;
+    padding: 1rem;
+  }
+  mat-card-title {
+    font-size: 1.2rem;
+  }
+  mat-card-content {
+    font-size: 1rem;
+  }
+}

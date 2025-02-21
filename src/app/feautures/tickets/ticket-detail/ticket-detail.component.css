@@ -1,88 +1,58 @@
-@keyframes fa-blink {
-  0% { opacity: 1; }
-  100% { opacity: 0.2; }
+/* Ticket Detail Card - square borders, smaller overall card */
+.ticket-detail-card {
+  width: 90%;
+  max-width: 60rem;  /* Reduced max width */
+  margin: 1rem auto;
+  padding: 1rem;
+  border-radius: 0;  /* Square borders */
+  box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.1);
 }
 
-.isOnline {
-  animation: fa-blink 1s infinite;
-  color: var(--status-resolved); /* ✅ Using CSS variable */
-}
-
-/* ✅ Responsive card */
-.example-card {
-  max-width: 90vw; /* Card takes max 90% of viewport width */
-  width: 100%;
-  margin: 2vh auto; /* Center with viewport height spacing */
-  box-shadow: 0 0.5vh 1vh rgba(0, 0, 0, 0.1); /* ✅ Responsive shadow */
-  border-radius: 0.5rem; /* ✅ Small rounded corners */
-  transition: transform 0.2s, box-shadow 0.2s; /* Adds hover effect */
-}
-
-.example-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 1vh 2vh rgba(0, 0, 0, 0.2);
-}
-
-/* ✅ Circular avatar with border */
-.example-header-image img {
-  border-radius: 50%; 
-  border: 0.3rem solid var(--role-handler); /* ✅ Using role color */
-}
-
-/* ✅ Card header */
+/* Card header */
 mat-card-header {
-  background-color: var(--status-open); /* ✅ Dynamic status color */
-  padding: 2vh;
-  border-bottom: 0.2vh solid var(--default-color);
+  padding: 1.5rem 1rem;
+  border-bottom: 0.125rem solid rgba(0, 0, 0, 0.1);
 }
 
-/* ✅ Title */
+/* Card title */
 mat-card-title {
   font-size: 1.5rem;
   font-weight: bold;
-  color: var(--default-color);
 }
 
-/* ✅ Company link */
-.company-link {
-  text-decoration: underline;
-  color: var(--role-handler);
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.company-link:hover {
-  color: var(--role-creator);
-  text-decoration: none;
-}
-
-/* ✅ Card content */
-mat-card-content {
-  padding: 2vh;
+/* Card subtitle */
+mat-card-subtitle {
   font-size: 1.2rem;
-  color: var(--default-color);
 }
 
-/* ✅ Card actions */
-mat-card-actions {
+/* Card content */
+mat-card-content {
+  padding: 1.5rem 1rem;
+  font-size: 1.2rem;
+}
+
+/* Description container with scroll */
+.description-container {
+  margin-bottom: 1rem;
+}
+
+/* Button container styling */
+.button-container {
   display: flex;
-  justify-content: flex-end;
-  padding: 2vh;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
-mat-card-actions button {
-  color: var(--link-color);
-  font-weight: bold;
-  border: none;
-  background: none;
-  cursor: pointer;
+/* Using Bootstrap buttons, so no additional Angular Material button styles needed here */
+
+/* Adjust scroll panel margin */
+p-scrollPanel {
+  margin-top: 1rem;
 }
 
-mat-card-actions button:hover {
-  text-decoration: underline;
-}
-
-/* ✅ Responsive Image */
+/* Responsive image styling (if needed) */
 mat-card-image {
   width: 50%;
   height: auto;
@@ -91,9 +61,16 @@ mat-card-image {
   object-fit: cover;
 }
 
-/* ✅ Mobile-friendly adjustments */
-@media (max-width: 600px) {
-  .example-card {
-      max-width: 100%;
+/* Responsive adjustments */
+@media (max-width: 40rem) {
+  .ticket-detail-card {
+    width: 95%;
+    padding: 1rem;
+  }
+  mat-card-title {
+    font-size: 1.2rem;
+  }
+  mat-card-content {
+    font-size: 1rem;
   }
 }

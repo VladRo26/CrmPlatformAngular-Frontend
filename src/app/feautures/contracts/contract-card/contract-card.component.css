@@ -1,54 +1,202 @@
 .card-container {
-    margin-bottom: 20px; /* Add space between the cards */
+  margin-bottom: 1.25rem; /* 20px */
+}
+
+/* Header Section */
+.header-section {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+  gap: 1.25rem;           /* 20px */
+}
+
+/* Header Left: Company Names and Logos */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.9375rem;         /* 15px */
+}
+
+/* Header Right: Title */
+.header-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;            /* Take up remaining space */
+}
+
+/* Company Section: Text and image */
+.company-section {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;          /* 10px */
+}
+
+/* Company Name */
+.company-name {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--outline-color);
+}
+
+/* Company Logo */
+.company-logo {
+  width: 3.125rem;        /* 50px */
+  height: 3.125rem;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 0.125rem solid var(--outline-color); /* 2px */
+}
+
+/* Arrow Icon */
+.arrow-icon {
+  font-size: 1.25rem;      /* 20px */
+  color: var(--outline-color);
+}
+
+/* Card styling */
+.example-card {
+  margin: 0.625rem auto;  /* 10px auto */
+  padding: 0.9375rem;      /* 15px */
+  border-radius: 0.5rem;   /* 8px */
+  box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+}
+
+/* Carousel container */
+.carousel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2vh 0;
+}
+
+/* Login/Register Container */
+.login-register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  padding: 2vh 2vw;
+  border-radius: 1vw;
+}
+
+/* Fade-in Container */
+.fade-in-container {
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background: transparent;
+  padding: 2vh 2vw;
+  box-shadow: none;
+}
+
+/* Fade-in Text Styling */
+.fade-in-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 1rem;
+  text-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.1);
+}
+
+/* Signup & Contract Link Styling */
+.signup-link,
+.contract-link {
+  color: var(--outline-color);
+  text-decoration: underline;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.signup-link:hover,
+.contract-link:hover {
+  color: var(--outline-color);
+}
+
+/* Tooltip for contract link */
+.contract-link:hover::after {
+  content: "Click to see contracts";
+  position: absolute;
+  bottom: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 0.125rem 0.3125rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+/* Animated text wrapper */
+.animated-text-wrapper {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Discover text wrapper */
+.discover-text-wrapper {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+/* Carousel image styling */
+.carousel-image {
+  display: block;
+  width: 70%;             /* Fill container width */
+  max-width: 150px;        /* Default max width on small screens */
+  height: auto;
+  object-fit: cover;
+  transition: max-width 0.3s ease;
+  border-radius: 1rem;
+}
+
+/* Responsive carousel image sizes */
+@media (min-width: 768px) {
+  .carousel-image {
+    max-width: 250px;
   }
-  
+}
+
+@media (min-width: 1024px) {
+  .carousel-image {
+    max-width: 350px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .carousel-image {
+    max-width: 450px;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 50rem) {
+  .fade-in-text, .login-text {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+  }
+  .signup-text {
+    font-size: 0.9rem;
+    margin-top: 0.75rem;
+  }
+}
+
+/* Responsive adjustments for header section */
+@media (max-width: 40rem) {
   .header-section {
-    display: flex;
-    align-items: flex-start; /* Align items to the top */
-    gap: 20px; /* Space between left and right sections */
-  }
-  
-  .header-left {
-    display: flex;
-    align-items: center; /* Center items vertically */
-    gap: 15px; /* Space between logos and names */
-  }
-  
-  .header-right {
-    display: flex;
     flex-direction: column;
-    justify-content: center;
-    width: 100%; /* Take up the remaining space */
+    align-items: flex-start;
+    gap: 1rem;
   }
-  
-  .company-section {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Space between text and image */
-  }
-  
   .company-name {
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 0.875rem;
   }
-  
-  .company-logo {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid #ccc;
-  }
-  
   .arrow-icon {
-    font-size: 20px;
-    color: #3f51b5;
+    font-size: 1rem;
   }
-  
-  .example-card {
-    margin: 10px auto;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
+}

@@ -10,11 +10,12 @@ import { CarouselModule } from 'primeng/carousel';
 import { NgFor, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import {PrimeNGConfig } from "primeng/api"; 
+import {ButtonModule} from 'primeng/button';
 
 @Component({
   selector: 'app-contract-software-list',
   standalone: true,
-  imports: [ContractCardComponent,CarouselModule,NgFor,NgIf],
+  imports: [ContractCardComponent,CarouselModule,NgFor,NgIf,ButtonModule],
   templateUrl: './contract-software-list.component.html',
   styleUrl: './contract-software-list.component.css'
 })

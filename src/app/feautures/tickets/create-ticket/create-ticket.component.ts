@@ -180,12 +180,10 @@ console.log(this.createTicketForm.status);
         next: () => {
             this.toastr.success('Ticket created successfully!');
 
-            // ✅ Reset form fields
             this.createTicketForm.reset();
             this.createTicketForm.patchValue({ status: 'Open', language: 'English' });
             this.selectedContract = null;
 
-            // ✅ Refresh the page after 1 second to show updates
             setTimeout(() => {
                 window.location.reload();
             }, 1000);
@@ -257,7 +255,7 @@ console.log(this.createTicketForm.status);
       contractId: '' // Clear the contract ID field
     });
   
-    this.toastr.info('Contract selection has been reset, but other form values are preserved.');
+    this.toastr.info('Contract selection has been reset.');
   }
 
 
