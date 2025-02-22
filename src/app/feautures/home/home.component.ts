@@ -108,29 +108,37 @@ combinedCompanies: any[] = [];
   }
 }
 
-  loadCompanies() {
-    this.softwarecompaniesService.getSoftwareCompanies().subscribe({
-      next: (softwarecompanies) => {
-        this.softwarecompanies = softwarecompanies;
-        this.combineCompanies();
-      },
-    });
+loadCompanies() {
+  this.softwarecompaniesService.getSoftwareCompanies().subscribe({
+    next: (softwarecompanies) => {
+      console.log('Software companies:', softwarecompanies);
+      this.softwarecompanies = softwarecompanies;
+      this.combineCompanies();
+    },
+    error: (err) => console.error('Error loading software companies:', err)
+  });
 
-    this.beneficiarycompanyService.getBeneficiaryCompanies().subscribe({
-      next: (beneficiarycompanies) => {
-        this.beneficiarycompanies = beneficiarycompanies;
-        this.combineCompanies();
-      },
-    });
+  this.beneficiarycompanyService.getBeneficiaryCompanies().subscribe({
+    next: (beneficiarycompanies) => {
+      console.log('Beneficiary companies:', beneficiarycompanies);
+      this.beneficiarycompanies = beneficiarycompanies;
+      this.combineCompanies();
+    },
+    error: (err) => console.error('Error loading beneficiary companies:', err)
+  });
+}
+
+combineCompanies() {
+  console.log('Inside combineCompanies, software length:', this.softwarecompanies.length, 'beneficiary length:', this.beneficiarycompanies.length);
+  if (this.softwarecompanies.length && this.beneficiarycompanies.length) {
+    this.combinedCompanies = [...this.softwarecompanies, ...this.beneficiarycompanies];
+    this.companiesCount = this.combinedCompanies.length;
+    console.log('Combined companies:', this.combinedCompanies);
+    console.log('Total companies count:', this.companiesCount);
+  } else {
+    console.log('One or both arrays are empty, not combining yet.');
   }
-
-  combineCompanies() {
-    if (this.softwarecompanies.length && this.beneficiarycompanies.length) {
-      this.combinedCompanies = [...this.softwarecompanies, ...this.beneficiarycompanies];
-      this.companiesCount = this.combinedCompanies.length;
-
-    }
-  }
+}
 
   loadContractsCount(): void {
     this.contractService.getContractCount().subscribe({

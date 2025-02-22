@@ -1,0 +1,108 @@
+<div class="contract-form-container">
+    <form [formGroup]="contractForm" (ngSubmit)="register()">
+      <!-- Project Name -->
+      <mat-form-field appearance="fill" class="w-100 mb-3">
+        <mat-label>Project Name</mat-label>
+        <input matInput type="text" formControlName="projectName" placeholder="Enter project name">
+        <mat-error *ngIf="contractForm.get('projectName')?.touched && contractForm.get('projectName')?.invalid">
+          Project Name is required!
+        </mat-error>
+      </mat-form-field>
+  
+      <!-- Start Date -->
+      <mat-form-field appearance="fill" class="w-100 mb-3">
+        <mat-label>Start Date</mat-label>
+        <input matInput [matDatepicker]="startPicker" formControlName="startDate" placeholder="Choose a start date">
+        <mat-datepicker-toggle matIconSuffix [for]="startPicker">
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+        <mat-error *ngIf="contractForm.get('startDate')?.touched && contractForm.get('startDate')?.invalid">
+          Start Date is required!
+        </mat-error>
+      </mat-form-field>
+  
+      <!-- Budget -->
+      <mat-form-field appearance="fill" class="w-100 mb-3">
+        <mat-label>Budget</mat-label>
+        <input matInput type="text" formControlName="budget" placeholder="Enter budget">
+        <mat-error *ngIf="contractForm.get('budget')?.touched && contractForm.get('budget')?.invalid">
+          Budget is required and must be a valid number!
+        </mat-error>
+      </mat-form-field>
+  
+      <!-- Estimated Finish Date -->
+      <mat-form-field appearance="fill" class="w-100 mb-3">
+        <mat-label>Estimated Finish Date</mat-label>
+        <input matInput [matDatepicker]="finishPicker" formControlName="estimatedFinishDate" placeholder="Choose a finish date">
+        <mat-datepicker-toggle matIconSuffix [for]="finishPicker">
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #finishPicker></mat-datepicker>
+        <mat-error *ngIf="
+            contractForm.get('estimatedFinishDate')?.touched &&
+            (contractForm.get('estimatedFinishDate')?.errors || contractForm.errors?.['dateRange'])
+          ">
+          <ng-container *ngIf="contractForm.get('estimatedFinishDate')?.hasError('required')">
+            Estimated Finish Date is required!
+          </ng-container>
+          <ng-container *ngIf="contractForm.errors?.['dateRange']">
+            Estimated Finish Date must be after the Start Date!
+          </ng-container>          
+        </mat-error>
+      </mat-form-field>
+  
+      <!-- Offers Support Toggle -->
+      <div class="mb-3 text-center">
+        <label for="offersSupport" class="form-label">Offers Support</label>
+        <p-inputSwitch id="offersSupport" formControlName="offersSupport"></p-inputSwitch>
+      </div>
+  
+      <!-- Status Knob -->
+      <div class="mb-3 text-center">
+        <label for="status" class="form-label">Status</label>
+        <p-knob id="status" formControlName="status" [min]="0" [max]="100" [step]="5"></p-knob>
+        <mat-error *ngIf="contractForm.get('status')?.touched && contractForm.get('status')?.invalid">
+          Status is required!
+        </mat-error>
+      </div>
+  
+      <!-- Beneficiary Company Dropdown -->
+      <mat-form-field appearance="fill" class="w-100 mb-3">
+        <mat-label>Beneficiary Company</mat-label>
+        <mat-select formControlName="beneficiaryCompanyName" placeholder="Select Beneficiary Company">
+          <mat-option *ngFor="let company of beneficiaryCompanies" [value]="company.name">
+            {{ company.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="contractForm.get('beneficiaryCompanyName')?.touched && contractForm.get('beneficiaryCompanyName')?.invalid">
+          Beneficiary Company is required!
+        </mat-error>
+      </mat-form-field>
+  
+      <!-- Software Company Dropdown -->
+      <mat-form-field appearance="fill" class="w-100 mb-3">
+        <mat-label>Software Company</mat-label>
+        <mat-select formControlName="softwareCompanyName" placeholder="Select Software Company">
+          <mat-option *ngFor="let company of softwareCompanies" [value]="company.name">
+            {{ company.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="contractForm.get('softwareCompanyName')?.touched && contractForm.get('softwareCompanyName')?.invalid">
+          Software Company is required!
+        </mat-error>
+      </mat-form-field>
+  
+      <!-- Description (Optional) -->
+      <mat-form-field appearance="fill" class="w-100 mb-3">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" placeholder="Enter description"></textarea>
+      </mat-form-field>
+  
+      <!-- Submit Button (disabled while submitting) -->
+      <button mat-raised-button color="primary" type="submit" class="w-100 mb-2" [disabled]="isSubmitting">
+        Create Contract
+      </button>
+    </form>
+  </div>
+  

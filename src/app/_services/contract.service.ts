@@ -33,4 +33,8 @@ export class ContractService {
   getContractCount(): Observable<{ count: number }> {
     return this.http.get<{ count: number }>(`${this.baseUrl}Contract/count`);
   }
+
+  createContract(formData: FormData): Observable<Contract> {
+    return this.http.post<Contract>(`${this.baseUrl}Contract/create-contract`, formData);
+  }
 }

@@ -19,5 +19,9 @@ export class SoftwarecompanyService {
   getSoftwareCompanyByUserId(userId: number): Observable<SoftwareCompany> {
     return this.http.get<SoftwareCompany>(`${this.baseUrl}SoftwareCompany/ByUserId/${userId}`);
   }
+
+  register(formData: FormData): Observable<SoftwareCompany> {
+    return this.http.post<SoftwareCompany>(`${this.baseUrl}SoftwareCompany/register`, formData);
+  }
   
 }
