@@ -1,0 +1,81 @@
+<form [formGroup]="registerForm" (ngSubmit)="register()">
+    <!-- Company Name -->
+    <div class="form-group mb-3">
+      <label for="name">Company Name</label>
+      <input type="text" id="name" class="form-control"
+             formControlName="name"
+             placeholder="Enter company name"
+             [class.is-invalid]="registerForm.get('name')?.touched && registerForm.get('name')?.invalid" />
+      <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid" class="invalid-feedback">
+        Company Name is required!
+      </div>
+    </div>
+    
+    <!-- Short Description -->
+    <div class="form-group mb-3">
+      <label for="shortDescription">Short Description</label>
+      <textarea id="shortDescription" class="form-control"
+                formControlName="shortDescription"
+                placeholder="Enter a short description"
+                [class.is-invalid]="registerForm.get('shortDescription')?.touched && registerForm.get('shortDescription')?.invalid"></textarea>
+      <div *ngIf="registerForm.get('shortDescription')?.touched && registerForm.get('shortDescription')?.invalid" class="invalid-feedback">
+        Short Description is required!
+      </div>
+    </div>
+    
+    <!-- Activity Domain -->
+    <div class="form-group mb-3">
+      <label for="activityDomain">Activity Domain</label>
+      <input type="text" id="activityDomain" class="form-control"
+             formControlName="activityDomain"
+             placeholder="Enter activity domain"
+             [class.is-invalid]="registerForm.get('activityDomain')?.touched && registerForm.get('activityDomain')?.invalid" />
+      <div *ngIf="registerForm.get('activityDomain')?.touched && registerForm.get('activityDomain')?.invalid" class="invalid-feedback">
+        Activity Domain is required!
+      </div>
+    </div>
+    
+    <!-- Address -->
+    <div class="form-group mb-3">
+      <label for="address">Address</label>
+      <input type="text" id="address" class="form-control"
+             formControlName="address"
+             placeholder="Enter address"
+             [class.is-invalid]="registerForm.get('address')?.touched && registerForm.get('address')?.invalid" />
+      <div *ngIf="registerForm.get('address')?.touched && registerForm.get('address')?.invalid" class="invalid-feedback">
+        Address is required!
+      </div>
+    </div>
+    
+    <!-- Establishment Date -->
+    <div class="form-group mb-3">
+      <label for="establishmentDate">Establishment Date</label>
+      <input type="date" id="establishmentDate" class="form-control"
+             formControlName="establishmentDate"
+             [class.is-invalid]="registerForm.get('establishmentDate')?.touched && registerForm.get('establishmentDate')?.invalid" />
+      <div *ngIf="registerForm.get('establishmentDate')?.touched && registerForm.get('establishmentDate')?.errors">
+        <div class="invalid-feedback" *ngIf="registerForm.get('establishmentDate')?.hasError('required')">
+          Establishment Date is required!
+        </div>
+        <div class="invalid-feedback" *ngIf="registerForm.get('establishmentDate')?.hasError('futureDate')">
+          Establishment Date cannot be in the future!
+        </div>
+      </div>
+    </div>
+    
+    <!-- File input for photo (Optional) -->
+    <div class="form-group mb-3">
+      <input type="file" class="form-control"
+             (change)="onFileSelected($event)" accept="image/*" />
+      <div *ngIf="registerForm.get('file')?.value">
+        <p class="mt-2">
+          <strong>Selected File:</strong> {{ registerForm.get('file')?.value.name }}
+          <button type="button" class="btn btn-sm btn-danger ms-2" (click)="removeFile()">Remove</button>
+        </p>
+      </div>
+    </div>
+    
+    <!-- Register Button -->
+    <button type="submit" class="btn btn-primary w-100 mb-2">Register Company</button>
+  </form>
+  

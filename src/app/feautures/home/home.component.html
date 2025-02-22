@@ -30,14 +30,15 @@
       <p-carousel [value]="combinedCompanies" [numVisible]="3" [numScroll]="1" [circular]="true"
                   autoplayInterval="2000" [responsiveOptions]="responsiveOptions">
         <ng-template let-company pTemplate="item">
-          <div class="m-2 p-3 centered-item">
-            <div class="mb-3">
-              <div class="relative mx-auto">
-                <img [src]="company.photoUrl || '/company.png'" alt="Company Photo" class="carousel-image">
-              </div>
+          <div class="d-flex flex-column align-items-center justify-content-center p-2 m-2">
+            <div class="d-flex justify-content-center mb-2">
+              <img [src]="company.photoUrl || '/company.png'" alt="Company Photo" class="carousel-image">
             </div>
-            <div class="mb-3 font-medium">{{ company.name || 'No Name' }}</div>
+            <div class="text-center fw-bold" style="font-size: 1rem; color: #333;">
+              {{ company.name || 'No Name' }}
+            </div>
           </div>
+          
         </ng-template>
       </p-carousel>
     </div>

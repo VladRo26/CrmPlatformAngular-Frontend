@@ -7,15 +7,15 @@ import { UserappService } from '../../../_services/userapp.service';
 import { userApp } from '../../../_models/userapp';
 import { ContractCardComponent } from '../contract-card/contract-card.component';
 import { CarouselModule } from 'primeng/carousel';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor } from '@angular/common';
 import { Router } from '@angular/router';
 import {PrimeNGConfig } from "primeng/api"; 
-import {ButtonModule} from 'primeng/button';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-contract-software-list',
   standalone: true,
-  imports: [ContractCardComponent,CarouselModule,NgFor,NgIf,ButtonModule],
+  imports: [ContractCardComponent,CarouselModule,NgFor,NgIf],
   templateUrl: './contract-software-list.component.html',
   styleUrl: './contract-software-list.component.css'
 })

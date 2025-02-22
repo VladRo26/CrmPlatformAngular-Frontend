@@ -23,5 +23,9 @@ export class BeneficiarycompanyService {
   getBeneficiaryCompanyByUserId(userId: number): Observable<BeneficiaryCompany> {
     return this.http.get<BeneficiaryCompany>(`${this.baseUrl}beneficiarycompany/ByUserId/${userId}`);
   }
+
+  register(formData: FormData): Observable<BeneficiaryCompany> {
+    return this.http.post<BeneficiaryCompany>(`${this.baseUrl}beneficiarycompany/register`, formData);
+  }
   
 }

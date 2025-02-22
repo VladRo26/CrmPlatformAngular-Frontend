@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import {MatTabsModule} from '@angular/material/tabs';
 import { UserManagementComponent } from '../user-management/user-management.component';
 import { HasRoleDirective } from '../../../_directives/has-role.directive';
+import { CreateBeneficiaryComponent } from '../../beneficiarycompanies/create-beneficiary/create-beneficiary.component';
 @Component({
   selector: 'app-admin-panel',
   standalone: true,
-  imports: [MatTabsModule, UserManagementComponent,HasRoleDirective],
+  imports: [MatTabsModule, UserManagementComponent,HasRoleDirective,CreateBeneficiaryComponent],
   templateUrl: './admin-panel.component.html',
   styleUrl: './admin-panel.component.css'
 })
