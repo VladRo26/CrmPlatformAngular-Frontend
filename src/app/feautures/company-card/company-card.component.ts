@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { NgModule } from '@angular/core';
 import { NgIf } from '@angular/common';
+import { HasRoleDirective } from '../../_directives/has-role.directive';
+import { RouterLink } from '@angular/router';
 
 type Company = BeneficiaryCompany | SoftwareCompany;
 
@@ -12,7 +14,7 @@ type Company = BeneficiaryCompany | SoftwareCompany;
 @Component({
   selector: 'app-company-card',
   standalone: true,
-  imports: [CommonModule, MatCardModule,NgIf],
+  imports: [CommonModule, MatCardModule,NgIf,HasRoleDirective,RouterLink],
   templateUrl: './company-card.component.html',
   styleUrl: './company-card.component.css'
 })

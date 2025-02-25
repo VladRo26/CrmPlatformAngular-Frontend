@@ -59,5 +59,10 @@ export class SoftwarecompanyService {
   register(formData: FormData): Observable<SoftwareCompany> {
     return this.http.post<SoftwareCompany>(`${this.baseUrl}SoftwareCompany/register`, formData);
   }
+
+  updateSoftwareCompany(companyId: number, formData: FormData): Observable<SoftwareCompany> {
+    return this.http.put<SoftwareCompany>(`${this.baseUrl}SoftwareCompany/${companyId}`, formData);
+  }
+  
   
 }

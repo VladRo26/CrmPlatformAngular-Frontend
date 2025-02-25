@@ -24,6 +24,7 @@ import { adminGuard } from './_guards/guards/admin.guard';
 import { DasboardUserComponent } from './feautures/dashboard/dasboard-user/dasboard-user.component';
 import { UpdateContractComponent } from './feautures/admin/update-contract/update-contract.component';
 import { CompanyListComponent } from './feautures/companies/company-list/company-list.component';
+import { UpdateBeneficiaryComponent } from './feautures/beneficiarycompanies/update-beneficiary/update-beneficiary.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -45,7 +46,8 @@ export const routes: Routes = [
             {path: 'dashboard',component: DasboardUserComponent},
             {path: 'admin', component: AdminPanelComponent, canActivate: [adminGuard]},
             {path:  'update-contract/:id', component: UpdateContractComponent, canActivate: [adminGuard]},
-            {path: 'companies', component: CompanyListComponent}
+            {path: 'companies', component: CompanyListComponent},
+            {path: 'update-beneficiary/:companyName', component: UpdateBeneficiaryComponent, canActivate: [adminGuard]}
        
         ]
     },

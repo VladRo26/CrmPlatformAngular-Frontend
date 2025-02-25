@@ -60,5 +60,15 @@ export class BeneficiarycompanyService {
   register(formData: FormData): Observable<BeneficiaryCompany> {
     return this.http.post<BeneficiaryCompany>(`${this.baseUrl}beneficiarycompany/register`, formData);
   }
+
+  updateBeneficiaryCompany(companyName: string, formData: FormData): Observable<BeneficiaryCompany> {
+    return this.http.put<BeneficiaryCompany>(`${this.baseUrl}beneficiarycompany/byName/${companyName}`, formData);
+  }
+
+  getBeneficiaryCompanyByName(companyName: string): Observable<BeneficiaryCompany> {
+    return this.http.get<BeneficiaryCompany>(`${this.baseUrl}beneficiarycompany/ByName/${companyName}`);
+  }
   
+  
+
 }

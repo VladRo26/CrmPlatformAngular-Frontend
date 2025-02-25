@@ -27,7 +27,12 @@
           <!-- Additional fields for SoftwareCompany if needed -->
         </ng-template>
       </mat-card-content>
-      <!-- Optionally, add card actions if needed -->
+      <!-- If the company is beneficiary, show update button for Admins -->
+      <mat-card-actions *ngIf="isBeneficiary(company)">
+        <button class="btn btn-secondary" *appHasRole="['Admin']" [routerLink]="['/update-beneficiary', company.name]">
+          <i class="pi pi-refresh me-2"></i> Update Company
+        </button>
+      </mat-card-actions>
     </mat-card>
   </div>
   
