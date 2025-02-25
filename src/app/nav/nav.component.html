@@ -21,6 +21,10 @@
               class="nav-item">
                 <a [routerLink]="['/admin']" routerLinkActive="active"   class="nav-link">Admin</a>
               </li>
+              <li *appHasRole="['Admin']"
+              class="nav-item">
+                <a [routerLink]="['/contracts']" routerLinkActive="active"   class="nav-link">Contracts</a>
+              </li>
               @if(!accountService.currentUser())
               {
               <li class="nav-item">

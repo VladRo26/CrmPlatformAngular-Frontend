@@ -22,6 +22,8 @@ import { TicketsCompanyListComponent } from './feautures/tickets/tickets-company
 import { AdminPanelComponent } from './feautures/admin/admin-panel/admin-panel.component';
 import { adminGuard } from './_guards/guards/admin.guard';
 import { DasboardUserComponent } from './feautures/dashboard/dasboard-user/dasboard-user.component';
+import { UpdateContractComponent } from './feautures/admin/update-contract/update-contract.component';
+import { CompanyListComponent } from './feautures/companies/company-list/company-list.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -41,7 +43,9 @@ export const routes: Routes = [
             {path:'ticketscontracts', component:ContractSoftwareListComponent},
             {path: 'tickets/contract/:id',component: TicketsCompanyListComponent},
             {path: 'dashboard',component: DasboardUserComponent},
-            {path: 'admin', component: AdminPanelComponent, canActivate: [adminGuard]}
+            {path: 'admin', component: AdminPanelComponent, canActivate: [adminGuard]},
+            {path:  'update-contract/:id', component: UpdateContractComponent, canActivate: [adminGuard]},
+            {path: 'companies', component: CompanyListComponent}
        
         ]
     },

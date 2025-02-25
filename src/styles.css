@@ -48,6 +48,9 @@ ngx-spinner {
     --spacing-medium: 1rem;
     --spacing-large: 1.5rem;
 
+    --knob-value-color: #4CAF50;
+    --knob-range-color: #FFC107;
+
   }
   
   

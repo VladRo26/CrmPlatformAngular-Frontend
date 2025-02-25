@@ -1,0 +1,9 @@
+export interface UpdateContract {
+  projectName: string;
+  startDate: string;           // ISO date string
+  budget: number;
+  estimatedFinishDate: string; // ISO date string
+  offersSupport: boolean;
+  status: number;
+  description?: string;
+}

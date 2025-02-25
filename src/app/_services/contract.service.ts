@@ -37,4 +37,18 @@ export class ContractService {
   createContract(formData: FormData): Observable<Contract> {
     return this.http.post<Contract>(`${this.baseUrl}Contract/create-contract`, formData);
   }
+
+  updateContractStatus(contractId: number, status: number): Observable<Contract> {
+    return this.http.put<Contract>(`${this.baseUrl}Contract/${contractId}/status`, { status });
+  }
+
+  // New method to update the full contract using FormData
+  updateContract(contractId: number, formData: FormData): Observable<Contract> {
+    return this.http.put<Contract>(`${this.baseUrl}Contract/${contractId}`, formData);
+  }
+
+  getContractById(contractId: number): Observable<Contract> {
+    return this.http.get<Contract>(`${this.baseUrl}Contract/${contractId}`);
+  }
+  
 }

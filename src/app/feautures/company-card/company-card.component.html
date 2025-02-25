@@ -1,0 +1,33 @@
+<div class="card-container">
+    <mat-card class="example-card" appearance="outlined">
+      <mat-card-header>
+        <div class="header-section">
+          <div class="company-section">
+            <img mat-card-avatar [src]="company.photoUrl || '/company.png'" alt="Company Logo" class="company-logo">
+            <span class="company-name">{{ company.name }}</span>
+          </div>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <p *ngIf="company.shortDescription">
+          <strong>Description:</strong> {{ company.shortDescription }}
+        </p>
+        <p>
+          <strong>Establishment Date:</strong> {{ company.establishmentDate | date }}
+        </p>
+        <ng-container *ngIf="isBeneficiary(company); else softwareTemplate">
+          <p>
+            <strong>Activity Domain:</strong> {{ company.activityDomain }}
+          </p>
+          <p>
+            <strong>Address:</strong> {{ company.address }}
+          </p>
+        </ng-container>
+        <ng-template #softwareTemplate>
+          <!-- Additional fields for SoftwareCompany if needed -->
+        </ng-template>
+      </mat-card-content>
+      <!-- Optionally, add card actions if needed -->
+    </mat-card>
+  </div>
+  

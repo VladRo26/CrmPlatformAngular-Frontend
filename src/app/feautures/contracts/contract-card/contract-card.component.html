@@ -1,63 +1,95 @@
 <div class="card-container">
-    <mat-card class="example-card" appearance="outlined">
-      <mat-card-header>
-        <!-- Header Section -->
-        <div class="header-section">
-          <!-- Left Side: Company Names and Logos -->
-          <div class="header-left">
-            <div class="company-section">
-              <img
-                mat-card-avatar
-                [src]="contract().softwareCompanyPhotoUrl || '/company.png'"
-                alt="Software Company Logo"
-                class="company-logo"
-              />
-              <span class="company-name">{{ contract().softwareCompanyName }}</span>
-            </div>
-            <i class="pi pi-arrow-right arrow-icon"></i>
-            <div class="company-section">
-              <img
-                mat-card-avatar
-                [src]="contract().beneficiaryCompanyPhotoUrl || '/company.png'"
-                alt="Beneficiary Company Logo"
-                class="company-logo"
-              />
-              <span class="company-name">{{ contract().beneficiaryCompanyName }}</span>
-            </div>
+  <mat-card class="example-card" appearance="outlined">
+    <mat-card-header>
+      <!-- Header Section -->
+      <div class="header-section">
+        <!-- Left Side: Company Names and Logos -->
+        <div class="header-left">
+          <div class="company-section">
+            <img
+              mat-card-avatar
+              [src]="contract().softwareCompanyPhotoUrl || '/company.png'"
+              alt="Software Company Logo"
+              class="company-logo"
+            />
+            <span class="company-name">{{ contract().softwareCompanyName }}</span>
           </div>
-  
-          <!-- Right Side: Title -->
-          <div class="header-right">
-            <mat-card-title>
-              <i class="fa fa-briefcase"></i> {{ contract().projectName }}
-            </mat-card-title>
+          <i class="pi pi-arrow-right arrow-icon"></i>
+          <div class="company-section">
+            <img
+              mat-card-avatar
+              [src]="contract().beneficiaryCompanyPhotoUrl || '/company.png'"
+              alt="Beneficiary Company Logo"
+              class="company-logo"
+            />
+            <span class="company-name">{{ contract().beneficiaryCompanyName }}</span>
           </div>
         </div>
-      </mat-card-header>
   
-      <mat-card-content>
-        <p><strong>Start Date:</strong> {{ contract().startDate | date }}</p>
-        <p><strong>Estimated Finish:</strong> {{ contract().estimatedFinishDate | date }}</p>
-        <p><strong>Budget:</strong> {{ contract().budget | currency }}</p>
-        <p><strong>Offers Support:</strong> {{ contract().offersSupport ? 'Yes' : 'No' }}</p>
-        <div class="status-knob">
-          <p-knob 
-            [(ngModel)]="contract().status"
-            [valueColor]="'#4CAF50'" 
-            [rangeColor]="'#FFC107'" 
-            [showValue]="true"
-            [readonly]="true"
-            [min]="0"
-            [max]="100"
-          >
-          </p-knob>
+        <!-- Right Side: Title -->
+        <div class="header-right">
+          <mat-card-title>
+            <i class="fa fa-briefcase"></i> {{ contract().projectName }}
+          </mat-card-title>
         </div>
-        <p><strong>Description:</strong> {{ contract().description }}</p>
-      </mat-card-content>
+      </div>
+    </mat-card-header>
   
-      <mat-card-actions>
-        <button mat-button [routerLink]="['/contract', contract().projectName]">View Contract</button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
+    <mat-card-content>
+      <p><strong>Start Date:</strong> {{ contract().startDate | date }}</p>
+      <p><strong>Estimated Finish:</strong> {{ contract().estimatedFinishDate | date }}</p>
+      <p><strong>Budget:</strong> {{ contract().budget | currency }}</p>
+      <p><strong>Offers Support:</strong> {{ contract().offersSupport ? 'Yes' : 'No' }}</p>
+      <div class="status-knob">
+        <p-knob 
+          [(ngModel)]="contract().status"
+          [valueColor]="'var(--knob-value-color)'" 
+          [rangeColor]="'var(--knob-range-color)'" 
+          [showValue]="true"
+          [readonly]="true"
+          [min]="0"
+          [max]="100">
+        </p-knob>
+      </div>
+      <p><strong>Description:</strong> {{ contract().description }}</p>
+    </mat-card-content>
   
+    <!-- Card Actions: Conditionally display buttons -->
+    <mat-card-actions style="display: flex; justify-content: center;">
+      <!-- If current user is a beneficiary, show the Update Status button -->
+      <ng-container *ngIf="currentUser?.userType === 'BeneficiaryCompanyUser'; else adminTemplate">
+        <button type="button" class="btn btn-secondary" (click)="statusOverlay.toggle($event)">
+          <i class="pi pi-refresh me-2"></i> Update Status
+        </button>
+      </ng-container>
+      <!-- Admin Template: Button visible only for Admin role using your custom directive -->
+      <ng-template #adminTemplate>
+        <button *appHasRole="['Admin']" type="button" class="btn btn-secondary" [routerLink]="['/update-contract', contract().id]">
+          <i class="pi pi-refresh me-2"></i> Update Contract
+        </button>
+        
+      </ng-template>
+    </mat-card-actions>
+  
+    <!-- Overlay Panel for Updating Contract Status (Beneficiary only) -->
+    <p-overlayPanel #statusOverlay>
+      <div class="overlay-content" style="padding: 1rem; text-align: center;">
+        <h3>Update Contract Status</h3>
+        <p-knob 
+          [(ngModel)]="newStatus" 
+          [step]="5" 
+          [min]="0" 
+          [max]="100"
+          [valueColor]="'var(--knob-value-color)'" 
+          [rangeColor]="'var(--knob-range-color)'" 
+          [showValue]="true">
+        </p-knob>
+        <!-- Bootstrap Save Button -->
+        <button type="button" class="btn btn-success" (click)="updateStatus(statusOverlay)">
+          Save
+        </button>
+      </div>
+    </p-overlayPanel>
+  
+  </mat-card>
+</div>

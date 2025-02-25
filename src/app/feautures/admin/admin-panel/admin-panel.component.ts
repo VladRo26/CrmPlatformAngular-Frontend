@@ -7,11 +7,13 @@ import { CreateSoftwareComponent } from "../../softwarecompanies/create-software
 import { NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { CreateContractsComponent } from '../../contracts/create-contracts/create-contracts.component';
+import { ContractListComponent } from '../../contracts/contract-list/contract-list.component';
+
 @Component({
   selector: 'app-admin-panel',
   standalone: true,
   imports: [MatTabsModule, UserManagementComponent,
-     HasRoleDirective, CreateBeneficiaryComponent, CreateSoftwareComponent,NgIf,CommonModule,CreateContractsComponent],
+     HasRoleDirective, CreateBeneficiaryComponent, CreateSoftwareComponent,NgIf,CommonModule,CreateContractsComponent,ContractListComponent],
   templateUrl: './admin-panel.component.html',
   styleUrl: './admin-panel.component.css'
 })
