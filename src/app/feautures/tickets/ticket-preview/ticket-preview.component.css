@@ -1,5 +1,4 @@
-/* General adjustments */
-.main-container {
+main-container {
     padding: 1rem;
     max-height: 90vh; /* Make the container fit within the viewport */
     overflow-y: auto; /* Enable vertical scrolling */
@@ -107,10 +106,7 @@ mat-select, mat-form-field {
 
 /* Responsive adjustments */
 @media (max-width: 40rem) {
-    .filter-container {
-        flex-direction: column;
-        align-items: stretch;
-    }
+
     
     .filter-item {
         max-width: 100%;

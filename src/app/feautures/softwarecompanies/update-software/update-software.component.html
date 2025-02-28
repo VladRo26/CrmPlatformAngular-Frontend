@@ -1,1 +1,55 @@
-<p>update-software works!</p>
+<div class="update-form-container">
+    <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+      <!-- Company Name -->
+      <mat-form-field appearance="fill" class="w-100 mb-3">
+        <mat-label>Company Name</mat-label>
+        <input matInput type="text" formControlName="name" placeholder="Enter company name">
+        <mat-error *ngIf="updateForm.get('name')?.touched && updateForm.get('name')?.invalid">
+          Company Name is required!
+        </mat-error>
+      </mat-form-field>
+  
+      <!-- Company Photo Preview & Upload -->
+      <mat-card class="photo-card">
+        <mat-card-header>
+          <mat-card-title>Company Photo</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="text-center">
+          <p-image 
+            [src]="companyPhotoUrl || '/assets/company-placeholder.png'" 
+            alt="Company Logo" 
+            width="250" 
+            [preview]="true"
+            class="company-photo-preview"
+          ></p-image>
+          <div class="file-upload-container">
+            <label for="fileUpload" class="file-label">Upload New Photo</label>
+            <input type="file" id="fileUpload" (change)="onFileSelected($event)">
+          </div>
+        </mat-card-content>
+      </mat-card>
+  
+      <!-- Short Description -->
+      <mat-form-field appearance="fill" class="w-100 mb-3">
+        <mat-label>Short Description</mat-label>
+        <textarea matInput formControlName="shortDescription" placeholder="Enter a short description"></textarea>
+      </mat-form-field>
+  
+      <!-- Establishment Date -->
+      <mat-form-field appearance="fill" class="w-100 mb-3">
+        <mat-label>Establishment Date</mat-label>
+        <input matInput [matDatepicker]="estPicker" formControlName="establishmentDate" placeholder="Choose a date">
+        <mat-datepicker-toggle matIconSuffix [for]="estPicker"></mat-datepicker-toggle>
+        <mat-datepicker #estPicker></mat-datepicker>
+        <mat-error *ngIf="updateForm.get('establishmentDate')?.touched && updateForm.get('establishmentDate')?.invalid">
+          Establishment Date is required!
+        </mat-error>
+      </mat-form-field>
+  
+      <!-- Submit Button -->
+      <button mat-raised-button color="primary" type="submit" class="w-100 mb-2" [disabled]="isSubmitting">
+        Update Company
+      </button>
+    </form>
+  </div>
+  

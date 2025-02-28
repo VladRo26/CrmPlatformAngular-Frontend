@@ -230,9 +230,19 @@ export class TicketService {
       const url = `${this.baseUrl}Ticket/GroupedTicketsByUserStatus/${username}`;
       return this.http.get<any[]>(url);
     }
-    
-    
-    
-    
 
+    getLastTicketStatusHistoryByUser(username: string, count: number): Observable<TicketStatusHistory[]> {
+      const url = `${this.baseUrl}Ticket/LastStatusHistoryByUser`;
+      let params = new HttpParams()
+        .append('username', username)
+        .append('count', count.toString());
+      return this.http.get<TicketStatusHistory[]>(url, { params });
+    }
+
+    markStatusAsSeen(markSeenDto: { message: string; updatedAt: Date; updatedByUsername: string }) {
+      return this.http.put(`${this.baseUrl}Ticket/MarkAsSeen`, markSeenDto);
+    }
+    
+    
+  
 }

@@ -1,0 +1,31 @@
+.status-card {
+    width: 100%; /* Make the card take more space */
+    max-width: 600px; /* Set a maximum width */
+    margin: var(--spacing-small) auto; /* Center it with spacing */
+    padding: var(--spacing-small);
+    border-left: 5px solid var(--default-color); /* Default color before dynamic update */
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    border-radius: 10px;
+}
+
+.status-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.status-message {
+    font-size: 1.1rem;
+}
+
+.status-updated, .status-date, .status-role {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+    .status-card {
+        width: 100%;
+        max-width: 90%;
+    }
+}

@@ -23,7 +23,7 @@ import { AccountService } from '../../_services/account.service';
 import { DashboardPreviewComponent } from '../dashboard-preview/dashboard-preview.component';
 import { TicketPreviewComponent } from '../tickets/ticket-preview/ticket-preview.component';
 import { AnimatedTextComponent } from '../animated-component/animated-component.component';
-
+import { ViewLastStatusListComponent } from '../tickets/view-last-status-list/view-last-status-list.component';
 
 @Component({
   selector: 'app-home',
@@ -32,7 +32,9 @@ import { AnimatedTextComponent } from '../animated-component/animated-component.
     SoftwarecompaniesListComponent, BeneficiarycompanyListComponent,
     ChipModule,CarouselModule,AnimateOnScrollModule,
     MatButtonModule,HasRoleDirective,NgxParticlesModule,
-    ButtonModule,NgIf,DashboardPreviewComponent,TicketPreviewComponent,AnimatedTextComponent],
+    ButtonModule,NgIf,DashboardPreviewComponent,TicketPreviewComponent,AnimatedTextComponent,
+    ViewLastStatusListComponent
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

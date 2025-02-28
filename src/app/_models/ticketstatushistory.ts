@@ -4,4 +4,5 @@ export interface TicketStatusHistory {
     updatedByUsername: string; // Required ID of the user who updated the ticket.
     updatedAt: Date;
     ticketUserRole: string; // Required role of the updater (e.g., Creator/Handler).
+    seen: boolean; // New property to track if the update has been seen
   }

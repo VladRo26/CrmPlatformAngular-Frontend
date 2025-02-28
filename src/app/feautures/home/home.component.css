@@ -7,6 +7,8 @@ html, body {
     padding: 0;
 }
 
+
+
 .mat-grid-list {
   background-color: rgba(248, 249, 250, 0.85) !important;
   display: block !important;
@@ -105,13 +107,24 @@ html, body {
 }
 
 .carousel-image {
-  width: 70%;             
-  max-width: 150px;        
-  height: auto;            
-  object-fit: cover;       
-  transition: max-width 0.3s ease;
-  border-radius: 1rem;     /* Add a 1rem rounded border */
+  width: 100%;               /* Take full container width */
+  max-width: 300px;          /* Increase the default maximum size */
+  height: auto;
+  object-fit: cover;
+  border-radius: 1rem;       /* Maintain rounded corners */
 }
+
+.ticket-preview-wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 0;          /* Remove extra padding */
+  margin: 0;           /* Remove extra margin */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
 
 
 .contract-link:hover {
@@ -153,27 +166,24 @@ html, body {
   transition: max-width 0.3s ease;
 }
 
+
 @media (min-width: 768px) {
   .carousel-image {
-    max-width: 250px;
+    max-width: 400px;        /* Bigger on tablets */
   }
 }
 
 @media (min-width: 1024px) {
   .carousel-image {
-    max-width: 350px;
+    max-width: 450px;        /* Even larger on desktops */
   }
 }
 
 @media (min-width: 1440px) {
   .carousel-image {
-    max-width: 450px;
+    max-width: 550px;        /* Maximum size on large screens */
   }
 }
-
-
-
-
 
 
 

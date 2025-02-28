@@ -1,0 +1,38 @@
+<div class="container">
+    <!-- Input for count using Angular Material -->
+    <mat-form-field appearance="fill" class="count-input">
+        <mat-label>Number of Status Histories to Display (1-10)</mat-label>
+        <input matInput type="number" [(ngModel)]="count" min="1" max="10">
+    </mat-form-field>
+
+    <!-- Button to reload the status history list -->
+    <div class="mb-3">
+        <p-button 
+            label="Load Status History" 
+            icon="pi pi-refresh" 
+            styleClass="p-button-primary" 
+            (click)="loadStatusHistory()">
+        </p-button>
+    </div>
+    
+    <!-- Status List -->
+    <div *ngIf="statusHistories.length > 0; else noDataMessage">
+        <div class="status-list-container">
+            <div class="row justify-content-center">
+                <ng-container *ngFor="let status of statusHistories; trackBy: trackByHistory">
+                    <div class="col-12 d-flex justify-content-center">
+                        <app-view-last-status-card 
+                            [statusHistory]="status"
+                            (statusUpdated)="reloadStatusList()">
+                        </app-view-last-status-card>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+    <!-- No data message -->
+    <ng-template #noDataMessage>
+        <p class="no-data-message">No status history available.</p>
+    </ng-template>
+</div>

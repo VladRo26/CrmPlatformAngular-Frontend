@@ -1,7 +1,14 @@
 <ngx-particles [id]="id" [options]="particlesOptions" (particlesLoaded)="particlesService.particlesLoaded($event)"></ngx-particles>
 <mat-grid-list [cols]="gridCols" [rowHeight]="rowHeight" [gutterSize]="gutterSize">
-  <mat-grid-tile colspan="1" rowspan="1" class="home-images-tile">
-    <app-homeimgaes></app-homeimgaes>
+  <mat-grid-tile colspan="1" rowspan="1">
+    <ng-container *ngIf="!accountService.currentUser(); else statusList">
+      <div class="home-images-tile">
+        <app-homeimgaes></app-homeimgaes>
+      </div>
+    </ng-container>
+    <ng-template #statusList>
+      <app-view-last-status-list></app-view-last-status-list>
+    </ng-template>
   </mat-grid-tile>
   
   

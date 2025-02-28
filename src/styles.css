@@ -34,10 +34,16 @@ ngx-spinner {
     --priority-medium: #81c784;   /* Soft green */
     --priority-high: #f48fb1;     /* Pastel pink */
 
-      --role-handler: #81c784;       /* Green for handlers */
+    --role-handler: #81c784;       /* Green for handlers */
     --role-creator: #ffca28;       /* Orange for creators */
     --default-color: #9ccc65;      /* Pastel lime green */
     --outline-color: #052b4242;
+    --outline-color2: #84c0f1;
+
+    --seen-color: #4caf50; /* Green for seen */
+    --unseen-color: #f44336; /* Red for unseen */
+
+
 
     --disabled-dropdown-bg: #e9ecef;
     --disabled-dropdown-text: #6c757d;

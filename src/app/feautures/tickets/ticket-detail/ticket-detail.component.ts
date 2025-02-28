@@ -165,6 +165,7 @@ export class TicketDetailComponent implements OnInit {
       updatedByUsername: this.accountService.currentUser()?.userName || '',
       updatedAt: new Date(),
       ticketUserRole: userRole, 
+      seen: false,
     }).subscribe({
       next: () => {
         this.toastr.success('Ticket reopened successfully!');

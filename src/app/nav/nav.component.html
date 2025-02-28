@@ -25,6 +25,10 @@
               class="nav-item">
                 <a [routerLink]="['/contracts']" routerLinkActive="active"   class="nav-link">Contracts</a>
               </li>
+              <li class="nav-item"
+              class="nav-item">
+                <a [routerLink]="['/companies']" routerLinkActive="active"   class="nav-link">Companies</a>
+              </li>
               @if(!accountService.currentUser())
               {
               <li class="nav-item">

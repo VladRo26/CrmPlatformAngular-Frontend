@@ -33,7 +33,6 @@
 
 /* Card header with background from a variable */
 mat-card-header {
-    background-color: var(--disabled-dropdown-bg);
     padding: var(--spacing-medium);
     border-bottom: 1px solid #ddd;
     display: flex;
@@ -45,14 +44,14 @@ mat-card-header {
 mat-card-title {
     font-size: 1.25rem;
     font-weight: bold;
-    color: var(--outline-color);
+    color: var(--outline-color2);
     white-space: normal;
 }
 
 /* Subtitle styling */
 mat-card-subtitle {
     font-size: 1rem;
-    color: var(--outline-color);
+    color: var(--outline-color2);
     white-space: normal;
 }
 
@@ -84,7 +83,7 @@ mat-card-actions {
 }
 
 mat-card-actions button {
-    color: var(--outline-color);
+    color: var(--outline-color2);
     font-weight: bold;
     border: none;
     background: none;

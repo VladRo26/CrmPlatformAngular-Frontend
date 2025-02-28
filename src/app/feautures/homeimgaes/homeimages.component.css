@@ -1,12 +1,13 @@
 :host {
   display: block;
   width: 100%;
-  padding: 1rem;            /* Equal padding on all edges */
+  padding: 3rem;            /* Equal padding on all edges */
   box-sizing: border-box;
   text-align: center;       /* Center inline content if needed */
 }
 
-/* Optional: wrap the carousel in a container for additional centering */
+
+
 .carousel-container {
   display: flex;
   justify-content: center;
@@ -14,14 +15,12 @@
   width: 100%;
 }
 
-/* Make carousel images responsive and centered */
 .carousel-image {
   display: block;
   width: 100%;              /* Fill the container's width */
   margin: 0 auto;           /* Center the image horizontally */
   border-radius: 1rem;
   object-fit: cover;
-  transition: max-width 0.3s ease;
 }
 
 /* Adjust for smaller screens */

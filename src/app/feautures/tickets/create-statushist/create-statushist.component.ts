@@ -69,6 +69,7 @@ export class CreateStatushistComponent implements OnInit {
         updatedByUsername: this.username,
         updatedAt: new Date(),
         ticketUserRole: userRole,
+        seen: false,
       })
       .subscribe({
         next: () => {
