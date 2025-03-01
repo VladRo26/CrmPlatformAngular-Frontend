@@ -25,6 +25,7 @@ import { TicketPreviewComponent } from '../tickets/ticket-preview/ticket-preview
 import { AnimatedTextComponent } from '../animated-component/animated-component.component';
 import { ViewLastStatusListComponent } from '../tickets/view-last-status-list/view-last-status-list.component';
 
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -33,7 +34,7 @@ import { ViewLastStatusListComponent } from '../tickets/view-last-status-list/vi
     ChipModule,CarouselModule,AnimateOnScrollModule,
     MatButtonModule,HasRoleDirective,NgxParticlesModule,
     ButtonModule,NgIf,DashboardPreviewComponent,TicketPreviewComponent,AnimatedTextComponent,
-    ViewLastStatusListComponent
+    ViewLastStatusListComponent,ScrollPanelModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -98,11 +99,15 @@ combinedCompanies: any[] = [];
   if (width < 600) {
     this.gridCols = 1; // Mobile: Single column layout
     this.rowHeight = "1:1"; // Enforce same height for all tiles
-    this.gutterSize = "10px";
+    this.gutterSize = "8px";
   } else if (width < 990) {
     this.gridCols = 1; // Tablet: Two-column layout
     this.rowHeight = "1:1"; // Same height for all tiles
-    this.gutterSize = "12px";
+    this.gutterSize = "10px";
+  } else if (width < 1400) {
+    this.gridCols = 2; // Tablet: Two-column layout
+    this.rowHeight = "0.8:1"; // Same height for all tiles
+    this.gutterSize = "8px";
   } else {
     this.gridCols = 2; // Desktop layout
     this.rowHeight = "1:1"; // Ensure uniform size
