@@ -1,8 +1,8 @@
-<ngx-spinner type = "pac-man" >
-    <h3>Loading...</h3>
-</ngx-spinner>
-<app-nav></app-nav>
-
+<ng-container *ngIf="!disableSpinner">
+    <app-loading-overlay></app-loading-overlay>
+  </ng-container>
+  <app-nav></app-nav>
+  
 <div class = "container" style ="margin-top: 5rem;">
     <router-outlet></router-outlet>
 </div>

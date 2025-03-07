@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Ticket } from '../_models/ticket';
 import { catchError, map, Observable, of } from 'rxjs';
 import { TicketStatusHistory } from '../_models/ticketstatushistory';
@@ -111,7 +111,10 @@ export class TicketService {
     params = params.append('sortDirection', this.ticketParams().sortDirection ?? '');
   }
 
-  return this.http.get<Ticket[]>(`${this.baseUrl}Ticket/ByUserName`, { observe: 'response', params }).pipe(
+  const headers = new HttpHeaders({ skipSpinner: 'true' });
+
+
+  return this.http.get<Ticket[]>(`${this.baseUrl}Ticket/ByUserName`, {headers, observe: 'response', params }).pipe(
     map(response => {
       const paginatedResult: PaginatedResult<Ticket[]> = {
         items: response.body ?? [],

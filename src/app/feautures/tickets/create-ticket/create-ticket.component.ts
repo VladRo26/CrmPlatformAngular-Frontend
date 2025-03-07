@@ -19,6 +19,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-ticket',
@@ -49,6 +50,7 @@ export class CreateTicketComponent implements OnInit {
   ticketService = inject(TicketService);
   contractService = inject(ContractService);
   userappService = inject(UserappService);
+  router = inject(Router);
   toastr = inject(ToastrService);
   contracts: Contract[] = [];
   selectedContract: Contract | null = null; // Store the dragged and dropped contract
@@ -90,9 +92,9 @@ export class CreateTicketComponent implements OnInit {
   };
 
 
-  selectedLanguageName: string = 'English'; // Default language
-  selectedCountryCode: string = ''; // Country code to be automatically populated
-  selectedLanguageCode: string = ''; // Language code to be automatically populated
+  selectedLanguageName: string = 'English'; 
+  selectedCountryCode: string = ''; 
+  selectedLanguageCode: string = ''; 
 
   showCountryList: boolean = true; // Show the country list dropdown
 
@@ -161,42 +163,58 @@ console.log(this.createTicketForm.status);
 
   submitTicket(): void {
     if (this.createTicketForm.invalid || !this.selectedContract) {
-        this.toastr.error('Please fill all required fields and select a contract.');
-        return;
+      this.createTicketForm.markAllAsTouched();
+      this.toastr.error('Please fill all required fields and select a contract.');
+      return;
     }
-
+  
     if (!this.currentUser) {
-        this.toastr.error('Current user is not available.');
-        return;
+      this.toastr.error('Current user is not available.');
+      return;
     }
-
+  
     const ticket: CreateTicket = {
-        ...this.createTicketForm.value,
-        contractId: this.selectedContract.id,
-        creatorId: this.currentUser.id,
+      ...this.createTicketForm.value,
+      contractId: this.selectedContract.id,
+      creatorId: this.currentUser.id,
     };
-
+  
     this.ticketService.createTicket(ticket).subscribe({
-        next: () => {
-            this.toastr.success('Ticket created successfully!');
+      next: () => {
+        this.toastr.success('Ticket created successfully!');
+        // Reset form completely using the helper method
+        this.resetForm();
+        this.router.navigate(['/home']);
 
-            this.createTicketForm.reset();
-            this.createTicketForm.patchValue({ status: 'Open', language: 'English' });
-            this.selectedContract = null;
-
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
-        },
-        error: (err) => {
-            console.error('Error creating ticket:', err);
-            this.toastr.error('Failed to create ticket.');
-        },
+      },
+      error: (err) => {
+        console.error('Error creating ticket:', err);
+        this.toastr.error('Failed to create ticket. Please correct any errors and try again.');
+      }
     });
-}
+  }
+  
 
-
- 
+  resetForm(): void {
+    // Reset the form values
+    this.createTicketForm.reset();
+  
+    // Optionally, patch default values if needed:
+    this.createTicketForm.patchValue({ status: 'Open', language: 'English' });
+  
+    // Reset the form state: mark all controls as untouched and pristine, and clear errors
+    Object.keys(this.createTicketForm.controls).forEach(key => {
+      const control = this.createTicketForm.get(key);
+      control?.markAsPristine();
+      control?.markAsUntouched();
+      control?.setErrors(null);
+    });
+  
+    // Also reset the contract selection
+    this.resetDragAndDrop();
+  }
+  
+  
 
  handleCountryChange(country: any): void {
   if (country?.language?.code) {

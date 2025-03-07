@@ -1,0 +1,25 @@
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff; /* white background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100; /* ensure it appears above the content */
+  }
+  
+  /* Override ngx-spinner's internal layout */
+  :host ::ng-deep ngx-spinner {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .spinner-content {
+    text-align: center;
+  }
+  

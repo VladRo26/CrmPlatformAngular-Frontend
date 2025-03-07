@@ -21,8 +21,8 @@ export class PerformancePageComponent implements OnInit {
   ticketService = inject(TicketService);
   feedbackService = inject(FeedbackService);
 
-  noSentimentDataMessage: string = ""; // ✅ Holds the no-data message for the sentiment chart
-  noTicketGroupDataMessage: string = ""; // ✅ Holds the no-data message for the ticket grouping chart
+  noSentimentDataMessage: string = ""; 
+  noTicketGroupDataMessage: string = ""; 
 
   basicData: any; // Chart.js data
   basicOptions: any; // Chart.js options
@@ -144,7 +144,7 @@ private createChartData(data: { username: string; totalTickets: number; resolved
       x: { display: true, title: { display: true, text: 'Categories' } },
       y: {
         display: true,
-        title: { display: true, text: 'Number of Tickets' },
+        title: { display: true, text: 'Nr. of Tickets' },
         beginAtZero: true,
         ticks: { callback: (value: number) => (Number.isInteger(value) ? value : ''), stepSize: 1 }
       }
