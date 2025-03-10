@@ -34,7 +34,6 @@
 /* Card header with background from a variable */
 mat-card-header {
     padding: var(--spacing-medium);
-    border-bottom: 1px solid #ddd;
     display: flex;
     align-items: center;
     flex-wrap: wrap;

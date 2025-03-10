@@ -47,11 +47,14 @@
         <i class="pi pi-pencil me-2"></i> Update Status
       </button>
 
-      <!-- Give Feedback Button -->
-      <button *ngIf="isEligibleForFeedback && ticket.status === 'Closed' && isSoftwareCompanyUser && ticket.handlerId === currentUserId"
-              type="button" class="btn btn-secondary d-flex align-items-center" (click)="showFeedbackDialog()">
-        <i class="pi pi-star me-2"></i> Give Feedback
+        <!-- Give Feedback Button -->
+      <button *ngIf="ticket.status === 'Closed' && isSoftwareCompanyUser && ticket.handlerId === currentUserId"
+      type="button" class="btn btn-secondary d-flex align-items-center"
+      [disabled]="!isEligibleForFeedback"
+      (click)="showFeedbackDialog()">
+      <i class="pi pi-star me-2"></i> Give Feedback
       </button>
+
 
       <!-- Reopen Ticket Button -->
       <button *ngIf="ticket.status === 'Closed'"

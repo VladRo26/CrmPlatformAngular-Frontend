@@ -245,6 +245,11 @@ export class TicketService {
     markStatusAsSeen(markSeenDto: { message: string; updatedAt: Date; updatedByUsername: string }) {
       return this.http.put(`${this.baseUrl}Ticket/MarkAsSeen`, markSeenDto);
     }
+
+    checkFeedbackEligibility(username: string, ticketId: number): Observable<boolean> {
+      return this.http.get<boolean>(`${this.baseUrl}feedback/check-eligibility/${username}/${ticketId}`);
+    }
+    
     
     
   

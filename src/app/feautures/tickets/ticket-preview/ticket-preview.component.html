@@ -29,7 +29,7 @@
       <div class="tickets-container">
         <div *ngIf="tickets.length > 0; else noTicketsMessage">
           <div class="tickets-grid">
-            <p-scrollPanel [style]="{ width: '100%', 'max-height': '50vh' }">
+            <p-scrollPanel [style]="{ width: '100%', 'max-height': '20vh' }">
             <ng-container *ngFor="let ticket of tickets; trackBy: trackTicket">
               <div class="ticket-col">
                 <app-tickets-userapp-card [ticket]="ticket"></app-tickets-userapp-card>

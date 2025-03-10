@@ -6,13 +6,14 @@ import { Router, RouterLink } from '@angular/router';
 import { RouterLinkActive } from '@angular/router';
 import { TitleCasePipe } from '@angular/common';
 import { HasRoleDirective} from '../_directives/has-role.directive'
+import { NothasRoleDirective } from '../_directives/nothas-role.directive';
 import { ChangeDetectorRef } from '@angular/core';
 import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-nav',
   standalone: true,
-  imports: [BsDropdownModule,RouterLink,RouterLinkActive,TitleCasePipe,HasRoleDirective,NgIf],
+  imports: [BsDropdownModule,RouterLink,RouterLinkActive,TitleCasePipe,HasRoleDirective,NgIf,NothasRoleDirective],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
 })

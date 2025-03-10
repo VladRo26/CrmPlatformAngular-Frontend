@@ -8,13 +8,16 @@
 
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
+              <li *appNothasRole="['Admin']" 
+              class="nav-item" >
                 <a [routerLink]="['/myTickets']" routerLinkActive="active"  class="nav-link">Tickets</a>
               </li>
-              <li class="nav-item">
+              <li *appNothasRole="['Admin']"
+               class="nav-item">
                 <a [routerLink]="['/usersApp']" routerLinkActive="active"  class="nav-link">See Users</a>
               </li>
-              <li class="nav-item">
+              <li *appNothasRole="['Admin']" 
+              class="nav-item">
                 <a [routerLink]="['/dashboard']" routerLinkActive="active"  class="nav-link">Dashboard</a>
               </li>
               <li *appHasRole="['Admin']"

@@ -64,10 +64,15 @@
           <span class="fade-in-text">
             Discover our track record: over 
             <a [routerLink]="['/contracts']" class="contract-link">
-              {{ contractsCount }} projects
-            </a> and more than {{ companiesCount }} companies trust us to manage their interactions and implementations.
+              {{ contractsCount | number }} projects
+            </a> and more than 
+            <a [routerLink]="['/companies']" class="contract-link">
+              {{ companiesCount | number }} companies
+            </a> trust us to manage their interactions and implementations.
           </span>
         </div>
+        
+        
         
       </div>
     </ng-container>
