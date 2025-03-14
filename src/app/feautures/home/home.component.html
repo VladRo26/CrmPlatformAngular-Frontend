@@ -1,11 +1,11 @@
 <ngx-particles [id]="id" [options]="particlesOptions" (particlesLoaded)="particlesService.particlesLoaded($event)"></ngx-particles>
 
-<ng-container *appHasRole="['Admin']">
+<ng-container *appHasRole="['Admin','Moderator']">
   <app-admin-images></app-admin-images>
 </ng-container>
 
 <!-- Non-Admin View: If no user or user does not have 'Admin', show the regular grid list -->
-<ng-container *appNothasRole="['Admin']">
+<ng-container *appNothasRole="['Admin','Moderator']">
   <mat-grid-list [cols]="gridCols" [rowHeight]="rowHeight" [gutterSize]="gutterSize">
     
     <!-- First Tile: Home Images or Status List -->

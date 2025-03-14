@@ -42,10 +42,11 @@ export class AppComponent implements OnInit {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
-      console.log('NavigationEnd event URL:', event.urlAfterRedirects);
-      // Adjust the condition below if your route path is different.
-      if (event.urlAfterRedirects.toLowerCase().includes('mytickets')) {
-        console.log('Detected "myTickets" in URL – disabling spinner overlay.');
+      const url = event.urlAfterRedirects.toLowerCase();
+      console.log('NavigationEnd event URL:', url);
+  
+      if (url.includes('mytickets') || url.includes('usersapp') || url.includes('createfeedback')) {
+        console.log('Detected a route that should disable spinner overlay.');
         this.disableSpinner = true;
       } else {
         console.log('Spinner overlay enabled.');
@@ -53,6 +54,8 @@ export class AppComponent implements OnInit {
       }
     });
   }
+  
+  
 
   setUser(){
     const user = localStorage.getItem('userinfo');

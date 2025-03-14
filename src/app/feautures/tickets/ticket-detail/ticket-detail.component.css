@@ -52,7 +52,6 @@ p-scrollPanel {
   margin-top: 1rem;
 }
 
-/* Responsive image styling (if needed) */
 mat-card-image {
   width: 50%;
   height: auto;
@@ -61,7 +60,7 @@ mat-card-image {
   object-fit: cover;
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 40rem) {
   .ticket-detail-card {
     width: 95%;
@@ -74,3 +73,10 @@ mat-card-image {
     font-size: 1rem;
   }
 }
+
+.readonly-container {
+  pointer-events: none;  /* Disables mouse events */
+  user-select: none;     /* Prevents text selection */
+  opacity: 0.6;          /* Optional: visually indicate the disabled state */
+}
+

@@ -17,13 +17,13 @@ import {MatRadioModule} from '@angular/material/radio';
 import { RatingModule } from 'primeng/rating';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatButtonModule} from '@angular/material/button';
-
+import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-userapp-list',
   standalone: true,
   imports: [UserappCardComponent,PaginationModule,NgFor,
     FormsModule,MatSelectModule,MatFormFieldModule,MatInputModule,
-    MatRadioModule,RatingModule,MatButtonToggleModule,MatButtonModule],
+    MatRadioModule,RatingModule,MatButtonToggleModule,MatButtonModule,NgIf],
   templateUrl: './userapp-list.component.html',
   styleUrl: './userapp-list.component.css'
 })

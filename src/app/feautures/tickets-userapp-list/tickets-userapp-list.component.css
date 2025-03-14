@@ -50,4 +50,12 @@
     width: 80%;
     margin: auto;
   }
+
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem; /* Optional: adjust spacing as needed */
+  }
+  
   

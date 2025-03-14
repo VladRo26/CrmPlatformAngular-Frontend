@@ -26,6 +26,7 @@ import { UpdateContractComponent } from './feautures/admin/update-contract/updat
 import { CompanyListComponent } from './feautures/companies/company-list/company-list.component';
 import { UpdateBeneficiaryComponent } from './feautures/beneficiarycompanies/update-beneficiary/update-beneficiary.component';
 import { UpdateSoftwareComponent } from './feautures/softwarecompanies/update-software/update-software.component';
+import { moderatorGuard } from './_guards/guards/moderator.guard';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -41,18 +42,18 @@ export const routes: Routes = [
             {path: 'usersApp', component: UserappListComponent},
             {path: 'userApp/edit', component: UserappEditComponent, canDeactivate: [unsavedChangesGuard]},
             {path: 'usersApp/:username', component: UserappDetailComponent},
-            {path:  'contracts', component: ContractListComponent},
             {path:'ticketscontracts', component:ContractSoftwareListComponent},
             {path: 'tickets/contract/:id',component: TicketsCompanyListComponent},
             {path: 'dashboard',component: DasboardUserComponent},
-            {path: 'admin', component: AdminPanelComponent, canActivate: [adminGuard]},
-            {path:  'update-contract/:id', component: UpdateContractComponent, canActivate: [adminGuard]},
-            {path: 'companies', component: CompanyListComponent},
-            {path: 'update-beneficiary/:companyName', component: UpdateBeneficiaryComponent, canActivate: [adminGuard]},
-            {path: 'update-software/:companyName', component: UpdateSoftwareComponent, canActivate: [adminGuard]}
+            {path: 'admin', component: AdminPanelComponent, canActivate: [moderatorGuard]},
+            {path:  'update-contract/:id', component: UpdateContractComponent,canActivate: [moderatorGuard]},
+            {path: 'update-beneficiary/:companyName', component: UpdateBeneficiaryComponent, canActivate: [moderatorGuard]},
+            {path: 'update-software/:companyName', component: UpdateSoftwareComponent, canActivate: [moderatorGuard]}
        
         ]
     },
+    {path: 'companies', component: CompanyListComponent},
+    {path:  'contracts', component: ContractListComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'login', component: LoginComponent},
     {path: 'error', component: ErrorTestingComponent},
