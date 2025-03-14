@@ -1,6 +1,7 @@
 import { Injectable, inject} from '@angular/core';
 import { ImageDTO } from '../_models/image';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -13,6 +14,10 @@ export class ImageService {
   getImages() {
     console.log(this.http.get<ImageDTO[]>(this.baseUrl + 'HomeImage'));
     return this.http.get<ImageDTO[]>(this.baseUrl + 'HomeImage');
+  }
+
+  deleteImage(publicId: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}HomeImage/${publicId}`);
   }
 
 }

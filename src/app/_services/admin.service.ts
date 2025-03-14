@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CreateHomeImage } from '../_models/createhomeimage';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,10 @@ export class AdminService {
 
   deleteUser(username: string) {
     return this.http.delete(`${this.baseUrl}User/username/${username}`);
+  }
+
+  uploadHomeImage(formData: FormData): Observable<CreateHomeImage> {
+    return this.http.post<CreateHomeImage>(`${this.baseUrl}HomeImage/upload`, formData);
   }
   
   

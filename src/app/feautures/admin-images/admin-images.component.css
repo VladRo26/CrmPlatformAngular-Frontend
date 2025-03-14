@@ -1,0 +1,57 @@
+.admin-home-images-container {
+    max-width: var(--max-width, 1200px);
+    margin: 0 auto;
+    padding: var(--container-padding, 1rem);
+  }
+  
+  .upload-form-container {
+    margin-bottom: var(--upload-margin-bottom, 2rem);
+  }
+  
+  /* Image preview wrapper */
+  .image-preview-wrapper {
+    margin-bottom: 1rem;
+  }
+  
+  /* Small button styling */
+  .small-button {
+    max-width: 200px;
+    width: auto;
+    margin: 0.5rem auto; /* Centers the button and adds vertical space */
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+    display: block;
+  }
+  
+  /* Additional styling for the remove button */
+  .remove-btn {
+    background-color: #f44336;
+    border: none;
+    color: #fff;
+  }
+  
+  /* Gallery styles */
+  .gallery-container {
+    margin-top: var(--gallery-margin-top, 2rem);
+  }
+  
+  .gallery-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gallery-gap, 1rem);
+  }
+  
+  .gallery-item {
+    border: var(--gallery-item-border, 1px solid #ccc);
+    padding: var(--gallery-item-padding, 0.5rem);
+    text-align: center;
+    width: var(--gallery-item-width, 250px);
+  }
+  
+  .gallery-item-info {
+    margin-top: var(--gallery-item-info-margin-top, 0.5rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  

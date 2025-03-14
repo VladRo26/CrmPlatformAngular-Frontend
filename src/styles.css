@@ -57,6 +57,21 @@ ngx-spinner {
     --knob-value-color: #4CAF50;
     --knob-range-color: #FFC107;
 
+    --max-width: 1200px;
+  --container-padding: var(--spacing-medium);
+  --upload-margin-bottom: var(--spacing-large);
+  --file-upload-margin-top: var(--spacing-medium);
+  --file-label-color: var(--link-color);
+  --gallery-margin-top: var(--spacing-large);
+  --gallery-gap: var(--spacing-medium);
+  --gallery-item-border: 1px solid #ccc;
+  --gallery-item-padding: var(--spacing-small);
+  --gallery-item-width: 250px;
+  --gallery-item-info-margin-top: var(--spacing-small);
+
+
+    
+
   }
   
   

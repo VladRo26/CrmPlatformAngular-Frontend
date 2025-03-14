@@ -1,0 +1,64 @@
+<div class="admin-home-images-container">
+    <!-- Upload Form -->
+    <div class="upload-form-container">
+      <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill" class="w-100 mb-3">
+          <mat-label>Image Title</mat-label>
+          <input matInput type="text" formControlName="title" placeholder="Enter image title">
+          <mat-error *ngIf="uploadForm.get('title')?.touched && uploadForm.get('title')?.invalid">
+            Title is required!
+          </mat-error>
+        </mat-form-field>
+        
+        <mat-card class="photo-card">
+          <mat-card-header>
+            <mat-card-title>Upload Home Image</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="text-center">
+            <div class="image-preview-wrapper">
+              <p-image 
+                [src]="imagePreview || '/home-image-placeholder.png'" 
+                alt="Home Image Preview" 
+                width="250" 
+                [preview]="true"
+                class="home-image-preview">
+              </p-image>
+            </div>
+            <!-- Hidden file input -->
+            <input type="file" id="fileInput" (change)="onFileSelected($event)" hidden>
+            <!-- Combined Button: If no image selected, button triggers file select; if image selected, button uploads -->
+            <p-button 
+              [label]="selectedFile ? 'Upload Image' : 'Select Image'" 
+              icon="pi pi-upload" 
+              (onClick)="handleButtonClick()"
+              styleClass="small-button">
+            </p-button>
+            <!-- Remove button, visible only when an image is selected -->
+            <p-button 
+              *ngIf="selectedFile" 
+              label="Remove Image" 
+              icon="pi pi-times" 
+              (onClick)="removeSelectedImage()"
+              styleClass="small-button remove-btn">
+            </p-button>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </div>
+    
+    <!-- Gallery -->
+    <div class="gallery-container">
+      <h3>Gallery</h3>
+      <div class="gallery-grid">
+        <div class="gallery-item" *ngFor="let image of images">
+          <p-image [src]="image.url" [alt]="image.title" width="250" [preview]="true"></p-image>
+          <div class="gallery-item-info">
+            <h5>{{ image.title }}</h5>
+            <!-- Delete Button using PrimeNG -->
+            <p-button icon="pi pi-times" styleClass="p-button-rounded p-button-danger" (onClick)="deleteImage(image.publicId)"></p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

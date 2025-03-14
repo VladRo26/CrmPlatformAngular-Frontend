@@ -14,6 +14,7 @@ import { CarouselModule, CarouselResponsiveOptions } from 'primeng/carousel';
 import { AnimateOnScrollModule } from 'primeng/animateonscroll';
 import {MatButtonModule} from '@angular/material/button';
 import { HasRoleDirective } from '../../_directives/has-role.directive';
+import { NothasRoleDirective } from '../../_directives/nothas-role.directive';
 import { ContractService } from '../../_services/contract.service';
 import { NgParticlesService, NgxParticlesModule } from "@tsparticles/angular";
 import { ParticlesService } from '../../_services/particles.services';
@@ -24,7 +25,7 @@ import { DashboardPreviewComponent } from '../dashboard-preview/dashboard-previe
 import { TicketPreviewComponent } from '../tickets/ticket-preview/ticket-preview.component';
 import { AnimatedTextComponent } from '../animated-component/animated-component.component';
 import { ViewLastStatusListComponent } from '../tickets/view-last-status-list/view-last-status-list.component';
-
+import { AdminImagesComponent } from '../admin-images/admin-images.component';
 
 @Component({
   selector: 'app-home',
@@ -34,7 +35,7 @@ import { ViewLastStatusListComponent } from '../tickets/view-last-status-list/vi
     ChipModule,CarouselModule,AnimateOnScrollModule,
     MatButtonModule,HasRoleDirective,NgxParticlesModule,
     ButtonModule,NgIf,DashboardPreviewComponent,TicketPreviewComponent,AnimatedTextComponent,
-    ViewLastStatusListComponent,ScrollPanelModule
+    ViewLastStatusListComponent,ScrollPanelModule, AdminImagesComponent, NothasRoleDirective
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -52,6 +53,7 @@ beneficiarycompanies: any[] = [];
 companiesCount: number = 0; 
 contractsCount: number = 0;
 private breakpointObserver = inject(BreakpointObserver);
+
 
 
 
@@ -94,6 +96,9 @@ combinedCompanies: any[] = [];
   onResize(event: any) {
     this.updateGrid(event.target.innerWidth);
   }
+
+
+
 
  updateGrid(width: number) {
   if (width < 600) {
