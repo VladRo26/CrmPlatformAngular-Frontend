@@ -33,7 +33,7 @@ import { Validators } from '@angular/forms'; // Import Validators
 })
 export class UserappEditComponent implements OnInit {
   userapp?: userApp;
-  userForm!: FormGroup; // ✅ Reactive form for phone number
+  userForm!: FormGroup; 
 
   initialPhoneNumber: string = ''; 
   initialEmail: string = '';
@@ -58,37 +58,78 @@ export class UserappEditComponent implements OnInit {
     });
   }
 
+  markPhoneDirty(): void {
+    this.userForm.get('phoneNumber')!.markAsDirty();
+  }
+
+  onPhoneNumberChange(event: any): void {
+    // Check if event has a target property (i.e. it's a DOM event)
+    const value: string = event && event.target && event.target.value ? event.target.value : event;
+    const trimmedValue = value ? value.replace(/\s+/g, '') : '';
+    if (trimmedValue !== this.initialPhoneNumber) {
+      this.userForm.get('phoneNumber')!.markAsDirty();
+    }
+  }
+  
+  
+
   initForm() {
-    const trimmedPhoneNumber = this.userapp?.phoneNumber ? this.userapp.phoneNumber.replace(/\s+/g, '') : '';
+    const trimmedPhoneNumber = this.userapp?.phoneNumber
+      ? this.userapp.phoneNumber.replace(/\s+/g, '')
+      : '';
   
     this.userForm = new FormGroup({
-      phoneNumber: new FormControl(trimmedPhoneNumber, [Validators.required]), // ✅ Ensure phone number is required
-      email: new FormControl(this.userapp?.email || '', [Validators.email]), // ✅ Validate email format
+      phoneNumber: new FormControl(trimmedPhoneNumber, {
+        validators: [Validators.required],
+        updateOn: 'change'
+      }),
+      email: new FormControl(this.userapp?.email || '', {
+        validators: [Validators.email],
+        updateOn: 'change'
+      })
     });
   
-    // ✅ Store initial values for accurate comparison
     this.initialPhoneNumber = trimmedPhoneNumber;
     this.initialEmail = this.userapp?.email || '';
   
+    // Optional: subscribe to valueChanges to log or mark as dirty
+    this.userForm.get('phoneNumber')!.valueChanges.subscribe(value => {
+      const newVal = value ? value.replace(/\s+/g, '') : '';
+      if (newVal !== this.initialPhoneNumber) {
+        this.userForm.get('phoneNumber')!.markAsDirty();
+      }
+    });
+  
+    // Ensure the form starts as pristine.
     setTimeout(() => {
-      this.userForm.markAsPristine(); // ✅ Ensures Angular doesn't mark the form dirty on load
+      this.userForm.markAsPristine();
     });
   }
-
-
   
-    isFormDirty(): boolean {
-      if (!this.userForm) return false; // ✅ Prevent errors if form hasn't loaded yet
+  
+
+
+  isFormDirty(): boolean {
+    if (!this.userForm) return false;
     
-      const currentPhoneNumber = this.userForm.value.phoneNumber.replace(/\s+/g, '');
-      const currentEmail = this.userForm.value.email;
+    // Get the current values
+    const currentPhoneNumber = this.userForm.get('phoneNumber')?.value || '';
+    const currentEmail = this.userForm.get('email')?.value || '';
+  
+    // Remove extra spaces from the phone number to compare with the initial value
+    const normalizedCurrentPhone = currentPhoneNumber.replace(/\s+/g, '');
     
-      // ✅ Check if form is dirty and phone number is valid
-      return (
-        (currentPhoneNumber !== this.initialPhoneNumber || currentEmail !== this.initialEmail) &&
-        this.userForm.get('phoneNumber')!.valid // ✅ Ensure phone number is valid
-      );
-    }
+    // Compare directly with the initial values
+    const phoneChanged = normalizedCurrentPhone !== this.initialPhoneNumber;
+    const emailChanged = currentEmail !== this.initialEmail;
+  
+    console.log('Initial phone:', this.initialPhoneNumber, 'Current phone:', normalizedCurrentPhone);
+    console.log('Initial email:', this.initialEmail, 'Current email:', currentEmail);
+    
+    return phoneChanged || emailChanged;
+  }
+  
+  
     
   
 

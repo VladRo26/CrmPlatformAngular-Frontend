@@ -33,7 +33,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.setUser();
-    this.getBenefCompanies();
     this.checkRouteForSpinner();
 
   }
@@ -45,7 +44,7 @@ export class AppComponent implements OnInit {
       const url = event.urlAfterRedirects.toLowerCase();
       console.log('NavigationEnd event URL:', url);
   
-      if (url.includes('mytickets') || url.includes('usersapp') || url.includes('createfeedback')) {
+      if (url.includes('mytickets') || url.includes('usersapp') || url.includes('companies') || url.includes('createfeedback')) {
         console.log('Detected a route that should disable spinner overlay.');
         this.disableSpinner = true;
       } else {
@@ -66,16 +65,6 @@ export class AppComponent implements OnInit {
       // Re-establish the SignalR connection
       this.presenceService.createHubConnection(parsedUser);
     }
-  }
-
- 
-
-  getBenefCompanies() {
-    this.http.get('https://localhost:7057/api/BeneficiaryCompany').subscribe
-    ({
-      next: response => this.benefcompanies = response,
-      error: error => console.error(error)
-    });
   }
 }
 

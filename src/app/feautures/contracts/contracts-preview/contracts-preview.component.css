@@ -1,0 +1,18 @@
+
+  
+  p-carousel {
+    width: 100%;
+  }
+  
+  .no-contracts {
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: var(--warning-color);
+    padding: 0.5rem;
+    background: var(--bg-light);
+    border-radius: var(--border-radius);
+    width: 100%;
+    margin: auto;
+  }
+  

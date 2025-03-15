@@ -23,9 +23,9 @@ import { CreateTicketComponent } from '../../tickets/create-ticket/create-ticket
   styleUrl: './dasboard-user.component.css'
 })
 export class DasboardUserComponent implements OnInit {
-  userApp: userApp | undefined; // ✅ Store the full user object
+  userApp: userApp | undefined; 
   userName: string | undefined;
-  userId: number | undefined; // ✅ Store the user ID
+  userId: number | undefined; 
   accountService = inject(AccountService);
   router = inject(Router);
   injector = inject(Injector);

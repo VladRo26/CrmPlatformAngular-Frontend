@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgFor,NgIf } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-error-testing',
@@ -11,7 +12,7 @@ import { NgFor,NgIf } from '@angular/common';
   styleUrl: './error-testing.component.css'
 })
 export class ErrorTestingComponent {
-  baseUrl = 'https://localhost:7057/api/';
+  private baseUrl = environment.apiUrl;
   private http = inject(HttpClient);
   validationErrors: string[] = [];
 

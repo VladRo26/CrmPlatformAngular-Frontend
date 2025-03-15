@@ -1,0 +1,17 @@
+<p-carousel 
+  [value]="contracts" 
+  [numVisible]="1" 
+  [numScroll]="1" 
+  [circular]="true" 
+  [responsiveOptions]="responsiveOptions"
+  (onPage)="handlePageChange($event)">
+  <ng-template let-contract pTemplate="item">
+    <div class="card-container">
+      <app-contract-card-preview [contract]="contract"></app-contract-card-preview>
+    </div>
+  </ng-template>
+</p-carousel>
+
+<div *ngIf="!contracts.length && !loading" class="no-contracts">
+  <p>No contracts available for this company.</p>
+</div>

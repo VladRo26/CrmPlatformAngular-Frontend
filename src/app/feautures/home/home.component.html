@@ -46,24 +46,28 @@
       </ng-template>
     </mat-grid-tile>
     
-    <!-- Third Tile: Partners Carousel -->
     <mat-grid-tile colspan="1" rowspan="1">
-      <div class="carousel-container">
-        <h3>Our Partners Companies</h3>
-        <p-carousel [value]="combinedCompanies" [numVisible]="1" [numScroll]="1" [circular]="true"
-                    autoplayInterval="2000" [responsiveOptions]="responsiveOptions">
-          <ng-template let-company pTemplate="item">
-            <div class="d-flex flex-column align-items-center justify-content-center p-2 m-2">
-              <div class="d-flex justify-content-center mb-2">
-                <img [src]="company.photoUrl || '/company.png'" alt="Company Photo" class="carousel-image">
+      <ng-container *ngIf="!accountService.currentUser(); else contractPreview">
+        <div class="carousel-container">
+          <h3>Our Partners Companies</h3>
+          <p-carousel [value]="combinedCompanies" [numVisible]="1" [numScroll]="1" [circular]="true"
+                      autoplayInterval="2000" [responsiveOptions]="responsiveOptions">
+            <ng-template let-company pTemplate="item">
+              <div class="d-flex flex-column align-items-center justify-content-center p-2 m-2">
+                <div class="d-flex justify-content-center mb-2">
+                  <img [src]="company.photoUrl || '/company.png'" alt="Company Photo" class="carousel-image">
+                </div>
+                <div class="text-center fw-bold" style="font-size: 1rem; color: #333;">
+                  {{ company.name || 'No Name' }}
+                </div>
               </div>
-              <div class="text-center fw-bold" style="font-size: 1rem; color: #333;">
-                {{ company.name || 'No Name' }}
-              </div>
-            </div>
-          </ng-template>
-        </p-carousel>
-      </div>
+            </ng-template>
+          </p-carousel>
+        </div>
+      </ng-container>
+      <ng-template #contractPreview>
+        <app-contracts-preview></app-contracts-preview>
+      </ng-template>
     </mat-grid-tile>
     
     <!-- Fourth Tile: Animated Text / Discover or Ticket Preview -->

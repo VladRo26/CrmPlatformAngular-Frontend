@@ -26,6 +26,8 @@ import { TicketPreviewComponent } from '../tickets/ticket-preview/ticket-preview
 import { AnimatedTextComponent } from '../animated-component/animated-component.component';
 import { ViewLastStatusListComponent } from '../tickets/view-last-status-list/view-last-status-list.component';
 import { AdminImagesComponent } from '../admin-images/admin-images.component';
+import { ToastrService } from 'ngx-toastr';
+import { ContractsPreviewComponent } from '../contracts/contracts-preview/contracts-preview.component';
 
 @Component({
   selector: 'app-home',
@@ -35,7 +37,8 @@ import { AdminImagesComponent } from '../admin-images/admin-images.component';
     ChipModule,CarouselModule,AnimateOnScrollModule,
     MatButtonModule,HasRoleDirective,NgxParticlesModule,
     ButtonModule,NgIf,DashboardPreviewComponent,TicketPreviewComponent,AnimatedTextComponent,
-    ViewLastStatusListComponent,ScrollPanelModule, AdminImagesComponent, NothasRoleDirective
+    ViewLastStatusListComponent,ScrollPanelModule, AdminImagesComponent, NothasRoleDirective,
+    ContractsPreviewComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -52,9 +55,8 @@ softwarecompanies: any[] = [];
 beneficiarycompanies: any[] = [];
 companiesCount: number = 0; 
 contractsCount: number = 0;
+toastr = inject(ToastrService);
 private breakpointObserver = inject(BreakpointObserver);
-
-
 
 
 gridCols: number = 2;
@@ -89,6 +91,12 @@ combinedCompanies: any[] = [];
     this.loadCompanies();
     this.particlesService.initParticles();
     this.loadContractsCount();
+
+    const currentUser = this.accountService.currentUser();
+    const roles = this.accountService.roles() || [];
+    if (currentUser && !roles.some((r: string) => ['Admin', 'Moderator', 'User'].includes(r))) {
+      this.toastr.warning("Your account it's not approved by moderator. Please wait for approval");
+    }
 
   }
 

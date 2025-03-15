@@ -17,7 +17,7 @@
         <p-toast />
         <p-fileUpload 
             name="file" 
-            url="https://localhost:7057/api/User/upload-photo" 
+            [url]="baseUrl + 'api/User/upload-photo'" 
             method="post"
             (onUpload)="onUpload($event)" 
             [multiple]="false" 

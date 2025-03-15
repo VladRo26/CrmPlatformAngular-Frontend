@@ -15,7 +15,7 @@ import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-contract-software-list',
   standalone: true,
-  imports: [ContractCardComponent,CarouselModule,NgFor,NgIf],
+  imports: [ContractCardComponent,CarouselModule,NgIf],
   templateUrl: './contract-software-list.component.html',
   styleUrl: './contract-software-list.component.css'
 })

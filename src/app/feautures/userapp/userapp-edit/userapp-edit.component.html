@@ -57,18 +57,18 @@
                             <div class="card shadow-sm p-3 mb-3">
                                 <h5 class="card-title">Phone Number</h5>
                                 <ngx-material-intl-tel-input
-                                    [fieldControl]="userForm.get('phoneNumber')"  
-                                    [required]="true"
-                                    [autoIpLookup]="true"
-                                    [iconMakeCall]="false"
-                                    [includeDialCode]="true"
-                                    [preferredCountries]="['us', 'gb', 'ro']"
-                                    [enableSearch]="true"
-                                    [numberValidation]="true"
-                                    autoSelectedCountry="ro"
-                                    outputNumberFormat="E164"  
-                                >
-                                </ngx-material-intl-tel-input>
+                                [fieldControl]="userForm.get('phoneNumber')"
+                                [required]="true"
+                                [autoIpLookup]="true"
+                                [iconMakeCall]="false"
+                                [includeDialCode]="true"
+                                [preferredCountries]="['us', 'gb', 'ro']"
+                                [enableSearch]="true"
+                                [numberValidation]="true"
+                                autoSelectedCountry="ro"
+                                outputNumberFormat="E164"
+                                (onBlur)="userForm.get('phoneNumber')?.markAsDirty()">
+                                </ngx-material-intl-tel-input>              
                                 <div *ngIf="userForm.get('phoneNumber')?.invalid && userForm.get('phoneNumber')?.touched" class="text-danger">
                                     Please enter a valid phone number.
                                 </div>

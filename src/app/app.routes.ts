@@ -27,6 +27,7 @@ import { CompanyListComponent } from './feautures/companies/company-list/company
 import { UpdateBeneficiaryComponent } from './feautures/beneficiarycompanies/update-beneficiary/update-beneficiary.component';
 import { UpdateSoftwareComponent } from './feautures/softwarecompanies/update-software/update-software.component';
 import { moderatorGuard } from './_guards/guards/moderator.guard';
+import { notDefaultGuard } from './_guards/guards/not-default.guard';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -37,14 +38,14 @@ export const routes: Routes = [
         children: [ 
             {path: 'createFeedback', component: CreateFeedbackComponent, canActivate: [benefuserGuard]}, 
             {path: 'createTicket', component: CreateTicketComponent, canActivate: [benefuserGuard]},
-            {path: 'myTickets', component:TicketsUserListComponent},
-            { path: 'tickets/:id', component: TicketDetailComponent },
-            {path: 'usersApp', component: UserappListComponent},
+            {path: 'myTickets', component:TicketsUserListComponent,canActivate: [notDefaultGuard]},
+            { path: 'tickets/:id', component: TicketDetailComponent, canActivate: [notDefaultGuard]},
+            {path: 'usersApp', component: UserappListComponent, canActivate : [notDefaultGuard]},
             {path: 'userApp/edit', component: UserappEditComponent, canDeactivate: [unsavedChangesGuard]},
-            {path: 'usersApp/:username', component: UserappDetailComponent},
-            {path:'ticketscontracts', component:ContractSoftwareListComponent},
-            {path: 'tickets/contract/:id',component: TicketsCompanyListComponent},
-            {path: 'dashboard',component: DasboardUserComponent},
+            {path: 'usersApp/:username', component: UserappDetailComponent, canActivate: [notDefaultGuard]},
+            {path:'ticketscontracts', component:ContractSoftwareListComponent, canActivate: [notDefaultGuard]},
+            {path: 'tickets/contract/:id',component: TicketsCompanyListComponent, canActivate: [notDefaultGuard]},
+            {path: 'dashboard',component: DasboardUserComponent, canActivate: [notDefaultGuard]},
             {path: 'admin', component: AdminPanelComponent, canActivate: [moderatorGuard]},
             {path:  'update-contract/:id', component: UpdateContractComponent,canActivate: [moderatorGuard]},
             {path: 'update-beneficiary/:companyName', component: UpdateBeneficiaryComponent, canActivate: [moderatorGuard]},

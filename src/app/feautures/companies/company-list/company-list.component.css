@@ -33,3 +33,15 @@
     justify-content: center;
   }
   
+  .no-data-message {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--warning-color);
+    padding: 0.8rem;
+    background: var(--bg-light);
+    border-radius: var(--border-radius);
+    width: 90%;
+    margin: auto;
+  }
+  

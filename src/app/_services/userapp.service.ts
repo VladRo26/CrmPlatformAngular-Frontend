@@ -12,7 +12,7 @@ import { UserParams } from '../_models/userparams';
 })
 export class UserappService {
   private http = inject(HttpClient);
-  baseUrl = 'https://localhost:7057/api/';
+  private baseUrl = environment.apiUrl;
   usersApp = signal<userApp[]>([]);
   paginatedResult = signal<PaginatedResult<userApp[]> | null>(null);
   userAppCache = new Map();
