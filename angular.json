@@ -13,7 +13,11 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/client",
+            "outputPath": {
+              "base": "../../back-end/CrmPlatformAPI/CrmPlatformAPI/wwwroot",
+              "browser": ""
+              
+            },
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -44,22 +48,30 @@
               "src/styles.css"
             ],
             "scripts": [
-            ]
+            ],
+            "allowedCommonJsDependencies": [
+            "google-libphonenumber"
+          ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "5MB",
+                  "maximumError": "6MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "4kB"
+                  "maximumWarning": "5kB",
+                  "maximumError": "6kB"
                 }
               ],
+              "optimization": {
+                "styles": {
+                  "inlineCritical": false
+                }
+              },
               "outputHashing": "all"
             },
             "development": {
