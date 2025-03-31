@@ -16,7 +16,7 @@ import { TimeagoModule } from 'ngx-timeago';
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
      provideRouter(routes),
-     provideHttpClient(withInterceptors([errorInterceptor,tokenInterceptor,loadingInterceptor])), //am adaugat serviciul de httpclient, folosind dependecyinjection
+     provideHttpClient(withInterceptors([tokenInterceptor,loadingInterceptor])), //am adaugat serviciul de httpclient, folosind dependecyinjection
      provideAnimations(),
       provideAnimationsAsync(),
       provideToastr({
