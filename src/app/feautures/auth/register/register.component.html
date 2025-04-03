@@ -84,7 +84,12 @@
             <mat-button-toggle [value]="0">Software Company User</mat-button-toggle>
             <mat-button-toggle [value]="1">Beneficiary Company User</mat-button-toggle>
           </mat-button-toggle-group>
+          <!-- Error message for userType -->
+          <div *ngIf="registerForm.get('userType')?.invalid && (registerForm.get('userType')?.touched || registerForm.get('userType')?.dirty)" class="text-danger">
+            User type is required.
+          </div>
         </div>
+        
 
         <div class="form-group mb-3">
           <mat-form-field appearance="fill" class="w-100">
