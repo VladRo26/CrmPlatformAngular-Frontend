@@ -1,73 +1,84 @@
-.card-container {
-    width: 90%;
-    max-width: 37.5rem;   /* 37.5rem ≈ 600px (assuming 16px base font-size) */
-    margin: 2vh auto;
+.contract-card {
+  width: 100%;
+  min-height: 28rem; /* increase height */
+  padding: 2rem;
+  box-sizing: border-box;
+  border-radius: 1rem;
+  box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Header container */
+.card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Title */
+.project-title mat-card-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Company logos row */
+.companies-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.company {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.company-logo {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.company-name {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.arrow-icon {
+  font-size: 1.5rem;
+}
+
+/* Status knob */
+.status-knob {
+  margin: 1rem 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contract-card {
     padding: 1rem;
+    min-height: 25rem;
   }
-  
-  .example-card {
-    font-size: 1rem;
-    padding: 1rem;
-    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
-    border-radius: 0.5rem;
-  }
-  
-  /* Header styles */
-  .header-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem 0;
-  }
-  
-  .header-left,
-  .header-right {
-    display: flex;
-    align-items: center;
-  }
-  
-  .company-section {
-    display: flex;
-    align-items: center;
-  }
-  
-  /* Company logo adjusts based on viewport width but never exceeds 3.75rem (≈60px) */
-  .company-logo {
-    width: 8vw;
-    height: 8vw;
-    max-width: 3.75rem;
-    max-height: 3.75rem;
-    margin-right: 0.5rem;
-    border-radius: 50%;
-  }
-  
-  .company-name {
-    font-size: 1rem;
-    font-weight: bold;
-  }
-  
-  .arrow-icon {
+
+  .project-title mat-card-title {
     font-size: 1.2rem;
-    margin: 0 0.5rem;
   }
-  
-  .status-knob {
-    margin: 0.5rem 0;
+
+  .company-name {
+    font-size: 0.95rem;
   }
-  
-  p {
-    margin: 0.5rem 0;
+
+  .company-logo {
+    width: 3rem;
+    height: 3rem;
   }
-  
-  @media (max-width: 768px) {
-    .company-logo {
-      width: 10vw;
-      height: 10vw;
-      max-width: 3rem;
-      max-height: 3rem;
-    }
-    .company-name {
-      font-size: 0.9rem;
-    }
-  }
-  
+}

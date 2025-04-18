@@ -1,82 +1,102 @@
-/* Base styles for larger screens */
-.main-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; 
-    padding: 20px; /* 20px */
-    box-sizing: border-box;
-    min-height: 100vh; /* Fills the viewport height */
-    overflow: visible;
-  }
-  
-  .single-card {
-    width: 100%;
-    max-width: 480px; /* 480px ~ 30rem */
-    margin: 0 auto;
-  }
-  
-  .filter-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px; /* 20px */
-  }
-  
-  .filter-item {
-    margin-bottom: 10px; /* 10px */
-  }
-  
-  .filter-button-wrapper {
-    margin-bottom: 10px; /* 10px */
-  }
-  
-  .pagination-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px; /* 20px */
-  }
-  
-  /* For screens under 1400px wide */
-  @media (max-width: 1400px) {
-    .main-container {
-      /* Reduce vertical space and expand horizontally */
-      min-height: auto;
-      margin: 2rem;
-      width: 70vw;
-      max-width: 80vw;
-      justify-content: flex-start; /* Align content at the top */
-      overflow-y: auto;  /* Enable vertical scrolling */
-      max-height: 90vh;  /* Limit height so scrolling kicks in */
-    }
-    .single-card {
-      max-width: 300px;
-    }
-  }
-  
-  /* For screens under 800px wide */
-  @media (max-width: 800px) {
-    .main-container {
-      /* Use full viewport width with minimal padding */
-      padding: 8px 16px;
-      width: 100vw;
-      max-width: 100vw;
-    }
-    .single-card {
-      max-width: 100%;
-    }
+/* 🔲 Page container */
+.ticket-preview-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+  background-color: transparent;
+  overflow-x: hidden;
+}
+
+/* 📦 Panel with scroll and borders */
+.ticket-preview-panel {
+  width: 100%;
+  max-width: 70rem; /* ≈1120px */
+  height: auto;
+  max-height: 70vh;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 1rem;
+  padding: 2rem;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+/* 🎛️ Filter section */
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.filter-item,
+.filter-button-wrapper {
+  margin-bottom: 1rem;
+}
+
+/* 🧾 Scroll panel with tickets */
+.ticket-scroll-panel {
+  width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  box-sizing: border-box;
+}
+
+/* 🧱 Each ticket */
+.ticket-col {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+app-tickets-userapp-card {
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* 🔢 Pagination */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+/* ❗ No data */
+.no-data-message {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--warning-color);
+  padding: 0.8rem;
+  background: var(--bg-light);
+  border-radius: var(--border-radius);
+  width: 90%;
+  margin: auto;
+}
+
+/* 📱 Responsive tweaks */
+@media (max-width: 768px) {
+  .ticket-preview-wrapper {
+    padding: 1rem;
   }
 
-  .no-data-message {
-    text-align: center;
-    font-size: 1rem;
-    font-weight: bold;
-    color: var(--warning-color);
-    padding: 0.8rem;
-    background: var(--bg-light);
-    border-radius: var(--border-radius);
-    width: 90%;
-    margin: auto;
+  .ticket-preview-panel {
+    padding: 1rem;
+    margin: 0;
+    height: auto;
+    max-height: none;
   }
-  
-  
+
+  .ticket-col {
+    padding: 0;
+  }
+
+  app-tickets-userapp-card {
+    max-width: 100%;
+  }
+}

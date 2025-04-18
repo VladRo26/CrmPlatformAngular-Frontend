@@ -97,7 +97,7 @@ export class TicketsUserappCardComponent implements OnInit {
       });
     } else {
       this.handlerUsername = 'Not assigned';
-      this.handlerPhotoUrl = '/default-handler.png';
+      this.handlerPhotoUrl = '/user.png';
     }
   }
 

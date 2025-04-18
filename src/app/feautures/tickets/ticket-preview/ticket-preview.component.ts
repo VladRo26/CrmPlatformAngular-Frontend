@@ -17,7 +17,7 @@ import {MatCardModule} from '@angular/material/card';
 import { TicketsUserappCardComponent } from '../../tickets-userapp-card/tickets-userapp-card.component';
 import { ButtonModule } from 'primeng/button';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
-
+import { TicketsUserPreviewCardComponent } from '../tickets-userapp-preview-card/tickets-userapp-preview-card.component';
 @Component({
   selector: 'app-ticket-preview',
   standalone: true,
@@ -25,7 +25,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
     NgFor, NgIf, PaginationModule
     ,FormsModule,MatSelectModule,MatFormFieldModule,
     MatInputModule,MatButtonModule,MatButtonToggleModule,MatCardModule,
-    TicketsUserappCardComponent,ButtonModule,ScrollPanelModule
+    TicketsUserappCardComponent,ButtonModule,ScrollPanelModule,TicketsUserPreviewCardComponent
   ],
   templateUrl: './ticket-preview.component.html',
   styleUrl: './ticket-preview.component.css'

@@ -1,18 +1,56 @@
+.contract-scroll-wrapper {
+  width: 100%;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 1rem;
+  box-sizing: border-box;
+}
 
-  
-  p-carousel {
-    width: 100%;
+.contract-scroll-container {
+  max-height: 70vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-right: 0.5rem; /* space for scrollbar */
+}
+
+/* Card container */
+.card-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* No contracts message */
+.no-contracts {
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--warning-color);
+  padding: 0.5rem;
+  background: var(--bg-light);
+  border-radius: var(--border-radius);
+  width: 100%;
+  margin: auto;
+}
+
+/* Optional: custom scrollbar */
+.contract-scroll-container::-webkit-scrollbar {
+  width: 8px;
+}
+.contract-scroll-container::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+.contract-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .contract-scroll-container {
+    max-height: 60vh;
+    gap: 1rem;
   }
-  
-  .no-contracts {
-    text-align: center;
-    font-size: 0.9rem;
-    font-weight: bold;
-    color: var(--warning-color);
-    padding: 0.5rem;
-    background: var(--bg-light);
-    border-radius: var(--border-radius);
-    width: 100%;
-    margin: auto;
-  }
-  
+}
