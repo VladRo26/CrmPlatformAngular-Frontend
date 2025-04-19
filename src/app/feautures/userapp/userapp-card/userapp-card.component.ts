@@ -9,11 +9,12 @@ import { Router, RouterLink } from '@angular/router';
 import { RouterLinkActive } from '@angular/router'
 import { TimeagoModule } from 'ngx-timeago';
 import { PresenceService } from '../../../_services/presence.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-userapp-card',
   standalone: true,
-  imports: [MatButtonModule,MatCardModule,RouterLink,RouterLinkActive,TimeagoModule],
+  imports: [MatButtonModule,MatCardModule,RouterLink,RouterLinkActive,TimeagoModule,NgIf],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './userapp-card.component.html',
   styleUrl: './userapp-card.component.css'
@@ -27,7 +28,4 @@ export class UserappCardComponent {
    getUserPhoto(): string {
     return this.userapp().photoUrl || '/user.png';
   }
-  
-
 }
-

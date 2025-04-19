@@ -5,33 +5,24 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-
 export class LoadingService {
-  private _loadingCount = 0;
-  private _loading = new BehaviorSubject<boolean>(false);
-  // Expose an observable for other components
-  loading$ = this._loading.asObservable();
-
+  private loadingCount = 0;
   private spinnerService = inject(NgxSpinnerService);
 
   loading() {
-    this._loadingCount++;
-    if (this._loadingCount === 1) {
-      this._loading.next(true);
-      this.spinnerService.show(undefined, {
-        type: 'pacman',
-        size: 'large',
-        bdColor: '#fff', // white backdrop
-        color: 'grey',  // black pacman
-      });
-    }
+    this.loadingCount++;
+    this.spinnerService.show(undefined,{
+      type: 'pacman',
+      bdColor: 'rgba(255,255,255,255)',
+      color:'#333333',
+    });
+
   }
 
   idle() {
-    this._loadingCount--;
-    if (this._loadingCount <= 0) {
-      this._loadingCount = 0;
-      this._loading.next(false);
+    this.loadingCount--;
+    if (this.loadingCount <= 0) {
+      this.loadingCount = 0;
       this.spinnerService.hide();
     }
   }

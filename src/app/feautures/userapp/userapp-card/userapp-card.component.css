@@ -5,7 +5,7 @@
 
 .isOnline {
     animation: fa-blink 1s infinite;
-    color: var(--status-open);
+    color: var(--status-resolved);
 }
 
 /* Fixed-size card with extra spacing */
@@ -128,3 +128,12 @@ mat-card-image {
         max-height: 80px;
     }
 }
+
+/* userapp-card.component.css */
+.spinner-container {
+    height: 200px;            /* match your card’s height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  

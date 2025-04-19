@@ -1,79 +1,182 @@
-.example-card {
-  max-width: 30rem; /* Approximately 400px */
-  margin: 2rem auto; /* Adjust spacing for responsiveness */
-  border: 0.125rem solid #080808; /* Approximately 2px */
-  box-shadow: 0 0.125rem 0.25rem rgba(87, 56, 56, 0.1); /* Subtle shadow */
-  border-radius: 0.5rem; /* Rounded corners */
-  transition: transform 0.2s, box-shadow 0.2s; /* Smooth hover effect */
-  height: 60rem; /* Fixed height for the card */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* Ensure consistent layout */
-  overflow: hidden; /* Prevent overflow */
-}
-  .example-card:hover {
-    transform: scale(1.05); /* Slight scale on hover */
-    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
-  }
-  
-  .example-header-image img {
-    border-radius: 50%; /* Circular avatar */
-    border: 0.125rem solid #849c85; /* Approximately 2px green border */
-  }
-  
-  mat-card-header {
-    background-color: #f5f5f5; /* Light background for header */
-    padding: 1rem; /* Consistent padding */
-    height: 10rem;
-    border-bottom: 0.0625rem solid #ddd; /* Subtle divider */
-  }
-  
-  mat-card-title {
-    font-size: 1.5rem; /* Larger font size */
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .company-link {
-    text-decoration: underline;
-    color: #4caf50; /* Green link */
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
-  .company-link:hover {
-    color: #388e3c; /* Darker green on hover */
-    text-decoration: none; /* Remove underline for cleaner look */
-  }
-  
-  mat-card-content {
-    padding: 1rem;
-    font-size: 1rem; /* Standard readable size */
-    color: #444;
-    height: 10rem;
-  }
-  
-  mat-card-actions {
-    display: flex;
-    justify-content: space-between; /* Space out buttons */
-    padding: 1rem;
-  }
-  
-  mat-card-actions button {
-    font-weight: bold;
-    text-transform: uppercase;
-    padding: 0.5rem 1rem; /* Adjust padding for readability */
-  }
-  
-  mat-card-image {
-    max-height: 10rem; /* Scales with viewport */
-    object-fit: cover;
-    border-radius: 0.5rem; /* Matches card border radius */
-  }
-  
-  @media (max-width: 48rem) { /* Approximately 768px */
-    .example-card {
-      max-width: 90vw; /* Full width for smaller screens */
-    }
-  }
-  
+/* ====================================
+   0. Universal Box‑Sizing
+   ==================================== */
+   *,
+   *::before,
+   *::after {
+     box-sizing: border-box;
+   }
+   
+   /* ====================================
+      1. Base Card Styles
+      ==================================== */
+   .example-card {
+     width: 100%;
+     max-width: 384px;
+     margin: 24px auto;
+     border: 2px solid #080808;
+     box-shadow: 0 2px 4px rgba(87, 56, 56, 0.1);
+     border-radius: 8px;
+     display: flex;
+     flex-direction: column;
+     overflow: hidden;
+     transition: transform 0.2s, box-shadow 0.2s;
+   }
+   .example-card:hover {
+     transform: scale(1.03);
+     box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+   }
+   
+   /* ====================================
+      2. Header Layout
+      ==================================== */
+   mat-card-header {
+     display: flex;
+     align-items: center;
+     padding: 12px 16px;
+     background: #f5f5f5;
+     border-bottom: 1px solid #ddd;
+   }
+   .example-header-image {
+     flex-shrink: 0;
+     margin-right: 12px;
+   }
+   .example-header-image img {
+     width: 24px;
+     height: 24px;
+     border-radius: 50%;
+     border: 1px solid #849c85;
+     object-fit: cover;
+   }
+   
+   /* ====================================
+      3. Title & Subtitle Styling
+      ==================================== */
+   mat-card-title {
+     margin: 0;
+     font-size: 20px;
+     font-weight: 700;
+     color: #333;
+     border-bottom: 2px solid #ccc;
+     padding-bottom: 4px;
+     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+     flex: 1;
+   }
+   mat-card-subtitle {
+     margin: 4px 0 0;
+     font-size: 14px;
+     font-weight: 500;
+     color: #555;
+     opacity: 0.8;
+   }
+   
+   /* ====================================
+      4. Content
+      ==================================== */
+   mat-card-content {
+     padding: 12px 16px;
+     font-size: 15px;
+     color: #444;
+     flex-grow: 1;
+   }
+   mat-card-content p {
+     margin: 0;
+     line-height: 1.4;
+   }
+   mat-card-content strong {
+     font-weight: 600;
+     color: #333;
+   }
+   
+   /* ====================================
+      5. Company Image
+      ==================================== */
+   mat-card-image {
+     width: 100%;
+     height: auto;
+     max-height: 48px;
+     object-fit: cover;
+     border-bottom: 1px solid #eaeaea;
+   }
+   
+   /* ====================================
+      6. Actions
+      ==================================== */
+   mat-card-actions {
+     display: flex;
+     justify-content: center;
+     padding: 12px 16px;
+     background: #f9f9f9;
+     border-top: 1px solid #eaeaea;
+   }
+   mat-card-actions button {
+     width: 100%;
+     padding: 8px;
+     font-weight: bold;
+     text-transform: uppercase;
+     border-radius: 4px;
+     transition: background-color 0.2s ease;
+   }
+   
+   /* ====================================
+      7. Spinner
+      ==================================== */
+   .p-progress-spinner {
+     display: block;
+     margin: 8px auto;
+     width: 32px;
+     height: 32px;
+   }
+   
+   /* ====================================
+      8. Tablet (≤768px)
+      ==================================== */
+   @media (max-width: 768px) {
+     .example-card {
+       max-width: 320px;
+       margin: 16px auto;
+     }
+     mat-card-title {
+       font-size: 18px;
+     }
+     mat-card-content {
+       font-size: 14px;
+     }
+     mat-card-content p {
+       line-height: 1.3;
+     }
+   }
+   
+   /* ====================================
+      9. Phone (≤490px)
+      ==================================== */
+   @media (max-width: 490px) {
+     .example-card {
+       width: 100% !important;  /* fill its grid cell */
+       max-width: none;
+       margin: 16px auto;
+       border-radius: 6px;
+     }
+     .example-header-image img {
+       width: 20px;
+       height: 20px;
+     }
+     mat-card-image {
+       max-height: 40px;
+     }
+     mat-card-title {
+       font-size: 16px;
+     }
+     mat-card-subtitle {
+       font-size: 12px;
+     }
+     mat-card-content {
+       padding: 8px;
+       font-size: 13px;
+     }
+     mat-card-actions button {
+       padding: 6px;
+       font-size: 13px;
+     }
+   }
+   

@@ -3,72 +3,58 @@
   <mat-card class="filter-card">
     <mat-card-title class="filter-title">Filter Tickets</mat-card-title>
     <mat-card-content>
-      <div class="filter-container">
-        <!-- Filter by Status -->
+      
+      <!-- 1) Filter Fields -->
+      <div class="filter-fields">
         <mat-form-field appearance="fill" class="filter-item">
           <mat-label>Status</mat-label>
           <mat-select [(ngModel)]="ticketParams.status" (selectionChange)="loadTickets()">
-            <mat-option value="notClosed">Not Closed</mat-option>
-            <mat-option value="all">All Statuses</mat-option>
-            <mat-option value="Open">Open</mat-option>
-            <mat-option value="InProgress">In Progress</mat-option>
-            <mat-option value="Resolved">Resolved</mat-option>
-            <mat-option value="Closed">Closed</mat-option>
+            <!-- options… -->
           </mat-select>
         </mat-form-field>
 
-        <!-- Filter by Priority -->
         <mat-form-field appearance="fill" class="filter-item">
           <mat-label>Priority</mat-label>
           <mat-select [(ngModel)]="ticketParams.priority" (selectionChange)="loadTickets()">
-            <mat-option value="">All Priorities</mat-option>
-            <mat-option value="Low">Low</mat-option>
-            <mat-option value="Medium">Medium</mat-option>
-            <mat-option value="High">High</mat-option>
+            <!-- options… -->
           </mat-select>
         </mat-form-field>
 
-        <!-- Search by Title -->
         <mat-form-field appearance="fill" class="filter-item">
           <mat-label>Search Title</mat-label>
           <input matInput [(ngModel)]="ticketParams.title" (input)="loadTickets()" placeholder="Enter title keyword" />
         </mat-form-field>
+      </div>
 
-        <!-- Sort By -->
-        <div class="filter-item sort-container">
+      <!-- 2) Sort Controls -->
+      <div class="sort-fields">
+        <div class="sort-container">
           <label class="sort-label">Sort By:</label>
-          <mat-button-toggle-group
-            [(ngModel)]="ticketParams.orderBy"
-            (change)="loadTickets()"
-            aria-label="Sort Options">
+          <mat-button-toggle-group [(ngModel)]="ticketParams.orderBy" (change)="loadTickets()">
             <mat-button-toggle value="date">Date</mat-button-toggle>
             <mat-button-toggle value="priority">Priority</mat-button-toggle>
           </mat-button-toggle-group>
         </div>
 
-        <!-- Sort Direction -->
-        <mat-form-field appearance="fill" class="filter-item">
-          <mat-label>Sort Direction</mat-label>
+        <mat-form-field appearance="fill" class="sort-direction">
+          <mat-label>Direction</mat-label>
           <mat-select [(ngModel)]="ticketParams.sortDirection" (selectionChange)="loadTickets()">
             <mat-option value="asc">Ascending</mat-option>
             <mat-option value="desc">Descending</mat-option>
           </mat-select>
         </mat-form-field>
-
-        <button class="btn btn-secondary btn-sl" (click)="resetFilters()">
-          Reset Filters
-        </button>
-        
-
-
-        <div *ngIf="userType === 'BeneficiaryCompanyUser'" class="give-feedback-container">
-          <button class="btn btn-secondary d-flex align-items-center" (click)="navigateToFeedback()">
-            <i class="pi pi-comment me-2"></i> Give Feedback
-          </button>
-        </div>
-        
-  
       </div>
+
+      <!-- 3) Action Buttons -->
+      <div class="action-buttons">
+        <button class="btn btn-secondary" (click)="resetFilters()">Reset Filters</button>
+        <button *ngIf="userType==='BeneficiaryCompanyUser'"
+                class="btn btn-secondary give-feedback"
+                (click)="navigateToFeedback()">
+          <i class="pi pi-comment me-2"></i>Give Feedback
+        </button>
+      </div>
+
     </mat-card-content>
   </mat-card>
 
@@ -85,11 +71,11 @@
           </ng-container>
         </div>
       </ng-container>
-      
+
       <ng-template #noTicketsMessage>
         <p class="no-data-message">There are no assigned tickets to display.</p>
       </ng-template>
-      
+
       <div *ngIf="pagination" class="pagination-container">
         <pagination
           [boundaryLinks]="true"

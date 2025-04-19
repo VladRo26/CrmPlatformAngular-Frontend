@@ -1,128 +1,97 @@
-/* Center everything */
-.main-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2vh;
-  padding: 2vh 2vw;
-  width: 100%;
-}
-
-/* Filter Card Styling */
-.filter-card {
-  width: 90vw;
-  max-width: 100%;
-  padding: 2vh;
-  border-radius: 1vw;
-  background: #ffffff;
-  box-shadow: 0 0.5vh 1vh rgba(0, 0, 0, 0.1);
-}
-
-/* Filter title styling */
-.filter-title {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 1vh;
-  font-weight: bold;
-}
-
-/* Filter controls container */
-.filter-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center; /* Align all items vertically */
-  gap: 2vw;
-  width: 100%;
-}
-
-filter-item {
-  flex: 1 1 20vw;
-  min-width: 20vw;
-}
-
-.sort-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-.sort-label {
-  margin-bottom: 0.5vh;
-  font-weight: bold;
-  text-align: center;
-  width: 100%;
-}
-
-.reset-btn-container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-
-.tickets-card {
-  width: 90vw;
-  max-width: 100%;
-  padding: 2vh;
-  background: #ffffff;
-  box-shadow: 0 0.5vh 1vh rgba(0, 0, 0, 0.1);
-}
-
-.tickets-title {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 2vh;
-  font-weight: bold;
-}
-
-
-.tickets-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(30vw, 1fr));
-  gap: 2vh;
-  margin: 2vh auto;
-  width: 100%;
-}
-
-/* Center a single ticket */
-.tickets-grid:has(.ticket-col:nth-child(1):nth-last-child(1)) {
-  display: flex;
-  justify-content: center;
-}
-
-/* Ensure ticket is properly aligned */
-.ticket-col {
-  display: flex;
-  justify-content: center;
-}
-
-/* No Tickets Message */
-.no-data-message {
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--warning-color);
-  padding: 2vh;
-  background: #f8d7da;
-  border-radius: 1vw;
-  width: 80%;
-  margin: auto;
-}
-
-.pagination-container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-top: 2vh;
-}
-
-
-/* Responsive: Make tickets one column on smaller screens */
-@media (max-width: 768px) {
-  .tickets-grid {
-      grid-template-columns: 1fr;
-  }
-}
+/* ====================================
+   0. Box‑Sizing
+   ==================================== */
+   *,
+   *::before,
+   *::after {
+     box-sizing: border-box;
+   }
+   
+   /* ====================================
+      1. Main Container & Card Spacing
+      ==================================== */
+   .main-container {
+     width: 100%;
+     max-width: 1200px;
+     margin: 0 auto;
+     padding: 1rem;
+     display: flex;
+     flex-direction: column;
+     gap: 2rem;               /* space between filter- and tickets‑cards */
+   }
+   
+   .filter-card {
+     width: 100%;
+   }
+   
+   .tickets-card {
+     width: 100%;
+     /* extra top spacing if you prefer */
+     /* margin-top: 2rem; */
+   }
+   
+   /* ====================================
+      2. Filter Fields Layout
+      ==================================== */
+   .filter-fields {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 1rem;               /* space between each field */
+     justify-content: space-between;
+     margin-bottom: 1rem;     /* space below filter row */
+   }
+   
+   .filter-item {
+     flex: 1 1 200px;         /* base 200px, then grow/shrink */
+     min-width: 150px;
+     max-width: 300px;
+   }
+   
+   /* ====================================
+      3. Sort Controls Layout
+      ==================================== */
+   .sort-fields {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 1rem;
+     align-items: center;
+     margin-bottom: 1rem;     /* space below sort row */
+   }
+   
+   .sort-container {
+     display: flex;
+     align-items: center;
+     gap: 0.5rem;
+     flex: 1 1 auto;
+   }
+   
+   .sort-direction {
+     flex: 0 1 150px;
+     min-width: 120px;
+   }
+   
+   /* ====================================
+      4. Action Buttons Layout
+      ==================================== */
+   .action-buttons {
+     display: flex;
+     gap: 1rem;
+     justify-content: center;
+     margin-bottom: 1rem;     /* space below buttons */
+   }
+   
+   .action-buttons .btn,
+   .action-buttons .give-feedback {
+     flex: 1 1 auto;
+     max-width: 160px;
+   }
+   
+   /* ====================================
+      6. Pagination Centering
+      ==================================== */
+   .pagination-container {
+     display: flex;
+     justify-content: center;
+     margin: 2rem 0;          /* vertical spacing around pagination */
+   }
+   

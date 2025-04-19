@@ -1,31 +1,33 @@
 <mat-card class="example-card" appearance="outlined">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image">
-        <img mat-card-avatar [src]="userapp().companyPhotoUrl || '/company.png'" alt="Photo of company">
-      </div>
-      <mat-card-title>
-        <span [class.isOnline]="isOnline()">
-          <i class="fa fa-user"></i>
-          {{userapp().userName}}
-        </span>
-      </mat-card-title>
-      <mat-card-subtitle>
-        <a [routerLink]="['/company', userapp().companyName]" class="company-link">  {{userapp().companyName}}</a></mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image [src]="getUserPhoto()" alt="Photo of user">
-    <mat-card-content>
-      <p>
-        {{userapp().lastName}} {{userapp().firstName}}
-      </p>
-      <p>
-        {{userapp().email}}
-      </p>
-      <p>Last seen:
-      {{userapp().lastActive | timeago}}</p>
-     
-    </mat-card-content>
-    <mat-card-actions>
-      <button routerLink="/usersApp/{{userapp().userName}}">View Profile</button>
-    </mat-card-actions>
-  </mat-card>
-
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image">
+      <img mat-card-avatar [src]="userapp().companyPhotoUrl || '/company.png'" alt="Photo of company">
+    </div>
+    <mat-card-title>
+      <span [class.isOnline]="isOnline()">
+        <i class="fa fa-user"></i>
+        {{userapp().userName}}
+      </span>
+    </mat-card-title>
+    <mat-card-subtitle>
+      <a [routerLink]="['/company', userapp().companyName]" class="company-link">  {{userapp().companyName}}</a></mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image [src]="getUserPhoto()" alt="Photo of user">
+  <mat-card-content>
+    <p>
+      {{userapp().lastName}} {{userapp().firstName}}
+    </p>
+    <p>
+      {{userapp().email}}
+    </p>
+    <p>
+      Last seen: 
+      <span *ngIf="isOnline(); else lastSeen" class="isOnline">Active now</span>
+      <ng-template #lastSeen>{{userapp().lastActive | timeago}}</ng-template>
+    </p>
+    
+  </mat-card-content>
+  <mat-card-actions>
+    <button routerLink="/usersApp/{{userapp().userName}}">View Profile</button>
+  </mat-card-actions>
+</mat-card>

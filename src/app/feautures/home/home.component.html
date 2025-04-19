@@ -94,7 +94,12 @@
         </div>
       </ng-container>
       <ng-template #ticketPreview>
-          <app-ticket-preview></app-ticket-preview>
+        <div pAnimateOnScroll 
+        enterClass="fadeinleft" 
+        leaveClass="fadeoutleft" 
+        class="dashboard-preview-wrapper fade-in-container animation-duration-3000 animation-ease-in-out">
+        <app-ticket-preview></app-ticket-preview>
+        </div>
       </ng-template>
     </mat-grid-tile>
   </mat-grid-list>

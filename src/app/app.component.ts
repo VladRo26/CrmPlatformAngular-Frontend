@@ -9,13 +9,13 @@ import { PresenceService } from './_services/presence.service';
 import { LoadingService } from './_services/loading.service';
 import { NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { LoadingOverlayComponent } from './feautures/loading-overlay/loading-overlay.component';
+// import { LoadingOverlayComponent } from './feautures/loading-overlay/loading-overlay.component';
 import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavComponent, HomeComponent,NgxSpinnerComponent,NgIf,CommonModule,LoadingOverlayComponent],
+  imports: [RouterOutlet, NavComponent, HomeComponent,NgxSpinnerComponent,NgIf,CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 
@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.setUser();
-    this.checkRouteForSpinner();
+    // this.checkRouteForSpinner();
 
   }
 
