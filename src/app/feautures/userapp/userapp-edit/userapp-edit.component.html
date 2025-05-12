@@ -39,10 +39,14 @@
     
                     <ng-template pTemplate="footer">
                         <div class="d-grid">
-                            <button [disabled]="!isFormDirty()" type="submit" form="editForm" 
-                                    class="btn btn-primary w-100">
-                                Save
-                            </button>
+                            <p-button 
+                                [disabled]="!isFormDirty()" 
+                                type="submit" 
+                                form="editForm" 
+                                label="Save" 
+                                icon="pi pi-save" 
+                                styleClass="w-100">
+                            </p-button>
                         </div>
                     </ng-template>
                 </p-card>
