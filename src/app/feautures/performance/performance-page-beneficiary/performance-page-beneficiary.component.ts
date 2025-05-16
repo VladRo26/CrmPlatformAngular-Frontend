@@ -4,11 +4,13 @@ import { FeedbackService } from '../../../_services/feedback.service';
 import { ChartModule } from 'primeng/chart';
 import { OnInit } from '@angular/core';
 import { NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-performance-page-beneficiary',
   standalone: true,
-  imports: [ChartModule,NgIf],
+  imports: [ChartModule,NgIf,CommonModule],
   templateUrl: './performance-page-beneficiary.component.html',
   styleUrl: './performance-page-beneficiary.component.css'
 })

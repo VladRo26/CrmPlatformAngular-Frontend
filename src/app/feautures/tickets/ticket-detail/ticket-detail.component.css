@@ -80,3 +80,22 @@ mat-card-image {
   opacity: 0.6;          /* Optional: visually indicate the disabled state */
 }
 
+/* Fix double scroll and keep PrimeNG-only scrolling */
+/* .description-scroll-panel .p-scrollpanel-wrapper {
+  overflow: hidden !important;
+}
+
+.description-scroll-panel .p-scrollpanel-content {
+  padding-right: 1rem;
+  box-sizing: border-box;
+}
+
+.description-scroll-content {
+  padding: 0.25rem 0.5rem;
+  line-height: 1.5;
+} */
+
+
+
+
+

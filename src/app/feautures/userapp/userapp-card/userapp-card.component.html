@@ -1,33 +1,34 @@
-<mat-card class="example-card" appearance="outlined">
-  <mat-card-header>
-    <div mat-card-avatar class="example-header-image">
-      <img mat-card-avatar [src]="userapp().companyPhotoUrl || '/company.png'" alt="Photo of company">
-    </div>
-    <mat-card-title>
-      <span [class.isOnline]="isOnline()">
-        <i class="fa fa-user"></i>
-        {{userapp().userName}}
-      </span>
-    </mat-card-title>
-    <mat-card-subtitle>
-      <a [routerLink]="['/company', userapp().companyName]" class="company-link">  {{userapp().companyName}}</a></mat-card-subtitle>
-  </mat-card-header>
-  <img mat-card-image [src]="getUserPhoto()" alt="Photo of user">
-  <mat-card-content>
-    <p>
-      {{userapp().lastName}} {{userapp().firstName}}
-    </p>
-    <p>
-      {{userapp().email}}
-    </p>
-    <p>
-      Last seen: 
-      <span *ngIf="isOnline(); else lastSeen" class="isOnline">Active now</span>
-      <ng-template #lastSeen>{{userapp().lastActive | timeago}}</ng-template>
-    </p>
+<div class="card-container">
+  <mat-card class="example-card" appearance="outlined">
+    <!-- Header with company logo and username -->
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image">
+        <img [src]="userapp().companyPhotoUrl || '/company.png'" alt="Company logo">
+      </div>
+      <div class="mat-card-header-text">
+        <mat-card-title>{{userapp().userName}}</mat-card-title>
+        <mat-card-subtitle>
+          <a [routerLink]="['/company', userapp().companyName]" class="company-link">{{userapp().companyName}}</a>
+        </mat-card-subtitle>
+      </div>
+    </mat-card-header>
     
-  </mat-card-content>
-  <mat-card-actions>
-    <button routerLink="/usersApp/{{userapp().userName}}">View Profile</button>
-  </mat-card-actions>
-</mat-card>
+    <!-- User photo with fixed height -->
+    <img mat-card-image [src]="getUserPhoto()" alt="Photo of user">
+    
+    <!-- Fixed height content area with no scroll -->
+    <mat-card-content>
+      <p>{{userapp().lastName}} {{userapp().firstName}}</p>
+      <p>{{userapp().email}}</p>
+      <p>
+        Last seen: 
+        <span *ngIf="isOnline()" class="isOnline">Active now</span>
+        <span *ngIf="!isOnline()">{{userapp().lastActive | timeago}}</span>
+      </p>
+    </mat-card-content>
+    
+    <!-- Actions at the bottom -->
+    <mat-card-actions>
+      <button routerLink="/usersApp/{{userapp().userName}}">View Profile</button>
+    </mat-card-actions>
+  </mat-card>

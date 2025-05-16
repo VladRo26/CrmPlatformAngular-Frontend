@@ -94,4 +94,13 @@
      justify-content: center;
      margin: 2rem 0;          /* vertical spacing around pagination */
    }
+
+   .no-data-message {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--warning-color, #ff9800); /* fallback to orange */
+    margin-top: 1rem;
+  }
+  
    
