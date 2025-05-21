@@ -1,31 +1,29 @@
 <mat-card class="status-card" [ngStyle]="{'border-left-color': getStatusColor(statusHistory.status)}">
     <mat-card-header>
-        <mat-card-title class="status-title" [ngStyle]="{'color': getStatusColor(statusHistory.status)}">
-            {{ statusHistory.status }}
-        </mat-card-title>
-
-        <!-- Bell Icon (Only shown if updatedByUsername is not the logged-in user) -->
-        <button *ngIf="statusHistory.updatedByUsername !== loggedInUsername" 
-                mat-icon-button 
-                (click)="markAsSeen()" 
-                [disabled]="statusHistory.seen"
-                [ngStyle]="{'color': getBellColor()}">
-            <mat-icon>{{ statusHistory.seen ? 'notifications' : 'notifications_active' }}</mat-icon>
-        </button>
+      <mat-card-title class="status-title" [ngStyle]="{'color': getStatusColor(statusHistory.status)}">
+        {{ statusHistory.status }}
+      </mat-card-title>
+      <button *ngIf="statusHistory.updatedByUsername !== loggedInUsername"
+              mat-icon-button
+              (click)="markAsSeen()"
+              [disabled]="statusHistory.seen"
+              [ngStyle]="{'color': getBellColor()}">
+        <mat-icon>{{ statusHistory.seen ? 'notifications' : 'notifications_active' }}</mat-icon>
+      </button>
     </mat-card-header>
-
-    <mat-card-content>
-        <p *ngIf="statusHistory.message" class="status-message">
-            <strong>Message:</strong> {{ statusHistory.message }}
-        </p>
-        <p class="status-updated">
-            <strong>Updated By:</strong> {{ statusHistory.updatedByUsername }}
-        </p>
-        <p class="status-date">
-            <strong>Updated At:</strong> {{ statusHistory.updatedAt | date:'short' }}
-        </p>
-        <p class="status-role">
-            <strong>Role:</strong> {{ statusHistory.ticketUserRole }}
-        </p>
+  
+    <mat-card-content class="status-card-content">
+      <p *ngIf="statusHistory.message" class="status-message">
+        <strong>Message:</strong> {{ statusHistory.message }}
+      </p>
+      <p class="status-updated">
+        <strong>Updated By:</strong> {{ statusHistory.updatedByUsername }}
+      </p>
+      <p class="status-date">
+        <strong>Updated At:</strong> {{ statusHistory.updatedAt | date:'short' }}
+      </p>
+      <p class="status-role">
+        <strong>Role:</strong> {{ statusHistory.ticketUserRole }}
+      </p>
     </mat-card-content>
-</mat-card>
+  </mat-card>

@@ -15,12 +15,24 @@
 
 }
 
-/* Status list container */
-.status-list-container {
-    max-height: 50vh;
+.status-list-container-scrollable {
+    max-height: 60vh;
     overflow-y: auto;
-    padding: 1rem;
-}
+    padding: 0 1rem;               /* Equal left and right padding */
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;           /* Center all cards horizontally */
+    gap: 1.5rem;                   /* Spacing between cards */
+  }
+  
+  .status-card-wrapper {
+    width: 100%;
+    max-width: 600px;              /* Optional: limit width for readability */
+  }
+  
+
+  
 
 /* No data message */
 .no-data-message {

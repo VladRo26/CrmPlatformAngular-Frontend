@@ -25,7 +25,7 @@
             <span class="company-name">{{ contract().beneficiaryCompanyName }}</span>
           </div>
         </div>
-  
+
         <!-- Right Side: Title -->
         <div class="header-right">
           <mat-card-title>
@@ -34,7 +34,7 @@
         </div>
       </div>
     </mat-card-header>
-  
+
     <mat-card-content>
       <p><strong>Start Date:</strong> {{ contract().startDate | date }}</p>
       <p><strong>Estimated Finish:</strong> {{ contract().estimatedFinishDate | date }}</p>
@@ -53,24 +53,24 @@
       </div>
       <p><strong>Description:</strong> {{ contract().description }}</p>
     </mat-card-content>
-  
+
     <!-- Card Actions: Conditionally display buttons -->
     <mat-card-actions style="display: flex; justify-content: center;">
-      <!-- If current user is a beneficiary, show the Update Status button -->
-      <ng-container *ngIf="currentUser?.userType === 'BeneficiaryCompanyUser'; else adminTemplate">
+      <!-- Show for allowed beneficiary users only -->
+      <ng-container *ngIf="allowedToUpdate; else adminTemplate">
         <button type="button" class="btn btn-secondary" (click)="statusOverlay.toggle($event)">
           <i class="pi pi-refresh me-2"></i> Update Status
         </button>
       </ng-container>
-      <!-- Admin Template: Button visible only for Admin role using your custom directive -->
+
+      <!-- Admin or Moderator role -->
       <ng-template #adminTemplate>
-        <button *appHasRole="['Admin']" type="button" class="btn btn-secondary" [routerLink]="['/update-contract', contract().id]">
+        <button *appHasRole="['Admin', 'Moderator']" type="button" class="btn btn-secondary" [routerLink]="['/update-contract', contract().id]">
           <i class="pi pi-refresh me-2"></i> Update Contract
         </button>
-        
       </ng-template>
     </mat-card-actions>
-  
+
     <!-- Overlay Panel for Updating Contract Status (Beneficiary only) -->
     <p-overlayPanel #statusOverlay>
       <div class="overlay-content" style="padding: 1rem; text-align: center;">
@@ -84,12 +84,10 @@
           [rangeColor]="'var(--knob-range-color)'" 
           [showValue]="true">
         </p-knob>
-        <!-- Bootstrap Save Button -->
         <button type="button" class="btn btn-success" (click)="updateStatus(statusOverlay)">
           Save
         </button>
       </div>
     </p-overlayPanel>
-  
   </mat-card>
 </div>

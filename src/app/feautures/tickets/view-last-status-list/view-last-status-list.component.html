@@ -16,20 +16,18 @@
     </div>
     
     <!-- Status List -->
-    <div *ngIf="statusHistories.length > 0; else noDataMessage">
-        <div class="status-list-container">
-            <div class="row justify-content-center">
-                <ng-container *ngFor="let status of statusHistories; trackBy: trackByHistory">
-                    <div class="col-12 d-flex justify-content-center">
-                        <app-view-last-status-card 
-                            [statusHistory]="status"
-                            (statusUpdated)="reloadStatusList()">
-                        </app-view-last-status-card>
-                    </div>
-                </ng-container>
-            </div>
-        </div>
+<div *ngIf="statusHistories.length > 0; else noDataMessage">
+    <div class="status-list-container-scrollable">
+      <ng-container *ngFor="let status of statusHistories; trackBy: trackByHistory">
+        <app-view-last-status-card
+          class="status-card-wrapper"
+          [statusHistory]="status"
+          (statusUpdated)="reloadStatusList()">
+        </app-view-last-status-card>
+      </ng-container>
     </div>
+  </div>
+  
 
     <!-- No data message -->
     <ng-template #noDataMessage>

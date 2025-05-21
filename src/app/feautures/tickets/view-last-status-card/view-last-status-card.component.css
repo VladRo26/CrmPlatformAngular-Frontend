@@ -1,31 +1,47 @@
 .status-card {
-    width: 100%; /* Make the card take more space */
-    max-width: 600px; /* Set a maximum width */
-    margin: var(--spacing-small) auto; /* Center it with spacing */
+    width: 100%;                   /* Force full width of container */
+    margin: var(--spacing-small) 0; /* Vertical spacing only */
     padding: var(--spacing-small);
-    border-left: 5px solid var(--default-color); /* Default color before dynamic update */
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    border-left: 5px solid var(--default-color);
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-}
-
-.status-title {
+    display: block;               /* Changed from flex to block */
+    box-sizing: border-box;       /* Ensure padding is included in width calculation */
+  }
+  
+  mat-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .status-card-content {
+    min-height: 120px;            /* Consistent height across cards */
+    width: 100%;                  /* Ensure content takes full width */
+  }
+  
+  .status-title {
     font-size: 1.5rem;
     font-weight: bold;
-}
-
-.status-message {
+  }
+  
+  .status-message {
     font-size: 1.1rem;
-}
-
-.status-updated, .status-date, .status-role {
+    width: 100%;                  /* Ensure message takes full width */
+  }
+  
+  .status-updated, .status-date, .status-role {
     font-size: 0.9rem;
     color: #555;
-}
-
-/* Responsive behavior */
-@media (max-width: 768px) {
+    width: 100%;                  /* Ensure these elements take full width */
+  }
+  
+  /* Responsive behavior */
+  @media (max-width: 768px) {
     .status-card {
-        width: 100%;
-        max-width: 90%;
+      width: 100%;
+      margin-left: auto;          /* Center the card */
+      margin-right: auto;         /* Center the card */
     }
-}
+  }

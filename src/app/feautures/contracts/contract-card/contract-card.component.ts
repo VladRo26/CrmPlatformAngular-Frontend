@@ -15,6 +15,7 @@ import { AccountService } from '../../../_services/account.service';
 import { User } from '../../../_models/user';
 import { NgIf } from '@angular/common';
 import { HasRoleDirective } from '../../../_directives/has-role.directive';
+import { UserappService } from '../../../_services/userapp.service';
 
 
 @Component({
@@ -32,12 +33,24 @@ export class ContractCardComponent implements OnInit {
     this.newStatus = this.contract().status;
     this.currentUser = this.accountService.currentUser();
 
+    if (this.currentUser?.userType === 'BeneficiaryCompanyUser') {
+      this.userAppService.getUsersapp_username(this.currentUser.userName).subscribe(userApp => {
+        const companyName = userApp.companyName;
+  
+        if (companyName) {
+          this.contractService.getContractsByBeneficiaryCompanyName(companyName).subscribe(contracts => {
+            this.allowedToUpdate = contracts.some(c => c.id === this.contract().id);
+          });
+        }
+      });
+    }
+
   }
   contractService = inject(ContractService);
   private accountService = inject(AccountService);
+  userAppService = inject(UserappService);
   currentUser: User | null = null;
-
-
+  allowedToUpdate: boolean = false;
   private router = inject(Router);
 
   newStatus!: number;

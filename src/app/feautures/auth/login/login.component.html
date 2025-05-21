@@ -1,6 +1,6 @@
 <ngx-particles [id]="id" [options]="particlesOptions" (particlesLoaded)="particlesService.particlesLoaded($event)"></ngx-particles>
 <div class="container d-flex justify-content-center align-items-center vh-100">
-  <div class="card p-4 mt-5 shadow-sm bg-opacity rounded-card">
+  <div class="card p-4 mt-5 shadow-sm bg-opacity rounded-card" style="width: 90%; max-width: 25rem; height: 25rem;">
     <div class="card-body rounded shadow">
       <form [formGroup]="loginForm" (ngSubmit)="login()" class="p-4">
         <h2 class="mb-4 text-center">DevLink</h2>

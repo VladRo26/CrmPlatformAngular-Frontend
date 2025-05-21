@@ -1,6 +1,7 @@
 <mat-card class="example-card" appearance="outlined">
   <!-- Card Header -->
   <mat-card-header>
+    <!-- User Avatar -->
     <div mat-card-avatar class="example-header-image">
       <img
         mat-card-avatar
@@ -11,9 +12,26 @@
     <!-- Ticket Title -->
     <mat-card-title>{{ ticket.title }}</mat-card-title>
 
-    <!-- Company Name -->
+    <!-- User-specific information based on role -->
     <mat-card-subtitle>
-        {{ companyName  }}
+      <!-- Show company name -->
+      {{ companyName }}
+      
+      <!-- User information based on role -->
+      <ng-container *ngIf="userType === 'BeneficiaryCompanyUser'">
+        <div *ngIf="handlerUser; else notAssigned">
+          Handled by: {{ handlerUser.userName || 'Unknown' }}
+        </div>
+        <ng-template #notAssigned>
+          <div>Handler: Not assigned</div>
+        </ng-template>
+      </ng-container>
+      
+      <ng-container *ngIf="userType === 'SoftwareCompanyUser'">
+        <div *ngIf="creatorUser">
+          Created by: {{ creatorUser.userName || 'Unknown' }}
+        </div>
+      </ng-container>
     </mat-card-subtitle>
   </mat-card-header>
 
