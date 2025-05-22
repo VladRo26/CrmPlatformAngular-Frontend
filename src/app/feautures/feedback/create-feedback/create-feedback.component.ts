@@ -24,13 +24,16 @@ import { CommonModule } from '@angular/common';
 import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ButtonModule } from 'primeng/button';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 
 @Component({
   selector: 'app-create-feedback',
   standalone: true,
   imports: [NgFor, NgIf, ReactiveFormsModule,MatFormFieldModule,
     MatInputModule,MatButtonModule,MatSelectModule,MatSliderModule,
-    FormsModule,RatingModule,DragDropModule,CommonModule,OverlayPanelModule,ProgressBarModule,ButtonModule],
+    FormsModule,RatingModule,DragDropModule,CommonModule,OverlayPanelModule,
+    ProgressBarModule,ButtonModule,ProgressSpinnerModule],
   templateUrl: './create-feedback.component.html',
   styleUrl: './create-feedback.component.css'
 })
@@ -42,6 +45,8 @@ export class CreateFeedbackComponent implements OnInit {
   beneficiaryCompanyService = inject(BeneficiarycompanyService);
   accountService = inject(AccountService);
   toastr = inject(ToastrService);
+  isSubmitting: boolean = false;
+
 
 
   @ViewChild('feedbackOverlay') feedbackOverlay!: OverlayPanel;
@@ -132,24 +137,30 @@ fetchHandlerUsername(handlerId: number): void {
       return;
     }
   
+    this.isSubmitting = true;
+  
     const { ticketId, content, rating } = this.feedbackForm.value;
   
     this.feedbackService.createFeedback(this.currentUserName, ticketId, content, rating).subscribe({
       next: (feedback: Feedback) => {
         this.toastr.success('Feedback submitted successfully!');
         this.feedbackForm.reset();
-        
-        // Refresh the page after submission
+  
+        // Refresh page after delay
         setTimeout(() => {
           window.location.reload();
-        }, 1000); // Delay to let the toastr message show
+        }, 1000);
       },
       error: (err) => {
         console.error('Error submitting feedback:', err);
         this.toastr.error('Failed to submit feedback.');
       },
+      complete: () => {
+        this.isSubmitting = false;
+      }
     });
   }
+  
   
 
   enableMessageInput(): void {

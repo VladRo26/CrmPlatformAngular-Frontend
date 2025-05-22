@@ -80,6 +80,15 @@
   >
     Submit Feedback
   </button>
+  <div *ngIf="isSubmitting" class="d-flex align-items-center gap-2 ms-3">
+    <p-progressSpinner
+      styleClass="w-2rem h-2rem"
+      strokeWidth="6"
+      fill="var(--surface-ground)"
+    ></p-progressSpinner>
+    <span>Waiting for the sentiment analysis...</span>
+  </div>
+
   <button
     type="button"
     class="btn btn-secondary btn-no-radius ms-2"
