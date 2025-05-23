@@ -73,10 +73,16 @@
 
 
 <div class="button-container">
-  <button
+    <button
     type="submit"
     class="btn btn-primary btn-no-radius"
-    [disabled]="feedbackForm.invalid || isDropdownDisabled"
+    [disabled]="
+      isDropdownDisabled || 
+      !feedbackForm.get('ticketId')?.value || 
+      feedbackForm.get('rating')?.value < 1 || 
+      !feedbackForm.get('content')?.value || 
+      feedbackForm.get('content')?.value.trim().length < 5
+    "
   >
     Submit Feedback
   </button>

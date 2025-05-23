@@ -77,9 +77,11 @@ export class CreateStatushistComponent implements OnInit {
       .subscribe({
         next: () => {
           this.toastr.success('Status updated successfully!');
-          this.statusUpdated.emit(); // Notify `TicketDetailComponent` to refresh
-          this.closeDialog.emit(); // Close the dialog
-        },
+          this.updateStatusForm.get('message')?.reset(); // ✅ clear the message field
+          this.statusUpdated.emit(); // notify parent to refresh
+          this.closeDialog.emit(); // close the dialog
+        }
+        ,
         error: (err) => {
           console.error('Error updating status:', err);
           this.toastr.error('Failed to update status.');
