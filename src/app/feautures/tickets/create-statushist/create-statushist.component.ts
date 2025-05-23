@@ -36,12 +36,15 @@ export class CreateStatushistComponent implements OnInit {
     this.initializeForm();
   }
 
-  initializeForm(): void {
-    this.updateStatusForm = new FormGroup({
-      status: new FormControl(this.statuses[0]?.value || '', Validators.required), // Default to the first status
-      message: new FormControl('', [Validators.maxLength(500)]),
-    });
-  }
+ initializeForm(): void {
+  const defaultStatus = this.statuses.find(s => s.value !== 'Open')?.value || '';
+
+  this.updateStatusForm = new FormGroup({
+    status: new FormControl(defaultStatus, Validators.required),
+    message: new FormControl('', [Validators.maxLength(500)]),
+  });
+}
+
 
   getUserRole(): string {
     const currentUser = this.accountService.currentUser();
