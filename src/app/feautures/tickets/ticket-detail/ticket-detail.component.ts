@@ -27,6 +27,7 @@ import { UserappService } from '../../../_services/userapp.service';
 import { FeedbackService } from '../../../_services/feedback.service';
 import { RatingModule } from 'primeng/rating';
 import { CommonModule } from '@angular/common';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-ticket-detail',
@@ -35,7 +36,9 @@ import { CommonModule } from '@angular/common';
      NgxCountriesDropdownModule,MatButton,TimelineModule,
      Button,DatePipe,CardModule,ScrollPanelModule
      ,MatButtonToggleModule,OverlayPanelModule,NgIf,DialogModule,
-     CreateStatushistComponent,ButtonModule,ProgressBarModule,FormsModule,NgClass,RatingModule,CommonModule],
+     CreateStatushistComponent,ButtonModule,
+     ProgressBarModule,FormsModule,NgClass,RatingModule,CommonModule
+     ,TooltipModule],
   templateUrl: './ticket-detail.component.html',
   styleUrl: './ticket-detail.component.css'
 })
@@ -85,6 +88,7 @@ export class TicketDetailComponent implements OnInit {
   currentUserId: number = 0;
   isSoftwareCompanyUser: boolean = false;
   isEligibleForFeedback: boolean = false;
+  isSubmittingFeedback: boolean = false;
 
   feedbackDialogVisible: boolean = false;
   feedbackContent: string = '';
@@ -263,20 +267,39 @@ export class TicketDetailComponent implements OnInit {
       this.toastr.error('Ticket ID is missing.', 'Error');
       return;
     }
-
+  
+    if (!this.feedbackContent.trim()) {
+      this.toastr.error('Feedback content cannot be empty.', 'Error');
+      return;
+    }
+  
     const username = this.accountService.currentUser()?.userName || '';
-
-    this.feedbackService.createFeedbackForBeneficiary(username, this.ticket.id, this.feedbackContent, this.feedbackRating)
-      .subscribe({
-        next: () => {
-          this.toastr.success('Feedback submitted successfully.', 'Success');
-          this.feedbackDialogVisible = false;
-          this.feedbackContent = '';
-          this.feedbackRating = 5; 
-        },
-        error: () => this.toastr.error('Failed to submit feedback.', 'Error'),
-      });
+  
+    this.isSubmittingFeedback = true;
+  
+    this.feedbackService.createFeedbackForBeneficiary(
+      username,
+      this.ticket.id,
+      this.feedbackContent,
+      this.feedbackRating
+    ).subscribe({
+      next: () => {
+        this.toastr.success('Feedback submitted successfully.', 'Success');
+        this.feedbackDialogVisible = false; // ✅ Close the dialog
+        this.feedbackContent = '';
+        this.feedbackRating = 5;
+        this.isEligibleForFeedback = false; 
+      },
+      error: (err) => {
+        console.error('Failed to submit feedback:', err);
+        this.toastr.error('Failed to submit feedback.', 'Error');
+      },
+      complete: () => {
+        this.isSubmittingFeedback = false;
+      }
+    });
   }
+  
 
  
   loadCountryListAfterDelay() {

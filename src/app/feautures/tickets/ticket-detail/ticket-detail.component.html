@@ -51,12 +51,17 @@
       </button>
 
         <!-- Give Feedback Button -->
-      <button *ngIf="ticket.status === 'Closed' && isSoftwareCompanyUser && ticket.handlerId === currentUserId"
-      type="button" class="btn btn-secondary d-flex align-items-center"
-      [disabled]="!isEligibleForFeedback"
-      (click)="showFeedbackDialog()">
-      <i class="pi pi-star me-2"></i> Give Feedback
-      </button>
+     <!-- Show only if ticket is closed and current user is the handler -->
+    <button
+    *ngIf="ticket.status === 'Closed' && isSoftwareCompanyUser && ticket.handlerId === currentUserId"
+    type="button"
+    class="btn btn-secondary d-flex align-items-center"
+    [disabled]="!isEligibleForFeedback"
+    (click)="showFeedbackDialog()"
+    >
+    <i class="pi pi-star me-2"></i> Give Feedback
+    </button>
+
 
 
       <!-- Reopen Ticket Button -->
@@ -205,8 +210,22 @@
   <textarea [(ngModel)]="feedbackContent" class="form-control" placeholder="Enter feedback..." rows="3"></textarea>
 
   <div class="d-flex justify-content-end gap-2 mt-3">
-    <button mat-button (click)="feedbackDialogVisible = false">Cancel</button>
-    <button mat-raised-button color="primary" (click)="submitFeedback()">Submit</button>
+    <button mat-button (click)="feedbackDialogVisible = false" [disabled]="isSubmittingFeedback">Cancel</button>
+  
+    <button 
+      mat-raised-button 
+      color="primary" 
+      (click)="submitFeedback()" 
+      [disabled]="isSubmittingFeedback"
+    >
+      <ng-container *ngIf="!isSubmittingFeedback">
+        Submit
+      </ng-container>
+      <ng-container *ngIf="isSubmittingFeedback">
+        <i class="pi pi-spin pi-spinner me-2"></i> Submitting...
+      </ng-container>
+    </button>
   </div>
+  
 </p-dialog>
 
