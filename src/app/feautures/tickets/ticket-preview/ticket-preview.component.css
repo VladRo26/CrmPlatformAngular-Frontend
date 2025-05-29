@@ -21,6 +21,11 @@
   padding: 2rem;
   background-color: #fff;
   box-sizing: border-box;
+  scrollbar-width: none;          /* Firefox */
+  -ms-overflow-style: none;       /* IE & Edge */
+}
+.ticket-preview-panel::-webkit-scrollbar {
+  display: none;                  /* Chrome, Safari */
 }
 
 /* 🎛️ Filter section */
@@ -43,6 +48,11 @@
   overflow-y: auto;
   padding-right: 0.5rem;
   box-sizing: border-box;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.ticket-scroll-panel::-webkit-scrollbar {
+  display: none;
 }
 
 /* 🧱 Each ticket */
@@ -100,3 +110,18 @@ app-tickets-userapp-card {
     max-width: 100%;
   }
 }
+
+.no-data-card {
+  width: 100%;
+  max-width: 1000px;
+  min-height: 8rem;
+  border: 1px dashed var(--warning-color);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  background-color: var(--bg-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+

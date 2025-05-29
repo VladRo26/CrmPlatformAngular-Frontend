@@ -17,18 +17,24 @@
     margin-bottom: 1rem;
   }
   
-  /* Preview Panel: Increase size and add scrolling if content is larger */
-  .preview-panel {
-    width: 100%;
-    height: 50vh;               /* Set height to 50% of viewport height (adjust as needed) */
-    max-height: 30rem;          /* Or use a max-height for consistency */
-    overflow-y: auto;           /* Vertical scroll if content exceeds height */
-    border: 1px solid #ddd;     /* Optional border for clarity */
-    padding: 0.5rem;
-    box-sizing: border-box;
-    margin-bottom: 1rem;
-  }
-  
+.preview-panel {
+  width: 100%;
+  height: 60vh;              /* Was 50vh, now a bit more */
+  max-height: 38rem;         /* Was 30rem, now increased moderately */
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+
+  /* Hide scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.preview-panel::-webkit-scrollbar {
+  display: none;
+}
+
   /* Ensure the embedded dashboard content fills the preview panel */
   .dashboard-content {
     width: 100%;

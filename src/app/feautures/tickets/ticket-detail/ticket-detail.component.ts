@@ -28,6 +28,7 @@ import { FeedbackService } from '../../../_services/feedback.service';
 import { RatingModule } from 'primeng/rating';
 import { CommonModule } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-ticket-detail',
@@ -38,7 +39,7 @@ import { TooltipModule } from 'primeng/tooltip';
      ,MatButtonToggleModule,OverlayPanelModule,NgIf,DialogModule,
      CreateStatushistComponent,ButtonModule,
      ProgressBarModule,FormsModule,NgClass,RatingModule,CommonModule
-     ,TooltipModule],
+     ,TooltipModule,ProgressSpinnerModule],
   templateUrl: './ticket-detail.component.html',
   styleUrl: './ticket-detail.component.css'
 })
