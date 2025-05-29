@@ -29,6 +29,7 @@ import { RatingModule } from 'primeng/rating';
 import { CommonModule } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TicketAttachment } from '../../../_services/ticketattachment';
 
 @Component({
   selector: 'app-ticket-detail',
@@ -58,6 +59,7 @@ export class TicketDetailComponent implements OnInit {
   showCountryList: boolean = false; // Show country list after page load
   visible: boolean = false;
   translatedMessage: string | null = null; // Holds the translated message
+  ticketAttachments: TicketAttachment[] = [];
 
   
 
@@ -151,39 +153,41 @@ export class TicketDetailComponent implements OnInit {
     this.reopenVisible = true;
   }
 
-  reopenTicket(): void {
-    if (!this.ticket || !this.ticket.id) {
-      this.toastr.error('Ticket ID is missing.', 'Error');
-      return;
-    }
-
-    if (!this.reopenMessage.trim()) {
-      this.toastr.error('Please provide a reason for reopening the ticket.');
-      return;
-    }
-
-    const userRole = this.accountService.currentUser()?.userType === 'SoftwareCompanyUser' ? 'Handler' : 'Creator';
-
-    this.ticketService.addTicketStatusHistory(this.ticket.id, {
-      status: 'Open',
-      message: this.reopenMessage,
-      updatedByUsername: this.accountService.currentUser()?.userName || '',
-      updatedAt: new Date(),
-      ticketUserRole: userRole, 
-      seen: false,
-    }).subscribe({
-      next: () => {
-        this.toastr.success('Ticket reopened successfully!');
-        this.reopenVisible = false; // Close Dialog
-        this.reopenMessage = ''; // Clear input
-        this.handleStatusUpdate(); // Refresh ticket details
-      },
-      error: (err) => {
-        console.error('Error reopening ticket:', err);
-        this.toastr.error('Failed to reopen the ticket.');
-      },
-    });
+ reopenTicket(): void {
+  if (!this.ticket || !this.ticket.id) {
+    this.toastr.error('Ticket ID is missing.', 'Error');
+    return;
   }
+
+  if (!this.reopenMessage.trim()) {
+    this.toastr.error('Please provide a reason for reopening the ticket.');
+    return;
+  }
+
+  const userRole = this.accountService.currentUser()?.userType === 'SoftwareCompanyUser' ? 'Handler' : 'Creator';
+
+  const formData = new FormData();
+  formData.append('status', 'Open');
+  formData.append('message', this.reopenMessage);
+  formData.append('updatedByUsername', this.accountService.currentUser()?.userName || '');
+  formData.append('updatedAt', new Date().toISOString());
+  formData.append('ticketUserRole', userRole);
+  formData.append('seen', 'false');
+
+  this.ticketService.addTicketStatusHistory(this.ticket.id, formData).subscribe({
+    next: () => {
+      this.toastr.success('Ticket reopened successfully!');
+      this.reopenVisible = false;
+      this.reopenMessage = '';
+      this.handleStatusUpdate(); // Refresh ticket
+    },
+    error: (err) => {
+      console.error('Error reopening ticket:', err);
+      this.toastr.error('Failed to reopen the ticket.');
+    },
+  });
+}
+
 
   getStatusClass(status: string): string {
     switch (status) {
@@ -235,6 +239,7 @@ export class TicketDetailComponent implements OnInit {
     this.loadTicketDetails();
     this.setUserRole();
     this.loadUserDetails();
+
 
   }
 
@@ -309,47 +314,48 @@ export class TicketDetailComponent implements OnInit {
     }, 2000); // Adjust the delay as needed
   }
 
-
   private loadTicketDetails(): void {
-    const ticketId = Number(this.route.snapshot.paramMap.get('id'));
-    if (!ticketId) return;
+  const ticketId = Number(this.route.snapshot.paramMap.get('id'));
+  if (!ticketId) return;
 
-    this.ticketService.getTicketById(ticketId).subscribe({
-      next: (ticket) => {
-        this.ticket = ticket;
-        this.ticketDescription = ticket.tDescription ?? ticket.description ?? null;
+  this.loadTicketAttachments(ticketId); // ✅ Adaugă această linie aici
 
-        if (this.isBeneficiaryUser) {
-          if (ticket.handlerId) {
-            this.getUserById(ticket.handlerId, 'handler');
-          } else {
-            this.handlerUsername = 'Not assigned yet';
-          }
+  this.ticketService.getTicketById(ticketId).subscribe({
+    next: (ticket) => {
+      this.ticket = ticket;
+      this.ticketDescription = ticket.tDescription ?? ticket.description ?? null;
+
+      if (this.isBeneficiaryUser) {
+        if (ticket.handlerId) {
+          this.getUserById(ticket.handlerId, 'handler');
+        } else {
+          this.handlerUsername = 'Not assigned yet';
         }
+      }
 
-        if (this.isSoftwareCompanyUser) {
-          this.getUserById(ticket.creatorId, 'creator');
-        }
+      if (this.isSoftwareCompanyUser) {
+        this.getUserById(ticket.creatorId, 'creator');
+      }
 
-        this.checkFeedbackEligibility(ticketId);
-      },
-      error: (err) => {
-        console.error('Failed to load ticket details', err);
-        this.toastr.error('Failed to load ticket details.', 'Error');
-      },
-    });
+      this.checkFeedbackEligibility(ticketId);
+    },
+    error: (err) => {
+      console.error('Failed to load ticket details', err);
+      this.toastr.error('Failed to load ticket details.', 'Error');
+    },
+  });
 
-    this.ticketService.getTicketHistoryById(ticketId).subscribe({
-      next: (history) => {
-        this.ticketHistory = history;
-        this.transformHistoryToTimeline();
-      },
-      error: (err) => {
-        console.error('Failed to load ticket history', err);
-        this.toastr.error('Failed to load ticket history.', 'Error');
-      },
-    });
-  }
+  this.ticketService.getTicketHistoryById(ticketId).subscribe({
+    next: (history) => {
+      this.ticketHistory = history;
+      this.transformHistoryToTimeline();
+    },
+    error: (err) => {
+      console.error('Failed to load ticket history', err);
+      this.toastr.error('Failed to load ticket history.', 'Error');
+    },
+  });
+ }
 
   private getUserById(userId: number, role: 'handler' | 'creator'): void {
     this.userappService.getUserappById(userId).subscribe({
@@ -378,6 +384,19 @@ export class TicketDetailComponent implements OnInit {
       }
     });
   }
+
+  private loadTicketAttachments(ticketId: number): void {
+  this.ticketService.getAttachments(ticketId).subscribe({
+    next: (attachments) => {
+      this.ticketAttachments = attachments;
+    },
+    error: (err) => {
+      console.error('Failed to load ticket attachments', err);
+      this.toastr.error('Failed to load attachments.', 'Error');
+    },
+  });
+}
+
 
   
   

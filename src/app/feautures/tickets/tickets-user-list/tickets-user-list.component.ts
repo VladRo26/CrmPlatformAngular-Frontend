@@ -34,30 +34,30 @@ export class TicketsUserListComponent implements OnInit {
   ticketParams = this.ticketService.ticketParams();
   pagination: any = null;
 
-  ngOnInit(): void {
-    if (!this.username) {
-      console.error('Username is not available.');
-      return;
-    }
+ngOnInit(): void {
+  if (!this.username) {
+    console.error('Username is not available.');
+    return;
+  }
 
-    if (!this.ticketParams.status) {
-      this.ticketParams.status = 'notClosed';
-    }
-    this.loadTickets();
-  }
+  this.ticketService.ticketCache.clear();  
+  this.ticketParams.status = 'notClosed';  
+  this.loadTickets();                    
+}
+
   
-  loadTickets(): void {
-    this.ticketParams.username = this.username;
-    this.ticketService.getTicketsByUserName().subscribe({
-      next: (result) => {
-        this.tickets = result.items ?? [];
-        this.pagination = result.pagination;
-      },
-      error: (err) => {
-        console.error('Error loading tickets:', err);
-      }
-    });
-  }
+loadTickets(force: boolean = true): void {
+  this.ticketParams.username = this.username;
+  this.ticketService.getTicketsByUserName(force).subscribe({
+    next: (result) => {
+      this.tickets = result.items ?? [];
+      this.pagination = result.pagination;
+    },
+    error: (err) => {
+      console.error('Error loading tickets:', err);
+    }
+  });
+}
 
   pageChanged(event: PageChangedEvent): void {
     const page = typeof event === 'number' ? event : event.page;

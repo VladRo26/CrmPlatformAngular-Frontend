@@ -9,5 +9,6 @@ export interface CreateTicket {
     language?: string; // Optional
     languageCode?: string; // Language code of the ticket (optional)
     countryCode?: string; // Optional
+    attachments?: File[]; 
   }
   

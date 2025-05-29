@@ -8,6 +8,7 @@ import { CreateTicket } from '../_models/createticket';
 import { PaginatedResult } from '../_models/pagination';
 import { TicketParams } from '../_models/ticketparams';
 import { TicketContractsParams } from '../_models/ticketcontractsparams';
+import { TicketAttachment } from './ticketattachment';
 
 @Injectable({
   providedIn: 'root'
@@ -82,11 +83,15 @@ export class TicketService {
     }
 
     // In ticket.service.ts
-  getTicketsByUserName(): Observable<PaginatedResult<Ticket[]>> {
+  getTicketsByUserName(forceReload: boolean = false): Observable<PaginatedResult<Ticket[]>> {
   const cacheKey = Object.values(this.ticketParams()).join('-');
-  const cachedResponse = this.ticketCache.get(cacheKey);
-  if (cachedResponse) {
-    return of(cachedResponse);
+
+  // 🚨 Skip cache if forced
+  if (!forceReload) {
+    const cachedResponse = this.ticketCache.get(cacheKey);
+    if (cachedResponse) {
+      return of(cachedResponse);
+    }
   }
 
   let params = this.setPaginationHeader(this.ticketParams().pageNumber, this.ticketParams().pageSize);
@@ -106,15 +111,17 @@ export class TicketService {
   if (this.ticketParams().orderBy) {
     params = params.append('orderBy', this.ticketParams().orderBy ?? '');
   }
-  // NEW: Append sortDirection
   if (this.ticketParams().sortDirection) {
     params = params.append('sortDirection', this.ticketParams().sortDirection ?? '');
   }
 
   const headers = new HttpHeaders({ skipSpinner: 'true' });
 
-
-  return this.http.get<Ticket[]>(`${this.baseUrl}Ticket/ByUserName`, {headers, observe: 'response', params }).pipe(
+  return this.http.get<Ticket[]>(`${this.baseUrl}Ticket/ByUserName`, {
+    headers,
+    observe: 'response',
+    params
+  }).pipe(
     map(response => {
       const paginatedResult: PaginatedResult<Ticket[]> = {
         items: response.body ?? [],
@@ -128,7 +135,8 @@ export class TicketService {
       return of({ items: [], pagination: undefined });
     })
   );
-  }
+}
+
 
   private setPaginationHeader(pageNumber: number, pageSize: number) {
     let params = new HttpParams();
@@ -143,9 +151,13 @@ export class TicketService {
       return this.http.get<Ticket[]>(url);
     }
 
-    createTicket(createTicketDto: CreateTicket): Observable<Ticket> {
+    createTicket(data: FormData): Observable<Ticket> {
       const url = `${this.baseUrl}Ticket/CreateTicket`;
-      return this.http.post<Ticket>(url, createTicketDto);
+      return this.http.post<Ticket>(url, data);
+    }
+
+    getAttachments(ticketId: number): Observable<TicketAttachment[]> {
+    return this.http.get<TicketAttachment[]>(`${this.baseUrl}Ticket/Attachments/${ticketId}`);
     }
 
     getTicketsByContractId(contractId: number, paramsObj: TicketContractsParams): Observable<PaginatedResult<Ticket[]>> {
@@ -185,10 +197,11 @@ export class TicketService {
       return this.http.put(url, null, { params: { handlerId } });
     }
     
-    addTicketStatusHistory(ticketId: number, statusHistory: TicketStatusHistory): Observable<{ message: string }> {
+  addTicketStatusHistory(ticketId: number, formData: FormData): Observable<{ message: string }> {
       const url = `${this.baseUrl}Ticket/AddStatusHistory?ticketId=${ticketId}`;
-      return this.http.post<{ message: string }>(url, statusHistory);
+      return this.http.post<{ message: string }>(url, formData);
     }
+
 
     updateTicketTranslation(
       ticketId: number,

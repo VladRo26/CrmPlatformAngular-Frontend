@@ -55,6 +55,39 @@ export class CreateTicketComponent implements OnInit {
   contracts: Contract[] = [];
   selectedContract: Contract | null = null; // Store the dragged and dropped contract
   draggedContract: Contract | null = null; // Temporarily hold the dragged contract
+  selectedFiles: File[] = [];
+  acceptedTypes = '.pdf,.png,.jpeg,.jpg,.zip';
+  isSubmitting = false;
+
+
+
+onFilesSelected(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  if (!input.files) return;
+
+  const allowedExtensions = ['pdf', 'png', 'jpeg', 'jpg', 'zip'];
+
+  Array.from(input.files).forEach(file => {
+    const ext = file.name.split('.').pop()?.toLowerCase();
+    if (ext && allowedExtensions.includes(ext)) {
+      if (!this.selectedFiles.find(f => f.name === file.name && f.size === file.size)) {
+        this.selectedFiles.push(file);
+      }
+    } else {
+      this.toastr.warning(`File type not allowed: ${file.name}`);
+    }
+  });
+
+  input.value = ''; // Reset input
+}
+
+  removeFile(index: number): void {
+    this.selectedFiles.splice(index, 1);
+
+    const fileInput = document.getElementById('fileUpload') as HTMLInputElement;
+    if (fileInput) fileInput.value = '';
+  }
+
 
 
   createTicketForm: FormGroup = new FormGroup({});
@@ -162,37 +195,48 @@ console.log(this.createTicketForm.status);
   }
 
   submitTicket(): void {
-    if (this.createTicketForm.invalid || !this.selectedContract) {
-      this.createTicketForm.markAllAsTouched();
-      this.toastr.error('Please fill all required fields and select a contract.');
-      return;
-    }
-  
-    if (!this.currentUser) {
-      this.toastr.error('Current user is not available.');
-      return;
-    }
-  
-    const ticket: CreateTicket = {
-      ...this.createTicketForm.value,
-      contractId: this.selectedContract.id,
-      creatorId: this.currentUser.id,
-    };
-  
-    this.ticketService.createTicket(ticket).subscribe({
-      next: () => {
-        this.toastr.success('Ticket created successfully!');
-        // Reset form completely using the helper method
-        this.resetForm();
-        this.router.navigate(['/home']);
-
-      },
-      error: (err) => {
-        console.error('Error creating ticket:', err);
-        this.toastr.error('Failed to create ticket. Please correct any errors and try again.');
-      }
-    });
+  if (this.createTicketForm.invalid || !this.selectedContract || !this.currentUser) {
+    this.createTicketForm.markAllAsTouched();
+    this.toastr.error('Please fill all required fields and select a contract.');
+    return;
   }
+
+  this.isSubmitting = true; // ✅ Disable the button
+
+  const formData = new FormData();
+  const values = this.createTicketForm.getRawValue();
+
+  formData.append('title', values.title ?? '');
+  formData.append('description', values.description ?? '');
+  formData.append('status', values.status ?? 'Open');
+  formData.append('priority', values.priority ?? '');
+  formData.append('type', values.type ?? '');
+  formData.append('contractId', this.selectedContract.id.toString());
+  formData.append('creatorId', this.currentUser.id.toString());
+  formData.append('language', values.language ?? '');
+  formData.append('languageCode', values.languageCode ?? '');
+  formData.append('countryCode', values.countryCode ?? '');
+
+  this.selectedFiles.forEach(file => {
+    formData.append('attachments', file);
+  });
+
+  this.ticketService.createTicket(formData).subscribe({
+    next: () => {
+      this.toastr.success('Ticket created successfully!');
+      this.resetForm();
+      this.router.navigate(['/home']);
+      this.isSubmitting = false; // ✅ Re-enable button
+    },
+    error: (err) => {
+      console.error('Error creating ticket:', err);
+      this.toastr.error('Failed to create ticket.');
+      this.isSubmitting = false; // ✅ Re-enable button
+    }
+  });
+}
+
+
   
 
   resetForm(): void {

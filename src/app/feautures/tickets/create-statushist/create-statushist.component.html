@@ -20,6 +20,25 @@
         placeholder="Add message"
       ></textarea>
     </div>
+    <div class="mb-3">
+  <label for="statusAttachments" class="form-label">Attachments</label>
+  <input
+    type="file"
+    id="statusAttachments"
+    class="form-control"
+    (change)="onFilesSelected($event)"
+    [accept]="'.pdf,.jpg,.jpeg,.png,.zip'"
+    multiple
+  />
+
+  <ul class="list-group mt-2" *ngIf="selectedFiles.length > 0">
+    <li *ngFor="let file of selectedFiles; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+      {{ file.name }}
+      <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeFile(i)">Remove</button>
+    </li>
+  </ul>
+</div>
+
     <div class="d-flex justify-content-end gap-2">
       <button type="button" class="btn btn-secondary" (click)="closeDialog.emit()">Cancel</button>
       <button type="submit" class="btn btn-warning" [disabled]="updateStatusForm.invalid">Update</button>

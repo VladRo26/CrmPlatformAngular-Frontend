@@ -62,6 +62,15 @@
     <i class="pi pi-star me-2"></i> Give Feedback
     </button>
 
+    <!-- Show Attachments Button -->
+  <button
+    type="button"
+    class="btn btn-secondary d-flex align-items-center"
+    (click)="overlayAttachments.toggle($event)">
+    <i class="pi pi-paperclip me-2"></i> Show Attachments
+  </button>
+
+
 
 
       <!-- Reopen Ticket Button -->
@@ -239,4 +248,20 @@
 
   
 </p-dialog>
+
+<p-overlayPanel #overlayAttachments>
+  <div *ngIf="ticketAttachments.length > 0; else noAttachments">
+    <ul class="list-unstyled m-0 p-0">
+      <li *ngFor="let attachment of ticketAttachments">
+        <a [href]="attachment.url" target="_blank" class="text-decoration-none">
+          <i class="pi pi-paperclip me-2"></i> {{ attachment.fileName }}
+        </a>
+      </li>
+    </ul>
+  </div>
+  <ng-template #noAttachments>
+    <p>No attachments found for this ticket.</p>
+  </ng-template>
+</p-overlayPanel>
+
 

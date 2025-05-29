@@ -95,7 +95,7 @@ combinedCompanies: any[] = [];
     const currentUser = this.accountService.currentUser();
     const roles = this.accountService.roles() || [];
     if (currentUser && !roles.some((r: string) => ['Admin', 'Moderator', 'User'].includes(r))) {
-      this.toastr.warning("Your account it's not approved by moderator. Please wait for approval");
+      this.toastr.warning("Your account it's not approved by admin. Please wait for approval to have the full access to the application.");
     }
 
   }

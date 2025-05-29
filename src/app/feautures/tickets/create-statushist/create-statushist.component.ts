@@ -6,10 +6,11 @@ import { ToastrService } from 'ngx-toastr';
 import { OnInit } from '@angular/core';
 import { AccountService } from '../../../_services/account.service';
 import { NgFor } from '@angular/common';
+import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-create-statushist',
   standalone: true,
-  imports: [ReactiveFormsModule,FormsModule,NgFor],
+  imports: [ReactiveFormsModule,FormsModule,NgFor,NgIf],
   templateUrl: './create-statushist.component.html',
   styleUrl: './create-statushist.component.css'
 })
@@ -21,6 +22,8 @@ export class CreateStatushistComponent implements OnInit {
   ticketService = inject(TicketService);
   accountService = inject(AccountService);
   toastr = inject(ToastrService);
+  selectedFiles: File[] = [];
+
 
 
   statuses = [
@@ -57,37 +60,58 @@ export class CreateStatushistComponent implements OnInit {
   }
   
   submitStatusUpdate(): void {
-    if (this.updateStatusForm.invalid) {
-      this.toastr.error('Please select a valid status and provide a valid message.');
-      return;
-    }
-  
-    const { status, message } = this.updateStatusForm.value;
-    const userRole = this.getUserRole(); // Get user role dynamically
-  
-    this.ticketService
-      .addTicketStatusHistory(this.ticketId, {
-        status: status ?? '',
-        message: message ?? '',
-        updatedByUsername: this.username,
-        updatedAt: new Date(),
-        ticketUserRole: userRole,
-        seen: false,
-      })
-      .subscribe({
-        next: () => {
-          this.toastr.success('Status updated successfully!');
-          this.updateStatusForm.get('message')?.reset(); // ✅ clear the message field
-          this.statusUpdated.emit(); // notify parent to refresh
-          this.closeDialog.emit(); // close the dialog
-        }
-        ,
-        error: (err) => {
-          console.error('Error updating status:', err);
-          this.toastr.error('Failed to update status.');
-        },
-      });
+  if (this.updateStatusForm.invalid) {
+    this.toastr.error('Please select a valid status and provide a valid message.');
+    return;
   }
+
+  const { status, message } = this.updateStatusForm.value;
+  const userRole = this.getUserRole();
+
+  const formData = new FormData();
+  formData.append('status', status ?? '');
+  formData.append('message', message ?? '');
+  formData.append('updatedByUsername', this.username);
+  formData.append('updatedAt', new Date().toISOString());
+  formData.append('ticketUserRole', userRole);
+  formData.append('seen', 'false');
+
+  this.selectedFiles.forEach(file => {
+    formData.append('attachments', file); // backend expects plural
+  });
+
+  this.ticketService.addTicketStatusHistory(this.ticketId, formData).subscribe({
+    next: () => {
+      this.toastr.success('Status updated successfully!');
+      this.updateStatusForm.get('message')?.reset();
+      this.selectedFiles = [];
+      this.statusUpdated.emit();
+      this.closeDialog.emit();
+    },
+    error: (err) => {
+      console.error('Error updating status:', err);
+      this.toastr.error('Failed to update status.');
+    },
+  });
+}
+
+onFilesSelected(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  if (!input.files) return;
+
+  Array.from(input.files).forEach(file => {
+    const ext = file.name.split('.').pop()?.toLowerCase();
+    if (['pdf', 'jpg', 'jpeg', 'png', 'zip'].includes(ext ?? '')) {
+      this.selectedFiles.push(file);
+    }
+  });
+
+  input.value = ''; // reset input
+}
+
+removeFile(index: number): void {
+  this.selectedFiles.splice(index, 1);
+}
 
   
 }
