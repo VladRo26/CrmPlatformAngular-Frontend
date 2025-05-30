@@ -128,33 +128,44 @@
         <i [class]="event.icon"></i>
       </span>
     </ng-template>
-
-    <!-- Content Template -->
     <ng-template pTemplate="content" let-event>
-      <p-card [header]="event.status" [subheader]="event.date">
-        <p>
-          <strong>Username:</strong>
-          <span [style.color]="event.color">{{ event.username }}</span>
-        </p>
-        <p>
-          <strong>Role:</strong> 
-          <span [style.color]="event.color">{{ event.role }}</span>
-        </p>
-        <p>
-          <strong>Details:</strong> {{ event.message }}
-        </p>
-        <ng-container *ngIf="shouldShowTranslateButton(event.role)">
-          <p-button 
-            icon="pi pi-language" 
-            [rounded]="true"
-            severity="secondary"
-            [outlined]="true"
-            [disabled]="overlayActive" 
-            (click)="showOverlay(event.message, $event, overlay)">
-          </p-button>
-        </ng-container>
-      </p-card>
-    </ng-template>
+  <p-card [header]="event.status" [subheader]="event.date">
+    <p>
+      <strong>Username:</strong>
+      <span [style.color]="event.color">{{ event.username }}</span>
+    </p>
+    <p>
+      <strong>Role:</strong> 
+      <span [style.color]="event.color">{{ event.role }}</span>
+    </p>
+    <p>
+      <strong>Details:</strong> {{ event.message }}
+    </p>
+
+    <div class="d-flex align-items-center gap-2 mt-2">
+      <!-- Translate button -->
+      <p-button 
+        icon="pi pi-language" 
+        [rounded]="true"
+        severity="secondary"
+        [outlined]="true"
+        [disabled]="overlayActive"
+        (click)="showOverlay(event.message, $event, overlay)">
+      </p-button>
+
+      <!-- View Attachments button -->
+      <p-button 
+        icon="pi pi-paperclip" 
+        [rounded]="true"
+        severity="secondary"
+        [outlined]="true"
+        (click)="showAttachmentsOverlay($event, overlayHistoryAttachments, event.id)">
+      </p-button>
+    </div>
+  </p-card>
+</ng-template>
+    <!-- Content Template -->
+
   </p-timeline>
 </p-scrollPanel>
 
@@ -263,5 +274,24 @@
     <p>No attachments found for this ticket.</p>
   </ng-template>
 </p-overlayPanel>
+
+<p-overlayPanel #overlayHistoryAttachments>
+  <div *ngIf="overlayAttachmentsLoading">
+    <p-progressSpinner strokeWidth="4" styleClass="w-2rem h-2rem"></p-progressSpinner>
+  </div>
+  <div *ngIf="!overlayAttachmentsLoading && selectedAttachments.length > 0">
+    <ul class="list-unstyled m-0">
+      <li *ngFor="let file of selectedAttachments">
+        <a [href]="file.url" target="_blank" class="text-decoration-none">
+          <i class="pi pi-paperclip me-2"></i> {{ file.fileName }}
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="!overlayAttachmentsLoading && selectedAttachments.length === 0">
+    <p>No attachments found for this status update.</p>
+  </div>
+</p-overlayPanel>
+
 
 

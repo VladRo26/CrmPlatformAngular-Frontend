@@ -80,6 +80,23 @@ mat-card-image {
   opacity: 0.6;          /* Optional: visually indicate the disabled state */
 }
 
+/* Force pill shape for PrimeNG p-button */
+.p-button-rounded {
+  border-radius: 999px !important;   /* Fully round */
+  padding: 0.5rem 0.75rem !important; /* Balanced padding */
+  min-width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.p-button-rounded.p-button-icon-only {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0 !important;
+}
+
+
 /* Fix double scroll and keep PrimeNG-only scrolling */
 /* .description-scroll-panel .p-scrollpanel-wrapper {
   overflow: hidden !important;

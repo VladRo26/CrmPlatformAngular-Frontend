@@ -102,6 +102,25 @@ export class TicketDetailComponent implements OnInit {
   handlerUsername: string | null = null;
   creatorUsername: string | null = null;
 
+  overlayAttachmentsLoading = false;
+selectedAttachments: TicketAttachment[] = [];
+
+showAttachmentsOverlay(event: Event, overlay: OverlayPanel, historyId: number): void {
+  this.overlayAttachmentsLoading = true;
+  this.ticketService.getStatusHistoryAttachments(historyId).subscribe({
+    next: (attachments) => {
+      this.selectedAttachments = attachments;
+      this.overlayAttachmentsLoading = false;
+      overlay.toggle(event);
+    },
+    error: () => {
+      this.overlayAttachmentsLoading = false;
+      this.toastr.error('Failed to load attachments');
+    }
+  });
+}
+
+
 
   private setUserRole(): void {
     const userType = this.accountService.currentUser()?.userType;
@@ -187,7 +206,6 @@ export class TicketDetailComponent implements OnInit {
     },
   });
 }
-
 
   getStatusClass(status: string): string {
     switch (status) {
@@ -451,31 +469,33 @@ export class TicketDetailComponent implements OnInit {
   }
   
   
-  transformHistoryToTimeline(): void {
-    this.events = this.ticketHistory.map((history) => {
-      // Determine icon and color based on role
-      let icon = 'pi pi-user';
-      let color = 'var(--default-color)'; // Use a fallback variable
-  
-      if (history.ticketUserRole.toLowerCase() === 'handler') {
-        icon = 'pi pi-briefcase'; // Icon for handlers
-        color = 'var(--role-handler)'; // Green for handlers
-      } else if (history.ticketUserRole.toLowerCase() === 'creator') {
-        icon = 'pi pi-pencil'; // Icon for creators
-        color = 'var(--role-creator)'; // Orange for creators
-      }
-  
-      return {
-        status: history.status,
-        date: new Date(history.updatedAt).toLocaleString(),
-        role: history.ticketUserRole,
-        username: history.updatedByUsername, // Add username
-        message: history.message || 'No additional details provided.',
-        icon,
-        color,
-      };
-    });
-  }
+ transformHistoryToTimeline(): void {
+  this.events = this.ticketHistory.map((history) => {
+    let icon = 'pi pi-user';
+    let color = 'var(--default-color)';
+
+    if (history.ticketUserRole.toLowerCase() === 'handler') {
+      icon = 'pi pi-briefcase';
+      color = 'var(--role-handler)';
+    } else if (history.ticketUserRole.toLowerCase() === 'creator') {
+      icon = 'pi pi-pencil';
+      color = 'var(--role-creator)';
+    }
+
+    return {
+      id: history.id, 
+      status: history.status,
+      date: new Date(history.updatedAt).toLocaleString(),
+      role: history.ticketUserRole,
+      username: history.updatedByUsername,
+      message: history.message || 'No additional details provided.',
+      icon,
+      color,
+      attachments: []
+    };
+  });
+}
+
   
 
     showDialog(): void {

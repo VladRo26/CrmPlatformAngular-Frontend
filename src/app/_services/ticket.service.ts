@@ -262,8 +262,9 @@ export class TicketService {
     checkFeedbackEligibility(username: string, ticketId: number): Observable<boolean> {
       return this.http.get<boolean>(`${this.baseUrl}feedback/check-eligibility/${username}/${ticketId}`);
     }
+
+    getStatusHistoryAttachments(statusHistoryId: number): Observable<TicketAttachment[]> {
+      return this.http.get<TicketAttachment[]>(`${this.baseUrl}TicketStatusAttachment/${statusHistoryId}`);
+    }
     
-    
-    
-  
 }
