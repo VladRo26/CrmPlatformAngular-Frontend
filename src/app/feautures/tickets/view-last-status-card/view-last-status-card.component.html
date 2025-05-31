@@ -1,17 +1,28 @@
 <mat-card class="status-card" [ngStyle]="{'border-left-color': getStatusColor(statusHistory.status)}">
     <mat-card-header>
-      <mat-card-title class="status-title" [ngStyle]="{'color': getStatusColor(statusHistory.status)}">
-        {{ statusHistory.status }}
-      </mat-card-title>
-      <button *ngIf="statusHistory.updatedByUsername !== loggedInUsername"
-              mat-icon-button
-              (click)="markAsSeen()"
-              [disabled]="statusHistory.seen"
-              [ngStyle]="{'color': getBellColor()}">
-        <mat-icon>{{ statusHistory.seen ? 'notifications' : 'notifications_active' }}</mat-icon>
-      </button>
-    </mat-card-header>
-  
+  <mat-card-title class="status-title" [ngStyle]="{'color': getStatusColor(statusHistory.status)}">
+    {{ statusHistory.status }}
+  </mat-card-title>
+
+  <div class="icon-buttons-wrapper">
+    <!-- Bell Notification -->
+    <button mat-icon-button
+            (click)="markAsSeen()"
+            *ngIf="statusHistory.updatedByUsername !== loggedInUsername"
+            [disabled]="statusHistory.seen"
+            [ngStyle]="{'color': getBellColor()}">
+      <mat-icon>{{ statusHistory.seen ? 'notifications' : 'notifications_active' }}</mat-icon>
+    </button>
+
+    <!-- Attachment Icon -->
+    <button mat-icon-button 
+            (click)="toggleOverlay($event, attachmentOverlay)"
+            style="color: #6c757d">
+      <mat-icon>attach_file</mat-icon>
+    </button>
+  </div>
+</mat-card-header>
+
     <mat-card-content class="status-card-content">
       <p *ngIf="statusHistory.message" class="status-message">
         <strong>Message:</strong> {{ statusHistory.message }}
@@ -27,3 +38,21 @@
       </p>
     </mat-card-content>
   </mat-card>
+
+<p-overlayPanel #attachmentOverlay>
+  <div *ngIf="loading">
+    <p-progressSpinner strokeWidth="4" styleClass="w-2rem h-2rem"></p-progressSpinner>
+  </div>
+  <div *ngIf="!loading && attachments.length > 0">
+    <ul class="list-unstyled m-0">
+      <li *ngFor="let file of attachments">
+        <a [href]="file.url" target="_blank" class="text-decoration-none">
+          <i class="pi pi-paperclip me-2"></i> {{ file.fileName }}
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="!loading && attachments.length === 0">
+    <p>No attachments found.</p>
+  </div>
+</p-overlayPanel>

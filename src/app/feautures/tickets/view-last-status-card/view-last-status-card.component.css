@@ -45,3 +45,17 @@
       margin-right: auto;         /* Center the card */
     }
   }
+
+  .icon-buttons-wrapper {
+  display: flex;
+  gap: 4px; /* small space between icons */
+  align-items: center;
+  margin-left: auto;
+}
+
+button[mat-icon-button] {
+  width: 36px;
+  height: 36px;
+  padding: 4px;
+  border-radius: 50%;
+}

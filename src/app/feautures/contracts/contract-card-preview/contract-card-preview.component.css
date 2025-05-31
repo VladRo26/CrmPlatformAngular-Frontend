@@ -1,6 +1,7 @@
 .contract-card {
   width: 100%;
-  min-height: 28rem; /* increase height */
+  max-width: 45rem; 
+  min-height: 28rem;
   padding: 2rem;
   box-sizing: border-box;
   border-radius: 1rem;
@@ -9,6 +10,7 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
 
 /* Header container */
 .card-header {
@@ -62,11 +64,11 @@
   margin: 1rem 0;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .contract-card {
     padding: 1rem;
     min-height: 25rem;
+    max-width: 100%; 
   }
 
   .project-title mat-card-title {
@@ -82,3 +84,28 @@
     height: 3rem;
   }
 }
+
+@media (max-width: 480px) {
+  .contract-card {
+    padding: 1rem;
+    max-width: 100%;
+  }
+
+  .project-title mat-card-title {
+    font-size: 1rem;
+  }
+
+  .company-name {
+    font-size: 0.85rem;
+  }
+
+  .company-logo {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .arrow-icon {
+    font-size: 1.2rem;
+  }
+}
+

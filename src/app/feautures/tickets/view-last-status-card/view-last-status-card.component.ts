@@ -11,12 +11,18 @@ import { TicketService } from '../../../_services/ticket.service';
 import { MatBadgeModule } from '@angular/material/badge';
 import { AccountService } from '../../../_services/account.service';
 import { OnInit } from '@angular/core';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TicketAttachment } from '../../../_services/ticketattachment';
+
 
 
 @Component({
   selector: 'app-view-last-status-card',
   standalone: true,
-  imports: [NgFor,NgIf,DatePipe,MatCardModule,NgStyle,BadgeModule,MatButtonModule,MatIcon,MatBadgeModule],
+  imports: [NgFor,NgIf,DatePipe,MatCardModule
+    ,NgStyle,BadgeModule,MatButtonModule,MatIcon,MatBadgeModule,
+    OverlayPanelModule,ProgressSpinnerModule],
   templateUrl: './view-last-status-card.component.html',
   styleUrl: './view-last-status-card.component.css'
 })
@@ -25,7 +31,8 @@ export class ViewLastStatusCardComponent implements OnInit {
   @Output() statusUpdated = new EventEmitter<void>();  // Emits event when seen
 
   loggedInUsername: string = '';
-
+  attachments: TicketAttachment[] = [];
+  loading = false;
   constructor(private ticketService: TicketService, private accountService: AccountService) {}
 
   ngOnInit(): void {
@@ -46,6 +53,24 @@ export class ViewLastStatusCardComponent implements OnInit {
   getBellColor(): string {
     return this.statusHistory.seen ? 'green' : 'red'; // Green if seen, Red if new
   }
+
+  toggleOverlay(event: MouseEvent, overlay: any): void {
+  this.loading = true;
+  overlay.toggle(event);
+
+  this.ticketService.getStatusHistoryAttachments(this.statusHistory.id).subscribe({
+    next: (res) => {
+      this.attachments = res;
+      this.loading = false;
+    },
+    error: (err) => {
+      console.error('Error loading attachments:', err);
+      this.attachments = [];
+      this.loading = false;
+    }
+  });
+}
+
 
   markAsSeen(): void {
     if (!this.statusHistory.seen) {
