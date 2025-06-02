@@ -99,15 +99,29 @@ onFilesSelected(event: Event): void {
   const input = event.target as HTMLInputElement;
   if (!input.files) return;
 
+  const maxSizeMB = 10;
+  const allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png', 'zip'];
+
   Array.from(input.files).forEach(file => {
     const ext = file.name.split('.').pop()?.toLowerCase();
-    if (['pdf', 'jpg', 'jpeg', 'png', 'zip'].includes(ext ?? '')) {
-      this.selectedFiles.push(file);
+    const sizeMB = file.size / (1024 * 1024); // Convert size to MB
+
+    if (!ext || !allowedExtensions.includes(ext)) {
+      this.toastr.warning(`File type not allowed: ${file.name}`);
+      return;
     }
+
+    if (sizeMB > maxSizeMB) {
+      this.toastr.error(`File too large: ${file.name} exceeds ${maxSizeMB}MB`);
+      return;
+    }
+
+    this.selectedFiles.push(file);
   });
 
-  input.value = ''; // reset input
+  input.value = ''; 
 }
+
 
 removeFile(index: number): void {
   this.selectedFiles.splice(index, 1);

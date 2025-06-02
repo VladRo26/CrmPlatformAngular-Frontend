@@ -59,27 +59,36 @@ export class CreateTicketComponent implements OnInit {
   acceptedTypes = '.pdf,.png,.jpeg,.jpg,.zip';
   isSubmitting = false;
 
-
-
 onFilesSelected(event: Event): void {
   const input = event.target as HTMLInputElement;
   if (!input.files) return;
 
   const allowedExtensions = ['pdf', 'png', 'jpeg', 'jpg', 'zip'];
+  const maxSizeMB = 10;
 
   Array.from(input.files).forEach(file => {
     const ext = file.name.split('.').pop()?.toLowerCase();
-    if (ext && allowedExtensions.includes(ext)) {
-      if (!this.selectedFiles.find(f => f.name === file.name && f.size === file.size)) {
-        this.selectedFiles.push(file);
-      }
-    } else {
+    const sizeMB = file.size / (1024 * 1024); // convert to MB
+
+    if (!ext || !allowedExtensions.includes(ext)) {
       this.toastr.warning(`File type not allowed: ${file.name}`);
+      return;
+    }
+
+    if (sizeMB > maxSizeMB) {
+      this.toastr.error(`File too large: ${file.name} exceeds ${maxSizeMB}MB`);
+      return;
+    }
+
+    // Avoid duplicates
+    if (!this.selectedFiles.find(f => f.name === file.name && f.size === file.size)) {
+      this.selectedFiles.push(file);
     }
   });
 
-  input.value = ''; // Reset input
+  input.value = ''; // Reset file input
 }
+
 
   removeFile(index: number): void {
     this.selectedFiles.splice(index, 1);
