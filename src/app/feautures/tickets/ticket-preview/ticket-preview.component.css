@@ -89,7 +89,23 @@ app-tickets-userapp-card {
   margin: auto;
 }
 
-/* 📱 Responsive tweaks */
+
+
+
+.no-data-card {
+  width: 100%;
+  max-width: 1000px;
+  min-height: 8rem;
+  border: 1px dashed var(--warning-color);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  background-color: var(--bg-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
 @media (max-width: 768px) {
   .ticket-preview-wrapper {
     padding: 1rem;
@@ -111,17 +127,36 @@ app-tickets-userapp-card {
   }
 }
 
-.no-data-card {
-  width: 100%;
-  max-width: 1000px;
-  min-height: 8rem;
-  border: 1px dashed var(--warning-color);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  background-color: var(--bg-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
+@media (max-width: 640px) {
+  .filter-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
 
+  .ticket-preview-wrapper {
+    padding: 1rem 0.5rem;
+  }
+
+  .ticket-preview-panel {
+    padding: 1rem;
+  }
+
+  .ticket-scroll-panel {
+    padding-right: 0;
+  }
+
+  .pagination-container {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .no-data-message {
+    font-size: 0.9rem;
+    width: 100%;
+  }
+
+  .no-data-card {
+    min-height: auto;
+    padding: 1rem;
+  }
+}

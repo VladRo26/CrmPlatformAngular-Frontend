@@ -1,12 +1,10 @@
 :host {
   display: block;
   width: 100%;
-  padding: 3rem;            /* Equal padding on all edges */
+  padding: 2rem 1rem; /* Less padding on small screens */
   box-sizing: border-box;
-  text-align: center;       /* Center inline content if needed */
+  text-align: center;
 }
-
-
 
 .carousel-container {
   display: flex;
@@ -16,16 +14,55 @@
 }
 
 .carousel-image {
-  display: block;
-  width: 100%;              /* Fill the container's width */
-  margin: 0 auto;           /* Center the image horizontally */
+  width: 100%;
+  max-width: 800px;
+  height: auto;
   border-radius: 1rem;
   object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
-/* Adjust for smaller screens */
+.carousel-image:hover {
+  transform: scale(1.01);
+}
+
+/* Caption Styling */
+.carousel-caption {
+  margin-top: 1rem;
+  font-size: 1.25rem;
+  color: #444;
+  font-weight: 500;
+}
+
+/* Phone */
 @media (max-width: 600px) {
+  :host {
+    padding: 1rem;
+  }
+
+  .carousel-caption {
+    font-size: 1rem;
+  }
+
   .carousel-image {
     max-width: 100%;
+  }
+}
+
+/* Tablet */
+@media (min-width: 601px) and (max-width: 1023px) {
+  .carousel-image {
+    max-width: 90%;
+  }
+
+  .carousel-caption {
+    font-size: 1.1rem;
+  }
+}
+
+/* Large desktop */
+@media (min-width: 1440px) {
+  .carousel-image {
+    max-width: 1000px;
   }
 }

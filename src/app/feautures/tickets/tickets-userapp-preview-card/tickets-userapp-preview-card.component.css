@@ -41,4 +41,36 @@
     font-size: 0.875rem;            /* approx 14px */
     font-weight: bold;
   }
+
+  @media (max-width: 640px) {
+  .example-card {
+    padding: 0.75rem;
+    margin: 0.75rem auto;
+  }
+
+  .header-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .column {
+    width: 100%;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .user-logo,
+  .company-logo {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .user-name,
+  .company-name {
+    font-size: 0.8rem;
+    text-align: center;
+  }
+}
+
   

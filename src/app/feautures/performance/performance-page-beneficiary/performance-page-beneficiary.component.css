@@ -44,3 +44,29 @@
   font-weight: bold;
   margin-top: 10px;
 }
+
+@media (max-width: 640px) {
+  .chart-container {
+    padding: 0.5rem;
+  }
+
+  .chart-grid {
+    gap: 1rem;
+  }
+
+  .card {
+    flex: 1 1 100%;
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .custom-chart {
+    height: 250px;
+  }
+
+  .no-data-message {
+    font-size: 1rem;
+    padding: 10px;
+  }
+}
+

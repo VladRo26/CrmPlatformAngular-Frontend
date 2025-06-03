@@ -7,21 +7,31 @@ declare var anime: any;
   standalone: true,
   template: `<h3 class="c2">DEVLINK CRM</h3>`,
   styles: [`
+  .c2 {
+    font-weight: bold;
+    font-size: clamp(1.4rem, 5vw, 2.8rem);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    text-align: center;
+    margin: 1rem 0 2rem 0;
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.2;
+    padding: 0 1rem;
+  }
+
+  .c2 .letter {
+    display: inline-block;
+    line-height: 1em;
+  }
+
+  @media (max-width: 480px) {
     .c2 {
-      font-weight: bold;
-      font-size: 2.8em;
-      text-transform: uppercase;
-      letter-spacing: 0.5em;
-      text-align: top;
-      margin: 1rem 0;
-      margin-bottom: 2rem;
-      white-space: nowrap; 
+      font-size: clamp(1.2rem, 8vw, 2rem);
+      letter-spacing: 0.1em;
     }
-    .c2 .letter {
-      display: inline-block;
-      line-height: 1em;
-    }
-  `]
+  }
+`]
 })
 export class AnimatedTextComponent implements AfterViewInit {
   ngAfterViewInit(): void {

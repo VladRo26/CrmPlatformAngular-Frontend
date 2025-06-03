@@ -64,3 +64,19 @@
     gap: 1rem;
   }
 }
+
+@media (max-width: 640px) {
+  .contract-scroll-wrapper {
+    padding: 0.5rem;
+  }
+
+  .card-container {
+    padding: 0 0.5rem;
+  }
+
+  .no-contracts {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+  }
+}
+

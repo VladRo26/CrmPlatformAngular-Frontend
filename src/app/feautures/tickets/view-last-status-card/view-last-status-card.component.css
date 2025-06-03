@@ -1,54 +1,47 @@
 .status-card {
-    width: 100%;                   /* Force full width of container */
-    margin: var(--spacing-small) 0; /* Vertical spacing only */
-    padding: var(--spacing-small);
-    border-left: 5px solid var(--default-color);
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    display: block;               /* Changed from flex to block */
-    box-sizing: border-box;       /* Ensure padding is included in width calculation */
-  }
-  
-  mat-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-  
-  .status-card-content {
-    min-height: 120px;            /* Consistent height across cards */
-    width: 100%;                  /* Ensure content takes full width */
-  }
-  
-  .status-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  .status-message {
-    font-size: 1.1rem;
-    width: 100%;                  /* Ensure message takes full width */
-  }
-  
-  .status-updated, .status-date, .status-role {
-    font-size: 0.9rem;
-    color: #555;
-    width: 100%;                  /* Ensure these elements take full width */
-  }
-  
-  /* Responsive behavior */
-  @media (max-width: 768px) {
-    .status-card {
-      width: 100%;
-      margin-left: auto;          /* Center the card */
-      margin-right: auto;         /* Center the card */
-    }
-  }
+  width: 100%;
+  margin: var(--spacing-small) 0;
+  padding: var(--spacing-small);
+  border-left: 5px solid var(--default-color);
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  display: block;
+  box-sizing: border-box;
+}
 
-  .icon-buttons-wrapper {
+mat-card-header {
   display: flex;
-  gap: 4px; /* small space between icons */
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.status-card-content {
+  min-height: 120px;
+  width: 100%;
+}
+
+.status-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.status-message {
+  font-size: 1.1rem;
+  width: 100%;
+}
+
+.status-updated,
+.status-date,
+.status-role {
+  font-size: 0.9rem;
+  color: #555;
+  width: 100%;
+}
+
+.icon-buttons-wrapper {
+  display: flex;
+  gap: 4px;
   align-items: center;
   margin-left: auto;
 }
@@ -58,4 +51,30 @@ button[mat-icon-button] {
   height: 36px;
   padding: 4px;
   border-radius: 50%;
+}
+
+@media (max-width: 600px) {
+  .status-title {
+    font-size: 1.3rem;
+  }
+
+  .status-message {
+    font-size: 1rem;
+  }
+
+  .status-updated,
+  .status-date,
+  .status-role {
+    font-size: 0.85rem;
+  }
+
+  mat-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .icon-buttons-wrapper {
+    margin-left: 0;
+    justify-content: flex-start;
+  }
 }

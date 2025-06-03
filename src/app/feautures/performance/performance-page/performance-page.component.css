@@ -50,4 +50,25 @@
     color: var(--warning-color);
     margin-top: 1rem;
   }
+
+  @media (max-width: 640px) {
+  .chart-container {
+    padding: 0.5rem;
+  }
+
+  .chart-card {
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .custom-chart {
+    height: 250px;
+  }
+
+  .no-data-message {
+    font-size: 1rem;
+    padding: 10px;
+  }
+}
+
   
