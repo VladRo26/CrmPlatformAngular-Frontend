@@ -1,44 +1,40 @@
-<mat-card class="example-card" appearance="outlined" style="margin: 10px;">
-    <mat-card-header>
-      <div class="header-section">
-        <div class="column">
-          <div class="user-section">
-            <img
-              mat-card-avatar
-              [src]="isBeneficiaryUser ? (handlerPhotoUrl || '/user.png') : (creatorPhotoUrl || '/user.png')"
-              class="user-logo"
-              alt="User Photo"
-            />
-            <span class="user-name">
-              {{ isBeneficiaryUser ? (handlerUsername || 'Not assigned') : (creatorUsername || 'Unknown') }}
-            </span>
-          </div>
-        </div>
-  
-        <div class="column">
-          <div class="company-section">
-            <img
-              mat-card-avatar
-              [src]="isBeneficiaryUser ? (softwareCompanyPhotoUrl || '/company.png') : (companyPhotoUrl || '/company.png')"
-              class="company-logo"
-              alt="Company Logo"
-            />
-            <span class="company-name">
-              {{ isBeneficiaryUser ? (softwareCompanyName || 'Software Company') : (companyName || 'Beneficiary Company') }}
-            </span>
-          </div>
+<mat-card class="example-card" appearance="outlined">
+  <mat-card-header>
+    <div class="header-section">
+      <div class="column">
+        <div class="user-section">
+          <img
+            mat-card-avatar
+            [src]="isBeneficiaryUser ? (handlerPhotoUrl || '/user.png') : (creatorPhotoUrl || '/user.png')"
+            class="user-logo"
+            alt="User Photo"
+          />
+          <span class="user-name">
+            {{ isBeneficiaryUser ? (handlerUsername || 'Not assigned') : (creatorUsername || 'Unknown') }}
+          </span>
         </div>
       </div>
-    </mat-card-header>
-  
-    <mat-card-content>
-      <p>
-        <strong>Ticket:</strong> {{ ticket.title }}
-      </p>
-      <p>
-        <strong>Status:</strong> {{ ticket.status }} |
-        <strong>Type:</strong> {{ ticket.type }}
-      </p>
-    </mat-card-content>
-  </mat-card>
-  
+
+      <div class="column">
+        <div class="company-section">
+          <img
+            mat-card-avatar
+            [src]="isBeneficiaryUser ? (softwareCompanyPhotoUrl || '/company.png') : (companyPhotoUrl || '/company.png')"
+            class="company-logo"
+            alt="Company Logo"
+          />
+          <span class="company-name">
+            {{ isBeneficiaryUser ? (softwareCompanyName || 'Software Company') : (companyName || 'Beneficiary Company') }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </mat-card-header>
+
+ <mat-card-content>
+  <p><strong>Ticket:</strong> {{ ticket.title }}</p>
+  <p><strong>Status:</strong> {{ ticket.status }}</p>
+  <p><strong>Type:</strong> {{ ticket.type }}</p>
+</mat-card-content>
+
+</mat-card>

@@ -1,74 +1,242 @@
-.chart-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Add spacing between charts */
-    align-items: center;
-  }
-  
-  .chart-card {
-    width: 100%;
-    max-width: 600px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .chart-card:hover {
-    transform: scale(1.02);
-  }
-  
-  .chart-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 250px;
-  }
-  
-  .custom-chart {
-    width: 100%;
-    height: 300px;
-  }
-  
-  .no-data-message {
-    text-align: center;
-    font-size: 1.1em;
-    color: #888;
-    font-weight: bold;
-    padding: 15px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    width: 80%;
-    margin: auto;
-  }
-  
-  .no-data-message {
-    text-align: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: var(--warning-color);
-    margin-top: 1rem;
-  }
+/* GENERAL LAYOUT FIXES */
+html, body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
 
-  @media (max-width: 640px) {
+.mat-grid-list {
+  background-color: rgba(248, 249, 250, 0.85);
+  display: block;
+  height: auto;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.mat-grid-tile {
+  height: unset;
+  display: flex;
+  align-items: stretch;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+
+.carousel-container,
+.login-register-container,
+.dashboard-preview-wrapper,
+.fade-in-container {
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-image {
+  width: 100%;
+  max-width: 90vw;
+  height: auto;
+  object-fit: cover;
+  border-radius: 16px;
+  transition: max-width 0.3s ease;
+}
+
+.fade-in-text,
+.login-text {
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.signup-text {
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.contract-link,
+.signup-link {
+  color: var(--link-color);
+  text-decoration: underline;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.contract-link:hover,
+.signup-link:hover {
+  color: var(--link-hover-color);
+}
+
+.contract-link:hover::after {
+  content: "Click to see contracts";
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.home-images-tile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 16px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.ticket-preview-wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.animated-text-wrapper {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.discover-text-wrapper {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+/* PERFORMANCE PAGE CHART STYLES */
+.chart-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.chart-card {
+  width: 100%;
+  max-width: 600px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.3s ease-in-out;
+  box-sizing: border-box;
+}
+
+.chart-card:hover {
+  transform: scale(1.02);
+}
+
+.chart-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 250px;
+  width: 100%;
+}
+
+.custom-chart {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 1.6 / 1;
+}
+
+.no-data-message {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--warning-color);
+  margin-top: 1rem;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .mat-grid-tile {
+    padding: 0.25rem;
+  }
+  .carousel-container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  .fade-in-text,
+  .login-text {
+    font-size: 1.25rem;
+    padding: 0.5rem;
+  }
+  .discover-text-wrapper {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .mat-grid-tile {
+    flex-direction: column;
+  }
+  .fade-in-text,
+  .login-text {
+    font-size: 1.1rem;
+  }
+  .carousel-image {
+    max-width: 100%;
+  }
+  .discover-text-wrapper {
+    font-size: 1rem;
+  }
+  .chart-card {
+    padding: 1rem;
+  }
+  .custom-chart {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+@media (max-width: 560px) {
+  .fade-in-text,
+  .login-text {
+    font-size: 1rem;
+  }
+  .carousel-image {
+    max-width: 100%;
+  }
+  .discover-text-wrapper {
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+  }
   .chart-container {
     padding: 0.5rem;
   }
-
   .chart-card {
     max-width: 100%;
     padding: 1rem;
   }
-
   .custom-chart {
-    height: 250px;
+    aspect-ratio: 1 / 1.1;
   }
-
   .no-data-message {
     font-size: 1rem;
     padding: 10px;
   }
 }
-
-  

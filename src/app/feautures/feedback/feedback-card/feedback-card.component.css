@@ -1,11 +1,11 @@
-/* Feedback Card: full width, responsive, square borders */
 .feedback-card {
   width: 100%;
-  margin: 0 auto;
+  margin: 0 0 1rem 0; /* 👈 Adds spacing between stacked cards */
   padding: 1rem;
-  border-radius: 0;  /* Square borders */
+  border-radius: 0;
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
 }
+
 
 /* User info styling */
 .user-info {

@@ -1,7 +1,10 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  padding: 2rem 1rem; /* Less padding on small screens */
+  padding: 2rem 1rem;
   box-sizing: border-box;
   text-align: center;
 }
@@ -15,18 +18,18 @@
 
 .carousel-image {
   width: 100%;
-  max-width: 800px;
+  max-width: 750px; /* Default for mid-size screens like 14" */
   height: auto;
   border-radius: 1rem;
   object-fit: cover;
   transition: transform 0.3s ease;
+  margin: 0 auto; /* Ensure centering */
 }
 
 .carousel-image:hover {
   transform: scale(1.01);
 }
 
-/* Caption Styling */
 .carousel-caption {
   margin-top: 1rem;
   font-size: 1.25rem;
@@ -34,7 +37,7 @@
   font-weight: 500;
 }
 
-/* Phone */
+/* Phones */
 @media (max-width: 600px) {
   :host {
     padding: 1rem;
@@ -45,14 +48,14 @@
   }
 
   .carousel-image {
-    max-width: 100%;
+    max-width: 95vw;
   }
 }
 
-/* Tablet */
+/* Tablets and small laptops */
 @media (min-width: 601px) and (max-width: 1023px) {
   .carousel-image {
-    max-width: 90%;
+    max-width: 650px;
   }
 
   .carousel-caption {
@@ -60,9 +63,16 @@
   }
 }
 
-/* Large desktop */
+/* Medium desktops (14" 1920x1200) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .carousel-image {
+    max-width: 700px;
+  }
+}
+
+/* Large desktops */
 @media (min-width: 1440px) {
   .carousel-image {
-    max-width: 1000px;
+    max-width: 800px;
   }
 }

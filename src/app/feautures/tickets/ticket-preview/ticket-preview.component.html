@@ -1,67 +1,70 @@
+<!-- Main container -->
 <div class="ticket-preview-wrapper" pAnimateOnScroll enterClass="fadeinleft" leaveClass="fadeoutleft">
-  <!-- Filter + Ticket Display -->
-  <div class="ticket-preview-panel">
-    <!-- Filter Section -->
-    <div class="filter-container">
-      <mat-form-field appearance="fill" class="filter-item">
-        <mat-label>Status</mat-label>
-        <mat-select [(ngModel)]="ticketParams.status" (selectionChange)="loadTickets()">
-          <mat-option value="notClosed">Not Closed</mat-option>
-          <mat-option value="all">All Statuses</mat-option>
-          <mat-option value="Open">Open</mat-option>
-          <mat-option value="InProgress">In Progress</mat-option>
-          <mat-option value="Resolved">Resolved</mat-option>
-          <mat-option value="Closed">Closed</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <div class="filter-button-wrapper">
-        <p-button 
-          label="Reset Filters" 
-          icon="pi pi-refresh" 
-          styleClass="p-button-primary" 
-          (onClick)="resetFilters()">
-        </p-button>
-      </div>
-    </div>
+  <!-- Scrollable area -->
+  <p-scrollPanel [style]="{ width: '100%', height: '75vh' }" styleClass="custom-scroll-panel">
+    <div class="full-height-content">
+      <div class="ticket-preview-panel rounded-card-wrapper">
+        <!-- Filters -->
+        <div class="filter-container">
+          <mat-form-field appearance="fill" class="filter-item">
+            <mat-label>Status</mat-label>
+            <mat-select [(ngModel)]="ticketParams.status" (selectionChange)="loadTickets()">
+              <mat-option value="notClosed">Not Closed</mat-option>
+              <mat-option value="all">All Statuses</mat-option>
+              <mat-option value="Open">Open</mat-option>
+              <mat-option value="InProgress">In Progress</mat-option>
+              <mat-option value="Resolved">Resolved</mat-option>
+              <mat-option value="Closed">Closed</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-    <!-- Tickets Section -->
-    <div class="tickets-container">
-      <div *ngIf="tickets.length > 0; else noTicketsMessage">
-        <p-scrollPanel class="ticket-scroll-panel">
-          <ng-container *ngFor="let ticket of tickets; trackBy: trackTicket">
-            <div class="ticket-col">
-              <app-tickets-userapp-preview-card [ticket]="ticket"></app-tickets-userapp-preview-card>
+        <!-- Reset button under filter -->
+        <div class="filter-button-wrapper">
+          <p-button
+            label="Reset Filters"
+            icon="pi pi-refresh"
+            styleClass="p-button-primary"
+            (onClick)="resetFilters()">
+          </p-button>
+        </div>
+
+        <!-- Tickets -->
+        <div class="tickets-container">
+          <ng-container *ngIf="tickets.length > 0; else noTicketsMessage">
+            <ng-container *ngFor="let ticket of tickets; trackBy: trackTicket">
+              <div class="ticket-col">
+                <app-tickets-userapp-preview-card [ticket]="ticket"></app-tickets-userapp-preview-card>
+              </div>
+            </ng-container>
+
+            <!-- Pagination -->
+            <div *ngIf="pagination" class="pagination-container">
+              <pagination
+                [boundaryLinks]="true"
+                [totalItems]="pagination.totalItems"
+                [itemsPerPage]="pagination.itemsPerPage"
+                (pageChanged)="pageChanged($event)"
+                [(ngModel)]="ticketParams.pageNumber"
+                [maxSize]="10"
+                previousText="&lsaquo;"
+                nextText="&rsaquo;"
+                firstText="&laquo;"
+                lastText="&raquo;">
+              </pagination>
             </div>
           </ng-container>
-        </p-scrollPanel>
 
-        <!-- Pagination -->
-        <div *ngIf="pagination" class="pagination-container">
-          <pagination
-            [boundaryLinks]="true"
-            [totalItems]="pagination.totalItems"
-            [itemsPerPage]="pagination.itemsPerPage"
-            (pageChanged)="pageChanged($event)"
-            [(ngModel)]="ticketParams.pageNumber"
-            [maxSize]="10"
-            previousText="&lsaquo;"
-            nextText="&rsaquo;"
-            firstText="&laquo;"
-            lastText="&raquo;">
-          </pagination>
+          <!-- No tickets message -->
+          <ng-template #noTicketsMessage>
+            <div class="ticket-col">
+              <div class="no-data-card">
+                <p class="no-data-message">There are no assigned tickets to display.</p>
+              </div>
+            </div>
+          </ng-template>
         </div>
       </div>
-
-      <ng-template #noTicketsMessage>
-  <div class="ticket-scroll-panel">
-    <div class="ticket-col">
-      <div class="no-data-card">
-        <p class="no-data-message">There are no assigned tickets to display.</p>
-      </div>
     </div>
-  </div>
-</ng-template>
-
-    </div>
-  </div>
+  </p-scrollPanel>
 </div>

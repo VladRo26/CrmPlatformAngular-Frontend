@@ -1,76 +1,55 @@
+/* Main card container */
 .example-card {
-    margin: 1rem auto;               /* 1rem margin vertically, auto horizontally */
-    padding: 1rem;
-    border-radius: 0.5rem;            /* 8px if 1rem = 16px */
-    box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1); /* approx 2px 5px in px */
-    max-width: 90vw;                 /* Card will not exceed 90% of the viewport width */
-  }
-  
-  .header-section {
-    display: flex;
-    justify-content: space-between;
-    gap: 1.25rem;                   /* 20px if 1rem = 16px */
-  }
-  
-  .column {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.625rem;                  /* 10px if 1rem = 16px */
-  }
-  
-  .user-section,
-  .company-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.3125rem;                 /* 5px if 1rem = 16px */
-  }
-  
-  .user-logo,
-  .company-logo {
-    width: 3.75rem;                 /* 60px if 1rem = 16px */
-    height: 3.75rem;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 0.125rem solid #ccc;    /* 2px if 1rem = 16px */
-  }
-  
-  .user-name,
-  .company-name {
-    font-size: 0.875rem;            /* approx 14px */
-    font-weight: bold;
-  }
-
-  @media (max-width: 640px) {
-  .example-card {
-    padding: 0.75rem;
-    margin: 0.75rem auto;
-  }
-
-  .header-section {
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .column {
-    width: 100%;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .user-logo,
-  .company-logo {
-    width: 3rem;
-    height: 3rem;
-  }
-
-  .user-name,
-  .company-name {
-    font-size: 0.8rem;
-    text-align: center;
-  }
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 1rem;
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  overflow: hidden;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
-  
+/* Header layout */
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* Column layout inside header */
+.column {
+  flex: 1;
+}
+
+/* User/company sections */
+.user-section,
+.company-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Logos */
+.user-logo,
+.company-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Names */
+.user-name,
+.company-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Card content styles */
+mat-card-content p {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+}

@@ -1,162 +1,132 @@
-/* 🔲 Page container */
+.custom-scroll-panel ::ng-deep .p-scrollpanel-wrapper {
+  overflow-y: scroll !important;
+  scrollbar-width: none !important;        /* Firefox */
+  -ms-overflow-style: none !important;     /* IE */
+}
+
+.custom-scroll-panel ::ng-deep .p-scrollpanel-wrapper::-webkit-scrollbar {
+  width: 0px !important;
+  height: 0px !important;
+  display: none !important;                /* Chrome/Safari */
+}
+
+.custom-scroll-panel ::ng-deep .p-scrollpanel-content {
+  height: auto !important;
+  overflow: visible !important;
+}
+
 .ticket-preview-wrapper {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 2rem 1rem;
-  box-sizing: border-box;
-  background-color: transparent;
-  overflow-x: hidden;
 }
 
-/* 📦 Panel with scroll and borders */
-.ticket-preview-panel {
+/* FIX: allow full scrollPanel height & content scrolling */
+.custom-scroll-panel ::ng-deep .p-scrollpanel-wrapper {
+  overflow-y: auto !important;
+  height: 100% !important;
+}
+
+.custom-scroll-panel ::ng-deep .p-scrollpanel-content {
+  height: auto !important;
+  overflow: visible !important;
+}
+
+/* FIX: let content scroll and center */
+.full-height-content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem;
   width: 100%;
-  max-width: 70rem; /* ≈1120px */
-  height: auto;
-  max-height: 70vh;
-  overflow-y: auto;
-  border: 1px solid #ddd;
-  border-radius: 1rem;
-  padding: 2rem;
-  background-color: #fff;
   box-sizing: border-box;
-  scrollbar-width: none;          /* Firefox */
-  -ms-overflow-style: none;       /* IE & Edge */
-}
-.ticket-preview-panel::-webkit-scrollbar {
-  display: none;                  /* Chrome, Safari */
 }
 
-/* 🎛️ Filter section */
-.filter-container {
+/* FIX: the outer card */
+.rounded-card-wrapper {
+  width: 100%;
+  max-width: 1100px;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 1.5rem;
+  gap: 2rem;
+  margin-bottom: 2rem; 
 }
 
-.filter-item,
-.filter-button-wrapper {
-  margin-bottom: 1rem;
-}
-
-/* 🧾 Scroll panel with tickets */
-.ticket-scroll-panel {
+/* Filters and button stacked */
+.filter-container {
   width: 100%;
-  max-height: 100%;
-  overflow-y: auto;
-  padding-right: 0.5rem;
-  box-sizing: border-box;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.ticket-scroll-panel::-webkit-scrollbar {
-  display: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
-/* 🧱 Each ticket */
+.filter-button-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Cards and pagination */
+.tickets-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  align-items: center;
+}
+
 .ticket-col {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 0 1rem;
-  box-sizing: border-box;
 }
 
-app-tickets-userapp-card {
-  width: 100%;
-  max-width: 1000px;
-}
-
-/* 🔢 Pagination */
 .pagination-container {
   display: flex;
   justify-content: center;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 
-/* ❗ No data */
-.no-data-message {
-  text-align: center;
-  font-size: 1rem;
-  font-weight: bold;
-  color: var(--warning-color);
-  padding: 0.8rem;
-  background: var(--bg-light);
-  border-radius: var(--border-radius);
-  width: 90%;
-  margin: auto;
-}
-
-
-
-
+/* No tickets message */
 .no-data-card {
   width: 100%;
-  max-width: 1000px;
-  min-height: 8rem;
-  border: 1px dashed var(--warning-color);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  background-color: var(--bg-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  max-width: 600px;
+  padding: 2rem;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: 0.75rem;
+  text-align: center;
 }
 
+.no-data-message {
+  font-size: 1rem;
+  color: #856404;
+}
+
+/* ✅ Mobile improvements */
 @media (max-width: 768px) {
-  .ticket-preview-wrapper {
+  .rounded-card-wrapper {
     padding: 1rem;
+    margin: 1rem;
   }
 
-  .ticket-preview-panel {
-    padding: 1rem;
-    margin: 0;
-    height: auto;
-    max-height: none;
+  .filter-container,
+  .filter-button-wrapper {
+    padding: 0 1rem;
   }
 
   .ticket-col {
-    padding: 0;
-  }
-
-  app-tickets-userapp-card {
-    max-width: 100%;
+    padding: 0 0.5rem;
   }
 }
 
-@media (max-width: 640px) {
-  .filter-container {
-    flex-direction: column;
-    align-items: stretch;
-  }
 
-  .ticket-preview-wrapper {
-    padding: 1rem 0.5rem;
-  }
 
-  .ticket-preview-panel {
-    padding: 1rem;
-  }
 
-  .ticket-scroll-panel {
-    padding-right: 0;
-  }
-
-  .pagination-container {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .no-data-message {
-    font-size: 0.9rem;
-    width: 100%;
-  }
-
-  .no-data-card {
-    min-height: auto;
-    padding: 1rem;
-  }
-}

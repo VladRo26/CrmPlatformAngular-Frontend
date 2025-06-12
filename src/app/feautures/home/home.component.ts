@@ -111,19 +111,19 @@ combinedCompanies: any[] = [];
  updateGrid(width: number) {
   if (width < 600) {
     this.gridCols = 1; // Mobile: Single column layout
-    this.rowHeight = "1:1"; // Enforce same height for all tiles
-    this.gutterSize = "8px";
+    this.rowHeight = "0.6:1"; // Enforce same height for all tiles
+    this.gutterSize = "4px";
   } else if (width < 990) {
     this.gridCols = 1; // Tablet: Two-column layout
     this.rowHeight = "1:1"; // Same height for all tiles
     this.gutterSize = "10px";
   } else if (width < 1400) {
-    this.gridCols = 2; // Tablet: Two-column layout
-    this.rowHeight = "0.8:1"; // Same height for all tiles
-    this.gutterSize = "8px";
+  this.gridCols = 2;
+  this.rowHeight = "0.9:1"; // slightly taller tiles
+  this.gutterSize = "7px";  // less space between tiles
   } else {
     this.gridCols = 2; // Desktop layout
-    this.rowHeight = "1:1"; // Ensure uniform size
+    this.rowHeight = "0.9:1"; // Ensure uniform size
     this.gutterSize = "16px";
   }
 }
