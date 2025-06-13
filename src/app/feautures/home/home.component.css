@@ -37,12 +37,13 @@ html, body {
 
 .carousel-image {
   width: 100%;
-  max-width: 90vw;
+  max-width: 300px;        /* 🧩 smaller on desktop/laptops */
   height: auto;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 16px;
   transition: max-width 0.3s ease;
 }
+
 
 .fade-in-text,
 .login-text {
