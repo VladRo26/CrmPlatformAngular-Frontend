@@ -18,12 +18,12 @@
 
 .carousel-image {
   width: 100%;
-  max-width: 750px; /* Default for mid-size screens like 14" */
+  max-width: 320px; /* default desktop */
   height: auto;
   border-radius: 1rem;
   object-fit: cover;
   transition: transform 0.3s ease;
-  margin: 0 auto; /* Ensure centering */
+  margin: 0 auto;
 }
 
 .carousel-image:hover {
@@ -37,42 +37,65 @@
   font-weight: 500;
 }
 
-/* Phones */
-@media (max-width: 600px) {
+/* ✅ Extra small screens (≤560px) - FULL WIDTH */
+@media (max-width: 560px) {
   :host {
-    padding: 1rem;
+    padding: 0;
+    gap: 0.5rem;
   }
-
+  
   .carousel-caption {
-    font-size: 1rem;
+    font-size: 0.95rem;
+    padding: 0 1rem;
   }
-
+  
   .carousel-image {
-    max-width: 95vw;
+    max-width: 100vw;
+    width: 100vw;
+    border-radius: 0;
   }
 }
 
-/* Tablets and small laptops */
-@media (min-width: 601px) and (max-width: 1023px) {
+/* ✅ Mobile screens (561px–768px) - FULL WIDTH */
+@media (min-width: 561px) and (max-width: 768px) {
+  :host {
+    padding: 0;
+    gap: 0.6rem;
+  }
+  
+  .carousel-caption {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+  
+  .carousel-image {
+    max-width: 100vw;
+    width: 100vw;
+    border-radius: 0;
+  }
+}
+
+/* ✅ Tablets (769px–1023px) */
+@media (min-width: 769px) and (max-width: 1023px) {
   .carousel-image {
     max-width: 650px;
   }
-
+  
   .carousel-caption {
     font-size: 1.1rem;
   }
 }
 
-/* Medium desktops (14" 1920x1200) */
+/* ✅ Medium desktops (1024px–1439px) */
 @media (min-width: 1024px) and (max-width: 1439px) {
   .carousel-image {
     max-width: 700px;
   }
 }
 
-/* Large desktops */
+/* ✅ Large desktops (≥1440px) */
 @media (min-width: 1440px) {
   .carousel-image {
-    max-width: 800px;
+    max-width: 750px;
   }
 }

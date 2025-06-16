@@ -1,60 +1,54 @@
 <nav *ngIf="accountService.currentUser()" class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
-  <div class="container mt-0 mt-lg-0">
+  <div class="container-fluid px-3">
     <a class="navbar-brand" href="#">DevLink CRM</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" 
-            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+
+    <!-- Toggler button -->
+    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
       <span class="navbar-toggler-icon"></span>
-    </button> 
-    <div class="collapse navbar-collapse" id="navbarCollapse">
+    </button>
+
+    <!-- Responsive collapse -->
+    <div [ngClass]="{ 'collapse navbar-collapse': true, 'show': !isCollapsed }" id="navbarCollapse">
       <ul class="navbar-nav me-auto">
         <li *appNothasRole="['Admin','Moderator']" class="nav-item">
           <a [routerLink]="['/myTickets']" routerLinkActive="active" class="nav-link">Tickets</a>
         </li>
-        <li *appNothasRole="['Admin',]" class="nav-item">
+        <li *appNothasRole="['Admin']" class="nav-item">
           <a [routerLink]="['/usersApp']" routerLinkActive="active" class="nav-link">See Users</a>
         </li>
         <li *appNothasRole="['Admin','Moderator']" class="nav-item">
           <a [routerLink]="['/dashboard']" routerLinkActive="active" class="nav-link">Dashboard</a>
         </li>
-        <!-- Visible for Admin and Moderator -->
         <li *appHasRole="['Admin', 'Moderator']" class="nav-item">
           <a [routerLink]="['/admin']" routerLinkActive="active" class="nav-link">Admin</a>
         </li>
-        <li *appHasRole="['Admin', 'Moderator','User']" class="nav-item">
+        <li *appHasRole="['Admin', 'Moderator', 'User']" class="nav-item">
           <a [routerLink]="['/contracts']" routerLinkActive="active" class="nav-link">Contracts</a>
         </li>
         <li class="nav-item">
           <a [routerLink]="['/companies']" routerLinkActive="active" class="nav-link">Companies</a>
         </li>
-        @if(!accountService.currentUser())
-        {
-          <li class="nav-item">
-            <a [routerLink]="['/login']" routerLinkActive="active" class="nav-link">Login</a>
-          </li>
-        }
       </ul>
 
-      @if(accountService.currentUser())
-      {
-        <div dropdown class="dropdown">
-          <div dropdownToggle class="d-flex align-items-center">
-            <img
-              src="{{ accountService.currentUser()?.photoUrl || '/user.png' }}"
-              class="rounded-3 me-2"
-              width="40"
-              height="40"
-              alt="User Photo"
-            />
-            <a class="dropdown-toggle text-light text-decoration-none">
-              Welcome {{ accountService.currentUser()?.userName | titlecase }}
-            </a>
-          </div>
-          <div *dropdownMenu class="dropdown-menu">
-            <a routerLink="userApp/edit" class="dropdown-item">Edit Profile</a>
-            <a class="dropdown-item" (click)="logout()">Logout</a>
-          </div>
+      <!-- User Dropdown -->
+      <div dropdown class="dropdown">
+        <div dropdownToggle class="d-flex align-items-center">
+          <img
+            [src]="accountService.currentUser()?.photoUrl || '/user.png'"
+            class="rounded-3 me-2"
+            width="40"
+            height="40"
+            alt="User Photo"
+          />
+          <a class="dropdown-toggle text-light text-decoration-none">
+            Welcome {{ accountService.currentUser()?.userName | titlecase }}
+          </a>
         </div>
-      }
+        <div *dropdownMenu class="dropdown-menu">
+          <a routerLink="userApp/edit" class="dropdown-item">Edit Profile</a>
+          <a class="dropdown-item" (click)="logout()">Logout</a>
+        </div>
+      </div>
     </div>
   </div>
 </nav>

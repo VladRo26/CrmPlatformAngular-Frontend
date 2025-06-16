@@ -109,14 +109,22 @@ combinedCompanies: any[] = [];
 
 
  updateGrid(width: number) {
-  if (width < 600) {
+  if (width < 400) {
     this.gridCols = 1; // Mobile: Single column layout
-    this.rowHeight = "0.6:1"; // Enforce same height for all tiles
-    this.gutterSize = "4px";
-  } else if (width < 990) {
-    this.gridCols = 1; // Tablet: Two-column layout
-    this.rowHeight = "1:1"; // Same height for all tiles
+    this.rowHeight = "0.47:1"; // Enforce same height for all tiles
     this.gutterSize = "10px";
+  }else if (width < 600) {
+    this.gridCols = 1; // Tablet: Two-column layout
+    this.rowHeight = "0.57:1"; // Same height for all tiles
+    this.gutterSize = "10px";
+   } else if (width < 990) {
+    this.gridCols = 1; // Tablet: Two-column layout
+    this.rowHeight = "0.8:1"; // Same height for all tiles
+    this.gutterSize = "10px";
+  } else if (width < 1100) {
+    this.gridCols = 1; // Tablet: Two-column layout
+    this.rowHeight = "0.95:1"; // Same height for all tiles
+    this.gutterSize = "4px"; // Less space between tiles
   } else if (width < 1400) {
   this.gridCols = 2;
   this.rowHeight = "0.9:1"; // slightly taller tiles

@@ -115,3 +115,44 @@
     height: 2rem;
   }
 }
+/* Allow navbar items to wrap */
+.navbar-nav {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Force responsive behavior on tablets and smaller */
+@media (max-width: 62rem) { /* 992px */
+  .navbar-collapse {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-nav {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .navbar-nav .nav-item {
+    width: 100%;
+    text-align: left;
+    padding: 0.25rem 1rem;
+  }
+
+  .dropdown {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
+
+  .dropdown-toggle {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .dropdown-menu {
+    width: 100%;
+    text-align: left;
+  }
+}
+

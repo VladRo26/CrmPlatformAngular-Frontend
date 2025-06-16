@@ -1,37 +1,43 @@
 <div *ngIf="!loading" class="chart-container">
-
-  <!-- ✅ Group Cards in a Responsive Grid -->
   <div class="chart-grid">
-  
+
     <!-- Tickets per Contract -->
     <div class="card" [ngClass]="{ 'card-empty': !contractChartData }">
       <h3>Tickets per Contract</h3>
-      <p-chart *ngIf="contractChartData; else noContractData"
-               type="bar" 
-               [data]="contractChartData"
-               [options]="contractChartOptions"
-               class="custom-chart">
-      </p-chart>
-    </div>
 
-    <ng-template #noContractData>
-      <p class="no-data-message">You have no tickets assigned to any contract.</p>
-    </ng-template>
+      <ng-container *ngIf="contractChartData; else noContractData">
+        <div class="chart-wrapper">
+          <p-chart 
+            type="bar"
+            [data]="contractChartData"
+            [options]="contractChartOptions">
+          </p-chart>
+        </div>
+      </ng-container>
+
+      <ng-template #noContractData>
+        <p class="no-data-message">You have no tickets assigned to any contract.</p>
+      </ng-template>
+    </div>
 
     <!-- Tickets by Status -->
     <div class="card" [ngClass]="{ 'card-empty': !statusChartData }">
       <h3>Tickets by Status</h3>
-      <p-chart *ngIf="statusChartData; else noStatusData"
-               type="doughnut"
-               [data]="statusChartData"
-               [options]="statusChartOptions"
-               class="custom-chart">
-      </p-chart>
-    </div>
 
-    <ng-template #noStatusData>
-      <p class="no-data-message">You have no tickets assigned by status.</p>
-    </ng-template>
+      <ng-container *ngIf="statusChartData; else noStatusData">
+        <div class="chart-wrapper">
+          <p-chart 
+            type="doughnut"
+            [data]="statusChartData"
+            [options]="statusChartOptions">
+          </p-chart>
+        </div>
+      </ng-container>
+
+      <ng-template #noStatusData>
+        <p class="no-data-message">You have no tickets assigned by status.</p>
+      </ng-template>
+    </div>
 
   </div>
 </div>

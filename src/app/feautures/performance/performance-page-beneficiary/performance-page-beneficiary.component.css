@@ -1,10 +1,13 @@
+/* ========== CONTAINER ========== */
 .chart-container {
   width: 100%;
   padding: 1rem;
   display: flex;
   justify-content: center;
+  box-sizing: border-box;
 }
 
+/* ========== RESPONSIVE GRID ========== */
 .chart-grid {
   display: flex;
   flex-wrap: wrap;
@@ -12,40 +15,95 @@
   width: 100%;
   max-width: 1200px;
   justify-content: center;
+  box-sizing: border-box;
 }
 
+/* ========== CARD STYLING ========== */
 .card {
-  flex: 1 1 300px;        /* grow/shrink but keep minimum width */
-  max-width: 550px;
-  padding: 20px;
+  flex: 1 1 320px;
+  max-width: 100%;
+  padding: 1.5rem;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   text-align: center;
-  min-height: 350px;
+  box-sizing: border-box;
 }
 
-.custom-chart {
+.card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+/* ========== WRAPPER THAT CENTERS AND CONSTRAINS THE CHART ========== */
+.chart-wrapper {
   width: 100%;
-  height: 300px;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 1rem 0;
 }
 
-/* ⬇️ Only for empty cards — vertically center the message */
+/* PrimeNG chart canvas */
+.chart-wrapper canvas {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 300px;
+}
+
+/* ========== EMPTY STATE ========== */
 .card-empty {
   justify-content: center;
 }
 
-/* Style the "no data" message */
 .no-data-message {
   color: #ff7043;
   font-size: 1.1rem;
   font-weight: bold;
   margin-top: 10px;
+  padding: 0.5rem;
 }
 
-@media (max-width: 640px) {
+/* ========== TABLET (≤1024px) ========== */
+@media (max-width: 1024px) {
+  .card h3 {
+    font-size: 1.3rem;
+  }
+
+  .chart-wrapper canvas {
+    max-height: 260px;
+  }
+}
+
+/* ========== MOBILE (≤768px) ========== */
+@media (max-width: 768px) {
+  .chart-container {
+    padding: 0.75rem;
+  }
+
+  .chart-grid {
+    gap: 1.5rem;
+  }
+
+  .card {
+    padding: 1.25rem;
+  }
+
+  .chart-wrapper canvas {
+    max-height: 240px;
+  }
+
+  .no-data-message {
+    font-size: 1rem;
+  }
+}
+
+/* ========== SMALL MOBILE (≤480px) ========== */
+@media (max-width: 480px) {
   .chart-container {
     padding: 0.5rem;
   }
@@ -55,18 +113,18 @@
   }
 
   .card {
-    flex: 1 1 100%;
-    max-width: 100%;
     padding: 1rem;
   }
 
-  .custom-chart {
-    height: 250px;
+  .card h3 {
+    font-size: 1.1rem;
+  }
+
+  .chart-wrapper canvas {
+    max-height: 220px;
   }
 
   .no-data-message {
-    font-size: 1rem;
-    padding: 10px;
+    font-size: 0.95rem;
   }
 }
-
