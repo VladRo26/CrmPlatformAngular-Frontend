@@ -1,34 +1,35 @@
 <div class="user-photo-container">
-    <p-image 
-        src="{{ userApp().photoUrl || '/user.png' }}" 
-        alt="User Photo" 
-        width="250" 
-        [preview]="true" 
-        class="user-photo" />
-    <p-button 
-        icon="pi pi-trash" 
-        [rounded]="true" 
-        severity="contrast" 
-        class="delete-button"
-        (onClick)="deletePhoto()" />
+  <p-image 
+    [src]="userApp().photoUrl || '/user.png'" 
+    alt="User Photo" 
+    [preview]="true" 
+    class="user-photo" />
+  
+  <p-button 
+    icon="pi pi-trash" 
+    [rounded]="true" 
+    severity="contrast" 
+    class="delete-button"
+    (onClick)="deletePhoto()" />
 </div>
-<div>
-    <div class="card flex justify-content-center">
-        <p-toast />
-        <p-fileUpload 
-            name="file" 
-            [url]="baseUrl + 'User/upload-photo'" 
-            method="post"
-            (onUpload)="onUpload($event)" 
-            [multiple]="false" 
-            accept="image/*" 
-            maxFileSize="1000000">
-                <ng-template pTemplate="content">
-                    <ul *ngIf="uploadedFiles.length">
-                        <li *ngFor="let file of uploadedFiles">
-                            {{ file.name }}
-                        </li>
-                    </ul>
-                </ng-template>
-        </p-fileUpload>    
+
+<div class="card flex justify-content-center mt-3">
+  <p-toast />
+  <p-fileUpload 
+    name="file" 
+    [url]="baseUrl + 'User/upload-photo'" 
+    method="post"
+    (onUpload)="onUpload($event)" 
+    [multiple]="false" 
+    accept="image/*" 
+    maxFileSize="1000000">
+    
+    <ng-template pTemplate="content">
+      <ul *ngIf="uploadedFiles.length">
+        <li *ngFor="let file of uploadedFiles">
+          {{ file.name }}
+        </li>
+      </ul>
+    </ng-template>
+  </p-fileUpload>
 </div>

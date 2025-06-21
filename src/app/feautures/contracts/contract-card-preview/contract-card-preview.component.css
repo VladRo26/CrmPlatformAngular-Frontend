@@ -1,18 +1,18 @@
 .contract-card {
-  width: 100%;
-  max-width: 45rem; 
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
   min-height: 28rem;
-  padding: 2rem;
+  padding: 0;
   box-sizing: border-box;
   border-radius: 1rem;
   box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.15);
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-
-/* Header container */
+/* Header */
 .card-header {
   display: flex;
   flex-direction: column;
@@ -21,14 +21,13 @@
   margin-bottom: 1rem;
 }
 
-/* Title */
 .project-title mat-card-title {
   font-size: 1.4rem;
   font-weight: bold;
   text-align: center;
 }
 
-/* Company logos row */
+/* Companies */
 .companies-row {
   display: flex;
   align-items: center;
@@ -59,16 +58,16 @@
   font-size: 1.5rem;
 }
 
-/* Status knob */
+/* Knob */
 .status-knob {
   margin: 1rem 0;
 }
 
+/* Responsive Styles */
 @media (max-width: 768px) {
   .contract-card {
     padding: 1rem;
     min-height: 25rem;
-    max-width: 100%; 
   }
 
   .project-title mat-card-title {
@@ -96,11 +95,9 @@
   }
 }
 
-
 @media (max-width: 480px) {
   .contract-card {
     padding: 1rem;
-    max-width: 100%;
   }
 
   .project-title mat-card-title {
@@ -120,4 +117,3 @@
     font-size: 1.2rem;
   }
 }
-

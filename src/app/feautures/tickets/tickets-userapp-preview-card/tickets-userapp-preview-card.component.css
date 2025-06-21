@@ -1,38 +1,33 @@
-/* Main card container */
 .example-card {
   width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 16px;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
-  height: 100%;
-  border-radius: 1rem;
-  background-color: white;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  overflow: hidden;
-  padding: 1rem;
-  box-sizing: border-box;
 }
 
-/* Header layout */
 .header-section {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 16px;
 }
 
-/* Column layout inside header */
 .column {
   flex: 1;
 }
 
-/* User/company sections */
 .user-section,
 .company-section {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 8px;
 }
 
-/* Logos */
 .user-logo,
 .company-logo {
   width: 40px;
@@ -41,15 +36,79 @@
   border-radius: 50%;
 }
 
-/* Names */
 .user-name,
 .company-name {
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 15px;
 }
 
-/* Card content styles */
 mat-card-content p {
-  margin: 0.25rem 0;
-  font-size: 0.9rem;
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+/* 📱 Mobile */
+@media (max-width: 767px) {
+  .example-card {
+    max-width: 90%;
+    padding: 12px;
+  }
+
+  .user-logo,
+  .company-logo {
+    width: 34px;
+    height: 34px;
+  }
+
+  .user-name,
+  .company-name,
+  mat-card-content p {
+    font-size: 13px;
+  }
+}
+
+/* 🟨 Tablet / iPad Pro */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .example-card {
+    max-width: 100%;
+    padding: 24px;
+  }
+
+  .user-logo,
+  .company-logo {
+    width: 45px;
+    height: 45px;
+  }
+
+  .user-name,
+  .company-name {
+    font-size: 16px;
+  }
+
+  mat-card-content p {
+    font-size: 15px;
+  }
+}
+
+/* 🖥️ Desktop */
+@media (min-width: 1367px) {
+  .example-card {
+    max-width: 700px;
+    padding: 16px;
+  }
+
+  .user-logo,
+  .company-logo {
+    width: 50px;
+    height: 50px;
+  }
+
+  .user-name,
+  .company-name {
+    font-size: 18px;
+  }
+
+  mat-card-content p {
+    font-size: 16px;
+  }
 }

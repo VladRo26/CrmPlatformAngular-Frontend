@@ -15,67 +15,64 @@ import { CommonModule } from '@angular/common';
   styleUrl: './performance-page-beneficiary.component.css'
 })
 export class PerformancePageBeneficiaryComponent implements OnInit {
+  @Input() username!: string;
 
-  @Input() username!: string; // Input property for username
-  
-    ticketService = inject(TicketService);
-    feedbackService = inject(FeedbackService);
+  ticketService = inject(TicketService);
+  feedbackService = inject(FeedbackService);
 
-    contractChartData: any;
-    contractChartOptions: any;
-    statusChartData: any;
-    statusChartOptions: any;
+  contractChartData: any;
+  contractChartOptions: any;
+  statusChartData: any;
+  statusChartOptions: any;
 
-    loading: boolean = true;
+  loading: boolean = true;
 
-    ngOnInit(): void {
-      if (this.username) {
-        this.loadContractChartData();
-        this.loadStatusChartData();
-      } else {
-        console.error('Username is required for PerformancePageBeneficiaryComponent.');
-      }
+  ngOnInit(): void {
+    if (this.username) {
+      this.loadContractChartData();
+      this.loadStatusChartData();
+    } else {
+      console.error('Username is required for PerformancePageBeneficiaryComponent.');
     }
-    
-    private loadContractChartData(): void {
-      this.ticketService.getTicketsGroupedByContract(this.username).subscribe({
-        next: (response) => {
-          this.loading = false; // ✅ Ensure loading stops
-          if (!response || !Array.isArray(response) || response.length === 0) {
-            console.warn('No contract-based ticket data available:', response);
-            this.contractChartData = null;
-            return;
-          }
-          this.createContractChartData(response);
-        },
-        error: (err) => {
-          this.loading = false; // ✅ Ensure loading stops even on error
-          console.error('Error fetching grouped ticket data by contract:', err);
+  }
+
+  private loadContractChartData(): void {
+    this.ticketService.getTicketsGroupedByContract(this.username).subscribe({
+      next: (response) => {
+        this.loading = false;
+        if (!response || !Array.isArray(response) || response.length === 0) {
+          console.warn('No contract-based ticket data available:', response);
           this.contractChartData = null;
+          return;
         }
-      });
-    }
-    
-    private loadStatusChartData(): void {
-      this.ticketService.getTicketsGroupedByUserStatus(this.username).subscribe({
-        next: (response) => {
-          this.loading = false; // ✅ Ensure loading stops
-          if (!response || !Array.isArray(response) || response.length === 0) {
-            console.warn('No status-based ticket data available:', response);
-            this.statusChartData = null;
-            return;
-          }
-          this.createStatusChartData(response);
-        },
-        error: (err) => {
-          this.loading = false; // ✅ Ensure loading stops even on error
-          console.error('Error fetching grouped ticket data by status:', err);
+        this.createContractChartData(response);
+      },
+      error: (err) => {
+        this.loading = false;
+        console.error('Error fetching grouped ticket data by contract:', err);
+        this.contractChartData = null;
+      }
+    });
+  }
+
+  private loadStatusChartData(): void {
+    this.ticketService.getTicketsGroupedByUserStatus(this.username).subscribe({
+      next: (response) => {
+        this.loading = false;
+        if (!response || !Array.isArray(response) || response.length === 0) {
+          console.warn('No status-based ticket data available:', response);
           this.statusChartData = null;
+          return;
         }
-      });
-    }
-    
-  
+        this.createStatusChartData(response);
+      },
+      error: (err) => {
+        this.loading = false;
+        console.error('Error fetching grouped ticket data by status:', err);
+        this.statusChartData = null;
+      }
+    });
+  }
 
   private createContractChartData(data: any[]): void {
     const labels = data.map(item => item.projectName);
@@ -92,11 +89,31 @@ export class PerformancePageBeneficiaryComponent implements OnInit {
 
     this.contractChartOptions = {
       responsive: true,
-      maintainAspectRatio: false
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            maxRotation: 45,
+            minRotation: 30,
+            autoSkip: false,
+            font: {
+              size: 10
+            }
+          }
+        },
+        y: {
+          beginAtZero: true
+        }
+      }
     };
   }
 
-   private createStatusChartData(data: any[]): void {
+  private createStatusChartData(data: any[]): void {
     const statuses = data.map(item => item.status);
     const ticketCounts = data.map(item => item.totalTickets);
 
@@ -111,15 +128,12 @@ export class PerformancePageBeneficiaryComponent implements OnInit {
 
     this.statusChartOptions = {
       responsive: true,
-      maintainAspectRatio: false
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: true
+        }
+      }
     };
   }
-
-
-      
-  
-
-
-
-
 }

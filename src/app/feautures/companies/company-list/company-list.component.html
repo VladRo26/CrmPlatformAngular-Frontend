@@ -1,64 +1,59 @@
-<mat-card class="filter-card">
-  <div class="filter-container">
-    <!-- Filter by Company Name -->
-    <mat-form-field appearance="fill" class="filter-item">
-      <mat-label>Company Name</mat-label>
-      <input matInput placeholder="Search Company" [(ngModel)]="filter" (input)="loadCompanies()">
-    </mat-form-field>
+<div class="page-container">
+  <mat-card class="filter-card"> 
+    <div class="filter-container"> 
+      <!-- Your filters here - keep them as they are -->
+      <mat-form-field appearance="fill" class="filter-item"> 
+        <mat-label>Company Name</mat-label> 
+        <input matInput placeholder="Search Company" [(ngModel)]="filter" (input)="loadCompanies()"> 
+      </mat-form-field> 
+   
+      <mat-form-field appearance="fill" class="filter-item"> 
+        <mat-label>Company Type</mat-label> 
+        <mat-select [(ngModel)]="companyType" (selectionChange)="loadCompanies()"> 
+          <mat-option value="all">All Companies</mat-option> 
+          <mat-option value="beneficiary">Beneficiary</mat-option> 
+          <mat-option value="software">Software</mat-option> 
+        </mat-select> 
+      </mat-form-field> 
+   
+      <mat-form-field appearance="fill" class="filter-item"> 
+        <mat-label>Sort By</mat-label> 
+        <mat-select [(ngModel)]="orderBy" (selectionChange)="loadCompanies()"> 
+          <mat-option value="name">Name</mat-option> 
+        </mat-select> 
+      </mat-form-field> 
+   
+      <button mat-stroked-button color="primary" (click)="resetFilters()" class="reset-button"> 
+        <mat-icon>refresh</mat-icon> 
+        Reset Filters 
+      </button> 
+    </div> 
+  </mat-card> 
 
-    <!-- Filter by Company Type -->
-    <mat-form-field appearance="fill" class="filter-item">
-      <mat-label>Company Type</mat-label>
-      <mat-select [(ngModel)]="companyType" (selectionChange)="loadCompanies()">
-        <mat-option value="all">All Companies</mat-option>
-        <mat-option value="beneficiary">Beneficiary</mat-option>
-        <mat-option value="software">Software</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <!-- Sort By -->
-    <mat-form-field appearance="fill" class="filter-item">
-      <mat-label>Sort By</mat-label>
-      <mat-select [(ngModel)]="orderBy" (selectionChange)="loadCompanies()">
-        <mat-option value="name">Name</mat-option>
-        <!-- Additional sort options can be added here -->
-      </mat-select>
-    </mat-form-field>
-
-    <!-- Reset Filters Button -->
-    <button mat-stroked-button color="primary" (click)="resetFilters()" class="reset-button">
-      <mat-icon>refresh</mat-icon>
-      Reset Filters
-    </button>
-  </div>
-</mat-card>
-
-<!-- Company List or No Data Message -->
-<div class="company-list">
-  <div *ngIf="companies.length > 0; else noCompaniesMessage" class="row">
-    <!-- Use col-12 to force one card per row and center it -->
-    <div *ngFor="let company of companies; trackBy: trackById" class="col-12 mb-3 d-flex justify-content-center">
-      <app-company-card [company]="company"></app-company-card>
+  <div class="centered-content">
+    <div *ngIf="companies.length > 0; else noCompaniesMessage" class="company-cards-container">
+      <div *ngFor="let company of companies; trackBy: trackById" class="single-card-wrapper">
+        <app-company-card [company]="company"></app-company-card>
+      </div>
     </div>
+    
+    <ng-template #noCompaniesMessage>
+      <div class="no-data-message">There are no companies to display.</div>
+    </ng-template>
   </div>
 
-  <!-- No Companies Message -->
-  <ng-template #noCompaniesMessage>
-    <p class="no-data-message">There are no companies to display.</p>
-  </ng-template>
-</div>
-
-<div *ngIf="paginatedResult" class="d-flex justify-content-center mt-3">
-  <pagination 
-    [boundaryLinks]="true"
-    [totalItems]="paginatedResult.pagination?.totalItems || 0"
-    [itemsPerPage]="paginatedResult.pagination?.itemsPerPage || 0"
-    [maxSize]="10"
-    [(ngModel)]="pageNumber"
-    (pageChanged)="pageChanged($event)"
-    previousText="&lsaquo;"
-    nextText="&rsaquo;"
-    firstText="&laquo;"
-    lastText="&raquo;">
-  </pagination>
+  <div class="pagination-centered" *ngIf="paginatedResult">
+    <pagination  
+      [boundaryLinks]="true" 
+      [totalItems]="paginatedResult.pagination?.totalItems || 0" 
+      [itemsPerPage]="paginatedResult.pagination?.itemsPerPage || 0" 
+      [maxSize]="10" 
+      [(ngModel)]="pageNumber" 
+      (pageChanged)="pageChanged($event)" 
+      previousText="&lsaquo;" 
+      nextText="&rsaquo;" 
+      firstText="&laquo;" 
+      lastText="&raquo;"> 
+    </pagination>
+  </div>
 </div>

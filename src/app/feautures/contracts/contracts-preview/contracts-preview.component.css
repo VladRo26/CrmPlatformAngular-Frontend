@@ -1,8 +1,7 @@
 .contract-scroll-wrapper {
   width: 100%;
-  max-width: 80rem;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -12,27 +11,23 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  padding-right: 0.5rem;
-
-  /* Hide scrollbar (cross-browser) */
-  scrollbar-width: none;          /* Firefox */
-  -ms-overflow-style: none;       /* Internet Explorer and Edge */
+  padding: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+
 .contract-scroll-container::-webkit-scrollbar {
-  display: none;                  /* Chrome, Safari, Opera */
+  display: none;
 }
-
 
 .card-container {
   width: 100%;
-  display: flex;
-  justify-content: center;
+  display: block;
+  padding: 0;
+  margin: 0;
   box-sizing: border-box;
-  padding: 0 1rem;
 }
 
-
-/* No contracts message */
 .no-contracts {
   text-align: center;
   font-size: 0.9rem;
@@ -45,7 +40,7 @@
   margin: auto;
 }
 
-/* Optional: custom scrollbar */
+/* Optional scrollbar style */
 .contract-scroll-container::-webkit-scrollbar {
   width: 8px;
 }
@@ -56,27 +51,3 @@
 .contract-scroll-container::-webkit-scrollbar-thumb:hover {
   background: #999;
 }
-
-/* Responsive tweaks */
-@media (max-width: 768px) {
-  .contract-scroll-container {
-    max-height: 60vh;
-    gap: 1rem;
-  }
-}
-
-@media (max-width: 640px) {
-  .contract-scroll-wrapper {
-    padding: 0.5rem;
-  }
-
-  .card-container {
-    padding: 0 0.5rem;
-  }
-
-  .no-contracts {
-    font-size: 0.85rem;
-    padding: 0.5rem;
-  }
-}
-

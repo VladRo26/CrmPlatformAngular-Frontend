@@ -1,4 +1,7 @@
-<div class="filter-container">
+<div class="userapp-page-wrapper">
+
+  <!-- Filters -->
+  <div class="filter-container">
     <!-- Filter by Company -->
     <mat-form-field appearance="fill" class="filter-item small-height">
       <mat-label>Filter by Company</mat-label>
@@ -9,7 +12,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-  
+
     <!-- Filter by User Type -->
     <div class="filter-item">
       <label for="userType-filter">Filter by User Type:</label>
@@ -24,13 +27,13 @@
         <mat-radio-button value="BeneficiaryCompanyUser">Beneficiary Company User</mat-radio-button>
       </mat-radio-group>
     </div>
-  
+
     <!-- Search by Name -->
     <mat-form-field appearance="fill" class="filter-item small-height">
       <mat-label>Search by Name</mat-label>
       <input matInput [(ngModel)]="userappService.userParams().name" (input)="loadUsersapp()" />
     </mat-form-field>
-  
+
     <!-- Filter by Rating -->
     <div class="filter-item">
       <label for="rating-filter">Filter by Rating</label>
@@ -42,7 +45,7 @@
         id="rating-filter"
       ></p-rating>
     </div>
-  
+
     <!-- Sort By -->
     <div class="filter-item">
       <label for="sort-options">Sort By:</label>
@@ -59,45 +62,48 @@
         <mat-button-toggle value="">Last Name (Default)</mat-button-toggle>
       </mat-button-toggle-group>
     </div>
-</div>
+  </div>
 
-<div class="button-container">
-  <button class="btn btn-secondary d-flex align-items-center" (click)="resetFilters()">
-    <i class="pi pi-refresh me-2"></i> Reset Filters
-  </button>
-</div>
+  <!-- Reset Button -->
+  <div class="button-container">
+    <button class="btn btn-secondary d-flex align-items-center" (click)="resetFilters()">
+      <i class="pi pi-refresh me-2"></i> Reset Filters
+    </button>
+  </div>
 
-  
- 
-  
-<div class="row justify-content-center g-2 g-md-3 g-lg-4">
-  @for(userapp of userappService.paginatedResult()?.items; track userapp.id){
-    <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
-      <app-userapp-card [userapp]="userapp"></app-userapp-card>
-    </div>
-  }
-</div>
+  <!-- Cards -->
+  <div class="row justify-content-center align-items-stretch g-3">
+    @for(userapp of userappService.paginatedResult()?.items; track userapp.id){
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="card-wrapper">
+          <app-userapp-card [userapp]="userapp"></app-userapp-card>
+        </div>
+      </div>
+    }
+  </div>
 
-<ng-template [ngIf]="userappService.paginatedResult()?.items?.length === 0">
-  <p class="no-data-message">There are no results for your selected filters.</p>
-</ng-template>
+  <!-- No Data Message -->
+  <ng-template [ngIf]="userappService.paginatedResult()?.items?.length === 0">
+    <p class="no-data-message">There are no results for your selected filters.</p>
+  </ng-template>
 
-
-
-@if(userappService.paginatedResult()?.pagination)
-{
-    <div class = "d-flex justify-content-center">
-        <pagination 
+  <!-- Pagination -->
+  @if(userappService.paginatedResult()?.pagination)
+  {
+    <div class="d-flex justify-content-center">
+      <pagination 
         [boundaryLinks]="true" 
         [totalItems]="userappService.paginatedResult()?.pagination!.totalItems" 
         [itemsPerPage]="userappService.paginatedResult()?.pagination!.itemsPerPage"         
         (pageChanged)="pageChanged($event)"
-        [(ngModel)] = "userappService.paginatedResult()?.pagination!.currentPage"
+        [(ngModel)]="userappService.paginatedResult()?.pagination!.currentPage"
         [maxSize]="10"
         previousText="&lsaquo;" 
         nextText="&rsaquo;" 
         firstText="&laquo;" 
         lastText="&raquo;"> 
-        </pagination>
+      </pagination>
     </div>
-}
+  }
+
+</div>

@@ -86,7 +86,7 @@ combinedCompanies: any[] = [];
   constructor(private softwarecompaniesService: SoftwarecompanyService, private beneficiarycompanyService: BeneficiarycompanyService) {}
 
   ngOnInit(): void {
-    this.updateGrid(window.innerWidth);
+    this.updateGrid(window.innerWidth, window.innerHeight); // ✅ fix here
 
     this.loadCompanies();
     this.particlesService.initParticles();
@@ -102,17 +102,17 @@ combinedCompanies: any[] = [];
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-    this.updateGrid(event.target.innerWidth);
+  this.updateGrid(event.target.innerWidth, event.target.innerHeight); 
   }
 
 
 
 
- updateGrid(width: number) {
+updateGrid(width: number, height: number) {
   if (width < 400) {
     this.gridCols = 1; // Mobile: Single column layout
-    this.rowHeight = "0.47:1"; // Enforce same height for all tiles
-    this.gutterSize = "10px";
+    this.rowHeight = "0.47:0.9"; // Enforce same height for all tiles
+    this.gutterSize = "2px";
   }else if (width < 600) {
     this.gridCols = 1; // Tablet: Two-column layout
     this.rowHeight = "0.57:1"; // Same height for all tiles
@@ -121,10 +121,15 @@ combinedCompanies: any[] = [];
     this.gridCols = 1; // Tablet: Two-column layout
     this.rowHeight = "0.8:1"; // Same height for all tiles
     this.gutterSize = "10px";
+     }else if (width >= 1000 && width <= 1100 && height >= 1200 && height <= 1400) {
+    this.gridCols = 1;
+    this.rowHeight = "0.97:1"; // More balanced square tiles for tall display
+    this.gutterSize = "2px";
   } else if (width < 1100) {
-    this.gridCols = 1; // Tablet: Two-column layout
+    this.gridCols = 2; // Tablet: Two-column layout
     this.rowHeight = "0.95:1"; // Same height for all tiles
     this.gutterSize = "4px"; // Less space between tiles
+
   } else if (width < 1400) {
   this.gridCols = 2;
   this.rowHeight = "0.9:1"; // slightly taller tiles

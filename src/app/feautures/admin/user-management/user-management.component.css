@@ -1,0 +1,117 @@
+/* Ensure full responsiveness */
+:host {
+  display: block;
+  width: 100%;
+}
+
+/* ========== FORM FIELDS ========== */
+.custom-field {
+  width: 60vw;
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+@media (max-width: 40rem) {
+  .custom-field {
+    width: 90%;
+  }
+}
+
+/* ========== CONTRACTS ========== */
+.contracts-container {
+  width: 100%;
+  max-width: 90rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.selectable-contract {
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.selectable-contract:hover {
+  background-color: #f1f1f1;
+}
+
+/* ========== BUTTON CONTAINER ========== */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 40rem) {
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .button-container button {
+    width: 90%;
+    max-width: 300px;
+  }
+}
+
+/* ========== TABLE STYLES (Override Material) ========== */
+::ng-deep .mat-elevation-z8 {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+::ng-deep .mat-table {
+  width: 100%;
+  table-layout: fixed;
+  word-wrap: break-word;
+}
+
+::ng-deep .mat-header-cell {
+  font-size: 12px !important; /* Smaller header */
+  font-weight: 500;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+::ng-deep .mat-cell {
+  font-size: 14px;
+  padding: 10px;
+  text-align: left;
+}
+
+::ng-deep .actions-column .action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  ::ng-deep .mat-header-cell {
+    font-size: 11px !important;
+    padding: 6px;
+  }
+
+  ::ng-deep .mat-cell {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  ::ng-deep .actions-column .action-buttons {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  ::ng-deep .mat-header-cell {
+    font-size: 10px !important;
+  }
+
+  ::ng-deep .mat-cell {
+    font-size: 12px;
+  }
+
+  ::ng-deep .action-buttons button {
+    width: 100%;
+  }
+}

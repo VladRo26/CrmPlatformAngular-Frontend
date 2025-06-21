@@ -1,47 +1,120 @@
-/* Filter card styling */
+/* MAIN PAGE CONTAINER - PERFECT CENTERING */
+.page-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* FILTER CARD - CENTERED */
 .filter-card {
-    margin-bottom: 20px;
-    padding: 16px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 30px auto;
+  padding: 20px;
+}
+
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.filter-item {
+  width: 100%;
+  max-width: 350px;
+}
+
+.reset-button {
+  width: auto;
+  min-width: 150px;
+}
+
+/* CENTERED CONTENT AREA */
+.centered-content {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+/* COMPANY CARDS CONTAINER - PERFECT CENTER */
+.company-cards-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* SINGLE CARD WRAPPER - EQUAL PADDING LEFT/RIGHT */
+.single-card-wrapper {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* NO DATA MESSAGE - CENTERED */
+.no-data-message {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--warning-color);
+  padding: 20px;
+  background: var(--bg-light);
+  border-radius: var(--border-radius);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* PAGINATION - CENTERED */
+.pagination-centered {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 30px auto 0 auto;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+  .page-container {
+    padding: 15px;
   }
   
-  /* Filter container styling */
-  .filter-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    align-items: center;
-    justify-content: center;
+  .filter-card {
+    max-width: 100%;
+    padding: 15px;
   }
   
-  /* Ensure filter items have a minimum width */
   .filter-item {
-    flex: 1 1 200px;
+    max-width: 300px;
   }
   
-  /* Reset button styling */
-  .reset-button {
-    margin-top: 8px;
+  .centered-content {
+    max-width: 100%;
   }
   
-  /* Company list styling */
-  .company-list .row {
-    margin: 0;
+  .single-card-wrapper {
+    max-width: 100%;
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-container {
+    padding: 10px;
   }
   
-  .company-list .col-12 {
-    display: flex;
-    justify-content: center;
+  .single-card-wrapper {
+    padding: 0 10px;
   }
-  
-  .no-data-message {
-    text-align: center;
-    font-size: 1rem;
-    font-weight: bold;
-    color: var(--warning-color);
-    padding: 0.8rem;
-    background: var(--bg-light);
-    border-radius: var(--border-radius);
-    width: 90%;
-    margin: auto;
-  }
-  
+}

@@ -1,70 +1,53 @@
-.custom-scroll-panel ::ng-deep .p-scrollpanel-wrapper {
-  overflow-y: scroll !important;
-  scrollbar-width: none !important;        /* Firefox */
-  -ms-overflow-style: none !important;     /* IE */
+/* === Ensure full height layout from root === */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-.custom-scroll-panel ::ng-deep .p-scrollpanel-wrapper::-webkit-scrollbar {
-  width: 0px !important;
-  height: 0px !important;
-  display: none !important;                /* Chrome/Safari */
-}
-
-.custom-scroll-panel ::ng-deep .p-scrollpanel-content {
-  height: auto !important;
-  overflow: visible !important;
-}
-
+/* === Main full-height wrapper === */
 .ticket-preview-wrapper {
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
+  align-items: stretch;
 }
 
-/* FIX: allow full scrollPanel height & content scrolling */
-.custom-scroll-panel ::ng-deep .p-scrollpanel-wrapper {
-  overflow-y: auto !important;
-  height: 100% !important;
-}
-
-.custom-scroll-panel ::ng-deep .p-scrollpanel-content {
-  height: auto !important;
-  overflow: visible !important;
-}
-
-/* FIX: let content scroll and center */
+/* === p-scrollPanel content wrapper === */
 .full-height-content {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 1rem;
-  width: 100%;
+  padding: 0;
   box-sizing: border-box;
 }
 
-/* FIX: the outer card */
+/* === Parent card (rounded box) === */
 .rounded-card-wrapper {
   width: 100%;
-  max-width: 1100px;
-  background-color: #ffffff;
-  border-radius: 1rem;
+  max-width: 1600px; /* Wider on desktop */
+  margin: 0 auto;
+  padding: 32px;
+  background: #fff;
+  border-radius: 16px;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
-  padding: 1.5rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
-  margin-bottom: 2rem; 
+  gap: 32px;
+  min-height: 100vh; /* 🔥 Full height of the viewport */
 }
 
-/* Filters and button stacked */
+/* === Filters === */
 .filter-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 16px;
 }
 
 .filter-button-wrapper {
@@ -73,13 +56,15 @@
   width: 100%;
 }
 
-/* Cards and pagination */
+/* === Tickets container === */
 .tickets-container {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  width: 100%;
+  gap: 24px;
   align-items: center;
+  padding: 0 16px;
+  box-sizing: border-box;
 }
 
 .ticket-col {
@@ -91,44 +76,72 @@
 .pagination-container {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
+  margin-top: 16px;
 }
 
-
-
+/* === No tickets message === */
 .no-data-message {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 24px;
   font-weight: bold;
-  color: var(--warning-color); /* fallback color */
-  padding: 2vh;
-  border-radius: 1vw;
+  color: var(--warning-color);
+  padding: 24px;
+  border-radius: 16px;
   width: 80%;
   margin: auto;
-  background-color: #ffffff;
-  border: 1px solid #ffffff;
+  background: #fff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
+/* === Scrollbar hiding for p-scrollPanel === */
+::ng-deep .custom-scroll-panel .p-scrollpanel-wrapper {
+  overflow-y: auto !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
 
+::ng-deep .custom-scroll-panel .p-scrollpanel-wrapper::-webkit-scrollbar {
+  display: none !important;
+}
 
-/* ✅ Mobile improvements */
-@media (max-width: 768px) {
+::ng-deep .custom-scroll-panel .p-scrollpanel-content {
+  height: auto !important;
+  overflow: visible !important;
+}
+
+/* === Responsive Layouts === */
+
+/* 📱 Mobile */
+@media (max-width: 767px) {
   .rounded-card-wrapper {
-    padding: 1rem;
-    margin: 1rem;
+    max-width: 92%;
+    padding: 16px;
+    min-height: auto;
   }
 
-  .filter-container,
-  .filter-button-wrapper {
-    padding: 0 1rem;
-  }
-
-  .ticket-col {
-    padding: 0 0.5rem;
+  .tickets-container {
+    padding: 0 8px;
   }
 }
 
+/* 🟨 Tablet / iPad Pro */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .rounded-card-wrapper {
+    max-width: 98%;
+    padding: 32px 24px;
+    min-height: auto;
+  }
 
+  .tickets-container {
+    padding: 0 24px;
+  }
+}
 
-
+/* 🖥️ Desktop */
+@media (min-width: 1367px) {
+  .rounded-card-wrapper {
+    max-width: 1600px;
+    padding: 32px;
+    min-height: 100vh; /* 🔥 Full screen height */
+  }
+}

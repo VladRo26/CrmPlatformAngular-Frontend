@@ -1,4 +1,5 @@
 
+
 html, body {
     height: 100%;
     font-family: 'Roboto', sans-serif !important;
@@ -73,5 +74,31 @@ ngx-spinner {
     
 
   }
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  html, body {
+    font-size: 18px; /* 🔵 Set base font size in px */
+  }
+
+  /* Optional: override common components */
+  .mat-cell,
+  .mat-header-cell,
+  .mat-button,
+  .mat-raised-button,
+  .mat-icon-button,
+  .mat-form-field,
+  .mat-form-field-label,
+  .p-button-label,
+  .p-dialog,
+  input,
+  textarea,
+  select,
+  label,
+  button {
+    font-size: 18px !important; /* 🔵 Enforce px-based sizing */
+  }
+}
+
+
   
   

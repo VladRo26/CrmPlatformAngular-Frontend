@@ -1,35 +1,45 @@
 /* Ensure full responsiveness */
 :host {
-    display: block;
-    width: 100%;
-  }
-  
-  /* Custom form fields (optional override) */
+  display: block;
+  width: 100%;
+}
+
+/* Custom form fields (optional override) */
+.custom-field {
+  width: 60vw;
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+/* Contracts Container */
+.contracts-container {
+  width: 100%;
+  max-width: 90rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Button container (centered by default) */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 40rem) {
   .custom-field {
-    width: 60vw; /* 60% of viewport width; adjust as needed */
-    max-width: 40rem; /* Max width to limit field size on large screens */
-    margin: 0 auto;
+    width: 90%;
   }
-  
-  /* Contracts Container */
-  .contracts-container {
-    width: 100%;
-    max-width: 90rem;
-    margin: 0 auto;
-    padding: 1rem;
-  }
-  
-  /* Button container (centered) */
+
   .button-container {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 5rem; /* ⬅️ spacing between vertically stacked buttons */
   }
-  
-  /* Responsive adjustments for smaller screens */
-  @media (max-width: 40rem) {
-    .custom-field {
-      width: 90%;
-    }
+
+  .button-container button {
+    width: 100%; /* optional: full width buttons for mobile */
   }
-  
+}
