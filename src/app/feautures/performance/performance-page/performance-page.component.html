@@ -20,7 +20,13 @@
   </ng-template>
   <div class="chart-content">
     <p *ngIf="noTicketGroupDataMessage" class="no-data-message">{{ noTicketGroupDataMessage }}</p>
-    <p-chart *ngIf="ticketGroupChartData" type="bar" [data]="ticketGroupChartData" [options]="ticketGroupChartOptions"></p-chart>
+    <p-chart
+  *ngIf="ticketGroupChartData"
+  type="bar"
+  [data]="ticketGroupChartData"
+  [options]="ticketGroupChartOptions"
+  class="custom-horizontal-bar-chart">
+</p-chart>
   </div>
 </p-card>
 

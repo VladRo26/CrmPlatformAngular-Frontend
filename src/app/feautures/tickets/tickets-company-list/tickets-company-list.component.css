@@ -1,81 +1,242 @@
-/* Handler Photo Styling */
-.handler-photo {
-  width: 2.5rem;       /* ~40px if 1rem = 16px */
-  height: 2.5rem;
-  border-radius: 50%;
-  margin-right: 0.625rem;  /* ~10px */
-}
-
-/* Main Container */
+/* ========== Container Styles ========== */
 .main-container {
-  padding: 2rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 2rem;
+  gap: 16px;
+  padding: 16px;
+  box-sizing: border-box;
 }
 
-/* Filter Card */
+/* ========== Filter Card ========== */
 .filter-card {
-  width: 90vw;
-  max-width: 60rem;      /* ~960px */
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-  border-radius: 0.5rem;
 }
 
-/* Filter Title */
 .filter-title {
   text-align: center;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  font-weight: bold;
+  margin-bottom: 8px;
 }
 
-/* Filter Rows */
 .filter-row {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
-/* For the sort-by row, center content */
-.sort-by-row {
-  justify-content: center;
-  align-items: center;
-}
-
-/* Uniform styling for filter items */
 .filter-item {
-  flex: 1 1 20rem;
-  max-width: 25rem;
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
 }
 
-/* Reset Button Row */
+.sort-by-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.sort-label {
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+.sort-toggle-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
 .reset-btn-row {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
+  margin-top: 8px;
 }
 
-/* Tickets Card */
+.reset-btn-row .btn {
+  padding: 6px 14px;
+  font-size: 0.875rem;
+}
+
+/* ========== Tickets Card ========== */
 .tickets-card {
-  width: 90vw;
-  max-width: 70rem;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 40rem) {  /* ~640px */
-  .filter-row {
-    flex-direction: column;
-    align-items: stretch;
+.tickets-title {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+/* ========== Desktop Table ========== */
+.desktop-table {
+  display: block;
+}
+
+.priority-high {
+  color: red;
+}
+.priority-medium {
+  color: orange;
+}
+.priority-low {
+  color: green;
+}
+
+.handler-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.handler-photo {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* ========== Actions ========== */
+.action-columns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.action-columns .btn {
+  padding: 6px 12px;
+  min-width: 100px;
+  font-size: 0.875rem;
+}
+
+/* ========== Mobile Cards ========== */
+.mobile-cards {
+  display: none;
+}
+
+.ticket-card {
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  background-color: #fff;
+}
+
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.ticket-status {
+  text-transform: capitalize;
+}
+
+.ticket-title {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.ticket-details {
+  margin-bottom: 8px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.handler-photo-mobile {
+  width: 24px;
+  height: 24px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+/* ========== Ticket Actions ========== */
+.ticket-actions .action-columns {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* ========== Media Queries ========== */
+@media (max-width: 768px) {
+  .desktop-table {
+    display: none;
   }
-  .filter-item {
-    max-width: 100%;
+
+  .mobile-cards {
+    display: block;
   }
+
+  .filter-row,
+  .sort-by-row,
   .reset-btn-row {
-    margin-top: 0.5rem;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .filter-item {
+    width: 90%;
+    max-width: 400px;
+  }
+
+  .reset-btn-row .btn {
+    width: 90%;
+    max-width: 300px;
+  }
+
+  .sort-toggle-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    width: 100%;
+  }
+
+  .sort-toggle-group .mat-button-toggle {
+    width: 100%;
+    height: 42px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .sort-toggle-group .mat-button-toggle-button {
+    width: 100%;
+    height: 100%;
+    line-height: 40px;
+  }
+
+  .action-columns {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  input.mat-input-element,
+  textarea.mat-input-element {
+    font-size: 14px;
+    height: auto;
+  }
+
+  .ticket-card {
+    padding: 12px;
   }
 }

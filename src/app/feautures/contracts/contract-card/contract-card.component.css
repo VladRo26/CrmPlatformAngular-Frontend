@@ -1,202 +1,180 @@
+/* === Card Container === */
 .card-container {
-  margin-bottom: 1.25rem; /* 20px */
+  margin-bottom: 20px;
 }
 
-/* Header Section */
+/* === Contract Card === */
+.example-card {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  min-height: 440px; /* Ensure equal height */
+}
+
+/* === Header === */
 .header-section {
   display: flex;
-  align-items: flex-start; /* Align items to the top */
-  gap: 1.25rem;           /* 20px */
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
-/* Header Left: Company Names and Logos */
 .header-left {
   display: flex;
   align-items: center;
-  gap: 0.9375rem;         /* 15px */
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
-/* Header Right: Title */
 .header-right {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%;            /* Take up remaining space */
+  flex: 1;
 }
 
-/* Company Section: Text and image */
+/* === Company Info === */
 .company-section {
   display: flex;
   align-items: center;
-  gap: 0.625rem;          /* 10px */
+  gap: 10px;
 }
 
-/* Company Name */
-.company-name {
-  font-size: 1rem;
-  font-weight: bold;
-  color: var(--outline-color);
-}
-
-/* Company Logo */
 .company-logo {
-  width: 3.125rem;        /* 50px */
-  height: 3.125rem;
+  width: 50px;
+  height: 50px;
   object-fit: cover;
   border-radius: 50%;
-  border: 0.125rem solid var(--outline-color); /* 2px */
+  border: 2px solid var(--outline-color);
 }
 
-/* Arrow Icon */
+.company-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--outline-color);
+}
+
 .arrow-icon {
-  font-size: 1.25rem;      /* 20px */
+  font-size: 20px;
   color: var(--outline-color);
 }
 
-/* Card styling */
-.example-card {
-  margin: 0.625rem auto;  /* 10px auto */
-  padding: 0.9375rem;      /* 15px */
-  border-radius: 0.5rem;   /* 8px */
-  box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+/* === Card Content === */
+mat-card-content p {
+  margin: 6px 0;
+  font-size: 14px;
 }
 
-/* Carousel container */
-.carousel-container {
+/* Scrollable Description */
+mat-card-content p:last-of-type {
+  max-height: 90px;
+  overflow-y: auto;
+  padding-right: 6px;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+mat-card-content p:last-of-type::-webkit-scrollbar {
+  width: 5px;
+}
+mat-card-content p:last-of-type::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+/* === Knob Section === */
+.status-knob {
+  margin: 12px 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 2vh 0;
 }
 
-/* Login/Register Container */
-.login-register-container {
+/* === Actions === */
+mat-card-actions {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  background: transparent;
-  padding: 2vh 2vw;
-  border-radius: 1vw;
+  flex-wrap: wrap;
 }
 
-/* Fade-in Container */
-.fade-in-container {
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  background: transparent;
-  padding: 2vh 2vw;
-  box-shadow: none;
-}
-
-/* Fade-in Text Styling */
-.fade-in-text {
-  font-size: 1.5rem;
-  font-weight: bold;
+/* === Overlay Panel === */
+.overlay-content {
+  padding: 16px;
   text-align: center;
-  padding: 1rem;
-  text-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.1);
 }
 
-/* Signup & Contract Link Styling */
-.signup-link,
-.contract-link {
-  color: var(--outline-color);
-  text-decoration: underline;
-  font-weight: bold;
-  cursor: pointer;
-}
+/* ================================
+   RESPONSIVE MEDIA QUERIES
+================================ */
 
-.signup-link:hover,
-.contract-link:hover {
-  color: var(--outline-color);
-}
-
-/* Tooltip for contract link */
-.contract-link:hover::after {
-  content: "Click to see contracts";
-  position: absolute;
-  bottom: -1.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  padding: 0.125rem 0.3125rem;
-  border-radius: 0.25rem;
-  font-size: 0.75rem;
-  white-space: nowrap;
-  z-index: 10;
-}
-
-/* Animated text wrapper */
-.animated-text-wrapper {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-/* Discover text wrapper */
-.discover-text-wrapper {
-  text-align: center;
-  font-size: 1.5rem;
-  margin-top: 0.5rem;
-}
-
-/* Carousel image styling */
-.carousel-image {
-  display: block;
-  width: 70%;             /* Fill container width */
-  max-width: 150px;        /* Default max width on small screens */
-  height: auto;
-  object-fit: cover;
-  transition: max-width 0.3s ease;
-  border-radius: 1rem;
-}
-
-/* Responsive carousel image sizes */
-@media (min-width: 768px) {
-  .carousel-image {
-    max-width: 250px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .carousel-image {
-    max-width: 350px;
-  }
-}
-
-@media (min-width: 1440px) {
-  .carousel-image {
-    max-width: 450px;
-  }
-}
-
-/* Responsive adjustments */
-@media (max-width: 50rem) {
-  .fade-in-text, .login-text {
-    font-size: 1.2rem;
-    padding: 0.5rem;
-  }
-  .signup-text {
-    font-size: 0.9rem;
-    margin-top: 0.75rem;
-  }
-}
-
-/* Responsive adjustments for header section */
-@media (max-width: 40rem) {
+/* Tablets */
+@media (max-width: 1024px) {
   .header-section {
     flex-direction: column;
     align-items: flex-start;
-    gap: 1rem;
+    gap: 16px;
   }
+
   .company-name {
-    font-size: 0.875rem;
+    font-size: 15px;
   }
+
   .arrow-icon {
-    font-size: 1rem;
+    font-size: 18px;
+  }
+
+  .example-card {
+    min-height: 420px;
+  }
+}
+
+/* Phones */
+@media (max-width: 768px) {
+  .header-section {
+    gap: 14px;
+  }
+
+  .company-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .company-name {
+    font-size: 14px;
+  }
+
+  .arrow-icon {
+    font-size: 16px;
+  }
+
+  .example-card {
+    padding: 12px;
+    min-height: 400px;
+  }
+
+  mat-card-content p:last-of-type {
+    max-height: 70px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .company-name {
+    font-size: 13px;
+  }
+
+  .arrow-icon {
+    font-size: 14px;
+  }
+
+  .example-card {
+    min-height: 380px;
   }
 }

@@ -1,0 +1,84 @@
+/* 🧱 Base container styling for the carousel item */
+p-carousel ::ng-deep .p-carousel-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* 📱 Mobile styles */
+@media (max-width: 767px) {
+  p-carousel ::ng-deep .p-carousel-content {
+    padding: 0.5rem;
+  }
+
+  p-carousel ::ng-deep .p-carousel-item {
+    padding: 0.5rem;
+  }
+
+  app-contract-card {
+    width: 100%;
+    max-width: 95vw;
+  }
+
+  .actions {
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .actions .btn {
+    width: 90%;
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+
+  .no-contracts {
+    text-align: center;
+    font-size: 1rem;
+    padding: 1rem;
+  }
+}
+
+/* 🟨 Tablet styles */
+@media (min-width: 768px) and (max-width: 1366px) {
+  app-contract-card {
+    width: 100%;
+    max-width: 80vw;
+  }
+
+  .actions {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+
+  .actions .btn {
+    width: 60%;
+    font-size: 1.1rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .no-contracts {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 1.5rem;
+  }
+}
+
+/* 🖥️ Desktop styles */
+@media (min-width: 1367px) {
+  app-contract-card {
+    width: 100%;
+    max-width: 700px;
+  }
+
+  .actions {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .actions .btn {
+    width: 300px;
+    font-size: 1.1rem;
+  }
+}

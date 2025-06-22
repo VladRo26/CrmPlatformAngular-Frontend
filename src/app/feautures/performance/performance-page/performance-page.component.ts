@@ -204,22 +204,34 @@ private createGroupedTicketChartData(data: any[]): void {
     datasets: datasets
   };
 
-  this.ticketGroupChartOptions = {
-    indexAxis: 'y',
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { position: 'top' },
-      tooltip: {
-        callbacks: {
-          label: (tooltipItem: any) => `${tooltipItem.dataset.label}: ${tooltipItem.raw}`
-        }
+this.ticketGroupChartOptions = {
+  indexAxis: 'y',
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: { position: 'top' },
+    tooltip: {
+      callbacks: {
+        label: (tooltipItem: any) => `${tooltipItem.dataset.label}: ${tooltipItem.raw}`
+      }
+    }
+  },
+  scales: {
+    x: {
+      beginAtZero: true,
+      ticks: {
+        callback: (value: number) => (Number.isInteger(value) ? value : ''),
+        stepSize: 1
       }
     },
-    scales: {
-      x: { beginAtZero: true },
-      y: { ticks: { autoSkip: false } }
+    y: {
+      ticks: {
+        autoSkip: false,
+        maxRotation: 0,
+        minRotation: 0
+      }
     }
+  }
   };
 }
 

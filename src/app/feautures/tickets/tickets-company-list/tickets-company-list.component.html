@@ -3,15 +3,13 @@
   <mat-card class="filter-card">
     <mat-card-title class="filter-title">Filter Tickets</mat-card-title>
     <mat-card-content>
-      <!-- First Row: Handler Username and Sort Direction -->
+      <!-- First Row -->
       <div class="filter-row">
-        <!-- Filter by Handler Username -->
         <mat-form-field appearance="fill" class="filter-item">
           <mat-label>Handler Username</mat-label>
-          <input matInput [(ngModel)]="ticketParams.handlerUsername" (input)="applyFilters()"
-                 placeholder="Enter handler username" />
+          <input matInput [(ngModel)]="ticketParams.handlerUsername" (input)="applyFilters()" placeholder="Enter handler username" />
         </mat-form-field>
-        <!-- Sort Direction -->
+
         <mat-form-field appearance="fill" class="filter-item">
           <mat-label>Sort Direction</mat-label>
           <mat-select [(ngModel)]="ticketParams.sortDirection" (selectionChange)="applyFilters()">
@@ -21,11 +19,10 @@
         </mat-form-field>
       </div>
 
-      <!-- Second Row: Sort By -->
+      <!-- Sort Row -->
       <div class="filter-row sort-by-row">
         <label class="sort-label">Sort By:</label>
-        <mat-button-toggle-group [(ngModel)]="ticketParams.sortBy" (change)="applyFilters()"
-                                  aria-label="Sort Options">
+        <mat-button-toggle-group [(ngModel)]="ticketParams.sortBy" (change)="applyFilters()" aria-label="Sort Options" class="sort-toggle-group">
           <mat-button-toggle value="assigned">Assigned</mat-button-toggle>
           <mat-button-toggle value="unassigned">Unassigned</mat-button-toggle>
           <mat-button-toggle value="priority">Priority</mat-button-toggle>
@@ -34,51 +31,119 @@
         </mat-button-toggle-group>
       </div>
 
+      <!-- Reset -->
       <div class="reset-btn-row">
         <button class="btn btn-primary btn-sm" (click)="resetFilters()">Reset Filters</button>
       </div>
     </mat-card-content>
   </mat-card>
 
-  <!-- Tickets Table Card -->
+  <!-- Tickets Card -->
   <mat-card class="tickets-card">
     <mat-card-title class="tickets-title">Tickets</mat-card-title>
     <mat-card-content>
-      <p-table [value]="tickets" [tableStyle]="{'min-width': '60rem'}" *ngIf="!loading"
-               [paginator]="true" [rows]="ticketParams.pageSize" [rowsPerPageOptions]="[5, 10, 20, 50]"
-               (onPage)="pageChanged($event)">
-        <ng-template pTemplate="header">
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Status</th>
-            <th>Priority</th>
-            <th>Handler</th>
-            <th>Actions</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-ticket>
-          <tr>
-            <td>{{ ticket.id }}</td>
-            <td>{{ ticket.title }}</td>
-            <td>{{ ticket.status }}</td>
-            <td>{{ ticket.priority }}</td>
-            <td>
-              <div *ngIf="ticket.handlerId">
-                <img [src]="handlers[ticket.handlerId]?.photoUrl || '/user.png'" alt="Handler Photo" class="handler-photo" />
-                <span>{{ handlers[ticket.handlerId]?.userName }}</span>
-              </div>
-              <div *ngIf="!ticket.handlerId">Unassigned</div>
-            </td>
-            <td>
-              <button class="btn btn-primary" [disabled]="!!ticket.handlerId" (click)="takeOverTicket(ticket.id)">
-                Take Over
+
+      <!-- Desktop View -->
+      <div class="desktop-table" *ngIf="!loading">
+        <p-table [value]="tickets" [tableStyle]="{ 'min-width': '60rem' }" [paginator]="true"
+                 [rows]="ticketParams.pageSize" [rowsPerPageOptions]="[5, 10, 20, 50]" (onPage)="pageChanged($event)">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Status</th>
+              <th>Priority</th>
+              <th>Handler</th>
+              <th>Actions</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-ticket>
+            <tr>
+              <td>{{ ticket.id }}</td>
+              <td>{{ ticket.title }}</td>
+              <td>{{ ticket.status }}</td>
+              <td class="priority-{{ ticket.priority?.toLowerCase() }}">{{ ticket.priority }}</td>
+              <td>
+                <div *ngIf="ticket.handlerId" class="handler-info">
+                  <img [src]="handlers[ticket.handlerId]?.photoUrl || '/user.png'" class="handler-photo" />
+                  <span>{{ handlers[ticket.handlerId]?.userName }}</span>
+                </div>
+                <div *ngIf="!ticket.handlerId">Unassigned</div>
+              </td>
+              <td class="action-columns">
+                <button class="btn btn-primary btn-mobile" 
+                        [disabled]="!!ticket.handlerId || takingOverTicketId === ticket.id"
+                        (click)="confirmTakeOver(ticket.id)">
+                  {{ takingOverTicketId === ticket.id ? 'Taking Over...' : 'Take Over' }}
+                </button>
+                <button class="btn btn-secondary btn-mobile" 
+                        (click)="viewDescription(ticket.description || '')">
+                  View Details
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+
+      <!-- Mobile Cards -->
+      <div class="mobile-cards" *ngIf="!loading">
+        <div *ngFor="let ticket of tickets" class="ticket-card">
+          <div class="ticket-header">
+            <div class="ticket-id">#{{ ticket.id }}</div>
+            <div class="ticket-status status-{{ ticket.status?.toLowerCase()?.replace(' ', '-') }}">{{ ticket.status }}</div>
+          </div>
+
+          <div class="ticket-title">{{ ticket.title }}</div>
+
+          <div class="ticket-details">
+            <div class="detail-item">
+              <span class="detail-label">Priority:</span>
+              <span class="detail-value priority-{{ ticket.priority?.toLowerCase() }}">{{ ticket.priority }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Handler:</span>
+              <span class="detail-value">
+                <ng-container *ngIf="ticket.handlerId; else noHandler">
+                  <img [src]="handlers[ticket.handlerId]?.photoUrl || '/user.png'" class="handler-photo-mobile" />
+                  {{ handlers[ticket.handlerId]?.userName }}
+                </ng-container>
+                <ng-template #noHandler>Unassigned</ng-template>
+              </span>
+            </div>
+          </div>
+
+          <div class="ticket-actions">
+            <div class="action-columns">
+              <button class="btn btn-primary btn-mobile" 
+                      [disabled]="!!ticket.handlerId || takingOverTicketId === ticket.id"
+                      (click)="confirmTakeOver(ticket.id)">
+                {{ takingOverTicketId === ticket.id ? 'Taking Over...' : 'Take Over' }}
               </button>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
+              <button class="btn btn-secondary btn-mobile" 
+                      (click)="viewDescription(ticket.description || '')">
+                View Details
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <p *ngIf="!loading && tickets.length === 0">No tickets found.</p>
     </mat-card-content>
   </mat-card>
 </div>
+
+<!-- Ticket Description Dialog -->
+<p-dialog header="Ticket Description" [(visible)]="showDialog" [modal]="true" [style]="{ width: '90vw', maxWidth: '600px' }">
+  <p>{{ selectedDescription }}</p>
+</p-dialog>
+
+<!-- Confirm Take Over Dialog -->
+<p-dialog header="Confirm Take Over" [(visible)]="confirmDialogVisible" [modal]="true" [style]="{ width: '400px' }">
+  <p>Are you sure you want to take over this ticket?</p>
+  <ng-template pTemplate="footer">
+    <button mat-button (click)="confirmDialogVisible = false">Cancel</button>
+    <button mat-flat-button color="primary" (click)="proceedTakeOver()">Yes, Take Over</button>
+  </ng-template>
+</p-dialog>

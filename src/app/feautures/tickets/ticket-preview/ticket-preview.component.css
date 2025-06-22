@@ -110,11 +110,10 @@ html, body {
 }
 
 /* === Responsive Layouts === */
-
-/* 📱 Mobile */
 @media (max-width: 767px) {
   .rounded-card-wrapper {
-    max-width: 92%;
+    width: 75%;                /* ✅ override 100% width */
+    max-width: none;           /* ✅ allow custom width instead of max constraint */
     padding: 16px;
     min-height: auto;
   }

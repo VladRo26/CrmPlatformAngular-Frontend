@@ -240,3 +240,26 @@ html, body {
     padding: 10px;
   }
 }
+
+/* 🔥 Make horizontal bar chart scrollable on small screens */
+.chart-content {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 🔥 Prevent chart canvas from shrinking too much */
+.custom-horizontal-bar-chart {
+  min-width: 400px; /* Ensures labels don't squish */
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* 📱 Extra tweaks for small devices */
+@media (max-width: 560px) {
+  .custom-horizontal-bar-chart {
+    min-width: 360px;
+    aspect-ratio: 1.4 / 1;
+  }
+}
+
