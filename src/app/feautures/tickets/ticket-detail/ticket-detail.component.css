@@ -16,7 +16,7 @@ mat-card-header {
 
 /* Card title */
 mat-card-title {
-  font-size: 1.5rem;
+  font-size: 0.5rem;
   font-weight: bold;
 }
 
@@ -51,6 +51,8 @@ mat-card-content {
 p-scrollPanel {
   margin-top: 1rem;
 }
+
+
 
 mat-card-image {
   width: 50%;
@@ -112,7 +114,61 @@ mat-card-image {
   line-height: 1.5;
 } */
 
+@media (max-width: 480px) {
+
+  ::ng-deep .customized-timeline .p-card p span {
+    display: block;
+    font-size: 0.65rem;
+    padding-left: 0.25rem;
+    word-break: break-word;
+  }
+
+::ng-deep .customized-timeline .timeline-username,
+::ng-deep .customized-timeline .timeline-role {
+  font-size: 0.6rem !important;
+}
+
+  ::ng-deep .customized-timeline .p-card {
+   
+    font-size: 0.75rem;
+  }
+
+  ::ng-deep .customized-timeline .p-card p {
+
+    font-size: 0.9rem ;
+  }
+
+  ::ng-deep .customized-timeline .p-card strong {
+    margin-right: 0.25rem;
+  }
+  ::ng-deep .customized-timeline .p-card-title{
+    font-size: 1.1rem !important;
+
+  }
+
+  ::ng-deep .customized-timeline .p-card-header,
+  ::ng-deep .customized-timeline .p-card-subtitle {
+
+    font-size: 1.1rem !important;
+  }
+
+  /* Optional: make file links inside card readable */
+  ::ng-deep .customized-timeline .p-card a {
+    font-size: 1.1rem;
+    word-break: break-word;
+  }
+
+::ng-deep .customized-timeline .p-card p:nth-child(1) strong,
+  ::ng-deep .customized-timeline .p-card p:nth-child(2) strong {
+    font-size: 0.9rem;
+  }
+
+
+::ng-deep .customized-timeline .p-card p span {
+  font-size: 1.2rem;
+}
 
 
 
 
+}

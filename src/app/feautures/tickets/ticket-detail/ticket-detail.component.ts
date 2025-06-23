@@ -30,6 +30,8 @@ import { CommonModule } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TicketAttachment } from '../../../_services/ticketattachment';
+import { HostListener } from '@angular/core';
+
 
 @Component({
   selector: 'app-ticket-detail',
@@ -60,7 +62,14 @@ export class TicketDetailComponent implements OnInit {
   visible: boolean = false;
   translatedMessage: string | null = null; // Holds the translated message
   ticketAttachments: TicketAttachment[] = [];
+  isMobile: boolean = false;
 
+  @HostListener('window:resize', [])
+  onResize() {
+    this.isMobile = window.innerWidth <= 500;
+  }
+
+  
   
 
 
@@ -257,6 +266,7 @@ showAttachmentsOverlay(event: Event, overlay: OverlayPanel, historyId: number): 
     this.loadTicketDetails();
     this.setUserRole();
     this.loadUserDetails();
+
 
 
   }
