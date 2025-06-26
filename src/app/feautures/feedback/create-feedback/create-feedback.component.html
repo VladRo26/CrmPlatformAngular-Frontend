@@ -9,18 +9,27 @@
   <label for="ticketId" class="form-label">Select Ticket</label>
   <select
     id="ticketId"
-    class="form-select"
+    class="form-select ticket-select"
     formControlName="ticketId"
     [ngClass]="{ 'disabled-dropdown': isDropdownDisabled }"
-    [attr.disabled]="isDropdownDisabled ? true : null" 
+    [attr.disabled]="isDropdownDisabled ? true : null"
     required
   >
+    <option value="" disabled selected>Choose a ticket...</option>
     <option *ngFor="let ticket of tickets" [value]="ticket.id">
-      {{ ticket.id }} - {{ ticket.title || 'No Title' }} - Handler: 
-      <ng-container *ngIf="ticket.handlerId !== undefined && handlerUserNames[ticket.handlerId] as handlerName; else loading">
-        {{ handlerName }}
+      <!-- Mobile-friendly shortened format -->
+      <ng-container *ngIf="isMobile; else fullFormat">
+        {{ ticket.id }} - {{ (ticket.title || 'No Title') | slice:0:20 }}{{ (ticket.title?.length || 0) > 20 ? '...' : '' }}
       </ng-container>
-      <ng-template #loading>Loading...</ng-template>
+      
+      <!-- Full format for desktop -->
+      <ng-template #fullFormat>
+        {{ ticket.id }} - {{ ticket.title || 'No Title' }} - Handler: 
+        <ng-container *ngIf="ticket.handlerId !== undefined && handlerUserNames[ticket.handlerId] as handlerName; else loading">
+          {{ handlerName }}
+        </ng-container>
+        <ng-template #loading>Loading...</ng-template>
+      </ng-template>
     </option>
   </select>
 </div>
@@ -107,7 +116,8 @@
   </form>
 </div>
 
-<p-overlayPanel #feedbackOverlay [style]="{ width: '40rem' }">
+<p-overlayPanel #feedbackOverlay [ngStyle]="{ width: overlayWidth }">
+
   <div class="overlay-content">
     <h3>Generate Feedback</h3>
     <label>Describe your experience:</label>

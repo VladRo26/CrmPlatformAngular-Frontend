@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, HostListener, inject, ViewChild } from '@angular/core';
 import { FeedbackService } from '../../../_services/feedback.service';
 import { TicketService } from '../../../_services/ticket.service';
 import { AccountService } from '../../../_services/account.service';
@@ -38,6 +38,21 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   styleUrl: './create-feedback.component.css'
 })
 export class CreateFeedbackComponent implements OnInit {
+
+  overlayWidth = window.innerWidth < 640 ? '95vw' : (window.innerWidth < 1024 ? '32rem' : '40rem');
+  isMobile = window.innerWidth <= 1280;
+
+
+  @HostListener('window:resize', [])
+  onResize() {
+    const w = window.innerWidth;
+    this.overlayWidth = w < 640 ? '95vw' : (w < 1024 ? '32rem' : '40rem');
+    this.isMobile = w <= 1280;
+
+  }
+
+  
+
 
   feedbackService = inject(FeedbackService);
   ticketService = inject(TicketService);

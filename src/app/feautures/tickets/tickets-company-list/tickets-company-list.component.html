@@ -91,7 +91,7 @@
         <div *ngFor="let ticket of tickets" class="ticket-card">
           <div class="ticket-header">
             <div class="ticket-id">#{{ ticket.id }}</div>
-            <div class="ticket-status status-{{ ticket.status?.toLowerCase()?.replace(' ', '-') }}">{{ ticket.status }}</div>
+            <div class="ticket-status status-{{ ticket.status.toLowerCase().replace(' ', '-') }}">{{ ticket.status }}</div>
           </div>
 
           <div class="ticket-title">{{ ticket.title }}</div>
