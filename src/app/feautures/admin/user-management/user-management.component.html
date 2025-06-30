@@ -31,3 +31,33 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </div>
+
+<p-dialog
+  header="Edit Roles"
+  [(visible)]="visible"
+  [modal]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <p *ngIf="selectedUser">Editing roles for: <strong>{{ selectedUser.username }}</strong></p>
+
+  <div *ngFor="let role of roles" class="role-checkbox">
+      <label>
+          <input
+              type="checkbox"
+              [checked]="selectedRoles.includes(role)"
+              (change)="toggleRole(role)"
+          />
+          {{ role }}
+      </label>
+  </div>
+
+  <p-footer>
+      <button mat-raised-button color="primary" (click)="saveRoles()">Save</button>
+      <button mat-raised-button color="warn" (click)="visible = false">
+          Cancel
+      </button>
+  </p-footer>
+</p-dialog>
