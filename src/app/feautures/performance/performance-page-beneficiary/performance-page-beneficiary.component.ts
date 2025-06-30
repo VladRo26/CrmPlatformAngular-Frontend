@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { AfterViewInit, Component, inject, Input } from '@angular/core';
 import { TicketService } from '../../../_services/ticket.service';
 import { FeedbackService } from '../../../_services/feedback.service';
 import { ChartModule } from 'primeng/chart';
@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './performance-page-beneficiary.component.html',
   styleUrl: './performance-page-beneficiary.component.css'
 })
-export class PerformancePageBeneficiaryComponent implements OnInit {
+export class PerformancePageBeneficiaryComponent implements OnInit, AfterViewInit{
   @Input() username!: string;
 
   ticketService = inject(TicketService);
@@ -28,6 +28,8 @@ export class PerformancePageBeneficiaryComponent implements OnInit {
   loading: boolean = true;
 
   ngOnInit(): void {
+      console.log('Loaded beneficiary usernamexxx:', this.username); // check if it prints!
+
     if (this.username) {
       this.loadContractChartData();
       this.loadStatusChartData();
@@ -36,43 +38,60 @@ export class PerformancePageBeneficiaryComponent implements OnInit {
     }
   }
 
-  private loadContractChartData(): void {
-    this.ticketService.getTicketsGroupedByContract(this.username).subscribe({
-      next: (response) => {
-        this.loading = false;
-        if (!response || !Array.isArray(response) || response.length === 0) {
-          console.warn('No contract-based ticket data available:', response);
-          this.contractChartData = null;
-          return;
-        }
-        this.createContractChartData(response);
-      },
-      error: (err) => {
-        this.loading = false;
-        console.error('Error fetching grouped ticket data by contract:', err);
-        this.contractChartData = null;
-      }
-    });
+  
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize')); // trigger canvas resize
+    }, 200); // wait for DOM to fully paint
   }
 
-  private loadStatusChartData(): void {
-    this.ticketService.getTicketsGroupedByUserStatus(this.username).subscribe({
-      next: (response) => {
-        this.loading = false;
-        if (!response || !Array.isArray(response) || response.length === 0) {
-          console.warn('No status-based ticket data available:', response);
-          this.statusChartData = null;
-          return;
-        }
-        this.createStatusChartData(response);
-      },
-      error: (err) => {
-        this.loading = false;
-        console.error('Error fetching grouped ticket data by status:', err);
-        this.statusChartData = null;
+  
+
+private loadContractChartData(): void {
+  this.ticketService.getTicketsGroupedByContract(this.username).subscribe({
+    next: (response) => {
+      console.log('Contract chart raw data:', response); // ✅ Log this
+      this.loading = false;
+
+      if (!response || !Array.isArray(response) || response.length === 0) {
+        console.warn('No contract-based ticket data available:', response);
+        this.contractChartData = null;
+        return;
       }
-    });
-  }
+
+      this.createContractChartData(response);
+    },
+    error: (err) => {
+      this.loading = false;
+      console.error('Error fetching grouped ticket data by contract:', err);
+      this.contractChartData = null;
+    }
+  });
+}
+
+
+ private loadStatusChartData(): void {
+  this.ticketService.getTicketsGroupedByUserStatus(this.username).subscribe({
+    next: (response) => {
+      console.log('Status chart raw data:', response); // ✅ Log this
+      this.loading = false;
+
+      if (!response || !Array.isArray(response) || response.length === 0) {
+        console.warn('No status-based ticket data available:', response);
+        this.statusChartData = null;
+        return;
+      }
+
+      this.createStatusChartData(response);
+    },
+    error: (err) => {
+      this.loading = false;
+      console.error('Error fetching grouped ticket data by status:', err);
+      this.statusChartData = null;
+    }
+  });
+}
+
 
   private createContractChartData(data: any[]): void {
     const labels = data.map(item => item.projectName);
@@ -98,11 +117,11 @@ export class PerformancePageBeneficiaryComponent implements OnInit {
       scales: {
         x: {
           ticks: {
-            maxRotation: 45,
-            minRotation: 30,
+            maxRotation: 0,
+            minRotation: 0,
             autoSkip: false,
             font: {
-              size: 10
+              size: 7
             }
           }
         },

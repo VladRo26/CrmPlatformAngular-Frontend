@@ -9,21 +9,26 @@
 }
 
 /* Card header */
+/* Align mat-card-header content with mat-card-content content */
 mat-card-header {
-  padding: 1.5rem 1rem;
-  border-bottom: 0.125rem solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; /* stack title and subtitle vertically */
+  align-items: flex-start; /* align to left */
 }
 
-/* Card title */
 mat-card-title {
-  font-size: 0.5rem;
-  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;  /* Align left */
+  font-size: 2rem;
 }
 
-/* Card subtitle */
+
 mat-card-subtitle {
   font-size: 1.2rem;
+  margin: 0; /* remove default margin */
 }
+
 
 /* Card content */
 mat-card-content {

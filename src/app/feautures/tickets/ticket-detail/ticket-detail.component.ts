@@ -142,6 +142,8 @@ showAttachmentsOverlay(event: Event, overlay: OverlayPanel, historyId: number): 
   handleCountryChange(country: any) {
     if (country?.language) {
       const selectedLanguageName = country.language.name;
+      localStorage.setItem('selectedLanguage', selectedLanguageName ?? '');
+      localStorage.removeItem(`translatedDescription_${this.selectedLanguageName}`); // Optional: clear old description if any
       const selectedLanguageCode = country.language.code; // Assuming `country.language` has a `code` property
       const selectedCountryCode = country.code;
   
@@ -532,34 +534,36 @@ showAttachmentsOverlay(event: Event, overlay: OverlayPanel, historyId: number): 
     }
     
     
-    showOverlay(message: string, event: Event, overlay: OverlayPanel): void {
-      if (!this.selectedLanguageName || !this.ticket?.language) {
-        console.error('Selected language or original language is missing.');
-        console.log('Selected language:', this.selectedLanguageName);
-        this.translatedMessage = 'Language selection is missing. Please select a language.';
-        overlay.toggle(event);
-        return;
-      }
-    
-      this.translatedMessage = null; // Clear previous translations
-      this.selectedLanguageName = this.ticket.tLanguage ?? this.ticket.language; // Set the selected language
-      this.overlayActive = true; // Set the overlay active state
-      overlay.toggle(event); // Open the overlay
-    
-      this.llmService
-        .translateText(message, this.ticket?.language, this.selectedLanguageName)
-        .subscribe({
-          next: (response) => {
-            this.translatedMessage = response.translation || 'Translation unavailable.';
-            this.overlayActive = false; // Reset the overlay active state
-          },
-          error: (err) => {
-            console.error('Translation failed:', err);
-            this.translatedMessage = 'Error translating message.';
-            this.overlayActive = false; // Reset the overlay active state
-          },
-        });
-    }
+  showOverlay(message: string, event: Event, overlay: OverlayPanel): void {
+  const sourceLang = this.ticket?.language;
+  const targetLang = this.ticket?.tLanguage;
+
+  if (!sourceLang || !targetLang) {
+    console.error('Ticket language or translation language is missing.');
+    this.translatedMessage = 'Translation not available. Please check ticket language settings.';
+    overlay.toggle(event);
+    return;
+  }
+
+  this.translatedMessage = null;
+  this.overlayActive = true;
+  overlay.toggle(event);
+
+  this.llmService
+    .translateText(message, sourceLang, targetLang)
+    .subscribe({
+      next: (response) => {
+        this.translatedMessage = response.translation || 'Translation unavailable.';
+        this.overlayActive = false;
+      },
+      error: (err) => {
+        console.error('Translation failed:', err);
+        this.translatedMessage = 'Error translating message.';
+        this.overlayActive = false;
+      },
+    });
+}
+
 
     getStatusColor(status: string): string {
       const rootStyles = getComputedStyle(document.documentElement);

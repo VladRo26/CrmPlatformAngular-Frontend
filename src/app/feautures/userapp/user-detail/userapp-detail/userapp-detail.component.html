@@ -1,9 +1,9 @@
-<div class="row">
-  <div class="col-4">
+<div class="userapp-container">
+  <!-- USER INFO -->
+  <div class="user-info">
     <p-card
       header="{{ userapp?.userName }}"
       subheader="{{ userapp?.companyName }}"
-      [style]="{ width: '22rem' }"
       class="p-card-custom"
     >
       <ng-template pTemplate="header">
@@ -34,76 +34,45 @@
           class="company-logo"
         />
       </p>
-
     </p-card>
   </div>
 
-  <div class="col-8">
+  <!-- TAB CONTENT -->
+  <div class="user-tabs">
     <mat-tab-group *ngIf="userapp?.userType === 'SoftwareCompanyUser'">
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon>inbox</mat-icon>
-          Tickets
-        </ng-template>
-        <!-- Changed height to 20rem (~320px) -->
-        <p-scrollPanel [style]="{ width: '100%', height: '30rem' }">
+      <mat-tab label="Tickets">
+        <div class="tab-scroll">
           <app-tickets-userapp-list></app-tickets-userapp-list>
-        </p-scrollPanel>
+        </div>
       </mat-tab>
-
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon>bar_chart</mat-icon>
-          Performance
-        </ng-template>
-        <p-scrollPanel [style]="{ width: '100%', height: '30rem' }">
+      <mat-tab label="Performance">
+        <div class="tab-scroll">
           <app-performance-page *ngIf="userapp?.userName" [username]="userapp?.userName || ''"></app-performance-page>
-        </p-scrollPanel>
+        </div>
       </mat-tab>
-
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon>chat</mat-icon>
-          Feedback
-        </ng-template>
-        <p-scrollPanel [style]="{ width: '100%', height: '30rem' }">
+      <mat-tab label="Feedback">
+        <div class="tab-scroll">
           <app-feedback-user-list *ngIf="userapp?.id" [userId]="userapp?.id ?? 1"></app-feedback-user-list>
-        </p-scrollPanel>
+        </div>
       </mat-tab>
     </mat-tab-group>
 
     <mat-tab-group *ngIf="userapp?.userType === 'BeneficiaryCompanyUser'">
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon>assignment</mat-icon>
-          Tickets
-        </ng-template>
-        <p-scrollPanel [style]="{ width: '100%', height: '30rem' }">
+      <mat-tab label="Tickets">
+        <div class="tab-scroll">
           <app-tickets-userapp-list></app-tickets-userapp-list>
-        </p-scrollPanel>
+        </div>
       </mat-tab>
-
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon>business</mat-icon>
-          Performance
-
-        </ng-template>
-        <p-scrollPanel [style]="{ width: '100%', height: '30rem' }">
+      <mat-tab label="Performance">
+        <div class="tab-scroll">
           <app-performance-page-beneficiary *ngIf="userapp?.userName" [username]="userapp?.userName || ''"></app-performance-page-beneficiary>
-        </p-scrollPanel>
+        </div>
       </mat-tab>
-
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon>chat</mat-icon>
-          Feedback
-        </ng-template>
-        <p-scrollPanel [style]="{ width: '100%', height: '30rem' }">
+      <mat-tab label="Feedback">
+        <div class="tab-scroll">
           <app-feedback-user-list *ngIf="userapp?.id" [userId]="userapp?.id ?? 1"></app-feedback-user-list>
-        </p-scrollPanel>
+        </div>
       </mat-tab>
     </mat-tab-group>
-    
   </div>
 </div>

@@ -1,4 +1,3 @@
-/* ========== CONTAINER ========== */
 .chart-container {
   width: 100%;
   padding: 1rem;
@@ -7,21 +6,18 @@
   box-sizing: border-box;
 }
 
-/* ========== RESPONSIVE GRID ========== */
-.chart-grid {
+.chart-column {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 2rem;
   width: 100%;
-  max-width: 1200px;
-  justify-content: center;
+  max-width: 900px;
   box-sizing: border-box;
+  align-items: center;
 }
 
-/* ========== CARD STYLING ========== */
 .card {
-  flex: 1 1 320px;
-  max-width: 100%;
+  width: 100%;
   padding: 1.5rem;
   background: #fff;
   border-radius: 8px;
@@ -30,32 +26,35 @@
   flex-direction: column;
   text-align: center;
   box-sizing: border-box;
+  min-width: 0; /* ✅ prevent chart overflow from breaking layout */
+  overflow-x: hidden;
 }
 
 .card h3 {
   font-size: 1.4rem;
   margin-bottom: 1rem;
+  word-break: break-word;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
-/* ========== WRAPPER THAT CENTERS AND CONSTRAINS THE CHART ========== */
+/* ✅ CHART WRAPPER */
 .chart-wrapper {
   width: 100%;
-  max-width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
+  overflow-x: auto;
   padding: 1rem 0;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
-/* PrimeNG chart canvas */
+/* ✅ CHART CANVAS */
 .chart-wrapper canvas {
+  min-width: 600px; /* force scroll if needed */
   width: 100% !important;
-  height: auto !important;
-  max-height: 300px;
+  height: 100% !important;
 }
 
-/* ========== EMPTY STATE ========== */
+/* EMPTY STATE */
 .card-empty {
   justify-content: center;
 }
@@ -68,48 +67,29 @@
   padding: 0.5rem;
 }
 
-/* ========== TABLET (≤1024px) ========== */
-@media (max-width: 1024px) {
-  .card h3 {
-    font-size: 1.3rem;
-  }
-
-  .chart-wrapper canvas {
-    max-height: 260px;
-  }
-}
-
-/* ========== MOBILE (≤768px) ========== */
+/* RESPONSIVE: TABLET */
 @media (max-width: 768px) {
   .chart-container {
     padding: 0.75rem;
-  }
-
-  .chart-grid {
-    gap: 1.5rem;
   }
 
   .card {
     padding: 1.25rem;
   }
 
-  .chart-wrapper canvas {
-    max-height: 240px;
+  .card h3 {
+    font-size: 1.2rem;
   }
 
-  .no-data-message {
-    font-size: 1rem;
+  .chart-wrapper canvas {
+    min-width: 500px;
   }
 }
 
-/* ========== SMALL MOBILE (≤480px) ========== */
+/* RESPONSIVE: MOBILE */
 @media (max-width: 480px) {
   .chart-container {
     padding: 0.5rem;
-  }
-
-  .chart-grid {
-    gap: 1rem;
   }
 
   .card {
@@ -120,11 +100,11 @@
     font-size: 1.1rem;
   }
 
-  .chart-wrapper canvas {
-    max-height: 220px;
-  }
-
   .no-data-message {
     font-size: 0.95rem;
+  }
+
+  .chart-wrapper canvas {
+    min-width: 450px;
   }
 }

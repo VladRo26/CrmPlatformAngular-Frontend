@@ -114,3 +114,17 @@ button {
   width: 90%;
   margin: auto;
 }
+
+/* ========== RESPONSIVE TOGGLE WRAP FIX ========== */
+@media (max-width: 768px) {
+  .mat-button-toggle-group {
+    flex-wrap: wrap !important;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .mat-button-toggle-group .mat-button-toggle {
+    flex: 1 1 auto; /* allow to shrink/grow */
+    min-width: 45%; /* adjust based on your preference */
+  }
+}
