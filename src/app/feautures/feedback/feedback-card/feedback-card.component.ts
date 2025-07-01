@@ -103,30 +103,111 @@ export class FeedbackCardComponent implements OnInit {
     });
   }
 
- private prepareMeterGroupValues(): void {
-    if (this.sentiment) {
+  private prepareMeterGroupValues(): void {
+  if (this.sentiment) {
+    // Convert to percentage and round
+    const positive = Math.round(this.sentiment.positive * 100);
+    const neutral = Math.round(this.sentiment.neutral * 100);
+    const negative = Math.round(this.sentiment.negative * 100);
+
+    let total = positive + neutral + negative;
+
+    // Adjust to ensure the total is exactly 100%
+    if (total !== 100) {
+      const diff = 100 - total;
+
+      // Find the max and adjust it
+      const maxVal = Math.max(positive, neutral, negative);
+      if (maxVal === positive) {
+        this.value = [
+          {
+            label: 'Positive',
+            value: positive + diff,
+            color: '#4CAF50',
+            icon: 'pi pi-smile'
+          },
+          {
+            label: 'Neutral',
+            value: neutral,
+            color: '#FFC107',
+            icon: 'pi pi-meh'
+          },
+          {
+            label: 'Negative',
+            value: negative,
+            color: '#F44336',
+            icon: 'pi pi-frown'
+          }
+        ];
+      } else if (maxVal === neutral) {
+        this.value = [
+          {
+            label: 'Positive',
+            value: positive,
+            color: '#4CAF50',
+            icon: 'pi pi-smile'
+          },
+          {
+            label: 'Neutral',
+            value: neutral + diff,
+            color: '#FFC107',
+            icon: 'pi pi-meh'
+          },
+          {
+            label: 'Negative',
+            value: negative,
+            color: '#F44336',
+            icon: 'pi pi-frown'
+          }
+        ];
+      } else {
+        this.value = [
+          {
+            label: 'Positive',
+            value: positive,
+            color: '#4CAF50',
+            icon: 'pi pi-smile'
+          },
+          {
+            label: 'Neutral',
+            value: neutral,
+            color: '#FFC107',
+            icon: 'pi pi-meh'
+          },
+          {
+            label: 'Negative',
+            value: negative + diff,
+            color: '#F44336',
+            icon: 'pi pi-frown'
+          }
+        ];
+      }
+    } else {
+      // Already sums to 100, use as-is
       this.value = [
         {
           label: 'Positive',
-          value: this.sentiment.positive * 100, // Convert to percentage
-          color: '#4CAF50', // Green for positive sentiment
-          icon: 'pi pi-smile' // Smiley face icon
+          value: positive,
+          color: '#4CAF50',
+          icon: 'pi pi-smile'
         },
         {
           label: 'Neutral',
-          value: this.sentiment.neutral * 100, // Convert to percentage
-          color: '#FFC107', // Yellow for neutral sentiment
-          icon: 'pi pi-meh' // Neutral face icon
+          value: neutral,
+          color: '#FFC107',
+          icon: 'pi pi-meh'
         },
         {
           label: 'Negative',
-          value: this.sentiment.negative * 100, // Convert to percentage
-          color: '#F44336', // Red for negative sentiment
-          icon: 'pi pi-frown' // Sad face icon
+          value: negative,
+          color: '#F44336',
+          icon: 'pi pi-frown'
         }
       ];
     }
   }
+}
+
 
 
   openTranslationPanel(event: Event, ticketId?: number): void {
