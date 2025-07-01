@@ -103,7 +103,7 @@ export class FeedbackCardComponent implements OnInit {
     });
   }
 
-  private prepareMeterGroupValues(): void {
+ private prepareMeterGroupValues(): void {
     if (this.sentiment) {
       this.value = [
         {
@@ -127,6 +127,7 @@ export class FeedbackCardComponent implements OnInit {
       ];
     }
   }
+
 
   openTranslationPanel(event: Event, ticketId?: number): void {
     if (!ticketId) return;
