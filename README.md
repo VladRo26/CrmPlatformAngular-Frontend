@@ -1,27 +1,53 @@
-# Client
+# CrmPlatformClient – Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.8.
+This folder contains the client-side Angular application of the CRM platform, developed as part of the Bachelor's thesis by Turis Gavriil-Vlad, University of Bucharest, Faculty of Mathematics and Computer Science.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Technologies Used
 
-## Code scaffolding
+- Angular CLI (standalone components)
+- PrimeNG – UI components
+- Angular Material – dialogs and forms
+- Bootstrap – layout and responsiveness
+- SignalR – for real-time user presence
+- ngx-material-intl-tel-input – international phone input
+- Reactive Forms – for complex form logic and validation
+- HTTPS support via mkcert (development environment)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+---
 
-## Build
+## Application Architecture
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```
+src/app/
+├── features/                  # Core modules (auth, home, dashboard, tickets, feedback, etc.)
+│   └── auth/
+│   └── dashboard/
+│   └── tickets/
+│   └── feedback/
+├── _services/                 # HTTP services (AccountService, TicketService, etc.)
+├── _interceptors/             # JWT handling, global error interceptors
+├── _directives/               # Role-based rendering directives (hasRole, notHasRole)
+├── models/                    # Interfaces for API DTOs
+├── environments/              # Environment configurations
+```
 
-## Running unit tests
+The project is modular and uses lazy loading with role-based guards.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+---
 
-## Running end-to-end tests
+## Authentication and Role Logic
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- JWT-based login and secure token storage
+- Roles are embedded in the token
+- Conditional rendering based on roles using custom Angular directives
+- Navigation structure adapts based on role
 
-## Further help
+Roles:
+- Admin
+- Moderator
+- SoftwareCompanyUser
+- BeneficiaryCompanyUser
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
