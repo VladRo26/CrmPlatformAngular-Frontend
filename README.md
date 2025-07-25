@@ -120,7 +120,7 @@ The dashboard logic is handled by `DashboardUserComponent`, which identifies the
 </p>
 
 
-
+---
 
 ## Ticket Detail Page
 
@@ -134,7 +134,38 @@ The dashboard logic is handled by `DashboardUserComponent`, which identifies the
 <em>Figure: Dashboard view for authenticated users</em>
 </p>
 
+---
 
+## Feedback Module
+
+- Star-based feedback for beneficiaries
+- Optional prompt auto-generated via LLM
+- Sentiment analysis results
+- Display of received feedback for software users
+
+<p align="center">
+<img width="960" height="620" alt="image" src="https://github.com/user-attachments/assets/71ac884f-28a2-4d9c-9769-ac5e41d80c15" />
+  <br/>
+<em>Figure: Dashboard view for authenticated users</em>
+</p>
+
+## User List and Profile
+
+- Paginated list of all users with role, name, rating
+- Uses SignalR for online status indicator
+- Profile view includes feedback, ticket, and activity tabs
+
+<p align="center">
+<img width="960" height="620" alt="image" src="https://github.com/user-attachments/assets/c2c42f07-37d9-43b9-a053-5e22476cbc8d" />
+  <br/>
+<em>Figure: Dashboard view for authenticated users</em>
+</p>
+
+<p align="center">
+<img width="960" height="620" alt="image" src="https://github.com/user-attachments/assets/615571ff-1b98-4611-a74b-2f362f2e52d2" />
+  <br/>
+<em>Figure: Dashboard view for authenticated users</em>
+</p>
 
 
 
