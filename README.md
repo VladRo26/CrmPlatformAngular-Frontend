@@ -1,5 +1,9 @@
 # CrmPlatformClient – Frontend
 
+📄 **Full Romanian-language documentation (PDF):**  
+[📘 View the full Bachelor's thesis documentation (Romanian)]([Documentatie_Licenta_TurisGavriil-Vlad_gr.462.pdf](https://github.com/user-attachments/files/21430154/Documentatie_Licenta_TurisGavriil-Vlad_gr.462.pdf)
+)
+
 This folder contains the client-side Angular application of the CRM platform, developed as part of the Bachelor's thesis by Turis Gavriil-Vlad, University of Bucharest, Faculty of Mathematics and Computer Science.
 
 ---
@@ -294,7 +298,7 @@ Update Components:
 </p>
 
 <p align="center">
- <img width="960" height="620" alt="image" src="https://github.com/user-attachments/assets/b7cec3ef-284b-44a8-b233-d169713891a0" />
+ <img width="760" height="420" alt="image" src="https://github.com/user-attachments/assets/b7cec3ef-284b-44a8-b233-d169713891a0" />
   <br/>
 <em>Company update form page</em>
 </p>
