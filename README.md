@@ -1,8 +1,9 @@
 # CrmPlatformClient – Frontend
 
 📄 **Full Romanian-language documentation (PDF):**  
-[📘 View the full Bachelor's thesis documentation (Romanian)]([Documentatie_Licenta_TurisGavriil-Vlad_gr.462.pdf](https://github.com/user-attachments/files/21430154/Documentatie_Licenta_TurisGavriil-Vlad_gr.462.pdf)
-)
+[📘 View the full Bachelor's thesis documentation (Romanian)](https://github.com/user-attachments/files/21430154/Documentatie_Licenta_TurisGavriil-Vlad_gr.462.pdf)
+
+
 
 This folder contains the client-side Angular application of the CRM platform, developed as part of the Bachelor's thesis by Turis Gavriil-Vlad, University of Bucharest, Faculty of Mathematics and Computer Science.
 
